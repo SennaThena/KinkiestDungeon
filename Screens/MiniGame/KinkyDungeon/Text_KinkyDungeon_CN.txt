@@ -73,7 +73,7 @@ Keybindings
 
 
 Auto loot all from chests
-从箱子中自动掠夺所有物品
+从箱子中自动拾取所有物品
 
 
 Apply palettes to Restraints
@@ -695,13 +695,13 @@ Cyber Doll
 Start in full Cyber restraints.
 开局时穿戴全套赛博束缚。
 Fuuka's Pet
-Fuuka宠物
+风香（Fuuka）的宠物
 Start with Fuuka's collar and a few restraints.
-开局时穿戴Fuuka的项圈和一些别的束缚。
+开局时穿戴风香（Fuuka）的项圈和一些别的束缚。
 Fuuka Fan Club
-Fuuka俱乐部粉丝
+风香（Fuuka）粉丝俱乐部
 All humanoids that can bind you also apply Fuuka's special restraints.
-所有可束缚你的人形生物可以使用Fuuka特制的拘束具。
+所有可束缚你的人形生物可以使用风香（Fuuka）特制的拘束具。
 Collected
 搜集
 Start with The Warden's special belt which punishes you for defiling spell orbs.
@@ -1625,7 +1625,7 @@ Stormbreaker: You have the Power.
 Game Setup:
 游戏设置
 Beginner: Get a save code every 3 levels, autosave after each floor
-初学者 : ‎每3层获得一个保存代码
+初学者 : ‎每3层获得一个保存代码,每层自动保存
 Roguelike: No save codes, only autosave
 Roguelike : ‎没有保存代码，只有自动保存
 Exciting: Orbs give random spells
@@ -4574,7 +4574,7 @@ The red liquid bubbles and a round slime pops out!
 A revenant appears!
 一个亡魂出现了！
 Fuuka uses a talisman to call forth the spirits of her pets!
-Fuuka 使用丝带召唤她的宠物的灵魂！
+风香（Fuuka） 使用丝带召唤她的宠物的灵魂！
 
 
 A pool of latex bubbles and a twisted elemental appears!
@@ -6366,7 +6366,7 @@ Rope Dojo
 Doll Shoppe
 玩偶商店
 Fuuka's Shrine
-枫香的神龛
+风香（Fuuka）的神龛
 The Collectors
 收藏家
 Dollmaker Inc.
@@ -6596,11 +6596,11 @@ You look like you're right at home!
 Restraining Bed
 拘束床
 A bed with a booby trap designed to trap you on top of it!
-带有拘束装置的床，旨在将你困在上面！
+带有拘束具的床，旨在将你困在上面！
 You have to get out somehow...
 你得个想办法逃脱......
 Belts emerge from underneath the bed and wrap around you, strapping you down tightly!
-腰带从床底下出来，缠绕在你身上，把你紧紧地绑起来！
+皮带从床底下出来，缠绕在你身上，把你紧紧地绑起来！
 
 
 Binding Dress
@@ -6614,7 +6614,7 @@ Ornamental Corset
 Your figure looks gorgeous in this~
 你的身材看起来真漂亮〜
 It's so tight you won't be able to undo the laces yourself, dear!
-哎呀！这个绑带太紧了，你自己解不开！
+亲爱的！这个绑带太紧了，你自己解不开！
 
 
 Fancy Ball Gag
@@ -6656,7 +6656,7 @@ It is difficult to pull off and though it is made from supple, heavy duty leathe
 
 
 Fuuka's Collar
-Fuuka的项圈
+风香（Fuuka）的项圈
 A collar enchanted with ghastly energy.
 一个被可怕能量附魔的项圈。
 It seems to react with a pulse of energy whenever a nearby enemy is defeated.
@@ -6666,7 +6666,7 @@ Your collar pulses, and a revenant appears to avenge the enemy you defeated!
 
 
 Fuuka's Pet Collar
-Fuuka的宠物项圈
+风香（Fuuka）的宠物项圈
 A collar enchanted with beneficial ghastly energy.
 被赋予了有益的可怕能量的项圈。
 Your collar pulses, and a revenant appears to assist you!
@@ -9753,10 +9753,9 @@ Choose target point
 Restraining Device
 拘束装置
 The thrown restraining device latches onto you as you struggle to get it off!!!
-当你努力挣脱时，抛出的拘束装置缠在了你身上！！！
+当你挣扎着想从被抛出的约束装置挣脱出来时，它却牢牢地缠住了你！！！
 The restraining device wraps many elastic cables around you!!!
-拘束装置将许多弹性绳索缠绕在你的周围！！！
-
+拘束装置将许多弹性电缆缠绕在您周围！
 
 Shadowy Grip
 暗影控制
@@ -13115,7 +13114,7 @@ Unaware
 Items carried:
 携带的物品 : ‎
 Items worn:
-用坏的物品:
+穿戴的物品:
 ...and NUMBER more
 ...还有 NUMBER 个
 Takes damage if the caster is stunned
@@ -13735,7 +13734,7 @@ There's no use in struggling, dear! I've made sure it's extra tight.
 Playtime is over, back to your cell~
 游戏时间结束了，回你的牢房吧~
 Why aren't you wearing your restraints?
-你为什么不戴约束装置？
+你为什么不戴拘束具？
 I did not order you to clean~
 我没有命令你打扫~
 What's that you've got there?
@@ -20332,7 +20331,7 @@ Why does that matter to you?
 (Stare at her silently, maintaining your posture)
 ( 静静地盯着她，保持你的姿势 )
 (She grins)|I am in charge of this place.|Everything that goes through here goes through me.|You may address me as Fuuka Windsong.
-( 她咧嘴一笑 ) |这里由我负责。|这里的一切都经过我。|你可以称呼我为风歌Fuuka。
+( 她咧嘴一笑 ) |这里由我负责。|这里的一切都经过我。|你可以称呼我为风香（Fukka）.风之歌。
 By what authority?
 凭什么？
 (SPEAKER tilts her head)|Ummmm.... uh...|The Old Civilization! Of course!|I've been keeping their traditions for centuries.
@@ -21200,7 +21199,7 @@ Metallic arms wrap you in tape!
 Metallic arms wrap you in strict restraints!
 金属手臂将你牢牢束缚！
 Metallic arms install various cybernetic restraints!
-金属臂安装了各种拘束装置！
+金属臂安装了各种拘束具！
 You've sprung a trap! You've been stunned.
 你陷入了陷阱了！ 受到了惊吓。
 The bandit leaves behind a sneaky trap...
@@ -21740,9 +21739,9 @@ BootLeftHogtie
 Gauntlets
 铠甲手套
 GauntletLeft
-左手长手套
+左护手
 GauntletRight
-右手长手套
+右护手
 PlateArmor
 板甲
 ChainShirt
@@ -21752,7 +21751,7 @@ ShirtChest
 Shirt
 衬衫
 ChainSkirt
-链甲裙子
+链甲裙
 Skirt
 裙子
 ChainArmor
@@ -22254,7 +22253,7 @@ BunnySockRight
 BunnySocks
 兔女郎丝袜
 BunnySocksRestraint
-兔女郎袜子拘束装置
+兔女郎袜子拘束具
 BunnyGloveLeft
 兔女郎手套(左)
 BunnyGloveRight
@@ -26797,7 +26796,7 @@ Leyline Map
 
 
 Harness Plug Gag
-安全带塞子
+马具塞子口塞
 A gag meant to keep people quiet by forcing a plug into their mouth and securing it in place with a strict harness.
 一种堵嘴装置，旨在通过将塞子强行塞入人们的嘴中并用严格的安全带将其固定到位来保持人们的安静。
 
@@ -26809,15 +26808,15 @@ Your OLDITM gains new properties!
 
 
 Moon-Cursed Epicenter
-月光诅咒中心
+月咒核心
 The cursed epicenter disperses into black stardust.
-被诅咒的中心消散成黑色星尘。
+诅咒核心消散成黑色星尘。
 The cursed epicenter retreats as you remove the last of your cursed restraints!
-当你移除最后的被诅咒的束缚时，被诅咒的中心就会撤退！
+当你解除最后一个被诅咒的拘束时，诅咒核心就会撤退！
 The cursed epicenter retreats as you are claimed by something else!
-当你被其他东西占领时，被诅咒的中心正在撤退！
+当你被其他东西占领时，诅咒核心正在撤退！
 The cursed epicenter assaults your mind with its presence! (DamageDealt)
-被诅咒的中心以其存在来攻击你的思想！ ( DamageDealt )
+诅咒核心以其存在来攻击你的思想！ ( DamageDealt )
 You feel your cursed items turn cold to the touch!
 你感觉你被诅咒的物品摸起来变冷了！
 An cursed collar appears around your neck, feeling cold to the touch.
@@ -26831,7 +26830,7 @@ You are being cursed!!!
 
 
 Star-Cursed Epicenter
-星咒中心
+星咒核心
 
 
 Moondust Collar
@@ -26871,13 +26870,13 @@ With a burst of dark energy, your OLDITM transforms into a NEWITM!
 Restoration: While distracted, your Star Cursed restraints regain strength.
 恢复 : ‎在分心时，你的星咒束缚会恢复力量。
 With the rush of pleasure, you feel your cursed restraints tighten and strengthen!
-随着快感的涌动，你感受到你那被诅咒的束缚收紧、加强！
+随着快感的涌动，你感受到你那被诅咒的拘束收紧、加强！
 
 
 Corruption: While in the shadows, you slowly gain corruption.
 堕落 : ‎在阴影中，你会慢慢得堕落。
 Your willpower gain and struggle power is less effective due to your corruption.
-你的意志力增益和奋斗力会因为你的腐败而变得不那么有效。
+你的意志力增益和奋斗力会因为你的腐化而变得不那么有效。
 
 
 Seduction: Gain distraction after taking damage.
@@ -27324,7 +27323,7 @@ Congratulations! Your continued patronage has earned you|one (1) round trip to t
 Select a restraint to remove the curse from
 选择要解除诅咒的束缚
 You don't have any restraints that can be removed
-你没有任何可以解除的束缚
+你没有任何可以解除的拘束
 
 
 As you are low on mana, you are unable to store Arcane Energy.
@@ -27440,7 +27439,7 @@ You pick up a staff of belts wrapped tightly in leather.
 Binding Lock
 束缚具锁
 A LKTYP lock clasps on to one of your restraints!
-LKTYP 锁锁在了你的一个束缚具上！
+LKTYP 锁上了你的一个拘束具！
 You are caught in a constricting field! (Dmgdlt)
 你陷入了一个狭窄的区域！ ( Dmgdlt )
 
@@ -27836,7 +27835,7 @@ Gain access to the Bite spell.
 Slime Girl
 粘液少女
 You are a shapeshifting slime, granting +100 Glue Resist and can squeeze thru bars. Escaping is easy, but your powers are sealed while wearing cursed or magic restraints.
-你是一个变形的粘液，提供 +100 抗胶性，并且可以穿过栅栏。逃脱很容易，但当你戴着诅咒或魔法束缚时，你的力量会被封印。
+你是一个变形的粘液，提供 +100 胶水抗性，并且可以穿过栅栏。逃脱很容易，但当你戴着诅咒或魔法拘束具时，你的力量会被封印。
 Cybernetic
 控制
 You have mechanical parts, granting +10 Physical Armor, +15 Block, and +10% base physical damage. -100 Electric Resist.
@@ -27852,7 +27851,7 @@ You have animalistic features such as a bite spell, -10% attack stamina cost, an
 Demon Girl
 恶魔少女
 You are related to eldritch entities, granting +50% shadow damage and the ability to teleport between shadows. You are weak to holy restraints and bright light.
-你与可怕的实体有联系，给予 +50% 的暗影伤害和在暗影之间传送的能力。你对神圣的束缚和明亮的光芒是软弱的。
+你与可怕的实体有联系，给予 +50% 的暗影伤害和在暗影之间传送的能力。你对神圣的束缚和明亮的光芒无能为力。
 You are a minor angel sent to perform a specific task. You are forced to wear a full set of divine restraints, but gain an infinite mana pool, +20 Magic Armor, and +25% magic damage.
 你是一位小天使，被派去执行特定任务。你被迫穿戴全套神圣束缚，但获得无限魔力池、+20 魔法防御和 +25% 魔法伤害。
 Elven Ancestry
@@ -28174,13 +28173,13 @@ AMNT 暗影吸血 ( 10回合 )
 Sealing Talisman
 封印符
 You were hit by one of Fuuka's talismans. Fuuka's magic begins sealing your power!
-你被 Fuuka 的一枚护身符击中了。Fuuka 的魔法开始封印你的力量！
+你被 风香（Fuuka） 的一枚护身符击中了。风香（Fuuka）的魔法开始封印你的力量！
 You were hit by one of Fuuka's talismans. Fuuka's magic makes you sluggish!!
-你被 Fuuka 的一枚护身符击中了。Fuuka 的魔法让你变得迟钝！！
+你被风香（Fuuka）的一枚护身符击中了。风香（Fuuka）的魔法让你变得迟钝！！
 You were hit by one of Fuuka's talismans. Fuuka's magic renders you helpless!!!
-你被 Fuuka 的一枚护身符击中了。Fuuka 的魔法让你束手无策！！！
+你被风香（Fuuka）的一枚护身符击中了。风香（Fuuka） 的魔法让你束手无策！！！
 You were hit by one of Fuuka's talisman projectiles. Fuuka's magic is restricting you!
-你被 Fuuka 的一枚护身符射中了。Fuuka 的魔法束缚了你！
+你被 风香（Fuuka） 的一枚护身符射中了。风香（Fuuka） 的魔法束缚了你！
 
 
 Sealing Shadows
@@ -29042,7 +29041,7 @@ You skipped your duty and left some dirt missing in the last level!
 The Dollmaker does not take no for an answer.
 玩偶师不会接受 '不' 的回答。
 Fuuka's shrine maidens would like to have a word with you.
-Fukka的巫女们想和你说句话。
+风香（Fuuka）的巫女们想和你说句话。
 Your instructor will meet with you at regular intervals for further training.
 你的导师将定期与你会面以进行进一步训练。
 
@@ -29056,7 +29055,7 @@ Experience a comprehensive rope bondage experience.
 
 
 Receive the following restraints: 
-接受以下约束：
+接受以下拘束：
 You will be bound with some form of restraint.
 你将受到某种形式的束缚。
 
@@ -29376,7 +29375,7 @@ Rubber Elemental
 The rubber elemental's restraints snap onto her and she falls over hogtied.
 橡胶精灵的束缚突然卡在了她身上，她被绑住了。
 The rubber elemental molds itself into restraints! (+RestraintAdded)
-橡胶精灵将自身塑造成束缚具！ ( +RestraintAdded )
+橡胶精灵将自身塑造成拘束具！ ( +RestraintAdded )
 The rubber elemental squeezes you with its appendages! (DamageTaken)
 橡胶精灵用它的附肢揉捏你！ ( DamageTaken )
 The rubber elemental forms rubber locks around all your restraints! (DamageTaken)
@@ -30018,7 +30017,7 @@ Quite a boast for someone who's about to lose.
 (SPEAKER grins)|I look forward to testing those claims~
 ( 发言人笑了 ) |我期待着验证这些说法~
 I defeated Fuuka. Now you're next!
-我打败了 Fuuka。现在轮到你了！
+我打败了风香（Fuuka）。现在轮到你了！
 (SPEAKER shrugs)|You beat that zombie girl?|She's the weakest of the paladins.|She loves to boast about how she's special,|But she's really just a spoiled brat.
 ( SPEAKER 耸耸肩 ) |你打败了那个僵尸女孩？|她是最弱的圣骑士。|她喜欢吹嘘自己的特别之处，|但她实际上只是一个被宠坏的孩子。
 ...Zombie girl?
@@ -31212,7 +31211,7 @@ Cyber Guardian
 
 
 Auto Enforcer Guardian
-自动执法器守护者
+自行执法守护者
 
 
 
@@ -31228,7 +31227,7 @@ There we go, all ready for training!
 
 
 Cyber Storage
-网络容器
+赛博容器
 An all-purpose metal crate equipped with a polycarbonate blast door and steel reinforcement.
 多功能金属箱，配备有聚碳酸酯防爆门和钢筋。
 Used throughout the reign of the Old Civilization to store slaves and prisoners.
@@ -31246,7 +31245,7 @@ The latex seals you in, rendering escape impossible without alchemical methods.
 The liquid latex spray slows you down!
 液体乳胶喷雾会减缓你的速度！
 Latex Sprayer
-乳胶喷雾器
+乳胶喷雾炮塔
 The turret deactivates after taking too much damage!
 炮塔在受到太大伤害后会失效！
 The turret defends itself with a spray of sticky liquid latex! (DamageTaken)
@@ -31262,7 +31261,7 @@ Your skin is covered in a layer of latex, making escape from cyber restraints ha
 Some Exclusions Apply
 有限移除
 Goddess shrines do not remove non-binding restraints such as harnesses and cuffs.
-女神神殿不会移除非拘束性束缚，如束衣和手铐。
+女神神殿不会移除非限制性拘束，如束衣和手铐。
 
 
 Melee Specialization
@@ -31314,15 +31313,15 @@ Confirm Choice
 
 
 Increase max distraction by AMNT%.
-增加最大性奋程度 AMNT%。
+增加分心值上限 AMNT%。
 DP decays faster and more SP is safe from damage.
-性奋值衰减得更快，更多的体力值免受损害。
+分心值更快衰减，更多的体力值免受损害。
 Increase max stamina by AMNT.
-最大体力值添加 AMNT 点。
+体力值上限添加 AMNT 点。
 Increase max mana by AMNT.
-最大魔力值添加 AMNT 点。
+魔力值上限添加 AMNT 点。
 Increase max willpower by AMNT.
-最大意志力添加 AMNT 点。
+意志力上限添加 AMNT 点。
 Gain +AMNT SP regen/turn.
 每回合恢复 +AMNT 点体力值。
 
@@ -31372,7 +31371,7 @@ All of your runes have been removed.
 
 
 E-Stimulation
-电子刺激
+刺激电流
 Replaces most instances of painful electric shocks with stimulating effects instead.
 用刺激效果代替大多数痛苦的电击。
 
@@ -31428,15 +31427,15 @@ ENMY 请求帮助！
 
 
 (Go to The Summit)
-( 前往巅峰设施 )
+( 前往顶部设施 )
 
 
 The Summit is a safe area. Items can be left here without fear of losing them.
-巅峰设施是一个安全地区。物品可以放在这里，不用担心丢失。
+顶部设施是一个安全地区。物品可以放在这里，不用担心丢失。
 
 
 Target an NPC to attach a leash. Enemies and unwilling allies must be tied up to 50% first. Target self to release all leashes, or target a leashed NPC to unleash them.
-以NPC为目标绑上皮带。敌人和不情愿的盟友必须首先被捆绑到50%。以自身为目标释放所有的束缚，或者以一个被束缚的NPC为目标释放它们。
+以NPC为目标绑上皮带。敌人和不情愿的盟友必须被捆绑到50%。以自身为目标释放所有的束缚，或者以一个被束缚的NPC为目标释放它们。
 Target an NPC to leash, or self to unleash all.
 以NPC为目标进行束缚，或以自我为目标进行释放。
 
@@ -31472,7 +31471,7 @@ You let go of all leashes.
 Plastic Explosive
 塑胶炸弹
 Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage.
-有一个60回合的计时器，但可以被其他炸药引爆。在巨大的半径范围内造成210处爆炸破坏，并留下一大片瓦砾。被击中的敌人在受到伤害之前，护甲减少50。
+有一个60回合的计时器，但可以被其他炸药引爆。在巨大的半径范围内造成210处爆炸破坏，并留下一大片瓦砾。被击中的敌人在受到伤害之前减少50护甲。
 It's totally harmless! Probably.
 这完全无害！可能吧。
 You set the clock ticking...
@@ -31482,11 +31481,11 @@ You set the clock ticking...
 Dynamite
 甘油炸药
 10 turn fuse with a 25% chance each turn to detonate prematurely. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage.
-10回合的引信，每回合有25%的几率提前引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前，护甲减少20。
+10回合的引信，每回合有25%的几率提前引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前减少20护甲。
 Arguably more dangerous to the user than the target.
 可以说，对用户来说比目标更危险。
 10 turn fuse with a 25% chance each turn to detonate. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage.
-10回合的引信，每回合有25%的几率引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前，护甲减少20。
+10回合的引信，每回合有25%的几率引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前减少20护甲·。
 You light the fuse and pray it doesn't blow up in your face.
 你点燃保险丝，祈祷它不要在你脸上爆炸。
 
@@ -31496,11 +31495,11 @@ You are holding too many leashes!
 
 
 You feel a corrupting influence... (+AMNT Corruption)
-你感觉到了一种堕性的影响... (+AMNT Corruption)
+你受到了一些腐化... (+AMNT Corruption)
 You feel a restoring influence! (-AMNT Corruption)
-你感觉到了一种恢复性的影响！ (-AMNT Corruption)
+你受到了一些恢复！ (-AMNT Corruption)
 Sticky latex fuses itself to your skin! (+AMNT Latex Integration)
-粘稠的乳胶会与你的皮肤融合！(+AMNT Latex Integration)
+粘性乳胶与你的皮肤融合到一起了！(+AMNT Latex Integration)
 The latex starts to detach from your skin... (-AMNT Latex Integration)
 乳胶开始从你的皮肤上脱落... (-AMNT Latex Integration)
 
@@ -31512,7 +31511,7 @@ While you have an evasion penalty, even clumsy enemies...
 
 
 You are more likely to succumb to curses.
-你更容易被诅咒。
+你更容易屈服于诅咒。
 
 
 X Offset
@@ -31578,9 +31577,9 @@ Chastity bras are much rarer.
 
 
 Find an elevator to the Summit in order to access facilities.
-找到通往巅峰设施的电梯以便使用设施。
+找到通往顶部设施的电梯以便使用设施。
 Visit the Summit to allow additional interactions with this facility.
-参观巅峰设施可以与该设施进行更多互动。
+参观顶部设施可以与该设施进行更多互动。
 
 
 +AMNT% Training/Tick
@@ -31612,17 +31611,17 @@ Assign servants to produce potions from base ingredients you acquire in your adv
 Recycler
 回收者
 Convert low tier restraints into raw materials and output higher quality restraints.|Adding more servants increase the conversion speed.
-将低等级的限制转化为原材料，输出更高质量的限制。|添加更多仆人可以增加转化速度。
+将低等级的拘束具转化为原材料，输出更高质量的限制。|添加更多仆人可以增加转化速度。
 Cuddle Lounge
 拥抱休息室
 Assign prisoners to the lounge in order to improve servant and prisoner opinion.
 将囚犯分配到休息室以提高仆人和囚犯对你的看法。
 Appoint a warden to keep prisoners in check and automatically bind using restraints from storage.
-任命一名狱卒来维持囚犯的秩序，并可自动使用约束装置将他们捆绑起来。
+任命一名狱卒来维持囚犯的秩序，并可自动使用拘束具将他们捆绑起来。
 
 
 Recycle Restraints
-回收限制
+回收拘束具
 
 
 Recycle One
@@ -31732,7 +31731,7 @@ Inputs:
 You slip off the conveyor!
 你从传送带上滑下来了！
 The Summit
-巅峰设施
+顶部设施
 
 
 Back to Collection
@@ -31822,7 +31821,7 @@ You ready the bottle of Latex Solvent.
 A potent acid, capable of dissolving slime and latex.
 一种强酸，能够溶解粘液和乳胶。
 Deal 90 acid damage to target. Adds a 10% debuff to the cut and struggle resistance of latex restraints currently worn.
-对目标造成 90 点酸性伤害。当前穿戴的乳胶束缚带的切割和抗挣扎能力增加 10% 的减益效果。
+对目标造成 90 点酸性伤害。为当前穿戴的乳胶拘束具的切割和挣扎抵抗力增加 10% 的减益效果。
 
 
 Weakened by Latex Solvent (10%)
@@ -31884,7 +31883,7 @@ Use 'Truss'em'Up' to edit restraints on this NPC
 The NPC needs tightening, but is unavailable right now
 NPC 需要收紧束缚，但目前无法做到
 Tighten non-conjured restraints
-加强非魔法约束
+加强非魔法拘束
 
 
 NPC has escaped!
@@ -31952,7 +31951,7 @@ Copy Restraints
 Paste Restraints from NME
 从 NME 粘贴束缚
 No restraints left in inventory
-背包中没有任何束缚
+背包中没有任何拘束具
 Paste to All!
 粘贴到全部！
 OVERWRITE All!
@@ -32295,7 +32294,7 @@ AMNT restraints added since last tick~
 AMNT restraints confiscated since last tick~
 自上个周期以没收的 AMNT 拘束具~
 You have no restraints in storage. Go to the Summit to deposit restraints.
-您的仓库中没有拘束具。前往巅峰设施存放约束装置。
+您的仓库中没有拘束具。前往顶部设施存放拘束具。
 
 
 Back to Facilities
@@ -32543,7 +32542,7 @@ Covers the important bits, anyway.
 +20 Bondage Resist. Conducts electricity.
 +20 捆绑抗性。导电。
 Light Plate Armor
-轻板盔甲
+光亮板甲
 Knight in shining rest-err, armor!
 穿着闪亮盔甲的骑士！
 Provides +5 armor and high protection. No impact to stealth or evasion
@@ -32555,21 +32554,21 @@ I have the power!
 +30% spell damage and +10 spell ward
 +30% 法术伤害和 +10 法术防护
 Chain Skirt
-链条裙
+链甲裙
 A defensive garment providing optimal coverage to the lower torso.
 为下半身提供最佳防护的防御性服装。
 Provides medium protection. No impact to stealth or evasion
 提供中等防护。不影响隐身或闪避
 Armored Skirt
-铠甲裙
+盔甲裙
 Knight in shining rest-err, armor!
 穿着闪亮盔甲的骑士！
 Provides +5 armor and high protection. No impact to stealth or evasion
 提供 +5 护甲和高等级防护。不影响隐身或闪避
 Gauntlets
-铠甲手套
+盔甲手套
 Gloves with an iron grip.
-坚硬的手套。
+钢铁的手套。
 Provides +5 armor and minor protection against enemy attacks. Makes noise when attacking.
 提供 +5 护甲和轻微防护。攻击时会发出声音。
 Leather Gloves
@@ -32579,7 +32578,7 @@ Protecting you in style.
 Provides minor protection against enemy attacks.
 提供轻微保护，抵御敌人攻击。
 Steel Pauldrons
-钢铁护盾
+钢铁护肩
 Dependable protection for the average adventurer.
 为普通冒险者提供可靠的保护。
 Provides minor protection against enemy attacks.
@@ -32611,7 +32610,7 @@ For stepping into all kinds of trouble!
 undefined
 未定义
 Auto loot all from chests
-从箱子中自动掠夺所有物品
+从箱子中自动拾取所有物品
 Don't use character palette
 不使用角色调色板
 Always use character palette
@@ -32662,13 +32661,13 @@ Take Everything
 Deposit All
 全部存入
 Auto-loot found 
-发现自动锁定
+自动拾取战利品
 (not picked up)
 (未拾取）
 Automatically Flip When Moving
 在移动时自动翻转
 Go to the summit to deposit restraints
-前往巅峰存放约束装置
+前往顶部存放拘束具
 
 
 AMNTx damage when SP is over 50%
