@@ -115,7 +115,7 @@ Allow Suspicious Mods
 Auto Load Mods (offline only)
 自动加载模组 ( 仅离线版 )
 Classic Inventory Background
-经典背包背景
+古典背包背景
 Skip Intro
 跳过序言
 No Forced Greetings
@@ -235,7 +235,7 @@ Grayscale when Blind
 Faster Floater Fade
 漂浮物更快消散
 No Damage Floaters
-无伤漂浮物
+漂浮物无伤害
 Dynamic Armor (must hide armor)
 动态盔甲 ( 必须隐藏盔甲 )
 Hide floating weapon display
@@ -249,7 +249,7 @@ Evaded!
 Blocked!
 阻挡！
 Resisted Bondage!
-反抗束缚！
+抵挡束缚！
 
 
 You bump into a wall.
@@ -481,7 +481,7 @@ Born with an intense submissive desire, you cannot refuse bondage from dialogues
 Frantic Struggle
 疯狂挣扎
 Your escaping is 3 times as fast, but less efficient in terms of stamina.
-你的挣扎速度是原来的 3 倍，但体力消耗效率较低。
+你的挣扎速度是原来的 3 倍，但消耗更多体力。
 
 
 Escape Artist
@@ -2992,7 +2992,7 @@ Magic Wand
 Its powers extend beyond the traditional schools of magic.
 它的力量超越了传统的魔法。
 Deals charm damage. 20% chance to stun the target for 2 turns. Offhand: +5 charm damage on attack for 3 stamina.
-造成妩媚伤害，有 20% 的几率使目标眩晕 2 回合。副手 : ‎攻击时造成 +5 妩媚伤害，消耗 3 点耐力。
+造成妩媚伤害，有 20% 的几率使目标眩晕 2 回合。副手 : ‎攻击时造成 +5 妩媚伤害，消耗 3 点体力。
 Ice Cube
 冰块
 A magical cube of ice that never melts. Convenient!
@@ -5648,7 +5648,7 @@ TargetRestraint 在脱落前受到严重伤害。
 This is as far as you can struggle. You'll have to remove the TargetRestraint some other way.
 这是你能挣扎的极限了。你必须以其他方式挣脱 TargetRestraint。
 The item is too tight. You'll need to loosen the TargetRestraint somehow first...
-这个物品太紧了。你需要以某种方式先让 TargetRestraint 松一松...
+这个物品过于紧密。你需要以某种方式先让 TargetRestraint 松一松...
 The item is to tight to get your tool into position. You'll have to first make the TargetRestraint looser.
 你的工具因为这个物品太紧无法放到需要的位置。你必须先让 TargetRestraint 变得更宽松。
 You can't quite get your pick into position. Maybe if you loosened the TargetRestraint first...
@@ -8145,7 +8145,7 @@ A collar made from a warm, shining alloy.
 Living Obsidian Collar
 活体黑曜石项圈
 A collar made of a dark, shiny metal that adjusts itself to your neck. You can't help but hear whispering since it is so tight.
-一种由深色、有光泽的金属制成的项圈，可以根据你的脖子进行调整。由于太紧，你不禁会听到窃窃私语。
+一种由深色、有光泽的金属制成的项圈，可以根据你的脖子进行调整。你会情不自禁地听到窃窃私语，因为它太紧了。
 It will occasionally cause obsidian to appear out of nowhere and bind the wearer.  Effect increases in speed based on the amount of obsidian you have on you.
 它偶尔使得黑曜石突然出现并束缚佩戴者。效果的速度增加基于你身上的黑曜石数量。
 
@@ -11057,7 +11057,7 @@ Produce a bright light for Duration turns. Has no effect in dark rooms.
 Levitate
 浮游
 When enabled and above 0 stamina: Drain 5 mana per step to reduce slow level by 1 (if above 1), or 20 mana to ignore a temporary slow effect.
-当激活且耐力值大于0时：每走一步消耗5点法力值，可将减速等级降低1级（如果减速等级大于1），或者消耗20点法力值来无视一次临时减速效果。
+当激活且体力值大于0时：每走一步消耗5点法力值，可将减速等级降低1级（如果减速等级大于1），或者消耗20点法力值来无视一次临时减速效果。
 You levitate over the trap!
 你漂浮在陷阱上！
 You snag a tripwire while floating!
@@ -32518,7 +32518,7 @@ Danger Level: High|They appear to be influential figures in the ancient Bast cul
 Mummy
 木乃伊
 Bast Mummy
-Bast 木乃伊
+猫女神木乃伊
 Rock-solid and form-fitting.
 坚如磐石，贴身舒适。
 Provides minor protection against enemy attacks. Decreases stealth.
@@ -32542,7 +32542,7 @@ Covers the important bits, anyway.
 +20 Bondage Resist. Conducts electricity.
 +20 捆绑抗性。导电。
 Light Plate Armor
-光亮板甲
+轻型板甲
 Knight in shining rest-err, armor!
 穿着闪亮盔甲的骑士！
 Provides +5 armor and high protection. No impact to stealth or evasion
