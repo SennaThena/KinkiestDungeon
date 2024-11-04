@@ -72,6 +72,8 @@ Keybindings
 
 Auto loot all from chests
 宝箱の中身を自動で収集
+
+
 Apply palettes to Restraints
 拘束具にﾊﾟﾚｯﾄで設定した色を使用
 Apply palettes to transforms
@@ -728,6 +730,7 @@ Sugar Rush
 シュガー・ラッシュ
 Consuming sweets makes you hyperactive, decreasing stamina costs and granting free moves.
 お菓子を食べると力が湧いてくる。スタミナコストが減少し、追加で移動できる。
+
 
 Vengeance
 報復
@@ -2035,8 +2038,10 @@ You climb down and find yourself in a strange new place.
 階段を下ると、奇妙な場所に出た
 
 
-plus XXX
+ plus XXX
 + XXX
+
+
 Graveyard
 墓地
 Catacombs
@@ -4461,12 +4466,24 @@ The Bast Warrior pulls out a lock and slips it on! (DamageTaken)
 バスト教の戦士に拘束をロックされた！(DamageTaken)
 
 
+
+
+Bast High Cleric
+バスト教の司祭
+The Bast High Cleric vanishes into a puff of ribbons.
+バスト教の司祭はリボンの渦に消えていった。
+A ray of light shoots out and paralyzes you! (DamageTaken)
+バスト教の神官は杖から一筋の光を発射してきた！(DamageTaken)
+The Bast Cleric conjures wrappings upon you! (+RestraintAdded)
+バスト教の司祭は大量の包帯を召喚してきた！ (+RestraintAdded)
+The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)
+バスト教の司祭は拘束具に錠を召喚してきた！ (DamageTaken)
+
+
 Bast Cleric
 バスト教の神官
 The Bast Cleric collapses and meows softly.
 バスト教の神官は倒れ込み静かに鳴いた。
-A ray of light shoots out and paralyzes you! (DamageTaken)
-バスト教の神官は杖から一筋の光を発射してきた！(DamageTaken)
 The Bast Cleric restrains you! (+RestraintAdded)
 バスト教の神官に拘束された！(+RestraintAdded)
 The Bast Cleric pulls out a lock and slips it on! (DamageTaken)
@@ -5435,6 +5452,8 @@ The ghast vanishes... for now
 貪欲なガストはおそらく成仏した……
 The moaning spirit runs its hands all across your body!!! (DamageTaken)
 幽霊がうめき声を挙げながら全身を愛撫してきた！ (DamageTaken)
+
+
 
 
 Tome of Chains
@@ -9035,6 +9054,8 @@ Liquid Latex
 液状のゴム
 Engulfs creatures
 近づくと飲み込まれる
+Engulfs pets (like you)
+ペットを飲み込む
 Slows creatures
 上では足が遅くなる
 Glue
@@ -9475,6 +9496,8 @@ Way of Pleasure
 快楽の道
 You have chosen the path of absolute pleasure. After letting go of yourself, you restore 50 mana, which can refill the mana pool if you have spare willpower. Blocks Way of Discipline.
 欲望に素直になった。絶頂後、マナを50回復し、気力が1以上の場合、マナプールを回復する。このスキルを習得した場合、「鍛錬の道」を習得することができなくなる。
+
+
 Intense Power
 強烈な解放
 After letting go of yourself, you feel an immense surge of power, increasing magic damage by 40% for 8 turns after you regain control, and by 10% while you remain satisfied.
@@ -10105,6 +10128,8 @@ Chaos Beam
 カオスビーム
 Mystic Beam
 ミスティックビーム
+Mystic Barrage
+ミスティックバラージュ
 A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 2ターンの間チャージし、命中したターゲットに DamageDealt 火ダメージを与えるビームを放つ。命中した敵は12ターンの間盲目状態になる。この攻撃の会心ダメージ倍率は150%。
 You charge a powerful beam attack!!!
@@ -11807,6 +11832,10 @@ Ropes wrap themselves around your body from all sides!
 ロープが四方八方から身体を包み込む！
 Wrappings appear and wrap you head to toe!
 リボンに全身を包まれる！
+A spell transforms your wrappings into hexed latex!
+魔法が形を変え、六角形のゴムになり包みこんできた！
+A spell engulfs you in wrappings!
+魔法が形を変え、全身を包みこんできた！
 Vines sprout around you and grab hold of your limbs!
 周囲に蔦が生え、手足を掴まれた！
 Your clothes are stripped and replaced!
@@ -30923,6 +30952,8 @@ You retrieve an interesting article dubbed 'the Robe of Chastity.
 
 Took 
 ﾀﾞﾒｰｼﾞ
+
+
 (As you slay the dragon, it begins shapeshifting into human form!)
 (竜を討つと、人の姿に変化した！)
 
@@ -31379,12 +31410,15 @@ Crystal Ball Gag
 クリスタルのボールギャグ
 A growth of crystals inside your mouth. It emits a strange, pleasurable sensation.
 口の中で成長したクリスタル。触れていると気持ちよくなれる。
+
+
 Crystal Gag Necklace
 クリスタルのボールギャグ(ネックレス)
 An arousing accessory made of solid crystal!
 クリスタルで作られたえっちなネックレス。
 Simply popping it out of your mouth isn't enough to negate its effects entirely~
 口から外すだけでは、効果を完全に無効化できない。
+
 
 
 
@@ -32228,6 +32262,8 @@ Need Positive Opinion to Promote
 昇格させるには好感度が足りない
 Remove From Party Before Promoting?
 昇格させずにパーティから追放する？
+
+
 Servant Cuddle Points: AMNT (+OPN opinion/cycle)
 使用人の幸福度: AMNT (+OPN 追加ポイント/サイクル)
 Prisoner Cuddle Points: AMNT (+OPN opinion/cycle)
@@ -32663,6 +32699,7 @@ Crystal Storm
 Shadow Walk
 シャドウウォーク
 
+
 Your ITMN1 inflates inside your mouth to become a ITMN2!
 ITMN1 が口の中で大きくなり、 ITMN2 に変化した！
 Bigger Ball Gags
@@ -32675,7 +32712,6 @@ Screen flash when distracted
 発情時のエフェクト
 
 
-
 Essentia Aliquam
 エッセンティア・アリカム
 Aliquam Orbis
@@ -32686,32 +32722,24 @@ Ultimate Glue no. 91
 アルティメット接着剤No.91
 Slime Encapsulation
 スライム・カプセル
-Nature Bolt
-ネイチャー・ボルト
-Wind Blast
-ウィンドブラスト
 Judgement Bolt
 ジャッジメント・ボルト
 Flame Bolt
 フレイム・ボルト
 Electrification
 エレクトリファイ
-Dazzle
-コロナ
 Charming Orb
 チャーム・オーブ
 Freezing Orb
 フリーズ・オーブ
-Hairpin
-ヘアピン
 Heavy Ordnance
 重火器
 Entangle
 タングル
-Crystal Bind
-クリスタル・バインド
 Blessed Orb
 ブレスオーブ
+Slimy Sphere
+スライムスフィア
 Rubberization Protocol
 ラバー化プロトコル
 Latex Encapsulation
@@ -32720,46 +32748,8 @@ Red Slime Experiment
 赤スライムの実験
 Encasement Protocol
 完全拘束プロトコル
-Homing Missile
-ホーミングミサイル
 Electrical Discharge
 エレクトリカル・ディスチャージ
-Gravitation
-グラビテーション
-Shadow Teleportation
-シャドウ・テレポート
-Ice Blast
-アイスブラスト
-Poison Blast
-ポイズンブラスト
-Forbidden Rope
-禁忌のロープ
-Enchanted Arrow
-エンチャント・アロー
-Flash
-フラッシュ
-Crystal Barrage
-クリスタル・バラージュ
-Shadow Bolt
-シャドウ・ボルト
-Obsidian Bolt
-オブシディアン・ボルト
-Shadow Grasp
-シャドウグリップ
-Bound by Fate
-運命の拘束
-Conjure Lock
-サモン・ロック
-Magical Rope
-マジカルロープ
-Hex
-ヘックス
-Rubber Projector
-ラバー・プロジェクター
-Enhance Ropes
-エンハンス・ロープ
-Enchant Ropes
-エンチャント・ロープ
 Icebolt
 アイスボルト
 Bubble Burst
@@ -32780,12 +32770,8 @@ Capture Device
 捕獲デバイス
 Sedative
 鎮静剤
-Poison Dart
-ポイズンダート
-Bear Trap
-トラバサミ
-Charming Orbs
-チャーム・オーブ
+Slime Barrage
+スライムバラージュ
 Seal of the 5th Era
 第五の時の封印
 Taunt
@@ -32794,6 +32780,8 @@ Magical Missile
 マジック・ミサイル
 Cursing Circle
 カースサークル
+
+
 
 
 Healing Flash
@@ -32938,3 +32926,13 @@ That is none of your business. Now kneel.
 関係ないでしょ、あなたも捕まえるわ。
 (Fight without listening.)
 (話を聞かずに戦う)
+
+
+Blessed Hex
+聖六面体
+Hexing Orb
+ヘックスオーブ
+Hexed Latex Engulf
+ヘックス・ラテックス
+Hex Binding
+ヘックス・バインド
