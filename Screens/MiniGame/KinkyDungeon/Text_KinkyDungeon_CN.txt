@@ -230,6 +230,8 @@ Use default palette when no outfit is worn
 当未穿着衣物时使用默认调色
 Flip Player Display
 翻转玩家显示
+Automatically Flip When Moving
+在移动时自动翻转
 Grayscale when Blind
 失明时视野变成黑白
 Faster Floater Fade
@@ -4251,6 +4253,14 @@ The alkahestor shoves you! (DamageTaken)
 You rescue the Alkahestor
 你救下了万能炼金士。
 
+Latex Homonculus
+乳胶生命体
+The latex homonculus melts into sticky rubber.
+乳胶生命体融化成粘性橡胶。
+The latex homonculus molds itself into restraints! (+RestraintAdded)
+乳胶生命体将自己塑造成束缚！(+RestraintAdded）
+The latex homonculus slaps you with its appendages! (DamageTaken)
+乳胶生命体用它的附肢拍打你！(DamageTaken）
 
 Latex Homonculus
 乳胶生命体
@@ -6897,6 +6907,7 @@ The curse on the RestraintName is lifted!
 Press RIGHT to confirm buy!
 按 RIGHT 确认购买！
 
+### You find
 
 
 
@@ -7069,6 +7080,12 @@ A set of straps and buckles enchanted with a powerful spell to render you helple
 It's warded against cutting by nonmagic blades.
 它可以防止非魔法刀片的切割。
 
+Latex Petsuit
+乳胶宠物服
+A skintight suit that encases you in a tight rubber embrace.
+一件紧身衣，将你包裹在紧紧的乳胶怀抱中。
+The thick latex is resistant to even the most determined struggles.
+厚厚的乳胶能抵御最顽强的挣扎。
 
 Latex Petsuit
 乳胶宠物服
@@ -7745,6 +7762,8 @@ They can be thrown from long distances.
 Asylum Leg Cuffs
 安全足拷
 
+They are made of a steel alloy.
+它们是用钢合金制成的。
 
 They are made of a steel alloy.
 它们是用钢合金制成的。
@@ -7957,6 +7976,8 @@ A pair of bulky leg irons with coils visible on the inside.
 The electric damage causes your ankle cuffs to snap together!
 受到电损伤会导致你的踝铐绑在一起！
 
+Your ankle cuffs detatch!
+你的脚铐脱落了！
 
 Your ankle cuffs detatch!
 你的脚铐脱落了！
@@ -11933,6 +11954,10 @@ Learn Spell
 Spell Points: 
 技能点
 
+### Level:
+### Spell Point Cost:
+Mana Cost:
+魔力花费
 
 Level: 
 等级：
