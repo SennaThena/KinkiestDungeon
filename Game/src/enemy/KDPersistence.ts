@@ -33,6 +33,11 @@ interface KDPersistentNPC {
 
 	spawned?: boolean,
 
+	/** 0 = start, 1 = end, 2 = shortcut */
+	fromType?: number,
+	/** Shortcut index */
+	fromIndex?: number,
+
 	nextWanderTick?: number,
 	nextSpawnTick?: number,
 }

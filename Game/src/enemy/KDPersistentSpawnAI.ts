@@ -38,14 +38,23 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 				}
 			}
 			if (entity && entity.runSpawnAI) {
-				let point = KinkyDungeonGetRandomEnemyPoint(
+				let npc = KDGetPersistentNPC(id);
+				let point = (npc.fromType == undefined || npc.fromType == -1) ? KinkyDungeonGetRandomEnemyPoint(
 					true, false, undefined, undefined, 10
-				);
+				) : mapData.StartPosition;
+				if (npc.fromType == 1) {
+					point = mapData.EndPosition;
+				} else if (npc.fromType == 2) {
+					if (npc.fromIndex >= 0)
+						point = mapData.ShortcutPositions[npc.fromIndex];
+				}
 				if (point) {
 					KDMoveEntity(entity, point.x, point.y,
 						false, false, false, false,
 						true);
 					entity.runSpawnAI = false;
+					delete npc.fromIndex;
+					delete npc.fromType;
 					return true;
 				} else {
 					// Wait till next spawn cycle

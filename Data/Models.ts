@@ -46,6 +46,7 @@ interface ContainerInfo {
 	readonly Mesh: PIXIMesh;
 	readonly RenderTexture: PIXIRenderTexture;
 	readonly Matrix: PIXIArray;
+	Zoom: number;
 }
 
 class ModelContainer {
@@ -429,6 +430,7 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 			RenderTexture: RT,
 			SpriteList: new Map(),
 			Matrix: Object.assign([], Mesh.geometry.getBuffer('aVertexPosition').data),
+			Zoom: Zoom,
 		};
 
 		//Container.Container.scale.x = 1;

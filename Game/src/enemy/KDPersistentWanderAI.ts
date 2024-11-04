@@ -28,11 +28,21 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				(worldSlot.jx != undefined ? worldSlot.jx : currentWorldPosition.mapX) + ','
 				+ (worldSlot.jy != undefined ? worldSlot.jy : currentWorldPosition.mapY)];
 
+			let fromType = 0;
+			let fromIndex = 0;
+
 			if (currentWorldPosition.mapY < KDGameData.HighestLevelCurrent
 				&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
 				// 50% chance to go to a side room or go to normal
 				if (currentWorldPosition.room != worldSlot.main) {
 					targetPosition.room = worldSlot.main || "";
+
+					fromType = 2;
+					fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+						return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+					}) || 0;
+
+					if (fromIndex == -1) fromType = 0;
 				}
 			}
 
@@ -49,8 +59,16 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				}
 
 				// Move the entity
-				KDMovePersistentNPC(id, targetPosition);
+				if (KDMovePersistentNPC(id, targetPosition)) {
+					let npc = KDGetPersistentNPC(id);
+					npc.fromType = fromType;
+					npc.fromIndex = fromIndex;
+				}
 				return true;
+			} else {
+				let npc = KDGetPersistentNPC(id);
+				npc.fromType = -1;
+				delete npc.fromIndex;
 			}
 
 			return false;
@@ -74,6 +92,9 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				(worldSlot.jx != undefined ? worldSlot.jx : currentWorldPosition.mapX) + ','
 				+ (worldSlot.jy != undefined ? worldSlot.jy : currentWorldPosition.mapY)];
 
+			let fromType = 0;
+			let fromIndex = 0;
+
 			if (currentWorldPosition.mapY <= KDGameData.HighestLevelCurrent
 				&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
 				// 50% chance to go to a side room or go to normal
@@ -81,14 +102,25 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 					let selectedRoom = journeySlot?.SideRooms[Math.floor(KDRandom()*journeySlot?.SideRooms.length)];
 					if (KDSideRooms[selectedRoom]) {
 						targetPosition.room = KDSideRooms[selectedRoom].altRoom;
+						fromType = 0;
 					}
 				} else {
 					targetPosition.room = worldSlot.main || "";
+					fromType = 2;
+					fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+						return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+					}) || 0;
+
+					if (fromIndex == -1) fromType = 0;
 				}
 			} else if (currentWorldPosition.room == (worldSlot.main || "")) {
 				// Go up or down
 				// We dont go beyond current max level
 				let dy = KDRandom() < 0.5 ? -1 : 1;
+
+				if (dy < 0) {
+					fromType = 1;
+				}
 
 				if (currentWorldPosition.mapY + dy > 0 && currentWorldPosition.mapY + dy <= KDGameData.HighestLevelCurrent) {
 					targetPosition.mapY = currentWorldPosition.mapY + dy;
@@ -108,7 +140,11 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				}
 
 				// Move the entity
-				KDMovePersistentNPC(id, targetPosition);
+				if (KDMovePersistentNPC(id, targetPosition)) {
+					let npc = KDGetPersistentNPC(id);
+					npc.fromType = fromType;
+					npc.fromIndex = fromIndex;
+				}
 				return true;
 			}
 
