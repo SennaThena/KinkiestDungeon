@@ -2916,7 +2916,7 @@ Deals fire damage. Provides light.
 Наносит урон от огня. Обеспечивает свет.
 Unarmed
 Без оружия
-### Fight with your hands and feet. 50% chance to stun target if the target is disarmed.
+### Fight with your hands and feet. Counts as teasing if arms are free. 50% chance to stun target if the target is disarmed.
 
 Deals unarmed damage.
 Наносимый урон считается 'безоружным' уроном.
@@ -4414,12 +4414,24 @@ The Bast Warrior pulls out a lock and slips it on! (DamageTaken)
 Воин Бастет вытаскивает замочек и защелкивает его на ваших ограничителях! (DamageTaken)
 
 
+
+
+### Bast High Cleric
+
+### The Bast High Cleric vanishes into a puff of ribbons.
+
+A ray of light shoots out and paralyzes you! (DamageTaken)
+Выстрел лучом света парализует вас! (DamageTaken)
+### The Bast Cleric conjures wrappings upon you! (+RestraintAdded)
+
+### The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)
+
+
+
 Bast Cleric
 Жрица Бастет
 The Bast Cleric collapses and meows softly.
 Жрица Бастет падает и начинает тихонько мяукать.
-A ray of light shoots out and paralyzes you! (DamageTaken)
-Выстрел лучом света парализует вас! (DamageTaken)
 The Bast Cleric restrains you! (+RestraintAdded)
 Жрица Бастет вешает на вас ограничители! (+RestraintAdded)
 The Bast Cleric pulls out a lock and slips it on! (DamageTaken)
@@ -8924,6 +8936,8 @@ Liquid Latex
 Жидкий латекс
 Engulfs creatures
 Окутывает существ
+### Engulfs pets (like you)
+
 Slows creatures
 Замедляет существ
 Glue
@@ -9376,12 +9390,12 @@ You are quite difficult to satisfy. Letting go costs 50% less stamina (75% total
 
 Mental Resistance
 Ментальное сопротивление
-### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is 0 or are teased directly by an enemy or damage (click the buff to toggle), and willpower drains 70% slower while edged.
+### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is less than 25% (click the buff to toggle), and willpower drains 70% slower while edged.
 
-### Mental Resistance: You cannot orgasm except by choice, or being forced by an enemy. Click to toggle.
+### Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle.
 
-Mental Resistance: You are allowing yourself to let go if forced to. Click to toggle.
-Ментальное сопротивление: Вы позволяете себе достигать оргазма, если вас к этому вынуждают. Нажмите, чтобы переключить.
+### Mental Resistance: You are allowing yourself to let go. Click to toggle.
+
 
 
 Way of Discipline
@@ -9986,6 +10000,8 @@ Chaos Beam
 Луч хаоса
 Mystic Beam
 Мистический луч
+### Mystic Barrage
+
 A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 Луч света, который заряжается в течение 2 ходов (ненадолго оглушая вас), а затем мгновенно наносит DamageDealt урона светом первой цели на пути. Ослепляет на 12 ходов. 150% множитель крит. урона.
 You charge a powerful beam attack!!!
@@ -11686,6 +11702,10 @@ Ropes wrap themselves around your body from all sides!
 Веревки обвиваются вокруг вашего тела со всех сторон!
 Wrappings appear and wrap you head to toe!
 Появляются бинты и укутывает вас с головы до ног!
+### A spell transforms your wrappings into hexed latex!
+
+### A spell engulfs you in wrappings!
+
 Vines sprout around you and grab hold of your limbs!
 Лозы прорастают вокруг вас и хватаются за ваши конечности!
 Your clothes are stripped and replaced!
@@ -32407,3 +32427,13 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 ### That is none of your business. Now kneel.
 
 ### (Fight without listening.)
+
+
+
+### Blessed Hex
+
+### Hexing Orb
+
+### Hexed Latex Engulf
+
+### Hex Binding
