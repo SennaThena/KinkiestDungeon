@@ -862,6 +862,11 @@ interface enemy extends KDHasTags {
 		decay?: number,
 	},
 
+	/** Which subroutine to select spawnAI */
+	spawnAISetting?: string,
+	/** Which subroutine to select wanderAI */
+	wanderAISetting?: string,
+
 	/** Behavior tags */
 	Behavior?: {
 		/** This enemy will hold still when near the player */
@@ -1622,6 +1627,9 @@ interface String {
 }
 
 interface entity {
+	/** If true, immediately run the spawn AI for this once loading the map */
+	runSpawnAI?: boolean,
+
 	refreshSprite?: boolean,
 	FacilityAction?: string,
 
@@ -2507,11 +2515,25 @@ interface KDInventoryActionDef {
 }
 
 interface KinkyDungeonSave {
+	stats: any;
+	KinkyDungeonEffectTiles: any;
+	KinkyDungeonTiles: any;
+	KinkyDungeonTilesSkin: any;
+	KinkyDungeonTilesMemory: any;
+	KinkyDungeonRandomPathablePoints: any;
+	KinkyDungeonEntities: any;
+	KinkyDungeonBullets: any;
+	KinkyDungeonStartPosition: any;
+	KinkyDungeonEndPosition: any;
+	KinkyDungeonGrid: any;
+	KinkyDungeonGridWidth: number;
+	KinkyDungeonGridHeight: number;
+	KinkyDungeonFogGrid: any;
 	/** Metadata */
 	saveStat: {
 		version: string,
 		appearance: any[],
-		default: string,
+		default: KinkyDungeonDress,
 		poses: Record<string, boolean>,
 		Palette: string,
 
@@ -2576,7 +2598,9 @@ interface KinkyDungeonSave {
 	KDMapData: KDMapDataType;
 	KDWorldMap: Record<string, KDWorldSlot>;
 	KDEventData: Object;
-	KDCurrentWorldSlot: {x: number, y: number};
+	KDCurrentWorldSlot: {
+		x: number, y: number
+	};
 	KDPersistentNPCs: string,
 	KDDeletedIDs: string,
 	KDPersonalAlt: string,
@@ -2636,6 +2660,8 @@ interface KDWorldSlot {
 	data: Record<string, KDMapDataType>;
 	x: number;
 	y: number;
+	jx: number;
+	jy: number;
 	color: string;
 	name: string;
 	main: string;
@@ -2669,6 +2695,8 @@ interface RepopQueueData {
 }
 
 interface KDMapDataType {
+	mapX: number,
+	mapY: number,
 	RepopulateQueue: RepopQueueData[],
 	Checkpoint: string,
 	Title: string,
@@ -2786,6 +2814,7 @@ type MapMod = {
 	altRoom: string,
 	escapeMethod?: string,
 	noPersistentPrisoners?: boolean,
+	noPersistentSpawn?: boolean,
 }
 
 type AIType = {

@@ -2832,7 +2832,7 @@ Deals fire damage. Provides light.
 Inflige daño de fuego. Proporciona luz.
 Unarmed
 Desarmado
-### Fight with your hands and feet. 50% chance to stun target if the target is disarmed.
+### Fight with your hands and feet. Counts as teasing if arms are free. 50% chance to stun target if the target is disarmed.
 
 Deals unarmed damage.
 Inflige daño sin armas.
@@ -4308,12 +4308,24 @@ The Bast Warrior pulls out a lock and slips it on! (DamageTaken)
 ¡El Bast Warrior saca un candado y lo desliza! (Daño Recibido)
 
 
+
+
+### Bast High Cleric
+
+### The Bast High Cleric vanishes into a puff of ribbons.
+
+A ray of light shoots out and paralyzes you! (DamageTaken)
+¡Un rayo de luz sale disparado y te paraliza! (Daño Recibido)
+### The Bast Cleric conjures wrappings upon you! (+RestraintAdded)
+
+### The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)
+
+
+
 Bast Cleric
 bast clérigo
 The Bast Cleric collapses and meows softly.
 Bast Cleric se derrumba y maúlla suavemente.
-A ray of light shoots out and paralyzes you! (DamageTaken)
-¡Un rayo de luz sale disparado y te paraliza! (Daño Recibido)
 The Bast Cleric restrains you! (+RestraintAdded)
 ¡El bast clérigo te frena! (+ Restricción agregada)
 The Bast Cleric pulls out a lock and slips it on! (DamageTaken)
@@ -8682,6 +8694,8 @@ Liquid Latex
 Latex liquido
 Engulfs creatures
 Engulle criaturas
+### Engulfs pets (like you)
+
 Slows creatures
 Ralentiza a las criaturas
 Glue
@@ -9104,11 +9118,11 @@ Como aprendiz, ha aprendido la técnica de inducir claridad a través de un esta
 
 Mental Resistance
 Resistencia Mental
-### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is 0 or are teased directly by an enemy or damage (click the buff to toggle), and willpower drains 70% slower while edged.
+### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is less than 25% (click the buff to toggle), and willpower drains 70% slower while edged.
 
-### Mental Resistance: You cannot orgasm except by choice, or being forced by an enemy. Click to toggle.
+### Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle.
 
-### Mental Resistance: You are allowing yourself to let go if forced to. Click to toggle.
+### Mental Resistance: You are allowing yourself to let go. Click to toggle.
 
 
 
@@ -9702,6 +9716,8 @@ Chaos Beam
 Haz del caos
 Mystic Beam
 Haz místico
+### Mystic Barrage
+
 ### A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 
 You charge a powerful beam attack!!!
@@ -11350,6 +11366,10 @@ Ropes wrap themselves around your body from all sides!
 ¡Las cuerdas se envuelven alrededor de tu cuerpo por todos lados!
 Wrappings appear and wrap you head to toe!
 ¡Aparecen las envolturas y te envuelven de pies a cabeza!
+### A spell transforms your wrappings into hexed latex!
+
+### A spell engulfs you in wrappings!
+
 ### Vines sprout around you and grab hold of your limbs!
 
 Your clothes are stripped and replaced!
@@ -31085,3 +31105,13 @@ Te has perdido deambulando por las ruinas. ¡El orden de los mosaicos está inve
 ### That is none of your business. Now kneel.
 
 ### (Fight without listening.)
+
+
+
+### Blessed Hex
+
+### Hexing Orb
+
+### Hexed Latex Engulf
+
+### Hex Binding

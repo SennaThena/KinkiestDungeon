@@ -163,10 +163,13 @@ let KinkyDungeonSFX = [];
  * @param [RoomType]
  * @param [MapMod]
  */
-function KDDefaultMapData(RoomType: string = "", MapMod: string = ""): KDMapDataType {
+function KDDefaultMapData(mapX: number, mapY: number, RoomType: string = "", MapMod: string = ""): KDMapDataType {
 	return {
 		Checkpoint: MiniGameKinkyDungeonCheckpoint,
 		Title: "",
+
+		mapX: mapX,
+		mapY: mapY,
 
 		RepopulateQueue: [],
 
@@ -227,7 +230,7 @@ function KDDefaultMapData(RoomType: string = "", MapMod: string = ""): KDMapData
 	};
 }
 
-KDMapData = KDDefaultMapData();
+KDMapData = KDDefaultMapData(0, 0);
 
 
 /**
@@ -381,7 +384,7 @@ function KDResetEventData(Data?: any) {
 
 function KinkyDungeonInitialize(Level: number, Load?: any) {
 	KDWorldMap = {};
-	KDMapData = KDDefaultMapData();
+	KDMapData = KDDefaultMapData(0, 0);
 	KDCurrentWorldSlot = {x: 0, y: 0};
 	KDUpdateChokes = true;
 	KDUpdateItemEventCache = true;
@@ -569,11 +572,13 @@ function KDGetWorldMapLocation(point: { x: number, y: number }): KDWorldSlot {
  * @param y
  * @param [main] - The main maptype which you return to
  */
-function KDCreateWorldLocation(x: number, y: number, _main: string = "") {
+function KDCreateWorldLocation(x: number, y: number, jx: number, jy: number, _main: string = "") {
 	KDWorldMap[x + ',' + y] = {
 		data: {},
 		x: x,
 		y: y,
+		jx: jx,
+		jy: jy,
 		main: "",
 		name: "Tile" + x + ',' + y,
 		color: "#ffffff"
@@ -587,7 +592,7 @@ function KDCreateWorldLocation(x: number, y: number, _main: string = "") {
 function KDSaveRoom(slot: { x: number, y: number }, saveconstantX: boolean) {
 	slot = slot || KDCurrentWorldSlot;
 	let CurrentLocation = KDWorldMap[(saveconstantX ? 0 : slot.x) + "," + slot.y];
-	if (!CurrentLocation) KDCreateWorldLocation(0, slot.y);
+	if (!CurrentLocation) KDCreateWorldLocation(0, slot.y, KDGameData.JourneyX, KDGameData.JourneyY);
 
 	// Pack enemies
 	KDPackEnemies(KDMapData);
@@ -911,7 +916,8 @@ function KinkyDungeonCreateMap (
 
 	if (!worldLocation) worldLocation = {x: KDCurrentWorldSlot.x, y: KDCurrentWorldSlot.y};
 	if (!KDWorldMap[(constantX ? 0 : worldLocation.x) + "," + worldLocation.y]) {
-		KDCreateWorldLocation(constantX ? 0 : worldLocation.x, worldLocation.y, altType?.makeMain ? altRoom : "");
+		KDCreateWorldLocation(constantX ? 0 : worldLocation.x, worldLocation.y,
+			KDGameData.JourneyX, KDGameData.JourneyY, altType?.makeMain ? altRoom : "");
 		if (altType?.makeMain || !altType) {
 			KDPruneWorld();
 		}
@@ -921,11 +927,20 @@ function KinkyDungeonCreateMap (
 	if (useExisting && location.data[KDGameData.RoomType]) {
 		KDLoadMapFromWorld(worldLocation.x, worldLocation.y, KDGameData.RoomType, direction, constantX);
 
+		if (!location.jx) location.jx = KDGameData.JourneyX;
+		if (!location.jy) location.jy = KDGameData.JourneyY;
 		// Repopulate
 		altType = KDGetAltType(MiniGameKinkyDungeonLevel);
 		if (!altType?.loadscript || altType.loadscript(false)) {
 			if (!altType?.noPersistentPrisoners && !mapMod?.noPersistentPrisoners)
 				KDRepopulatePersistentNPCs();
+			if (!altType?.noPersistentSpawn && !mapMod?.noPersistentSpawn)
+				// Spawn wandering persistent NPCs depending on spawn AI
+				KDSpawnPersistentNPCs({
+					mapX: worldLocation.x,
+					mapY: worldLocation.y,
+					room: KDGameData.RoomType,
+				}, true);
 		}
 		UpdateRegiments({
 			mapX: worldLocation.x,
@@ -954,7 +969,7 @@ function KinkyDungeonCreateMap (
 			}
 		}
 		/** @type {KDMapData} */
-		KDMapData = KDDefaultMapData(KDGameData.RoomType, KDGameData.MapMod);
+		KDMapData = KDDefaultMapData(worldLocation?.x || 0, worldLocation?.y || MiniGameKinkyDungeonLevel, KDGameData.RoomType, KDGameData.MapMod);
 		KDCurrentWorldSlot = worldLocation;
 
 		KDInitTempValues(seed);
@@ -1487,6 +1502,14 @@ function KinkyDungeonCreateMap (
 	if (!altType?.loadscript || altType.loadscript(true)) {
 		if (!altType?.noPersistentPrisoners && !mapMod?.noPersistentPrisoners)
 			KDRepopulatePersistentNPCs();
+
+		if (!altType?.noPersistentSpawn && !mapMod?.noPersistentSpawn)
+			// Spawn wandering persistent NPCs depending on spawn AI
+			KDSpawnPersistentNPCs({
+				mapX: worldLocation.x,
+				mapY: worldLocation.y,
+				room: KDGameData.RoomType,
+			}, true);
 	}
 
 	KinkyDungeonGenNavMap();
@@ -2027,7 +2050,7 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				let clusterChance = 0.5; //1.1 + 0.9 * MiniGameKinkyDungeonLevel/KinkyDungeonMaxLevel;
 				let clusterLeader = !spawnPoint && !currentCluster && Enemy.clusterWith && KDRandom() < clusterChance;
 				// Give it a custom name, higher chance if cluster
-				let custom = KDProcessCustomPatron(Enemy, e, (clusterLeader) ? 1.0 : (!currentCluster ? 0.1 : 0.0));
+				let custom = KDProcessCustomPatron(Enemy, e, (clusterLeader) ? 1.0 : (!currentCluster ? 0.1 : 0.0), true);
 				let incrementCount = 1;
 				KinkyDungeonSetEnemyFlag(e, "NoFollow", -1);
 				let shop = KinkyDungeonGetShopForEnemy(e, false);
@@ -5350,6 +5373,7 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 	KinkyDungeonUpdateEnemies(delta, false); //console.log("Enemy Check " + (performance.now() - now));
 	KinkyDungeonSendEvent("afterEnemyTick", {delta: delta, allied: false});
 
+
 	KinkyDungeonUpdateBullets(delta); //console.log("Bullets Check " + (performance.now() - now));
 	KinkyDungeonUpdateBulletsCollisions(delta, true); //"catchup" phase for explosions!
 
@@ -5371,6 +5395,18 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 	KinkyDungeonUpdateJailKeys();
 
 	KDCommanderUpdate(delta);
+
+
+	if (KDCustomDefeat) {
+		let CD = KDCustomDefeat;
+		let CDE = KDCustomDefeatEnemy;
+		KDCustomDefeat = "";
+		KDCustomDefeatEnemy = null;
+		if (CD && KDCustomDefeats[CD]) KDCustomDefeats[CD](CDE);
+		else if (!KinkyDungeonFlags.get("CustomDefeat"))
+			KinkyDungeonDefeat(KinkyDungeonFlags.has("LeashToPrison"), CDE);
+
+	}
 
 	if (pauseTime) {
 		delta = 1;
@@ -5934,6 +5970,7 @@ function KDGetAltType(Floor: number, MapMod?: string, RoomType?: string): any {
 	let altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
 	return altType;
 }
+
 
 /**
  *

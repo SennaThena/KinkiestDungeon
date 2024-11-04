@@ -869,7 +869,11 @@ function SetpieceSpawnPrisoner(x: number, y: number, persistentOnly?: boolean, l
 		MiniGameKinkyDungeonLevel,
 		KDGameData.RoomType,
 		KDGameData.MapMod,
-		KDMapData.MapFaction);
+		KDMapData.MapFaction).filter(
+			(en) => {
+				return !en.entity?.Enemy?.tags?.noPrisoner;
+			}
+		);
 	let persistentAvailable =
 		KDGameData.CapturedParty?.length > 0
 		|| capturedPersistent.length > 0;
@@ -900,7 +904,7 @@ function SetpieceSpawnPrisoner(x: number, y: number, persistentOnly?: boolean, l
 			let index = Math.floor(KDRandom() * capturedPersistent.length);
 			let npc = capturedPersistent[index];
 			e = npc.entity;
-			KDSetNPCLocation(npc.id, KDGetCurrentLocation());
+			KDMovePersistentNPC(npc.id, KDGetCurrentLocation());
 			if (!altRoom || (!altRoom?.alwaysRegen && (altRoom?.makeMain || altRoom?.persist))) {
 				npc.jailed = true;
 			}

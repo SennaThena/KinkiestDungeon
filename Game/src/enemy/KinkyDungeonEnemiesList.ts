@@ -55,6 +55,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	{name: "ShopkeeperStart", tags: KDMapInit(["human", "peaceful", "alwayshelp", "noshop", "opendoors"]), faction: "Prisoner", lowpriority: true, armor: 2, followRange: 100, AI: "guard",
 		visionRadius: 0, maxhp: 120, regen: 10, minLevel:0, weight:-1000, movePoints: 2, attackPoints: 0, attack: "", attackRange: 0, specialdialogue: "ShopkeeperStart",
 		Behavior: {noPlay: true},
+		spawnAISetting: "None",
 		noDisplace: false, keys: true,
 		terrainTags: {}, floors:KDMapInit([])},
 
@@ -5174,6 +5175,35 @@ let KinkyDungeonEnemies: enemy[] = [
 		AI: "guard", visionRadius: 7, maxhp: 8, minLevel:0, weight:13, movePoints: 1.5, fullBoundBonus: 1,
 		terrainTags: {"secondhalf":0, "lastthird":1, "passage": -99, "open": 4, "mummy": 5}, floors:KDMapInit(["tmb"]),
 		shrines: ["Will"], dropTable: [{name: "MysticDuctTapeRaw", amount: 5, weight: 25}]},
+	{name: "ClericHigh", nameList: "bast", outfit: "Cleric", style: "Mummy", clusterWith: "mummy", bound: "Cleric",
+		faction: "Bast", playLine: "Mummy", color: "#4fd658",
+		tags: KDMapInit(["leashing", "religious", "opendoors", "closedoors", "mummy", "ranged", "search",
+			"miniboss",
+			"fireweakness", "soapweakness"]),
+		followLeashedOnly: true, followRange: 2, attackThruBars: true,
+		events: [
+			{trigger: "getLights", type: "enemyTorch", power: 4, color: "#4fd658"},
+		],
+		ondeath: [{type: "spellOnSelf", spell: "HexLatexExplosion"}],
+		maxblock: 0,
+		maxdodge: 1,
+		stamina: 2,
+		Resistance: {
+			profile: ["catgirl"],
+		},
+		Magic: {
+			priority: {
+				HexOrb: 10,
+			},
+		},
+		spells: ["ClericBeamMulti", "HexOrb", "EnemyCM1"], unlockCommandLevel: 2, unlockCommandCD: 30,
+		spellCooldownMult: 1, spellCooldownMod: 0, stopToCast: true, kite: 1.5, kiteChance: 0.9,
+		spellResist: 1.0,
+		attackPoints: 3, attack: "MeleeBindLockSpell", attackWidth: 2.5, attackRange: 1, power: 3, dmgType: "chain",
+		AI: "hunt", visionRadius: 8, maxhp: 16, minLevel:3, weight:10, movePoints: 1.8, fullBoundBonus: 1,
+		blindSight: 2,
+		terrainTags: {"secondhalf":0, "lastthird":1, "passage": -99, "open": 14, "mummy": 5}, floors:KDMapInit(["tmb"]),
+		shrines: ["Will"], dropTable: [{name: "MysticDuctTapeRaw", amount: 25, weight: 50}]},
 	{name: "MeleeCleric", nameList: "bast", outfit: "Cleric", style: "Mummy", clusterWith: "mummy", bound: "MeleeCleric", playLine: "Mummy", faction: "Bast", tags: KDMapInit(["leashing", "darkvision", "opendoors", "closedoors", "mummy", "imprisonable", "melee", "kittyRestraints", "jail", "jailer", "search", "fireweakness", "soapweakness"]),
 		followRange: 1, blindSight: 2.5, specialCD: 5, specialAttack: "BindLock",
 		armor: 1,
@@ -5605,8 +5635,8 @@ let KinkyDungeonEnemies: enemy[] = [
 ];
 
 
-let KDOndeath: Record<string, (enemy: entity, o: any) => void> = {
-	"DirtPile": (enemy, _o) => {
+let KDOndeath: Record<string, (enemy: entity, o: any, mapData: KDMapDataType) => void> = {
+	"DirtPile": (enemy, _o, mapData) => {
 		if (!KDGameData.QuestData.DirtPiles) KDGameData.QuestData.DirtPiles = {
 			pilesTotal: 0,
 			pilesSinceLastSpawn: 0,
@@ -5629,36 +5659,45 @@ let KDOndeath: Record<string, (enemy: entity, o: any) => void> = {
 				"AnimStraitjacket",
 				"AnimYoke",
 			]);
-			KinkyDungeonSummonEnemy(enemy.x, enemy.y, type, 1, 0.5, false, undefined, false, undefined, "Ambush", true, 0, true, undefined, false);
+			if (mapData == KDMapData)
+				KinkyDungeonSummonEnemy(enemy.x, enemy.y, type, 1, 0.5, false, undefined, false, undefined, "Ambush", true, 0, true, undefined, false);
 			KDGameData.QuestData.DirtPiles.lastSpawn = type;
-			KinkyDungeonSendTextMessage(9, TextGet("KDDirtPileSurprise").replace("ENMY", TextGet("Name" + type)), "#ff8933", 6);
+			if (mapData == KDMapData)
+				KinkyDungeonSendTextMessage(9, TextGet("KDDirtPileSurprise").replace("ENMY", TextGet("Name" + type)), "#ff8933", 6);
 			KDGameData.QuestData.DirtPiles.pilesSinceLastSpawn = 0;
 		} else {
 			KDGameData.QuestData.DirtPiles.pilesSinceLastSpawn += 1;
 		}
 		KDGameData.QuestData.DirtPiles.pilesTotal += 1;
 	},
-	"summon": (enemy, o) => {
-		let e = KinkyDungeonSummonEnemy(enemy.x, enemy.y, o.enemy, o.count, o.range, o.strict, o.lifetime, o.hidden, undefined, o.faction || KDGetFaction(enemy), o.hostile, o.minradius, o.startAware, undefined, o.hideTimer);
-		for (let en of e) {
-			KDProcessCustomPatron(en.Enemy, en, 0);
+	"summon": (enemy, o, mapData) => {
+		if (mapData == KDMapData) {
+			let e = KinkyDungeonSummonEnemy(enemy.x, enemy.y, o.enemy, o.count, o.range, o.strict, o.lifetime, o.hidden, undefined, o.faction || KDGetFaction(enemy), o.hostile, o.minradius, o.startAware, undefined, o.hideTimer);
+			for (let en of e) {
+				KDProcessCustomPatron(en.Enemy, en, 0, false);
+			}
 		}
+
 	},
-	"dialogue": (enemy, o) => {
-		KDStartDialog(o.dialogue, enemy.Enemy.name, o.click, enemy.personality, enemy);
+	"dialogue": (enemy, o, mapData) => {
+		if (mapData == KDMapData)
+			KDStartDialog(o.dialogue, enemy.Enemy.name, o.click, enemy.personality, enemy);
 	},
-	"murder": (_enemy, _o) => {
-		KDMurderShopkeeper(1);
+	"murder": (_enemy, _o, mapData) => {
+		if (mapData == KDMapData)
+			KDMurderShopkeeper(1);
 	},
-	"spellOnSelf": (enemy, o) => {
-		let spell = KinkyDungeonFindSpell(o.spell, true);
-		if (spell) KinkyDungeonCastSpell(enemy.x, enemy.y, spell, undefined, undefined, undefined, KDGetFaction(enemy));
+	"spellOnSelf": (enemy, o, mapData) => {
+		if (mapData == KDMapData) {
+			let spell = KinkyDungeonFindSpell(o.spell, true);
+			if (spell) KinkyDungeonCastSpell(enemy.x, enemy.y, spell, undefined, undefined, undefined, KDGetFaction(enemy));
+		}
 	},
 	"removeQuest": (_enemy, o) => {
 		KDRemoveQuest(o.quest);
 	},
-	"dollID": (enemy, _o) => {
-		if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 9) {
+	"dollID": (enemy, _o, mapData) => {
+		if (mapData == KDMapData && KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 9) {
 			if (!KinkyDungeonFlags.get("gotDollID")) {
 				let dropped = {x:enemy.x, y:enemy.y, name: "DollID"};
 				KDMapData.GroundItems.push(dropped);
@@ -6036,3 +6075,25 @@ let KDEnemyAction: Record<string, KDEnemyAction> = {
 		sprint: true,
 	},
 };
+
+
+let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
+	Default: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "Default";
+	},
+	None: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "None";
+	},
+}
+
+let WanderAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
+	Default: (npc: KDPersistentNPC, enemy: enemy) => {
+		if (npc?.entity?.summoned) {
+			return "GoToMain";
+		}
+		return "Default";
+	},
+	None: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "None";
+	},
+}

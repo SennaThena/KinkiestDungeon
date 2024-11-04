@@ -308,7 +308,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 		{name: "OrgasmResist", tags: ["will", "utility"], school: "Any", manacost: 0, components: [], level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
 				{type: "OrgasmResistBuff", trigger: "tick"},
-				{type: "OrgasmResist", trigger: "calcInvolOrgasmChance", power: -0.3},
+				{type: "OrgasmResist", trigger: "calcInvolOrgasmChance", power: 0},
 				{type: "ChangeEdgeDrain", trigger: "calcEdgeDrain", mult: 0.3},
 				{type: "Buff", trigger: "tick", power: 1.0, buffType: "soulDamageResist"},
 				{type: "Buff", trigger: "tick", power: 1.0, buffType: "charmDamageResist"},
@@ -650,7 +650,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 				{type: "ManaRegenSuspend", trigger: "afterSpellTrigger", time:16},
 				{type: "ManaRegenSuspend", trigger: "playerAttack", time:16},
 				//{type: "ManaRegenOld", trigger: "tick", mult: 0.2, power: 0.5},
-				{type: "ManaRegen", trigger: "beforeMultMana", mult: 0.2},
+				{type: "ManaRegen", trigger: "beforeCalcMana", mult: 0.2},
 			]},
 		{name: "ManaRegenPlus", tags: ["mana", "offense"], school: "Special", manacost: 0, components: [], prerequisite: "ManaRegen", classSpecific: "Mage", hideWithout: "ManaRegen", level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",},
 		{name: "ManaRegenPlus2", tags: ["mana", "offense"], school: "Special", manacost: 0, components: [], prerequisite: "ManaRegen", classSpecific: "Mage", hideWithout: "ManaRegen", level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",},
@@ -1694,7 +1694,10 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 				{id: "Camo", aura: "#3b7d4f", type: "SlowDetection", duration: 50, power: 49.0, player: true, enemies: true, endSleep: true, currentCount: -1, maxCount: 1, tags: ["SlowDetection", "moveOpen", "attack", "cast"]}
 			], onhit:"", time:50, power: 0, range: 2, size: 1, damage: ""},
 		{name: "ShadowBlade", prerequisite: "ApprenticeShadow", tags: ["buff", "offense", "shadow"], sfx: "MagicSlash", school: "Illusion", manacost: 6, components: ["Arms"], mustTarget: true, level:1, type:"buff",
-			buffs: [{id: "ShadowBlade", aura: "#7022a0", type: "AttackDmg", duration: 50, power: 2.0, player: true, enemies: true, maxCount: 5, tags: ["attack", "damage"]}], onhit:"", time:50, power: 0, range: 2, size: 1, damage: ""},
+			buffs: [
+				{id: "ShadowBlade", aura: "#7022a0", type: "AttackDmg", duration: 50, power: 2.0, player: true,
+					enemies: true, maxCount: 5, tags: ["damage"]}],
+					onhit:"", time:50, power: 0, range: 2, size: 1, damage: ""},
 		{name: "ShadowSlash", tags: ["aoe", "offense", "shadow"], prerequisite: "ShadowBlade", sfx: "Evil", school: "Illusion", manacost: 3, components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, piercing: true, noTerrainHit: true, noEnemyCollision: true, onhit:"aoe", power: 4, delay: 0, range: 1.5, aoe: 1.5, size: 3, lifetime:1, damage: "cold", speed: 1, time: 2,
 			hitevents: [
 				{trigger: "bulletHitEnemy", type: "ShadowSlash"},
@@ -1802,6 +1805,11 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 	{name: "BindVine", tags: ["offense", "nature", "binding"], sfx: "MagicSlash", school: "Conjure", manacost: 0.5, components: ["Verbal"],
 		noTargetPlayer: true, mustTarget: true, level:1, type:"hit", onhit:"instant", evadeable: true, noblock: true, power: 3.0, time: 10, range: 1.5, size: 1, lifetime: 1, aoe: 0.5, damage: "crush",
 		playerEffect: {name: "Bind", damage: "chain", power: 2, tag: "vineRestraints"},
+	},
+	{name: "BindWrapping", tags: ["offense", "fabric", "wrapping", "binding"], sfx: "HexOrbMinor", school: "Conjure", manacost: 0.5, components: ["Verbal"], bind: 3.0,
+		bindType: "Wrapping",
+		noTargetPlayer: true, mustTarget: true, level:1, type:"hit", onhit:"instant", evadeable: true, noblock: true, power: 2.0, time: 10, range: 1.5, size: 1, lifetime: 1, aoe: 0.5, damage: "crush",
+		playerEffect: {name: "Bind", damage: "chain", power: 2, tag: "mummyRestraints"},
 	},
 	{name: "BindChain", tags: ["offense", "metal", "binding"], sfx: "MagicSlash", school: "Conjure", manacost: 0.5, components: ["Verbal"],
 		noTargetPlayer: true, mustTarget: true, level:1, type:"hit", onhit:"instant", evadeable: true, noblock: true, power: 3.0, range: 1.5, size: 1, lifetime: 1, aoe: 0.5, damage: "crush",
@@ -2207,13 +2215,40 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		trailHit: "", trailPower: 0, trailLifetime: 1.1, trailTime: 4, trailDamage:"inert", trail:"lingering", trailChance: 1, playerEffect: {name: "ObserverBeam", count: 1}},
 
 
+	{enemySpell: true, name: "HexLatexExplosion", color: "#88ffaa", sfx: "Fwoosh", effectTileDurationMod: 10, effectTileDensity: 0.33, effectTile: {
+		name: "LatexThinGreen",
+		duration: 20,
+	}, manacost: 3, minRange: 0, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5,
+	delay: 1, power: 3, range: 2.5, size: 3, aoe: 1, lifetime: 1, damage: "chain",
+	playerEffect: {name: "HexLatex", power: 4, damage: "glue"}},
+
+
+	{enemySpell: true, name: "HexOrb", color: "#88ff88", sfx: "HexOrb", manacost: 4, specialCD: 12,
+		minRange: 0,
+		components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, onhit:"",
+		power: 0, delay: 0, range: 5, damage: "chain", speed: 1, playerEffect: {name: ""},
+		events: [{type: "CastSpellNearbyEnemy", player: true, trigger: "bulletTick", spell: "HexWrapping", aoe: 1.5},],
+		spellcast: {spell: "HexLatexExplosion", target: "onhit", directional:true, offset: false}},
+
+	{name: "HexWrapping", tags: ["offense", "fabric", "wrapping", "binding"], sfx: "HexOrbMinor", school: "Conjure", manacost: 0.5, components: ["Verbal"], bind: 3.0,
+		bindType: "Wrapping",
+		noTargetPlayer: true, mustTarget: true, level:1, type:"inert", onhit:"aoe", evadeable: true, noblock: true,
+		delay: 1,
+		power: 2.0, time: 10, range: 1.5, size: 1, lifetime: 1, aoe: 0.5, damage: "crush",
+		playerEffect: {name: "Bind", damage: "chain", power: 2, tag: "mummyRestraints"},
+	},
+
+	{enemySpell: true, name: "ClericBeamMulti", sfx: "Evil", minRange: 0, manacost: 6,
+		projectileTargeting: true, noTargetPlayer: true, CastInWalls: true, level:1, type:"inert", onhit:"aoe", time: 5, delay: 3, power: 3, range: 8, meleeOrigin: true, size: 1, lifetime: 1, damage: "inert", noMiscast: false, castDuringDelay: true, noCastOnHit: true,
+		spellcast: {spell: "ClericBeam", target: "target", directional:true, randomDirection: true, noTargetMoveDir: true, spread: 1, offset: false}, channel: 3},
+
 	{enemySpell: true, name: "ClericBeam",
 		bulletColor: 0x88ff88, bulletLight: 5,
 		color: "#88ff88", minRange: 0, sfx: "MagicSlash", school: "Illusion", manacost: 7, components: ["Arms"], projectileTargeting: true, noTargetPlayer: true, CastInWalls: true, level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 12, range: 8, meleeOrigin: true, size: 1, lifetime: 1, damage: "inert", noMiscast: false,
 		spellcast: {spell: "ClericBeamBeam", target: "target", directional:true, offset: false}, channel: 2},
 	{enemySpell: true, name: "ClericBeamBeam",
 		trailColor: 0x88ff88, trailLight: 3, slowStart: true, color: "#88ff88", noise: 1,
-		sfx: "MagicSlash", school: "Elements", manacost: 0, components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, nonVolatile: true, onhit:"", power: 6, delay: 0, range: 8, speed: 50, size: 1, damage: "fire",
+		sfx: "HexOrbMinor", school: "Elements", manacost: 0, components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, nonVolatile: true, onhit:"", power: 6, delay: 0, range: 8, speed: 50, size: 1, damage: "fire",
 		trailHit: "", trailPower: 0, trailLifetime: 1.1, trailTime: 4, trailDamage:"inert", trail:"lingering", trailChance: 1, playerEffect: {name: "MysticShock", time: 3}},
 
 
@@ -3637,6 +3672,15 @@ let KDSpecialBondage: Record<string, KDBondage> = {
 		powerStruggleBoost: 0.3,
 		healthStruggleBoost: 1.5,
 		mageStruggleBoost: 1.5,
+		enemyBondageMult: 1.0,
+	},
+	"Wrapping": {
+		priority: 14,
+		color: "#88ff88",
+		struggleRate: 0.95,
+		powerStruggleBoost: 0.3,
+		healthStruggleBoost: 1.5,
+		mageStruggleBoost: 2.5,
 		enemyBondageMult: 1.0,
 	},
 	"Magic": {

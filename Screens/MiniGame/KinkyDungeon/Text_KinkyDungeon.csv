@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.3.50"
+KDVersionStr,"5.3.51"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -1589,7 +1589,7 @@ KinkyDungeonInventoryItemTorch,Torch
 KinkyDungeonInventoryItemTorchDesc,"Second only to the mighty towel in usefulness."
 KinkyDungeonInventoryItemTorchDesc2,"Deals fire damage. Provides light."
 KinkyDungeonInventoryItemUnarmed,Unarmed
-KinkyDungeonInventoryItemUnarmedDesc,"Fight with your hands and feet. 50% chance to stun target if the target is disarmed."
+KinkyDungeonInventoryItemUnarmedDesc,"Fight with your hands and feet. Counts as teasing if arms are free. 50% chance to stun target if the target is disarmed."
 KinkyDungeonInventoryItemUnarmedDesc2,"Deals unarmed damage."
 KinkyDungeonInventoryItemSword,Sword
 KinkyDungeonInventoryItemSwordDesc,"the steel is strong, and the blade true."
@@ -2410,6 +2410,15 @@ KillMeleeCleric,"The Bast Warrior collapses and meows loudly."
 AttackMeleeClericBind,"The Bast Warrior restrains you! (+RestraintAdded)"
 AttackMeleeCleric,"The Bast Warrior tickles you with her claws! (DamageTaken)"
 AttackMeleeClericLock,"The Bast Warrior pulls out a lock and slips it on! (DamageTaken)"
+
+
+
+NameClericHigh,Bast High Cleric
+KillClericHigh,"The Bast High Cleric vanishes into a puff of ribbons."
+AttackClericHigh,"A ray of light shoots out and paralyzes you! (DamageTaken)"
+AttackClericHighBind,"The Bast Cleric conjures wrappings upon you! (+RestraintAdded)"
+AttackClericHighStun,"A ray of light shoots out and paralyzes you! (DamageTaken)"
+AttackClericHighLock,"The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)"
 
 
 NameCleric,Bast Cleric
@@ -5473,6 +5482,10 @@ KDEffectTileTooltipLatexBlue,Liquid Latex
 KDEffectTileTooltipLatexBlueDesc,"Engulfs creatures"
 KDEffectTileTooltipLatexThinBlue,Liquid Latex
 KDEffectTileTooltipLatexThinBlueDesc,"Engulfs creatures"
+KDEffectTileTooltipLatexGreen,Liquid Latex
+KDEffectTileTooltipLatexGreenDesc,"Engulfs pets (like you)"
+KDEffectTileTooltipLatexThinGreen,Liquid Latex
+KDEffectTileTooltipLatexThinGreeneDesc,"Engulfs pets (like you)"
 KDEffectTileTooltipSlime,Slime
 KDEffectTileTooltipSlimeDesc,"Slows creatures"
 KDEffectTileTooltipGlue,Glue
@@ -5750,9 +5763,9 @@ KinkyDungeonSpellOrgasmFrequency2,Pleasure Training II
 KinkyDungeonSpellDescriptionOrgasmFrequency2,"You are quite difficult to satisfy. Letting go costs 50% less stamina (75% total) and 50% less willpower."
 
 KinkyDungeonSpellOrgasmResist,Mental Resistance
-KinkyDungeonSpellDescriptionOrgasmResist,"+100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is 0 or are teased directly by an enemy or damage (click the buff to toggle), and willpower drains 70% slower while edged."
-KinkyDungeonBuffe_OrgasmResist,"Mental Resistance: You cannot orgasm except by choice, or being forced by an enemy. Click to toggle."
-KinkyDungeonBuffd_OrgasmResist,"Mental Resistance: You are allowing yourself to let go if forced to. Click to toggle."
+KinkyDungeonSpellDescriptionOrgasmResist,"+100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is less than 25% (click the buff to toggle), and willpower drains 70% slower while edged."
+KinkyDungeonBuffe_OrgasmResist,"Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle."
+KinkyDungeonBuffd_OrgasmResist,"Mental Resistance: You are allowing yourself to let go. Click to toggle."
 
 
 KinkyDungeonSpellEdgeMana1,Way of Discipline
@@ -6113,6 +6126,7 @@ KinkyDungeonSpellEnemyCorona,Binding Light
 KinkyDungeonSpellEnemyCoronaBeam,Binding Light
 KinkyDungeonSpellMonolithBeamBeam,Chaos Beam
 KinkyDungeonSpellClericBeamBeam,Mystic Beam
+KinkyDungeonSpellClericBeamMulti,Mystic Barrage
 KinkyDungeonSpellDescriptionCorona,A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 KinkyDungeonSpellCastCorona,You charge a powerful beam attack!!!
 KinkyDungeonSpellTargetCorona,Choose line direction
@@ -7082,6 +7096,8 @@ KinkyDungeonSpellElfArrow,Elven Arrow
 KinkyDungeonEnchantedArrow,"The elven arrow flashes and wraps you in mithril ropes!"
 KinkyDungeonRopeEngulf,"Ropes wrap themselves around your body from all sides!"
 KinkyDungeonSarcoEngulf,"Wrappings appear and wrap you head to toe!"
+KinkyDungeonHexLatex,A spell transforms your wrappings into hexed latex!
+KinkyDungeonHexLatexFail,A spell engulfs you in wrappings!
 KinkyDungeonRopeEngulfWeak,"Ropes wrap themselves around your body from all sides!"
 KinkyDungeonVineEngulf,"Vines sprout around you and grab hold of your limbs!"
 KinkyDungeonRopeEngulfDress,"Your clothes are stripped and replaced!"
@@ -25424,6 +25440,7 @@ KDBindType_Tape,Tape
 KDBindType_Vine,Vine
 KDBindType_Ice,Ice
 KDBindType_Furniture,Furniture
+KDBindType_Wrapping,Wrapping
 
 KDSaving,Saving...
 KDSaved,Game Saved
@@ -25613,3 +25630,9 @@ dTheWardenFuuka_AggressiveF,"Fuuka, take her down."
 dTheWardenFuuka_AggressiveFGag,"(Send Fuuka to fight her)"
 dTheWardenFuuka_Aggressive,"That is none of your business. Now kneel."
 dTheWardenFuuka_AggressiveGag,"(Fight without listening.)"
+
+
+KinkyDungeonSpellHexWrapping,Blessed Hex
+KinkyDungeonSpellHexOrb,Hexing Orb
+KinkyDungeonSpellHexLatexExplosion,Hexed Latex Engulf
+KinkyDungeonSpellHexWrappingBind,Hex Binding

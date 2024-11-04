@@ -22,7 +22,8 @@ let KDModsAfterGameStart = () => {};
  */
 let KDModsAfterLoad = () => {};
 
-
+let KDFastWaitTime = 100;
+let KDSlowWaitTime = 300;
 
 let maxSaveSlots = 4;
 
@@ -635,9 +636,11 @@ interface KDGameDataBase {
 	FacilitiesData:			FacilitiesData,
 	Regiments:			Record<string, KDRegiment>,
 	QuickLoadouts:			Record<string, string[]>,
+	PersistentNPCCache:			Record<string, number[]>,
 };
 
 let KDGameDataBase: KDGameDataBase = {
+	PersistentNPCCache: {},
 	Containers: {},
 	PersistentItems: {},
 	Regiments: {},
@@ -2847,7 +2850,7 @@ function KinkyDungeonRun() {
 						if (KinkyDungeonTempWait && !KDGameData.KinkyDungeonLeashedPlayer && !KinkyDungeonInDanger())
 							KDDisableAutoWait();
 					}
-					KinkyDungeonSleepTime = CommonTime() + (KinkyDungeonFastWait ? 100 : 300);
+					KinkyDungeonSleepTime = CommonTime() + (KinkyDungeonFastWait ? KDFastWaitTime : KDSlowWaitTime);
 				}
 			} else if (KinkyDungeonAutoWaitStruggle) {
 				if (CommonTime() > KinkyDungeonSleepTime) {
@@ -5694,7 +5697,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 	KinkyDungeonSendEvent("beforeLoadGame", {});
 	let str = String ? DecompressB64(String.trim()) : (localStorage.getItem('KinkyDungeonSave') ? DecompressB64(localStorage.getItem('KinkyDungeonSave')) : "");
 	if (str) {
-		let saveData = JSON.parse(str);
+		let saveData: KinkyDungeonSave = JSON.parse(str);
 		if (    saveData
 		    &&  saveData.spells != undefined
 		    &&  saveData.level != undefined
@@ -5759,6 +5762,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 			InitFacilities();
 
 			KDEventData = JSON.parse(JSON.stringify(KDEventDataBase));
+			//@ts-ignore
 			if (saveData.KDEventData != undefined) KDEventData = Object.assign({}, saveData.KDEventData);
 			if (saveData.inventoryVariants) KinkyDungeonRestraintVariants = saveData.inventoryVariants;
 			if (saveData.weaponVariants) KinkyDungeonWeaponVariants = saveData.weaponVariants;
@@ -5813,6 +5817,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 				if (saveData.npp != undefined) KinkyDungeonNewGame = saveData.npp;
 			}
 
+			//@ts-ignore
 			if (saveData.faction != undefined) KinkyDungeonFactionRelations = saveData.faction;
 			KDInitFactions();
 			if (typeof KDGameData.TimeSinceLastVibeStart === "number") KDGameData.TimeSinceLastVibeStart = {};
@@ -5888,15 +5893,28 @@ function KinkyDungeonLoadGame(String: string = "") {
 				let sp = KinkyDungeonFindSpell("FighterOffhand");
 				if (sp) KDPushSpell(sp);
 			}
-
-			if (saveData.KDWorldMap) KDWorldMap = JSON.parse(JSON.stringify(saveData.KDWorldMap));
+			KDMapData = undefined;
+			if (saveData.KDWorldMap) {
+				KDWorldMap = JSON.parse(JSON.stringify(saveData.KDWorldMap));
+				if (saveData.KDCurrentWorldSlot) {
+					let slot = KDGetWorldMapLocation({
+						x: saveData.KDCurrentWorldSlot.x,
+						y: saveData.KDCurrentWorldSlot.y,
+					});
+					if (slot) {
+						let data = slot.data[KDGameData.RoomType];
+						if (data) KDMapData = data;
+					}
+				}
+			}
 			if (saveData.KDPersistentNPCs) KDPersistentNPCs = JSON.parse(saveData.KDPersistentNPCs);
 			if (saveData.KDDeletedIDs) KDDeletedIDs = JSON.parse(saveData.KDDeletedIDs);
 			if (saveData.KDPersonalAlt) KDPersonalAlt = JSON.parse(saveData.KDPersonalAlt);
 
 			if (saveData.KinkyDungeonPlayerEntity) KinkyDungeonPlayerEntity = saveData.KinkyDungeonPlayerEntity;
 			if (saveData.KDMapData) {
-				KDMapData = Object.assign(KDDefaultMapData("", ""), JSON.parse(JSON.stringify(saveData.KDMapData)));
+				if (!KDMapData)
+					KDMapData = Object.assign(KDDefaultMapData(0, MiniGameKinkyDungeonLevel), JSON.parse(JSON.stringify(saveData.KDMapData)));
 				if (!KDMapData.Traffic || KDMapData.Traffic.length == 0) KDGenerateBaseTraffic();
 				KinkyDungeonGenNavMap();
 			} else {

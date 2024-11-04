@@ -8403,6 +8403,7 @@ A cold sphere of magic ice lodged firmly in your mouth.
 The work of a kinky elemental. It will melt! Eventually.
 変態趣味の精霊の一品。いずれ溶けるだろう。
 
+
 Ice (Body)
 氷（身体）
 Ice (Legs)
@@ -8779,6 +8780,7 @@ A heavy duty steel muzzle with a flexible metal locking pin and straps.
 柔軟なストラップと錠のついた、黒鉄のマズル。
 Perfect for sealing away those unruly lips.
 悪いお口を完全に封じるマズル。
+
 
 
 
@@ -10008,7 +10010,6 @@ You sweep your foot and call forth the storm!
 足で地を掃き、局所的な吹雪を召喚した！
 Choose target AoE location (3x3)
 位置を選択(3x3)
-
 Cold Feet
 コールドフット
 Freezes a single tile (ice slows entities). Any enemy standing on the tile takes take DamageDealt damage per turn for LifeTime turns.
@@ -10017,6 +10018,8 @@ You tap your foot and call forth the frost!
 足で地面を踏み、霜を降らせた！
 Choose target location (1x1)
 位置を選択(1x1)
+
+
 
 Healing Light
 ヒーリングライト
@@ -10130,6 +10133,7 @@ Mystic Beam
 ミスティックビーム
 Mystic Barrage
 ミスティックバラージュ
+
 A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 2ターンの間チャージし、命中したターゲットに DamageDealt 火ダメージを与えるビームを放つ。命中した敵は12ターンの間盲目状態になる。この攻撃の会心ダメージ倍率は150%。
 You charge a powerful beam attack!!!
@@ -11832,10 +11836,12 @@ Ropes wrap themselves around your body from all sides!
 ロープが四方八方から身体を包み込む！
 Wrappings appear and wrap you head to toe!
 リボンに全身を包まれる！
+
 A spell transforms your wrappings into hexed latex!
 魔法が形を変え、六角形のゴムになり包みこんできた！
 A spell engulfs you in wrappings!
 魔法が形を変え、全身を包みこんできた！
+
 Vines sprout around you and grab hold of your limbs!
 周囲に蔦が生え、手足を掴まれた！
 Your clothes are stripped and replaced!
@@ -32780,6 +32786,8 @@ Magical Missile
 マジック・ミサイル
 Cursing Circle
 カースサークル
+Seal of the 5th Era
+第五の時の封印
 
 
 
