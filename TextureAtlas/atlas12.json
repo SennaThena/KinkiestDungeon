@@ -8,14 +8,6 @@
 	"spriteSourceSize": {"x":535,"y":1181,"w":161,"h":444},
 	"sourceSize": {"w":1240,"h":1754}
 },
-"Models/Bunny/LegSockRightHogtie.png":
-{
-	"frame": {"x":1738,"y":2024,"w":142,"h":14},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":447,"y":907,"w":142,"h":14},
-	"sourceSize": {"w":1240,"h":1754}
-},
 "Models/CyberArms/LongMittenLeftBoxtie.png":
 {
 	"frame": {"x":3,"y":3,"w":319,"h":1220},
@@ -30,14 +22,6 @@
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":451,"y":392,"w":316,"h":1220},
-	"sourceSize": {"w":1240,"h":1754}
-},
-"Models/CyberCuffs/LockCollar.png":
-{
-	"frame": {"x":1660,"y":2024,"w":16,"h":21},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":610,"y":403,"w":16,"h":21},
 	"sourceSize": {"w":1240,"h":1754}
 },
 "Models/CyberMitts/ArmLongMittenLeftBoxtie.png":
@@ -72,17 +56,9 @@
 	"spriteSourceSize": {"x":451,"y":392,"w":316,"h":1220},
 	"sourceSize": {"w":1240,"h":1754}
 },
-"Models/DivineCuffs/ElbowRightDecoCleanFront.png":
-{
-	"frame": {"x":1680,"y":2024,"w":16,"h":21},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":430,"y":622,"w":16,"h":21},
-	"sourceSize": {"w":1240,"h":1754}
-},
 "Models/EyesDai1/Brows2Neutral.png":
 {
-	"frame": {"x":1487,"y":2024,"w":60,"h":21},
+	"frame": {"x":1640,"y":2024,"w":60,"h":21},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":604,"y":239,"w":60,"h":21},
@@ -90,11 +66,27 @@
 },
 "Models/EyesDai2/Brows2Surprised.png":
 {
-	"frame": {"x":1551,"y":2024,"w":51,"h":21},
+	"frame": {"x":1704,"y":2024,"w":51,"h":21},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":611,"y":230,"w":51,"h":21},
 	"sourceSize": {"w":813,"h":502}
+},
+"Models/FaceKjus/Brows2Sad.png":
+{
+	"frame": {"x":1813,"y":2024,"w":67,"h":13},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":610,"y":245,"w":67,"h":13},
+	"sourceSize": {"w":726,"h":532}
+},
+"Models/GagMetal/OTNStrap.png":
+{
+	"frame": {"x":1487,"y":2024,"w":149,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":238,"w":149,"h":21},
+	"sourceSize": {"w":321,"h":332}
 },
 "Models/Heels/BalletRightClosed.png":
 {
@@ -128,28 +120,12 @@
 	"spriteSourceSize": {"x":321,"y":702,"w":522,"h":452},
 	"sourceSize": {"w":1240,"h":1754}
 },
-"Models/LeatherCuffs/BandElbowRightFront.png":
-{
-	"frame": {"x":1720,"y":2024,"w":14,"h":21},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":431,"y":614,"w":14,"h":21},
-	"sourceSize": {"w":1240,"h":1754}
-},
 "Models/LeatherCuffs/ElbowRightBoxtie.png":
 {
-	"frame": {"x":1606,"y":2024,"w":25,"h":21},
+	"frame": {"x":1759,"y":2024,"w":25,"h":21},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":460,"y":608,"w":25,"h":21},
-	"sourceSize": {"w":1240,"h":1754}
-},
-"Models/LeatherCuffs/HardwareWristRightFront.png":
-{
-	"frame": {"x":1700,"y":2024,"w":16,"h":21},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":471,"y":543,"w":16,"h":21},
 	"sourceSize": {"w":1240,"h":1754}
 },
 "Models/Legbinder/LacesLegbinderClosed.png":
@@ -210,7 +186,7 @@
 },
 "Models/Warrior/ArmbandWristtie.png":
 {
-	"frame": {"x":1635,"y":2024,"w":21,"h":21},
+	"frame": {"x":1788,"y":2024,"w":21,"h":21},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":467,"y":510,"w":21,"h":21},
@@ -240,6 +216,6 @@
 	"size": {"w":2048,"h":2048},
 	"scale": "0.5",
 	"related_multi_packs": [ "atlas0.json", "atlas1.json", "atlas2.json", "atlas3.json", "atlas4.json", "atlas5.json", "atlas6.json", "atlas7.json", "atlas8.json", "atlas9.json", "atlas10.json", "atlas11.json", "atlas13.json", "atlas14.json", "atlas15.json", "atlas16.json", "atlas17.json", "atlas18.json", "atlas19.json", "atlas20.json", "atlas21.json", "atlas22.json", "atlas23.json", "atlas24.json", "atlas25.json", "atlas26.json", "atlas27.json", "atlas28.json", "atlas29.json", "atlas30.json", "atlas31.json", "atlas32.json", "atlas33.json", "atlas34.json", "atlas35.json", "atlas36.json", "atlas37.json", "atlas38.json", "atlas39.json", "atlas40.json", "atlas41.json", "atlas42.json", "atlas43.json" ],
-	"smartupdate": "$TexturePacker:SmartUpdate:f219ce395e18d8b65eebb8853caba4fc:e67c6f0cf1689aeb71f282f7a420f945:db6e5740ce99a4639cfdab15087d64cb$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7f986d26a36a264f9c0e328ed931c7d7:ace8c4bf55d5cf92067bf0e8a0bb9055:db6e5740ce99a4639cfdab15087d64cb$"
 }
 }

@@ -2141,10 +2141,6 @@
             <key type="filename">../Models/MaidKnightHeavy/PantyhoseHogtie.png</key>
             <key type="filename">../Models/MaidKnightHeavy/PantyhoseKneel.png</key>
             <key type="filename">../Models/MaidKnightHeavy/PantyhoseKneelClosed.png</key>
-            <key type="filename">../Models/MaidKnightHeavy/PantyhoseLeftClosed.png</key>
-            <key type="filename">../Models/MaidKnightHeavy/PantyhoseLeftKneel.png</key>
-            <key type="filename">../Models/MaidKnightHeavy/PantyhoseLeftKneelClosed.png</key>
-            <key type="filename">../Models/MaidKnightHeavy/PantyhoseLeftSpread.png</key>
             <key type="filename">../Models/MaidKnightHeavy/PantyhoseSpread.png</key>
             <key type="filename">../Models/MaidKnightHeavy/PauldronLeft.png</key>
             <key type="filename">../Models/MaidKnightHeavy/PauldronLeftHardware.png</key>
@@ -3799,6 +3795,8 @@
             <key type="filename">../Models/GagLeather/BallHarnessLarge.png</key>
             <key type="filename">../Models/GagLeather/BallSideStrap.png</key>
             <key type="filename">../Models/GagLeather/BallStrap.png</key>
+            <key type="filename">../Models/GagLeather/BallTeeth_Teeth.png</key>
+            <key type="filename">../Models/GagLeather/BallTeeth_TeethDeep.png</key>
             <key type="filename">../Models/GagLeather/Ball_Teeth.png</key>
             <key type="filename">../Models/GagLeather/Ball_TeethDeep.png</key>
             <key type="filename">../Models/GagLeather/BigBall.png</key>
@@ -3826,6 +3824,8 @@
             <key type="filename">../Models/GagMetal/BallHarnessSegmentedLarge.png</key>
             <key type="filename">../Models/GagMetal/BallSideStrap.png</key>
             <key type="filename">../Models/GagMetal/BallStrap.png</key>
+            <key type="filename">../Models/GagMetal/BallTeeth_Teeth.png</key>
+            <key type="filename">../Models/GagMetal/BallTeeth_TeethDeep.png</key>
             <key type="filename">../Models/GagMetal/Ball_Teeth.png</key>
             <key type="filename">../Models/GagMetal/Ball_TeethDeep.png</key>
             <key type="filename">../Models/GagMetal/BigBall.png</key>
@@ -3838,6 +3838,8 @@
             <key type="filename">../Models/GagMetal/HarnessRim.png</key>
             <key type="filename">../Models/GagMetal/OTN.png</key>
             <key type="filename">../Models/GagMetal/OTNRivets.png</key>
+            <key type="filename">../Models/GagMetal/OTNStrap.png</key>
+            <key type="filename">../Models/GagMetal/OTNStrapRivets.png</key>
             <key type="filename">../Models/GagMetal/Rim.png</key>
             <key type="filename">../Models/GagMetal/SciFiMuzzle.png</key>
             <key type="filename">../Models/GagMetal/SciFiMuzzle2.png</key>

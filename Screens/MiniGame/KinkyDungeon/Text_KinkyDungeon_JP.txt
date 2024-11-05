@@ -11837,10 +11837,12 @@ Ropes wrap themselves around your body from all sides!
 Wrappings appear and wrap you head to toe!
 リボンに全身を包まれる！
 
+
 A spell transforms your wrappings into hexed latex!
 魔法が形を変え、六角形のゴムになり包みこんできた！
 A spell engulfs you in wrappings!
 魔法が形を変え、全身を包みこんできた！
+
 
 Vines sprout around you and grab hold of your limbs!
 周囲に蔦が生え、手足を掴まれた！
@@ -32792,6 +32794,8 @@ Seal of the 5th Era
 
 
 
+
+
 Healing Flash
 フラッシュヒール
 Undead Frenzy
@@ -32944,3 +32948,4 @@ Hexed Latex Engulf
 ヘックス・ラテックス
 Hex Binding
 ヘックス・バインド
+

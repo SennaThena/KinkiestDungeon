@@ -2808,7 +2808,7 @@ Deals fire damage. Provides light.
 화염 피해를 입힙니다. 빛을 제공합니다.
 Unarmed
 비무장
-### Fight with your hands and feet. Counts as teasing if arms are free. 50% chance to stun target if the target is disarmed.
+### Fight with your hands and feet. 50% chance to stun target if the target is disarmed.
 
 Deals unarmed damage.
 비무장 피해를 입힙니다.
@@ -4212,22 +4212,12 @@ The Bast Warrior tickles you with her claws! (DamageTaken)
 
 
 
-### Bast High Cleric
-
-### The Bast High Cleric vanishes into a puff of ribbons.
-
-A ray of light shoots out and paralyzes you! (DamageTaken)
-한 줄기 빛이 당신을 마비시킵니다! (DamageTaken)
-### The Bast Cleric conjures wrappings upon you! (+RestraintAdded)
-
-### The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)
-
-
-
 Bast Cleric
 바스트 클레릭
 The Bast Cleric collapses and meows softly.
 바스트 클레릭이 쓰러지고 부드럽게 야옹거린다.
+A ray of light shoots out and paralyzes you! (DamageTaken)
+한 줄기 빛이 당신을 마비시킵니다! (DamageTaken)
 The Bast Cleric restrains you! (+RestraintAdded)
 바스트 클레릭이 당신을 구속합니다! (+RestraintAdded)
 ### The Bast Cleric pulls out a lock and slips it on! (DamageTaken)
@@ -8516,8 +8506,6 @@ Liquid Latex
 액체 라텍스
 Engulfs creatures
 생물을 삼킨다
-### Engulfs pets (like you)
-
 Slows creatures
 느린 생물
 Glue
@@ -8940,11 +8928,11 @@ The roaring inferno deals 10 damage to you!
 
 ### Mental Resistance
 
-### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is less than 25% (click the buff to toggle), and willpower drains 70% slower while edged.
+### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is 0 or are teased directly by an enemy or damage (click the buff to toggle), and willpower drains 70% slower while edged.
 
-### Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle.
+### Mental Resistance: You cannot orgasm except by choice, or being forced by an enemy. Click to toggle.
 
-### Mental Resistance: You are allowing yourself to let go. Click to toggle.
+### Mental Resistance: You are allowing yourself to let go if forced to. Click to toggle.
 
 
 
@@ -9538,8 +9526,6 @@ Chaos Beam
 카오스 빔
 Mystic Beam
 미스틱 빔
-### Mystic Barrage
-
 ### A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 
 You charge a powerful beam attack!!!
@@ -11185,10 +11171,6 @@ The elven arrow flashes and wraps you in mithril ropes!
 Ropes wrap themselves around your body from all sides!
 로프가 사방에서 몸을 감쌉니다!
 ### Wrappings appear and wrap you head to toe!
-
-### A spell transforms your wrappings into hexed latex!
-
-### A spell engulfs you in wrappings!
 
 ### Vines sprout around you and grab hold of your limbs!
 
@@ -30803,13 +30785,3 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 ### That is none of your business. Now kneel.
 
 ### (Fight without listening.)
-
-
-
-### Blessed Hex
-
-### Hexing Orb
-
-### Hexed Latex Engulf
-
-### Hex Binding
