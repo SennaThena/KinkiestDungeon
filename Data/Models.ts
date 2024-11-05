@@ -396,6 +396,18 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 		}
 
 	if (MC.Containers.get(containerID) && !MC.Update.has(containerID) && MC.Refresh.has(containerID)) {
+
+		let data = {
+			Character: Character,
+			containerID: containerID,
+			ContainerInfo: MC.Containers.get(containerID),
+			zIndex: zIndex,
+			x: X,
+			y: Y,
+			Blend: Blend,
+			StartMods: StartMods,
+		};
+		KinkyDungeonSendEvent("beforeMeshDestroy", data);
 		MC.Update.delete(containerID);
 		MC.Refresh.delete(containerID);
 		//console.log("Refreshed!")
@@ -417,6 +429,7 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 			}
 			KDAdjustmentFilterCache.clear();
 		}
+
 	}
 	let created = false;
 	if (!MC.Containers.get(containerID)) {
@@ -446,6 +459,16 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 		Container.Container.sortableChildren = true;
 		//Container.Container.cacheAsBitmap = true;
 		if (zIndex) Container.Mesh.zIndex = zIndex;
+		let data = {
+			Character: Character,
+			ContainerInfo: Container,
+			zIndex: zIndex,
+			x: X,
+			y: Y,
+			Blend: Blend,
+			StartMods: StartMods,
+		};
+		KinkyDungeonSendEvent("meshCreate", data);
 		//Container.Container.filterArea = new PIXI.Rectangle(0,0,MODELWIDTH*MODEL_SCALE,MODELHEIGHT*MODEL_SCALE);
 	}
 
