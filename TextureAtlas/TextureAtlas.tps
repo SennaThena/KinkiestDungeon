@@ -1792,6 +1792,8 @@
             <key type="filename">../Models/LatexPetsuit/LegsKneel.png</key>
             <key type="filename">../Models/LatexPetsuit/LegsKneelClosed.png</key>
             <key type="filename">../Models/Leash/Leash.png</key>
+            <key type="filename">../Models/Leash/LeashCollar.png</key>
+            <key type="filename">../Models/Leash/LeashCollarHardware.png</key>
             <key type="filename">../Models/Leash/LeashCrossed.png</key>
             <key type="filename">../Models/Leash/LeashFree.png</key>
             <key type="filename">../Models/Leash/LeashFront.png</key>

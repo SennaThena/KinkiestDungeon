@@ -41,6 +41,17 @@ AddModel({
 				Free: "Free", Crossed: "Crossed", Front: "Front"},
 			AppendPose: {Pulled: "Pulled"},
 		},
+		{ Name: "LeashCollar", Layer: "Collar", Pri: -400,
+			Invariant: true,
+			HideWhenOverridden: true,
+			InheritColor: "Leash",
+		},
+		{ Name: "LeashCollarHardware", Layer: "Collar", Pri: -399.9,
+			Invariant: true,
+			TieToLayer: "LeashCollar",
+			InheritColor: "Hardware",
+			NoOverride: true,
+		},
 	])
 });
 
