@@ -25348,7 +25348,7 @@ KDSetPalette,Set Palette
 KinkyDungeonStatMC_Mage,"Wizard"
 
 KDSlotLocFormat,"FLR-DGN"
-KDSlotLocNG+," (NG+AMNT)"
+KDSlotLocNG," (NG+AMNT)"
 
 
 KDBondageFailInvalidTargetHandcuffs,Target must be vulnerable.

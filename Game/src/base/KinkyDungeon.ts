@@ -1332,6 +1332,7 @@ function KDCloseFullscreen() {
 	}
 }
 
+let saveError = false;
 
 function KinkyDungeonRun() {
 	if (KDSaveQueue.length > 0 && !KDSaveBusy) {
@@ -1340,14 +1341,23 @@ function KinkyDungeonRun() {
 		KDSendMusicToast(TextGet("KDSaving"));
 		KinkyDungeonCompressSave(KDSaveQueue.splice(0, 1)[0]).then(
 			(data) => {
-					localStorage.setItem('KinkyDungeonSave', data);
+					try {
+						localStorage.setItem('KinkyDungeonSave', data);
+					} catch (e) {
+						KDSendMusicToast(e.message, 0);
+						localStorage.setItem('KinkyDungeonSave', "");
+						saveError = true;
+					}
+
 					if (ss != undefined) {
 						KinkyDungeonDBSave(ss, data);
 					}
 				}
 			).finally(() => {
 				KDSaveBusy = false;
-				KDSendMusicToast(TextGet("KDSaved"), -4000);
+				if (!saveError)
+					KDSendMusicToast(TextGet("KDSaved"), -4000);
+				saveError = false;
 			});
 	}
 
@@ -5966,8 +5976,15 @@ function KinkyDungeonLoadGame(String: string = "") {
 			//if (saveData.mapIndex && !saveData.mapIndex.length) KinkyDungeonMapIndex = saveData.mapIndex;
 
 			if (!KDGameData.SlowMoveTurns) KDGameData.SlowMoveTurns = 0;
-			if (String)
-				localStorage.setItem('KinkyDungeonSave', String);
+			if (String) {
+				try {
+					localStorage.setItem('KinkyDungeonSave', String);
+				} catch (e) {
+					KDSendMusicToast(e.message, 0);
+					localStorage.setItem('KinkyDungeonSave', "");
+					saveError = true;
+				}
+			}
 
 			if (saveData.KDGameData && saveData.KDGameData.LastMapSeed) KDsetSeed(saveData.KDGameData.LastMapSeed);
 
