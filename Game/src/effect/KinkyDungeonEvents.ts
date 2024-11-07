@@ -3788,7 +3788,15 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 						gaggedMiscastType: "Gagged",
 						query: true,
 					};
-					KDDoGaggedMiscastFlag(castdata);
+					let cpp = KinkyDungeoCheckComponentsPartial(data.spell,
+						data.x,
+						data.y,
+						false,
+						false,
+					);
+
+					if (cpp.length > 0)
+						KDDoGaggedMiscastFlag(castdata, cpp);
 					let oldMiscast = castdata.flags.miscastChance;
 
 					castdata = {
@@ -3803,7 +3811,15 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 						gaggedMiscastType: "Gagged",
 						query: true,
 					};
-					KDDoGaggedMiscastFlag(castdata);
+					cpp = KinkyDungeoCheckComponentsPartial(data.spell,
+						data.x,
+						data.y,
+						false,
+						false,
+					);
+
+					if (cpp.length > 0)
+						KDDoGaggedMiscastFlag(castdata, cpp);
 					let newMiscast = castdata.flags.miscastChance;
 					if (failedcomp.length > 0 || oldMiscast > newMiscast) {
 						data.components = ["Verbal"];

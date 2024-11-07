@@ -737,12 +737,12 @@ function KinkyDungeonMakeNoise(radius: number, noiseX: number, noiseY: number, h
  * @param {object} data.flags
  * @param {boolean} data.gaggedMiscastFlag
  */
-function KDDoGaggedMiscastFlag(data: any) {
+function KDDoGaggedMiscastFlag(data: any, components: string[]) {
 	let lastPartialChance = 0;
 
 
 	if (!KDSpellIgnoreComp(data.spell)) {
-		for (let c of data.components || data.spell.components) {
+		for (let c of components || data.components || data.spell.components) {
 			if (KDSpellComponentTypes[c]?.partialMiscastChance && KDSpellComponentTypes[c].check(data.spell, data.targetX, data.targetY)) {
 				let partialMiscastChance = KDSpellComponentTypes[c].partialMiscastChance(data.spell, data.targetX, data.targetY);
 				if (partialMiscastChance > 0) {
@@ -812,6 +812,7 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 		player: player,
 		delta: 1,
 		components: cp.components,
+		failed: cp.failed,
 		gaggedMiscastFlag: false,
 		gaggedMiscastType: "Gagged",
 		channel: spell.channel,
@@ -819,8 +820,17 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 		manacost: (!enemy && !bullet && player) ? KinkyDungeonGetManaCost(spell) : 0,
 	});
 
-	if (!enemy && !bullet && player && data.components)
-		KDDoGaggedMiscastFlag(data);
+	if (!enemy && !bullet && player && data.components) {
+		let cpp = KinkyDungeoCheckComponentsPartial(data.spell,
+			data.originX,
+			data.originY,
+			false,
+			false,
+		);
+
+		if (cpp.length > 0)
+			KDDoGaggedMiscastFlag(data, cpp);
+	}
 
 
 

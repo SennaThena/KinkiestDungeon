@@ -277,7 +277,15 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 					gaggedMiscastFlag: false,
 					gaggedMiscastType: "Gagged",
 				};
-				KDDoGaggedMiscastFlag(castdata);
+				let cpp = KinkyDungeoCheckComponentsPartial(spell,
+					entity.x,
+					entity.y,
+					false,
+					false,
+				);
+
+				if (cpp.length > 0)
+					KDDoGaggedMiscastFlag(castdata, cpp);
 
 				if (castdata.gaggedMiscastFlag) fail = true;
 			}
