@@ -15,7 +15,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 		cooldown: 400,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured;
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.33 : 0.8;
@@ -79,7 +79,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 		cooldown: 400,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured;
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.33 : 0.8;

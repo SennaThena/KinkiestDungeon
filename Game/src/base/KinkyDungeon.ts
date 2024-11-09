@@ -645,9 +645,12 @@ interface KDGameDataBase {
 	Regiments:			Record<string, KDRegiment>,
 	QuickLoadouts:			Record<string, string[]>,
 	PersistentNPCCache:			Record<string, number[]>,
+	NamesGenerated:			Record<string, number>,
+
 };
 
 let KDGameDataBase: KDGameDataBase = {
+	NamesGenerated: {},
 	PersistentNPCCache: {},
 	Containers: {},
 	PersistentItems: {},
@@ -2635,7 +2638,18 @@ function KinkyDungeonRun() {
 		KDDrawWardrobe("menu", KDSpeakerNPC);
 	} else if (KinkyDungeonState == "GenMap") {
 		DrawTextFitKD(TextGet("KDGenMap"),
+
 		PIXIWidth/2, PIXIHeight/2, 1000, "#ffffff", undefined, 36);
+		FillRectKD(kdcanvas, kdpixisprites, "GenMapBG", {
+			Left: 0,
+			Top: 0,
+			Width: PIXIWidth,
+			Height: PIXIHeight,
+			Color: "#000000",
+			LineWidth: 1,
+			zIndex: -19,
+			alpha: 0.3
+		});
 		if (KDGenMapCallback) {
 			setTimeout(RunGenMapCallback, 100);
 		}
@@ -5803,6 +5817,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 			KDGameData = JSON.parse(JSON.stringify(KDGameDataBase));
 			if (saveData.KDGameData != undefined) KDGameData = Object.assign({}, saveData.KDGameData);
 
+			if (!KDGameData.NamesGenerated) KDGameData.NamesGenerated = {};
 			if (!KDGameData.Containers) KDGameData.Containers = {};
 
 			InitFacilities();

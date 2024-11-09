@@ -1957,6 +1957,7 @@ function KDFreeNPC(en: entity) {
 	}
 	if (KDGameData.Collection[en.id + ""] && KDIsNPCPersistent(en.id)) {
 		KDGetPersistentNPC(en.id).collect = true; // Collect them)
+		//KDTPToSummit(en.id);
 	}
 	if (en.hp < 0.52) en.hp = 0.52;
 	KDSetToExpectedBondage(en, 0);
@@ -2537,6 +2538,7 @@ function KinkyDungeonCapture(enemy: entity): boolean {
 	if (KDIsImprisoned(enemy)) KDFreeNPC(enemy);
 	if (KDIsNPCPersistent(enemy.id)) {
 		KDGetPersistentNPC(enemy.id).collect = true;
+		KDTPToSummit(enemy.id);
 		KDGetPersistentNPC(enemy.id).captured = false;
 		KDUpdatePersistentNPC(enemy.id);
 	}
@@ -8355,6 +8357,7 @@ function KDAddToParty(enemy: entity): boolean {
 		if (!KDGameData.Collection[enemy.id + ""])
 			KDAddCollection(enemy, undefined, "Guest");
 		KDGetPersistentNPC(enemy.id).collect = true; // Collect them
+		//KDTPToSummit(enemy.id);
 	}
 	if (KDGameData.Collection[enemy.id + ""]?.Facility) {
 		KDGameData.Collection[enemy.id + ""].Facility = "";
@@ -8580,6 +8583,8 @@ function KDRemoveEntity(enemy: entity, kill?: boolean, capture?: boolean, noEven
 				if (enemy.hp < 0.52) enemy.hp = 0.52;
 				if (KDGameData.Collection[enemy.id + ""]) {
 					KDGameData.Collection[enemy.id + ""].escaped = false;
+					if (!KDGameData.Collection[enemy.id + ""].status)
+						KDTPToSummit(enemy.id);
 				}
 			} else {
 				if (KDEntityAtRiskOfCapture(enemy, data.mapData)) {

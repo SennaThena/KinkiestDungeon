@@ -348,6 +348,27 @@ function KinkyDungeonNewGamePlus(): void {
 	for (let item of lostItems) {
 		KDAddLostItemSingle(item.name, 1);
 	}
+	let newPersistent: {
+		[_: string]: KDPersistentNPC
+	} = {};
+	// Remove all persistent NPCs not permanent or part of collection
+	for (let V of Object.values(KDPersistentNPCs)) {
+		if (V.permanent || KDGameData.Collection[V.id + ""]) {
+			newPersistent[V.id] = V;
+			if (KDGameData.Collection[V.id + ""]) {
+				if (V.mapX != 0 || V.mapY != 0 || V.room != "Summit") {
+					V.spawned = false;
+					V.mapX = 0;
+					V.mapY = 0;
+					V.room = "Summit";
+				}
+			} else V.room = "";
+
+		}
+	}
+
+	KDGameData.PersistentNPCCache = {};
+	KDPersistentNPCs = newPersistent;
 
 	KinkyDungeonSetCheckPoint("grv", true);
 	KDGameData.HighestLevelCurrent = 1;
@@ -4850,6 +4871,7 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 				KDAddCollection(Enemy);
 				if (KDIsNPCPersistent(Enemy.id)) {
 					KDGetPersistentNPC(Enemy.id).collect = true;
+					KDTPToSummit(Enemy.id);
 					KDGetPersistentNPC(Enemy.id).captured = false;
 					KDUpdatePersistentNPC(Enemy.id);
 				}
@@ -6168,5 +6190,17 @@ function KDUpdateRepopQueue(data: KDMapDataType, delta: number) {
 					);
 			}
 		}
+	}
+}
+
+
+function KDTPToSummit(id: number) {
+	let npc = KDGetPersistentNPC(id);
+	if (npc) {
+		KDMovePersistentNPC(id, {
+			mapX: 0,
+			mapY: 0,
+			room: "Summit",
+		})
 	}
 }

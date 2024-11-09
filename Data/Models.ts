@@ -263,6 +263,8 @@ function DisposeCharacter(C: Character, resort: boolean = true, deleteSpecial: b
 		let id = KDNPCChar_ID.get(C);
 		KDNPCChar.delete(id);
 		if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+			if (KDPersistentNPCs[id + ""].Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
+				delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 			delete KDPersistentNPCs[id + ""];
 			delete KDGameData.NPCRestraints[id + ""];
 			KDDeletedIDs[id + ""] = 1;
@@ -294,6 +296,8 @@ function DisposeEntity(id: number, resort: boolean = true, deleteSpecial = false
 	}
 	KDNPCChar.delete(id);
 	if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+		if (KDPersistentNPCs[id + ""].Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
+			delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 		delete KDPersistentNPCs[id + ""];
 		delete KDGameData.NPCRestraints[id + ""];
 		KDDeletedIDs[id + ""] = 1;

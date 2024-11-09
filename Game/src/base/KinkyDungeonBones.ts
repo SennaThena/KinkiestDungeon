@@ -1247,7 +1247,7 @@ function KDProcessCustomPatron(Enemy: enemy, e: entity, chanceBoost: number, mak
 	let chance = 0.05 + (chanceBoost || 0); // Lower chance if 'subordinate'
 	if (!e.CustomName && KDPatronCustomEnemies.get(Enemy.name) && KDRandom() < chance) {
 		let customs: any[] = KDPatronCustomEnemies.get(Enemy.name).filter((element) => {
-			return (element.prisoner && KDEnemyHasFlag(e, "imprisoned")) || (element.free && !KDEnemyHasFlag(e, "imprisoned"));
+			return !KDGameData.NamesGenerated[element.name] && (element.prisoner && KDEnemyHasFlag(e, "imprisoned")) || (element.free && !KDEnemyHasFlag(e, "imprisoned"));
 		});
 		if (customs.length > 0) {
 			let custom = customs[Math.floor(customs.length * KDRandom())];
@@ -1272,6 +1272,8 @@ function KDProcessCustomPatron(Enemy: enemy, e: entity, chanceBoost: number, mak
 			if (makePersistent) {
 				let npc = KDGetPersistentNPC(e.id, e);
 				KDSetSpawnAndWanderAI(npc);
+				npc.special = true;
+				KDGameData.NamesGenerated[custom.name] = e.id;
 			}
 			return custom;
 		}

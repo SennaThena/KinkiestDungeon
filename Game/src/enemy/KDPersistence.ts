@@ -14,8 +14,10 @@ interface KDPersistentNPC {
 	opinion: number,
 	/** If true, the NPC is here to stay */
 	jailed?: boolean,
-	/** NPC is special and should remain persistent */
+	/** NPC is special and should remain persistent instead of being deleted */
 	special?: boolean,
+	/** NPC will NOT get deleted with NG+ */
+	permanent?: boolean,
 	/** NPC is very skilled and will never be captured */
 	alwaysEscape?: boolean,
 	/** Wandering AI type, for moving between floors */
@@ -382,4 +384,10 @@ function KDSetSpawnAndWanderAI(npc: KDPersistentNPC) {
 
 	if (SpawnAISettingList[aitype]) npc.spawnAI = SpawnAISettingList[aitype](npc, enemy);
 	if (WanderAISettingList[waitype]) npc.wanderAI = WanderAISettingList[waitype](npc, enemy);
+}
+
+function KDNPCCanWander(id: number): boolean {
+	let npc = KDIsNPCPersistent(id) ? KDGetPersistentNPC(id) : null;
+
+	return npc && (!npc.collect || !(KDGameData.Collection[id] && npc.room == "Summit")) && !KDIsInCapturedPartyID(id)
 }

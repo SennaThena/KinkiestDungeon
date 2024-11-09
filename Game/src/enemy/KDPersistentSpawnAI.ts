@@ -15,7 +15,7 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 		cooldown: 50,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextSpawnTick || 0) && !npc.captured;
+			return KinkyDungeonCurrentTick > (npc.nextSpawnTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.4 : 0.1;
