@@ -1397,7 +1397,6 @@ let KDCollectionTabDraw: Record<string, KDCollectionTabDrawDef> = {
 			DrawTextFitKD(TextGet("KDDemoteNPC"), x + 220, y + 750, 500, "#ffffff", KDTextGray0);
 		}
 
-
 		if ((!value.status
 			|| Object.values(KDGetNPCRestraints(value.id)).length > 0
 			|| KDIsOKWithRestraining(value))
@@ -1413,6 +1412,27 @@ let KDCollectionTabDraw: Record<string, KDCollectionTabDrawDef> = {
 				DrawTextFitKD(TextGet("KDRestrainNPC"), x + 220, y + 750, 500, "#ffffff",
 					KDTextGray0);
 			}
+
+
+		if (value.status == "Guest" && DrawButtonKDEx("removeGuest", (_b) => {
+			if (!KDConfirmOverInventoryAction) {
+				KDConfirmOverInventoryAction = true;
+			} else {
+				KDSendInput("removeGuest", {
+					selection: {[value.id]: true},
+					player: KDPlayer().id,
+				});
+				KDConfirmOverInventoryAction = false;
+			}
+			if (KDSoundEnabled())
+				AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "Damage" + ".ogg");
+			return true;
+		}, true, x + 10 + buttonSpacing*III++, y + 730 - 10 - 80, 80, 80, "", "#ffffff",
+		KinkyDungeonRootDirectory + "UI/Buttons/RemoveGuest" + (KDConfirmOverInventoryAction ? "Confirm" : "") + ".png",
+		undefined, undefined, false)) {
+			DrawTextFitKD(TextGet("KDKickOutGuest" + (KDConfirmOverInventoryAction ? "Confirm" : "")), x + 220, y + 750, 500, "#ffffff", KDTextGray0);
+		}
+
 		return III;
 	}
 };

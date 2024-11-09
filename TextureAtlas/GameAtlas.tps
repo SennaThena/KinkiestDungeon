@@ -4179,6 +4179,8 @@
             <key type="filename">../Game/UI/Buttons/MarkAll.png</key>
             <key type="filename">../Game/UI/Buttons/Ransom.png</key>
             <key type="filename">../Game/UI/Buttons/Release.png</key>
+            <key type="filename">../Game/UI/Buttons/RemoveGuest.png</key>
+            <key type="filename">../Game/UI/Buttons/RemoveGuestConfirm.png</key>
             <key type="filename">../Game/UI/Buttons/Unmark.png</key>
             <key type="filename">../Game/UI/Buttons/UnmarkAll.png</key>
             <struct type="IndividualSpriteSettings">

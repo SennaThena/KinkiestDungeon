@@ -3275,6 +3275,8 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 	let timeDelta = KinkyDungeonFlags.get('TimeSlowTick') ? 1 : maindelta;
 	let enemyDelta = {};
 	for (let entity of KDMapData.Entities) {
+		if (!entity.Enemy?.maxhp)
+			KDUnPackEnemy(entity);
 		if (KDIsTimeImmune(entity)) {
 			enemyDelta[entity.id] = timeDelta;
 			if (timeDelta > 0) {
@@ -3337,7 +3339,6 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 	for (let enemy of KDMapData.Entities) {
 		let delta = enemyDelta[enemy.id] || maindelta;
 		if ((Allied && KDAllied(enemy)) || (!Allied && !KDAllied(enemy))) {
-
 			let tile = KinkyDungeonTilesGet(enemy.x + "," + enemy.y);
 			if (tile?.OL && (enemy.gxx != enemy.x || enemy.gyy != enemy.y)) {
 				// We remove certain flags when enemies are in an 'offlimits' area so we can get them out

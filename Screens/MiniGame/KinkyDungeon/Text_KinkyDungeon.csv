@@ -23848,6 +23848,8 @@ KDPrisoners,Prisoners
 
 KDPromoteNPC,Promote to Servant
 KDDemoteNPC,Demote
+KDKickOutGuest,Delete Guest
+KDKickOutGuestConfirm,Really Delete Guest?
 
 KDTeaseAttackResist_LeashGrab,The ENMY tries to grab you!
 
@@ -25868,3 +25870,5 @@ RestraintLeatherBootsDesc2,"Provides minor protection against enemy attacks."
 RestraintLeatherBootsCommon,"Hide Boots"
 RestraintLeatherBootsCommonDesc,"For stepping into all kinds of trouble!"
 RestraintLeatherBootsCommonDesc2,"Provides minor protection against enemy attacks."
+
+KDGenMap,Generating Map...

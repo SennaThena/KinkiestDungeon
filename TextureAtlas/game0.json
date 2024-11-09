@@ -1,13 +1,5 @@
 {"frames": {
 
-"Game/Aura/Glow.png":
-{
-	"frame": {"x":1965,"y":1128,"w":72,"h":73},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":37,"y":36,"w":72,"h":73},
-	"sourceSize": {"w":144,"h":144}
-},
 "Game/Aura/Missiles4.png":
 {
 	"frame": {"x":935,"y":1725,"w":18,"h":76},
@@ -48,17 +40,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":216,"h":216},
 	"sourceSize": {"w":216,"h":216}
 },
-"Game/Bullets/ChainBolt.png":
-{
-	"frame": {"x":537,"y":2002,"w":72,"h":42},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":10,"w":72,"h":42},
-	"sourceSize": {"w":72,"h":72}
-},
 "Game/Bullets/Dagger.png":
 {
-	"frame": {"x":829,"y":2018,"w":67,"h":24},
+	"frame": {"x":823,"y":2018,"w":67,"h":24},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":24,"w":67,"h":24},
@@ -80,6 +64,14 @@
 	"spriteSourceSize": {"x":24,"y":28,"w":300,"h":332},
 	"sourceSize": {"w":360,"h":360}
 },
+"Game/Bullets/EncaseBoltDrone.png":
+{
+	"frame": {"x":932,"y":2025,"w":41,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":27,"w":41,"h":20},
+	"sourceSize": {"w":72,"h":72}
+},
 "Game/Bullets/ExplosiveBarrelHit.png":
 {
 	"frame": {"x":622,"y":1001,"w":360,"h":360},
@@ -98,7 +90,7 @@
 },
 "Game/Bullets/GlueBomb.png":
 {
-	"frame": {"x":538,"y":1924,"w":82,"h":76},
+	"frame": {"x":1965,"y":974,"w":82,"h":76},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":76,"y":63,"w":82,"h":76},
@@ -138,7 +130,7 @@
 },
 "Game/Bullets/LiquidMetalBurst.png":
 {
-	"frame": {"x":1965,"y":974,"w":76,"h":76},
+	"frame": {"x":1965,"y":1052,"w":76,"h":76},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":70,"y":70,"w":76,"h":76},
@@ -146,7 +138,7 @@
 },
 "Game/Bullets/NurseSyringe.png":
 {
-	"frame": {"x":760,"y":2018,"w":67,"h":25},
+	"frame": {"x":754,"y":2018,"w":67,"h":25},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":23,"w":67,"h":25},
@@ -176,6 +168,14 @@
 	"spriteSourceSize": {"x":1,"y":26,"w":70,"h":21},
 	"sourceSize": {"w":72,"h":72}
 },
+"Game/Bullets/SlimeBallHit.png":
+{
+	"frame": {"x":1965,"y":1130,"w":72,"h":71},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":72,"h":71},
+	"sourceSize": {"w":72,"h":72}
+},
 "Game/Bullets/SlimeWallVertHit.png":
 {
 	"frame": {"x":1993,"y":1791,"w":18,"h":72},
@@ -200,12 +200,12 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":216,"h":216},
 	"sourceSize": {"w":216,"h":216}
 },
-"Game/Bullets/WitchChainBolt.png":
+"Game/Bullets/VineSlimeBallHit.png":
 {
-	"frame": {"x":537,"y":2002,"w":72,"h":42},
+	"frame": {"x":1965,"y":1130,"w":72,"h":71},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":10,"w":72,"h":42},
+	"spriteSourceSize": {"x":0,"y":1,"w":72,"h":71},
 	"sourceSize": {"w":72,"h":72}
 },
 "Game/Bullets/WitchRope.png":
@@ -226,19 +226,11 @@
 },
 "Game/Down.png":
 {
-	"frame": {"x":1043,"y":2030,"w":60,"h":17},
+	"frame": {"x":1044,"y":2030,"w":60,"h":17},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":13,"y":11,"w":60,"h":17},
 	"sourceSize": {"w":86,"h":36}
-},
-"Game/EffectTiles/PressurePlateActive.png":
-{
-	"frame": {"x":1105,"y":2030,"w":38,"h":17},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":17,"y":43,"w":38,"h":17},
-	"sourceSize": {"w":72,"h":72}
 },
 "Game/EffectTiles/TorchUnlit.png":
 {
@@ -296,12 +288,12 @@
 	"spriteSourceSize": {"x":20,"y":5,"w":31,"h":62},
 	"sourceSize": {"w":72,"h":72}
 },
-"Game/EnemiesBound/Head/SlimeAdv.png":
+"Game/EnemiesBound/Head/Mummy.png":
 {
-	"frame": {"x":898,"y":2018,"w":35,"h":29},
+	"frame": {"x":892,"y":2018,"w":38,"h":29},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":21,"y":7,"w":35,"h":29},
+	"spriteSourceSize": {"x":22,"y":5,"w":38,"h":29},
 	"sourceSize": {"w":72,"h":72}
 },
 "Game/FloorGeneric/Crack.png":
@@ -362,7 +354,7 @@
 },
 "Game/FloorGeneric/HookHigh.png":
 {
-	"frame": {"x":611,"y":2002,"w":8,"h":28},
+	"frame": {"x":2038,"y":1203,"w":8,"h":28},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":31,"y":4,"w":8,"h":28},
@@ -400,6 +392,14 @@
 	"spriteSourceSize": {"x":5,"y":28,"w":500,"h":298},
 	"sourceSize": {"w":512,"h":368}
 },
+"Game/InvItemSort.png":
+{
+	"frame": {"x":537,"y":2004,"w":76,"h":33},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":76,"h":33},
+	"sourceSize": {"w":76,"h":76}
+},
 "Game/Items/ChainSword.png":
 {
 	"frame": {"x":1686,"y":2017,"w":70,"h":21},
@@ -410,7 +410,7 @@
 },
 "Game/Items/CrossbowPistol.png":
 {
-	"frame": {"x":974,"y":2030,"w":67,"h":17},
+	"frame": {"x":975,"y":2030,"w":67,"h":17},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":29,"w":67,"h":17},
@@ -434,7 +434,7 @@
 },
 "Game/Items/Flamberge.png":
 {
-	"frame": {"x":691,"y":2018,"w":67,"h":29},
+	"frame": {"x":685,"y":2018,"w":67,"h":29},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":22,"w":67,"h":29},
@@ -464,9 +464,17 @@
 	"spriteSourceSize": {"x":45,"y":39,"w":18,"h":29},
 	"sourceSize": {"w":72,"h":72}
 },
+"Game/Items/Group/ItemHead.png":
+{
+	"frame": {"x":1106,"y":2030,"w":36,"h":14},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":36,"y":46,"w":36,"h":14},
+	"sourceSize": {"w":72,"h":72}
+},
 "Game/Items/Katana.png":
 {
-	"frame": {"x":621,"y":2018,"w":68,"h":17},
+	"frame": {"x":615,"y":2018,"w":68,"h":17},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":28,"w":68,"h":17},
@@ -567,14 +575,6 @@
 	"trimmed": true,
 	"spriteSourceSize": {"x":40,"y":13,"w":37,"h":95},
 	"sourceSize": {"w":120,"h":120}
-},
-"Game/Items/Restraint/Posture.png":
-{
-	"frame": {"x":1965,"y":1052,"w":78,"h":74},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":9,"y":13,"w":78,"h":74},
-	"sourceSize": {"w":94,"h":94}
 },
 "Game/Items/Restraint/ReversePrayer.png":
 {
@@ -706,7 +706,7 @@
 },
 "Game/Poses/BrowsAngry.png":
 {
-	"frame": {"x":611,"y":2037,"w":11,"h":10},
+	"frame": {"x":615,"y":2037,"w":11,"h":10},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":12,"w":11,"h":10},
@@ -746,7 +746,7 @@
 },
 "Game/Poses/Eyes2Angry.png":
 {
-	"frame": {"x":2039,"y":1128,"w":8,"h":16},
+	"frame": {"x":2039,"y":1130,"w":8,"h":16},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":26,"y":13,"w":8,"h":16},
@@ -778,7 +778,7 @@
 },
 "Game/Poses/EyesAngry.png":
 {
-	"frame": {"x":2038,"y":1203,"w":9,"h":17},
+	"frame": {"x":2038,"y":1233,"w":9,"h":17},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":11,"y":12,"w":9,"h":17},
@@ -896,12 +896,12 @@
 	"spriteSourceSize": {"x":29,"y":17,"w":16,"h":43},
 	"sourceSize": {"w":72,"h":72}
 },
-"Game/Spells/ChainBolt.png":
+"Game/Spells/Coalesce.png":
 {
-	"frame": {"x":537,"y":2002,"w":72,"h":42},
+	"frame": {"x":1965,"y":1130,"w":72,"h":71},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":10,"w":72,"h":42},
+	"spriteSourceSize": {"x":0,"y":1,"w":72,"h":71},
 	"sourceSize": {"w":72,"h":72}
 },
 "Game/Spells/EarthformArc.png":
@@ -968,6 +968,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":6},
 	"sourceSize": {"w":6,"h":6}
 },
+"Game/UI/Buttons/RemoveGuestConfirm.png":
+{
+	"frame": {"x":538,"y":1924,"w":78,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":78},
+	"sourceSize": {"w":78,"h":78}
+},
 "Game/UI/CollectionFilter/EscapeRisk.png":
 {
 	"frame": {"x":2029,"y":1717,"w":18,"h":66},
@@ -983,14 +991,6 @@
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":19,"w":78,"h":45},
 	"sourceSize": {"w":94,"h":94}
-},
-"Game/UI/Sprint.png":
-{
-	"frame": {"x":935,"y":2025,"w":37,"h":21},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":13,"y":19,"w":37,"h":21},
-	"sourceSize": {"w":60,"h":60}
 }},
 "animations": {
 	"Game/Aura/Airbender": ["Game/Aura/Airbender0.png","Game/Aura/Airbender1.png","Game/Aura/Airbender2.png"],
@@ -1025,6 +1025,6 @@
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
 	"related_multi_packs": [ "game1.json", "game2.json", "game3.json", "game4.json", "game5.json" ],
-	"smartupdate": "$TexturePacker:SmartUpdate:28823c3a86816b897fbd22998506bdbe:cd2a23827de713cb365624f88ba6b90f:54a7432a0665349a58c0c74f51e75c65$"
+	"smartupdate": "$TexturePacker:SmartUpdate:01e35f715635f3460d392fc2389de1bb:82f16a65012125437f604f1c9fefe670:54a7432a0665349a58c0c74f51e75c65$"
 }
 }

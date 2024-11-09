@@ -1,5 +1,7 @@
 "use strict";
 
+let KDGenMapCallback: () => string = null;
+
 // Modders look here!
 /**
  * Dummy function. You can modify this function as part of your mod like so:
@@ -47,8 +49,14 @@ let KDStandardRenderException = {
 	Stats: [],
 	TileEditor: [],
 	Wardrobe: [],
+	GenMap: [],
+
 
 };
+
+let KDStateBG = {
+	GenMap: "Logo",
+}
 
 let KDClipboardDisabled = window.location.host.includes('itch.zone');
 (async function() {
@@ -1496,7 +1504,8 @@ function KinkyDungeonRun() {
 
 
 	if ((KinkyDungeonState != "Game" || KinkyDungeonDrawState != "Game") && KinkyDungeonState != "TileEditor") {
-		let BG = (KinkyDungeonState == "Consent" || KinkyDungeonState == "Intro" || KinkyDungeonState == "Logo" || KinkyDungeonState == "Game") ? "Logo" : "BrickWall";
+		let BG = KDStateBG[KinkyDungeonState] ||
+			(KinkyDungeonState == "Consent" || KinkyDungeonState == "Intro" || KinkyDungeonState == "Logo" || KinkyDungeonState == "Game") ? "Logo" : "BrickWall";
 		if (StandalonePatched) {
 			KDDraw(kdcanvas, kdpixisprites, "bg", "Backgrounds/" + BG + (StandalonePatched ? ".png" : ".jpg"), 0, 0, CanvasWidth, CanvasHeight, undefined, {
 				zIndex: -115,
@@ -2624,6 +2633,12 @@ function KinkyDungeonRun() {
 
 	} else if (KinkyDungeonState == "Wardrobe") {
 		KDDrawWardrobe("menu", KDSpeakerNPC);
+	} else if (KinkyDungeonState == "GenMap") {
+		DrawTextFitKD(TextGet("KDGenMap"),
+		PIXIWidth/2, PIXIHeight/2, 1000, "#ffffff", undefined, 36);
+		if (KDGenMapCallback) {
+			setTimeout(RunGenMapCallback, 100);
+		}
 	} else if (KinkyDungeonState == "Stats") {
 
 		let tooltip = KinkyDungeonDrawPerks(false);
@@ -4665,16 +4680,19 @@ function KDDrawLoadMenu() {
 			KinkyDungeonInitialize(1, true);
 			MiniGameKinkyDungeonCheckpoint = "grv";
 			if (KinkyDungeonLoadGame(LoadMenuCurrentSave)) {
-				KDSendEvent('loadGame');
-				//KDInitializeJourney(KDJourney);
-				if (KDMapData.Grid == "")
-					KinkyDungeonCreateMap(KinkyDungeonMapParams[(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint)],
-						KDMapData.RoomType || "", KDMapData.MapMod || "", MiniGameKinkyDungeonLevel, false, true);
-				KinkyDungeonState = "Game";
-				if (KinkyDungeonKeybindings) {
-					KDCommitKeybindings();
-				}
-				KDModsAfterGameStart();
+				KDGenMapCallback = () => {
+					if (KDMapData.Grid == "")
+						KinkyDungeonCreateMap(KinkyDungeonMapParams[(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint)],
+							KDMapData.RoomType || "", KDMapData.MapMod || "", MiniGameKinkyDungeonLevel, false, true);
+					KinkyDungeonState = "Game";
+					if (KinkyDungeonKeybindings) {
+						KDCommitKeybindings();
+					}
+					KDModsAfterGameStart();
+					return "Game";
+				};
+				KinkyDungeonState = "GenMap";
+
 			}
 			LoadMenuCurrentSave = undefined;
 			LoadMenuCurrentSlot = undefined;
@@ -5941,8 +5959,8 @@ function KinkyDungeonLoadGame(String: string = "") {
 
 			if (saveData.KinkyDungeonPlayerEntity) KinkyDungeonPlayerEntity = saveData.KinkyDungeonPlayerEntity;
 			if (saveData.KDMapData) {
-				if (!KDMapData)
-					KDMapData = Object.assign(KDDefaultMapData(0, MiniGameKinkyDungeonLevel), JSON.parse(JSON.stringify(saveData.KDMapData)));
+				KDMapData = Object.assign(KDMapData || KDDefaultMapData(0, MiniGameKinkyDungeonLevel),
+					JSON.parse(JSON.stringify(saveData.KDMapData)));
 				if (!KDMapData.Traffic || KDMapData.Traffic.length == 0) KDGenerateBaseTraffic();
 				KinkyDungeonGenNavMap();
 			} else {
@@ -5964,6 +5982,8 @@ function KinkyDungeonLoadGame(String: string = "") {
 				KinkyDungeonResetFog();
 				if (saveData.KinkyDungeonFogGrid) KDMapData.FogGrid = saveData.KinkyDungeonFogGrid;
 			}
+
+			KDUnPackEnemies(KDMapData);
 			KinkyDungeonLeashingEnemy();
 			KinkyDungeonJailGuard();
 			if (saveData.KDCommanderRoles) KDCommanderRoles = new Map(saveData.KDCommanderRoles);
@@ -6333,4 +6353,12 @@ let KDFocusSounds = setInterval(() => {
 
 function KDSoundEnabled() {
 	return KDToggles.Sound && (!KDToggles.SoundOffWhenMin || !KDMinimized);
+}
+
+async function RunGenMapCallback() {
+	let ff = KDGenMapCallback;
+	KDGenMapCallback = null;
+	(() => {
+		KinkyDungeonState = ff();
+	})();
 }

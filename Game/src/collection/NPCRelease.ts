@@ -161,6 +161,10 @@ function KDCanRelease(id: number) {
 	let v = KDGameData.Collection[id + ""];
 	return v && !v.status && !v.Facility && (!v.escaped || !KinkyDungeonFindID(v.id)); // Prisoners only, not in same room
 }
+function KDCanRemoveGuest(id: number) {
+	let v = KDGameData.Collection[id + ""];
+	return v && v.status == "Guest" && !v.Facility; // Prisoners only, not in same room
+}
 function KDCanRansom(id: number) {
 	let v = KDGameData.Collection[id + ""];
 	return v && !v.status && !v.escaped && !KinkyDungeonFindID(id) && !KDNPCUnavailable(id, v.status)

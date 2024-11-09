@@ -1232,6 +1232,16 @@ function KDProcessInput(type: string, data: any): string {
 			}
 			KDSortCollection();
 			break;
+		case "removeGuest":
+			if (data?.selection) {
+				for (let v of Object.keys(data.selection)) {
+					if (KDCanRemoveGuest(parseInt(v))) {
+						delete KDGameData.Collection[parseInt(v) + ""];
+					}
+				}
+			}
+			KDSortCollection();
+			break;
 		case "ransomNPC":
 			if (data?.selection) {
 				for (let v of Object.keys(data.selection)) {

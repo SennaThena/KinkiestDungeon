@@ -251,6 +251,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 				}
 
 				let newLocation = KDAdvanceLevel(data, MiniGameKinkyDungeonLevel + data.AdvanceAmount > KDGameData.HighestLevelCurrent); // Advance anyway
+
 				// We increment the save, etc, after the tunnel
 				if (MiniGameKinkyDungeonLevel > KDGameData.HighestLevelCurrent) {
 					if (!data.overrideProgression) {
@@ -339,37 +340,52 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 					KinkyDungeonSetCheckPoint((KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY]?.Checkpoint || 'grv'), true, suppressCheckPoint);
 				}
 
-				if (KinkyDungeonState != "End") {
-					KinkyDungeonSendEvent("afterHandleStairs", {
-						toTile: toTile,
-					});
-					KDGameData.HeartTaken = false;
-					KinkyDungeonCreateMap(KinkyDungeonMapParams[altRoomTarget?.useGenParams ? altRoomTarget.useGenParams : (KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY]?.Checkpoint || 'grv')], KDGameData.RoomType, KDGameData.MapMod, MiniGameKinkyDungeonLevel, undefined, undefined,
-						data.faction, newLocation, !altRoomTarget || !altRoomTarget.alwaysRegen, altRoom?.persist ? originalRoom : (KDGetWorldMapLocation(newLocation)?.main || data.JourneyTile?.RoomType || ""),
-						AdvanceAmount > 0
-							? (0)
-							: (toTile == 'S' ? 1 : 0),
-						data.escapeMethod);
+				KDGenMapCallback = () => {
+					if (KinkyDungeonState != "End") {
+						KinkyDungeonSendEvent("afterHandleStairs", {
+							toTile: toTile,
+						});
+						KDGameData.HeartTaken = false;
+						KinkyDungeonCreateMap(KinkyDungeonMapParams[altRoomTarget?.useGenParams ? altRoomTarget.useGenParams : (KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY]?.Checkpoint || 'grv')], KDGameData.RoomType, KDGameData.MapMod, MiniGameKinkyDungeonLevel, undefined, undefined,
+							data.faction, newLocation, !altRoomTarget || !altRoomTarget.alwaysRegen, altRoom?.persist ? originalRoom : (KDGetWorldMapLocation(newLocation)?.main || data.JourneyTile?.RoomType || ""),
+							AdvanceAmount > 0
+								? (0)
+								: (toTile == 'S' ? 1 : 0),
+							data.escapeMethod);
 
-					if (data.ShortcutIndex >= 0) {
-						KDGameData.ShortcutIndex = data.ShortcutIndex;
-					} else {
-						KDGameData.ShortcutIndex = -1;
-					}
-					if (altRoom?.afterExit) altRoom.afterExit(data); // Handle any special contitions
-					KinkyDungeonSendEvent("AfterAdvance", data);
-					let saveData = LZString.compressToBase64(JSON.stringify(KinkyDungeonSaveGame(true)));
-					if (KDGameData.RoomType == "PerkRoom" && MiniGameKinkyDungeonLevel >= 1 && MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent) { //  && Math.floor(MiniGameKinkyDungeonLevel / 3) == MiniGameKinkyDungeonLevel / 3
-						if ((!KinkyDungeonStatsChoice.get("saveMode")) && !suppressCheckPoint) {
-							KinkyDungeonState = "Save";
-							ElementCreateTextArea("saveDataField");
-							ElementValue("saveDataField", saveData);
+						if (data.ShortcutIndex >= 0) {
+							KDGameData.ShortcutIndex = data.ShortcutIndex;
+						} else {
+							KDGameData.ShortcutIndex = -1;
 						}
+						if (altRoom?.afterExit) altRoom.afterExit(data); // Handle any special contitions
+						KinkyDungeonSendEvent("AfterAdvance", data);
+						let saveData = LZString.compressToBase64(JSON.stringify(KinkyDungeonSaveGame(true)));
+						if (KDGameData.RoomType == "PerkRoom" && MiniGameKinkyDungeonLevel >= 1 && MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent) { //  && Math.floor(MiniGameKinkyDungeonLevel / 3) == MiniGameKinkyDungeonLevel / 3
+							if ((!KinkyDungeonStatsChoice.get("saveMode")) && !suppressCheckPoint) {
+								KinkyDungeonState = "Save";
+								KDTextArea("saveDataField", 1250, 150, 1000, 230);
+								ElementValue("saveDataField", saveData);
+							}
+						}
+						KinkyDungeonSaveGame();
+						KDSendStatus('nextLevel');
+					} else {
+						KDSendStatus('end');
 					}
-					KinkyDungeonSaveGame();
-					KDSendStatus('nextLevel');
-				} else {
-					KDSendStatus('end');
+					return "Game";
+				};
+
+				let location = KDWorldMap[newLocation.x + "," + newLocation.y];
+
+
+				if (KinkyDungeonState != "End"
+					&& !((!altRoomTarget || !altRoomTarget.alwaysRegen)
+					&& (location?.data[KDGameData.RoomType])))
+					KinkyDungeonState = "GenMap";
+				else {
+					KDGenMapCallback();
+					KDGenMapCallback = null;
 				}
 			}
 		} else {
