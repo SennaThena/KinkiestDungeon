@@ -1156,6 +1156,13 @@ function KinkyDungeonLoad(): void {
 				&& localStorage.getItem('KinkyDungeonSave')) {
 				localStorage.setItem('KDLastSaveSlot', "1");
 				KDMigrateSaveToNewSystem();
+			} else {
+				for (var i = 1; i < 5; i++) {
+					let num = (i);
+					KinkyDungeonDBLoad(num).then((code) => {
+						loadedsaveslots[num - 1] = code;
+					});
+				}
 			}
 
 
@@ -1642,12 +1649,21 @@ function KinkyDungeonRun() {
 
 
 		DrawButtonKDEx("GameContinue", () => {
+			if (!localStorage.getItem('KinkyDungeonSave')) {
+				// Set the save slot - if the player last loaded a save from slot 2, this will continue saving to slot 2.
+				KDSaveSlot = (localStorage.getItem('KDLastSaveSlot') !== null) ? parseInt(localStorage.getItem('KDLastSaveSlot')) : 0;
+			}
+
 			KDExecuteModsAndStart();
 			// Set the save slot - if the player last loaded a save from slot 2, this will continue saving to slot 2.
 			KDSaveSlot = (localStorage.getItem('KDLastSaveSlot') !== null) ? parseInt(localStorage.getItem('KDLastSaveSlot')) : 0;
 
 			return true;
-		}, localStorage.getItem('KinkyDungeonSave') != '', 1000-350/2, 360, 350, 64, TextGet("GameContinue"), localStorage.getItem('KinkyDungeonSave') ? "#ffffff" : "pink", "");
+		}, localStorage.getItem('KinkyDungeonSave') != ''
+			|| !!(localStorage.getItem('KDLastSaveSlot') !== null && loadedsaveslots[parseInt(localStorage.getItem('KDLastSaveSlot'))-1]),
+			1000-350/2, 360, 350, 64, TextGet("GameContinue"),
+			(localStorage.getItem('KinkyDungeonSave')
+		|| (localStorage.getItem('KDLastSaveSlot') !== null && loadedsaveslots[parseInt(localStorage.getItem('KDLastSaveSlot')) - 1])) ? "#ffffff" : "pink", "");
 		DrawButtonKDEx("GameStart", () => {
 			KinkyDungeonState = "Name";
 			KDSaveSlot = (localStorage.getItem('KDLastSaveSlot') !== null) ? parseInt(localStorage.getItem('KDLastSaveSlot')) : 4;
@@ -5705,7 +5721,9 @@ async function KinkyDungeonCompressSave(save: any) {
 function KinkyDungeonLoadGame(String: string = "") {
 	localStorage.setItem('KDLastSaveSlot', "" + KDSaveSlot);
 	KinkyDungeonSendEvent("beforeLoadGame", {});
-	let str = String ? DecompressB64(String.trim()) : (localStorage.getItem('KinkyDungeonSave') ? DecompressB64(localStorage.getItem('KinkyDungeonSave')) : "");
+	let str = String ? DecompressB64(String.trim()) :
+		(localStorage.getItem('KinkyDungeonSave') ? DecompressB64(localStorage.getItem('KinkyDungeonSave'))
+		: (loadedsaveslots[KDSaveSlot-1] ? DecompressB64(loadedsaveslots[KDSaveSlot-1]) : ""));
 	if (str) {
 		let saveData: KinkyDungeonSave = JSON.parse(str);
 		if (    saveData
