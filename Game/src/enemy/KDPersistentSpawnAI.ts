@@ -58,7 +58,7 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 					return true;
 				} else {
 					// Wait till next spawn cycle
-					KDRemoveEntity(entity, false, false, true);
+					KDRemoveEntity(entity, false, false, true, undefined, mapData);
 					return true;
 				}
 			}

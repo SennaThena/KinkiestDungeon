@@ -7839,8 +7839,8 @@ KinkyDungeonAddCursedVariants(KinkyDungeonCreateRestraint({
 		{trigger: "tick", type: "ApplyConduction", duration: 2},
 		{trigger: "tick", type: "armorBuff", power: 0.5, inheritLinked: true},
 		{trigger: "tick", type: "RestraintBlock", power: 2.5, inheritLinked: true},
-		{trigger: "playerAttack", type: "armorNoise", chance: 1, dist: 8, sfx: "Chain", msg: "KinkyDungeonPunishPlayerArmor", inheritLinked: true},
-		{trigger: "playerCast", type: "armorNoise", chance: 1, dist: 11, punishComponent: "Arms", sfx: "Chain", msg: "KinkyDungeonPunishPlayerArmor", inheritLinked: true},
+		{trigger: "playerAttack", type: "armorNoise", chance: 0.4, dist: 8, vol: 0.15, sfx: "Chain", msg: "KinkyDungeonPunishPlayerArmor", inheritLinked: true},
+		{trigger: "playerCast", type: "armorNoise", chance: 0.4, dist: 11, punishComponent: "Arms", vol: 0.15, sfx: "Chain", msg: "KinkyDungeonPunishPlayerArmor", inheritLinked: true},
 	],
 }, "Gauntlets", "Gloves with an iron grip.", "Provides +5 armor and minor protection against enemy attacks. Makes noise when attacking.")
 , [...KDHexVariantList.Base]);

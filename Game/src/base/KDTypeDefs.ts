@@ -1527,6 +1527,7 @@ interface KinkyDungeonEvent {
 	threshold?: number,
 	restraint?: string;
 	sfx?: string;
+	vol?: number;
 	power?: number;
 	keepLock?: boolean,
 	distractEff?: number;

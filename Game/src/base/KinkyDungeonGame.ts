@@ -1383,6 +1383,22 @@ function KinkyDungeonCreateMap (
 
 
 
+
+			KinkyDungeonReplaceVert(width, height);
+		}
+
+
+
+
+
+		if (KDTileToTest || ((KinkyDungeonNearestJailPoint(1, 1) || (altType && altType.nojail)) && (!altType || KDStageBossGenerated || !bossRules)
+			&& KinkyDungeonFindPath(KDMapData.StartPosition.x, KDMapData.StartPosition.y, KDMapData.EndPosition.x, KDMapData.EndPosition.y,
+				false, false, false, KinkyDungeonMovableTilesSmartEnemy,
+				false, false, false, undefined, false,
+				undefined, false, true)?.length > 0)) iterations = maxIter;
+		else console.log("This map failed to generate! Please screenshot and send your save code to Ada on deviantart or discord!");
+
+		if (iterations == maxIter) {
 			// Place enemies after player
 			if (!altType || altType.enemies) {
 
@@ -1399,42 +1415,31 @@ function KinkyDungeonCreateMap (
 
 			if (MapParams.worldGenCode) MapParams.worldGenCode();
 
-			KinkyDungeonReplaceVert(width, height);
-		}
+			if (KDGameData.PrisonerState == 'jail' && seed) {
+				// The above condition is the condition to start in jail
+				// We move the player to the jail after generating one
+				let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+				if (nearestJail) {
 
-		if (KDGameData.PrisonerState == 'jail' && seed) {
-			// The above condition is the condition to start in jail
-			// We move the player to the jail after generating one
-			let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
-			if (nearestJail) {
-
-				KDMovePlayer(nearestJail.x, nearestJail.y, false);
-				KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+					KDMovePlayer(nearestJail.x, nearestJail.y, false);
+					KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+				}
 			}
-		}
 
-		if (KDGameData.KinkyDungeonSpawnJailers > 0) KDGameData.KinkyDungeonSpawnJailers -= 1;
-		if (KDGameData.KinkyDungeonSpawnJailers > 3 && KDGameData.KinkyDungeonSpawnJailers < KDGameData.KinkyDungeonSpawnJailersMax - 1) KDGameData.KinkyDungeonSpawnJailers -= 1; // Reduce twice as fast when you are in deep...
+			if (KDGameData.KinkyDungeonSpawnJailers > 0) KDGameData.KinkyDungeonSpawnJailers -= 1;
+			if (KDGameData.KinkyDungeonSpawnJailers > 3 && KDGameData.KinkyDungeonSpawnJailers < KDGameData.KinkyDungeonSpawnJailersMax - 1) KDGameData.KinkyDungeonSpawnJailers -= 1; // Reduce twice as fast when you are in deep...
 
-		// Set map brightness
-		let lightingParams = null;
-		if (altType?.lightParams) lightingParams = KinkyDungeonMapParams[altType.lightParams];
-		else if (altType?.skin) lightingParams = KinkyDungeonMapParams[altType.skin];
-		KDMapData.MapBrightness = altType?.brightness || lightingParams?.brightness || MapParams.brightness;
-		KinkyDungeonMakeGhostDecision();
+			// Set map brightness
+			let lightingParams = null;
+			if (altType?.lightParams) lightingParams = KinkyDungeonMapParams[altType.lightParams];
+			else if (altType?.skin) lightingParams = KinkyDungeonMapParams[altType.skin];
+			KDMapData.MapBrightness = altType?.brightness || lightingParams?.brightness || MapParams.brightness;
+			KinkyDungeonMakeGhostDecision();
 
-		// Place the jail keys AFTER making the map!
-		KinkyDungeonLoseJailKeys(false, bossRules);
+			// Place the jail keys AFTER making the map!
+			KinkyDungeonLoseJailKeys(false, bossRules);
 
 
-		if (KDTileToTest || ((KinkyDungeonNearestJailPoint(1, 1) || (altType && altType.nojail)) && (!altType || KDStageBossGenerated || !bossRules)
-			&& KinkyDungeonFindPath(KDMapData.StartPosition.x, KDMapData.StartPosition.y, KDMapData.EndPosition.x, KDMapData.EndPosition.y,
-				false, false, false, KinkyDungeonMovableTilesSmartEnemy,
-				false, false, false, undefined, false,
-				undefined, false, true)?.length > 0)) iterations = maxIter;
-		else console.log("This map failed to generate! Please screenshot and send your save code to Ada on deviantart or discord!");
-
-		if (iterations == maxIter) {
 			KDUnPackEnemies(KDMapData);
 			if (!KinkyDungeonMapIndex.grv)
 				KDInitializeJourney(KDGameData.Journey, MiniGameKinkyDungeonLevel);

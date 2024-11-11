@@ -3,6 +3,7 @@
 let KDEnemyStruggleHPExp = 0.8;
 
 let KDOpinionThreshold = 12;
+let KDDespawnDistance = 16;
 
 let KDDebugOverlay2 = false;
 
@@ -351,6 +352,15 @@ function KDEnemyHidden(enemy: entity): boolean {
 
 	return KDEnemyHasFlag(enemy, "hidden");
 }
+
+function KDEnemyCanDespawn(id: number, mapData: KDMapDataType): boolean {
+	if (mapData != KDMapData) return true; // TODO make this a bit more complex
+	let entity = KinkyDungeonFindID(id);
+	if (!entity) return true;
+	return KinkyDungeonVisionGet(entity.x, entity.y) < 0.1
+		&& KDistChebyshev(entity.x - KDPlayer().x, entity.y - KDPlayer().y) >= KDDespawnDistance;
+}
+
 
 function KinkyDungeonInDanger() {
 	for (let b of KDMapData.Bullets) {

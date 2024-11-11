@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.0"
+KDVersionStr,"5.4.1"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -7990,10 +7990,10 @@ KinkyDungeonPerkBondageVisModeDesc0,"You do not know if a perk shrine will apply
 KinkyDungeonPerkBondageVisModeDesc1,"You know that a perk shrine will apply bondage, but not what kind."
 KinkyDungeonPerkBondageVisModeDesc2,"You know the exact restraints a perk shrine will apply."
 
-KDHardMode,"Hard Mode:"
+KDHardMode,"Difficulty:"
 KinkyDungeonHardMode0,Normal Mode
 KinkyDungeonHardMode1,Hard Mode
-KinkyDungeonExtremeMode,Extreme
+KinkyDungeonExtremeMode,Extreme Mode
 KinkyDungeonHardModeDesc0,"A supposedly reasonable difficulty curve."
 KinkyDungeonHardModeDesc1,"Play the game the way it was intended. Cruel and restrictive. "
 KinkyDungeonExtremeModeDesc,"Play at your own peril. Unlocked by double-clicking the Hard Mode button."
@@ -24461,6 +24461,7 @@ NameDragonGirlCrystal,Crystal Dragon Girl
 KillDragonGirlCrystal,The dragon girl submits to you!
 AttackDragonGirlCrystal,The dragon girl slams you with several hurled crystals! (DamageTaken)
 AttackDragonGirlCrystalBind,"The dragon girl conjures a cloud of crystals that solidify! (+RestraintAdded)"
+AttackDragonGirlCrystalLock,"The dragon girl conjures crystalline locks on you! (+RestraintAdded)"
 
 
 NameDragonQueenPoison,Poison Dragon Queen
@@ -24473,6 +24474,7 @@ NameDragonGirlPoison,Poison Dragon Girl
 KillDragonGirlPoison,The dragon girl submits to you!
 AttackDragonGirlPoison,The dragon girl slashes you with her venomous nails! (DamageTaken)
 AttackDragonGirlPoisonBind,"The dragon girl raises vines out of the ground to bind you! (+RestraintAdded)"
+AttackDragonGirlPoisonLock,"The dragon girl holds you in place and locks your restraints! (+RestraintAdded)"
 
 
 
@@ -24484,6 +24486,7 @@ NameDragonGirlIce,Ice Dragon Girl
 KillDragonGirlIce,The dragon girl submits to you!
 AttackDragonGirlIce,The dragon girl slams you with several chunks of ice! (DamageTaken)
 AttackDragonGirlIceBind,"The dragon girl splashes you with instantly freezing ice! (+RestraintAdded)"
+AttackDragonGirlIceLock,"The dragon girl conjures magical locks on you! (+RestraintAdded)"
 
 
 
@@ -24495,6 +24498,7 @@ NameDragonGirlShadow,Shadow Dragon Girl
 KillDragonGirlShadow,The dragon girl submits to you!
 AttackDragonGirlShadow,The dragon girl stares into your eyes! (DamageTaken)
 AttackDragonGirlShadowBind,"The dragon girl reaches out with a shadowy grip! (+RestraintAdded)"
+AttackDragonGirlShadowLock,"The dragon girl reaches out and locks your restraints! (+RestraintAdded)"
 
 
 

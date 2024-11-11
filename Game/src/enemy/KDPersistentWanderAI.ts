@@ -9,13 +9,15 @@ interface PersistentWanderAI {
 	doWander: (id: number, mapData: KDMapDataType, entity: entity) => boolean,
 }
 
+
 let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 	/** Default wander AI: choose to visit one of the journey slots on a tile, or move. */
 	GoToMain: {
 		cooldown: 400,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id)
+				&& KDEnemyCanDespawn(id, mapData);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.33 : 0.8;
@@ -55,7 +57,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				}
 				// Despawn first
 				if (entity) {
-					KDRemoveEntity(entity, false, false, true);
+					KDRemoveEntity(entity, false, false, true, undefined, mapData);
 				}
 
 				// Move the entity
@@ -117,12 +119,19 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				// Go up or down
 				// We dont go beyond current max level
 				let dy = KDRandom() < 0.5 ? -1 : 1;
+				// Wont go up if its a boss level
+				if (currentWorldPosition.mapY + dy == KDGameData.HighestLevelCurrent
+					&& KinkyDungeonBossFloor(currentWorldPosition.mapY + dy)
+				) {
+					// Dont move
+					dy = 0;
+				}
 
 				if (dy < 0) {
 					fromType = 1;
 				}
 
-				if (currentWorldPosition.mapY + dy > 0 && currentWorldPosition.mapY + dy <= KDGameData.HighestLevelCurrent) {
+				if (dy && currentWorldPosition.mapY + dy > 0 && currentWorldPosition.mapY + dy <= KDGameData.HighestLevelCurrent) {
 					targetPosition.mapY = currentWorldPosition.mapY + dy;
 				}
 			}
@@ -136,7 +145,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				}
 				// Despawn first
 				if (entity) {
-					KDRemoveEntity(entity, false, false, true);
+					KDRemoveEntity(entity, false, false, true, undefined, mapData);
 				}
 
 				// Move the entity

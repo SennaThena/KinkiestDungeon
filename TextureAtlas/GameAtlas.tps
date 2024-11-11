@@ -1154,6 +1154,7 @@
             <key type="filename">../Game/Enemies/LockMaster.png</key>
             <key type="filename">../Game/Enemies/MageZombie.png</key>
             <key type="filename">../Game/Enemies/Magician_Sparkle.png</key>
+            <key type="filename">../Game/Enemies/MaidKnightLight.png</key>
             <key type="filename">../Game/Enemies/Maidforce.png</key>
             <key type="filename">../Game/Enemies/MaidforceHead.png</key>
             <key type="filename">../Game/Enemies/MaidforceMafia.png</key>
