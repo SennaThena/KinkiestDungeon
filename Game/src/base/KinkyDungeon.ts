@@ -1357,7 +1357,8 @@ function KinkyDungeonRun() {
 		KDSaveBusy = true;
 		let ss = KDSaveSlot;
 		KDSendMusicToast(TextGet("KDSaving"));
-		KinkyDungeonCompressSave(KDSaveQueue.splice(0, 1)[0]).then(
+		let sd = JSON.stringify(KDSaveQueue.splice(0, 1)[0]);
+		KinkyDungeonCompressSave(sd).then(
 			(data) => {
 					try {
 						localStorage.setItem('KinkyDungeonSave', data);
@@ -5745,8 +5746,31 @@ function KinkyDungeonSaveGame(ToString: boolean = false): KinkyDungeonSave {
 	return save;
 }
 
-async function KinkyDungeonCompressSave(save: any) {
-	return LZString.compressToBase64(JSON.stringify(save));
+
+let KDSaveTimeout = 5000;
+async function KinkyDungeonCompressSave(save: string): Promise<string> {
+	if (window.Worker) {
+		let pp = new Promise<string>(function (resolve, reject) {
+			const myWorker = new Worker("out/saveworker.js");
+			myWorker.onmessage = function(e) {
+				console.log('Compressed data received from worker');
+				resolve(e.data);
+			}
+			myWorker.postMessage(save);
+			console.log('Save message posted to worker');
+			setTimeout(reject, KDSaveTimeout); // 10 min timeout
+		});
+		return Promise.resolve(pp)
+			.then((v) => {
+				console.log('Yay');
+				return v;})
+			.catch((v) => {
+				console.log('Nay');
+				return LZString.compressToBase64(save);});
+	} else {
+		console.log('Your browser doesn\'t support web workers.');
+		return LZString.compressToBase64(save);
+	}
 }
 
 // N4IgNgpgbhYgXARgDQgMYAsJoNYAcB7ASwDsAXBABlQCcI8FQBxDAgZwvgFoBWakAAo0ibAiQg0EvfgBkIAQzJZJ8fgFkIZeXFWoASgTwQqqAOpEwO/gFFIAWwjk2JkAGExAKwCudFwElLLzYiMSoAX1Q0djJneGAIkAIaACNYgG0AXUisDnSskAATOjZYkAARCAAzeS8wClQAcwIwApdCUhiEAGZUSBgwWNBbCAcnBBQ3Tx9jJFQAsCCQknGEtiNLPNRSGHIkgE8ENNAokjYvO3lkyEYQEnkHBEECMiW1eTuQBIBHL3eXsgOSAixzEZwuVxmoDuD3gTxeYgAylo7KR5J9UD8/kQAStkCDTudLtc4rd7jM4UsAGLCBpEVrfX7kbGAxDAkAAdwUhGWJOh5IA0iQiJVjGE2cUyDR5B0bnzHmUvGgyAAVeRGOQNZwJF4NDBkcQlca9Ai4R7o0ASqUy3lk+WKlVqiCUiCaNTnOwHbVEXX6iCG2bgE04M1hDJhIA=

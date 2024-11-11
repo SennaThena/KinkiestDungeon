@@ -3094,6 +3094,7 @@ function KinkyDungeonGetRandomEnemyPointCriteria (
 				&& (!KinkyDungeonPointInCell(X, Y)) && KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(X, Y))
 				&& (!Enemy || KinkyDungeonNoEnemyExceptSub(X, Y, true, Enemy))
 				&& (ignoreOL || !KinkyDungeonTilesGet(X + "," + Y) || !KinkyDungeonTilesGet(X + "," + Y).OL || (Enemy && KinkyDungeonTilesGet(Enemy.x + "," + Enemy.x)?.Jail && KinkyDungeonTilesGet(X + "," + Y).Jail))
+				&& (ignoreOL || !KDDefaultAvoidTiles.includes(KinkyDungeonMapGet(X, Y)))
 				&& (!criteria || criteria(X, Y))) {
 				return {x: X, y:Y};
 			}
