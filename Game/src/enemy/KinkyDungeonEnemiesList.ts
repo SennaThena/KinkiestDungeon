@@ -5715,7 +5715,10 @@ let KDSpecialConditions: Record<string, SpecialCondition> = {
 		resetCD: false,
 		criteria: (enemy, AIData) => {
 			let rThresh = enemy.Enemy.RestraintFilter?.powerThresh || KDDefaultRestraintThresh;
-			return KDGetRestraintsEligible(
+			return !AIData.player?.player
+				|| (KDEnemyHasFlag(enemy, "targ_player")
+				&& KDistChebyshev(enemy.x - AIData.player.x, enemy.y - AIData.player.y) < 3
+				&& KDGetRestraintsEligible(
 				{tags: KDGetTags(enemy, true)}, MiniGameKinkyDungeonLevel,
 				(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint),
 				enemy.Enemy.bypass,
@@ -5730,8 +5733,10 @@ let KDSpecialConditions: Record<string, SpecialCondition> = {
 						looseLimit: true,
 						onlyUnlimited: true,
 						ignore: enemy.items,
-					}, enemy,
-			).length > 0;
+					}, enemy, undefined, undefined, undefined,  undefined, undefined, {
+						QuitOnFirst: true,
+					}
+			).length > 0);
 		}
 	}
 };

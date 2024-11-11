@@ -1937,7 +1937,8 @@ const KinkyDungeonRestraints: restraint[] = [
 		escapeChance: {"Struggle": -0.1, "Cut": -0.1, "Remove": -0.1},
 		maxwill: 0.4, enemyTags: {"redLatexBasic":2}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Latex", "RedLatex", "Gloves"]},
 
-	{inventory: true, unlimited: true, name: "RedLatexBoots", LinkableBy: [...KDSocksLink], renderWhenLinked: ["Boots"], deepAccessible: true, alwaysAccessible: true,
+	{inventory: true, unlimited: true, name: "RedLatexBoots",
+		LinkableBy: [...KDSocksLink], renderWhenLinked: ["Boots"], deepAccessible: true, alwaysAccessible: true,
 		heelpower: 0.5,
 		sfxGroup: "Rubber",
 		Model: "BunnySocksRestraint",

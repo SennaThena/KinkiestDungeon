@@ -2799,6 +2799,8 @@ type eligibleRestraintOptions = {
 	/** Only use with KDGetRestraintWithVariants */
 	extraOptions?:       string[];
 	inventoryWeight?: 	 number;
+	/** For optimization purposes */
+	QuitOnFirst?:		 boolean;
 }
 
 /**
@@ -2835,6 +2837,7 @@ type eligibleRestraintItem = {
  * @param [options.dontPreferVariant]
  * @param [options.allowLowPower]
  * @param [options.ForceDeep]
+ * @param [options.QuitOnFirst] For optimization purposes
  */
 function KDGetRestraintsEligible (
 	enemy:               KDHasTags,
@@ -3024,6 +3027,7 @@ function KDGetRestraintsEligible (
 								variant: KDApplyVariants[variant[0]],
 								weight: w,
 							});
+							if (options?.QuitOnFirst) return RestraintsList;
 						}
 					}
 				}
@@ -3035,6 +3039,7 @@ function KDGetRestraintsEligible (
 					weight: r.w,
 					inventoryVariant: (r.name && KinkyDungeonRestraintVariants[r.name]) ? r.name : undefined,
 				});
+				if (options?.QuitOnFirst) return RestraintsList;
 			}
 		}
 	}
