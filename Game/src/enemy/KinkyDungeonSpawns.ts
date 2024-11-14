@@ -335,7 +335,7 @@ function KinkyDungeonCallGuard(x: number, y: number, _noTransgress: boolean, nor
 					Enemy = KinkyDungeonGetEnemy(["Guard", jt], KDGetEffLevel(),(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), '0', [jt, "jail"], undefined);
 				}
 			}
-			let guard: entity = {summoned: true, noDrop: !normalDrops, Enemy: Enemy, id: KinkyDungeonGetEnemyID(),
+			let guard: entity = {summoned: true, temporary: true, noDrop: !normalDrops, Enemy: Enemy, id: KinkyDungeonGetEnemyID(),
 				x:KDMapData.StartPosition.x, y:KDMapData.StartPosition.y, gx: point.x, gy: point.y,
 				hp: (Enemy && Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, movePoints: 0, attackPoints: 0};
 

@@ -52,19 +52,21 @@ let KDObjectClick: Record<string, (x: number, y: number) => void> = {
  */
 let KDObjectInteract: Record<string, (x: number, y: number, dist?: number) => void> = {
 	"DollDropoff": (x, y, dist) => {
-		if (dist != undefined ? dist : KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y) < 1.5)
+		if ((dist != undefined ? dist : KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y)) < 1.5) {
 			//if (!KinkyDungeonGetRestraintItem("ItemDevices")) {
 			KDGameData.InteractTargetX = x;
 			KDGameData.InteractTargetY = y;
 			KDStartDialog("DollDropoff", "", true);
+		}
 			//}
 	},
 	"Furniture": (x, y, dist) => {
-		if (dist != undefined ? dist : KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y) < 1.5)
+		if ((dist != undefined ? dist : KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y)) < 1.5) {
 			//if (!KinkyDungeonGetRestraintItem("ItemDevices")) {
 			KDGameData.InteractTargetX = x;
 			KDGameData.InteractTargetY = y;
 			KDStartDialog("Furniture", "", true);
+		}
 			//}
 	},
 	"Door": (x, y) => {

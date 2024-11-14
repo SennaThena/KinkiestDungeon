@@ -26,6 +26,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			}
 			let guard = {
 				summoned: true,
+				temporary: true,
 				Enemy: Enemy,
 				id: KinkyDungeonGetEnemyID(),
 				x:xx,

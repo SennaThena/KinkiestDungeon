@@ -667,7 +667,7 @@ function KinkyDungeonHandleJailSpawns(delta: number): void {
 
 				let g = KinkyDungeonJailGuard();
 
-				if (g.summoned) {
+				if (g.temporary) {
 					console.log("Despawned guard");
 					KDClearItems(g);
 					KDRemoveEntity(KinkyDungeonJailGuard());
