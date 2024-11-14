@@ -819,6 +819,9 @@
             <key type="filename">../Game/EffectTiles/Smoke.png</key>
             <key type="filename">../Game/EffectTiles/Soap.png</key>
             <key type="filename">../Game/EffectTiles/Sparks.png</key>
+            <key type="filename">../Game/EffectTiles/SpikeTrap.png</key>
+            <key type="filename">../Game/EffectTiles/SpikeTrapActive.png</key>
+            <key type="filename">../Game/EffectTiles/SpikeTrapSeen.png</key>
             <key type="filename">../Game/EffectTiles/StarryTrail.png</key>
             <key type="filename">../Game/EffectTiles/Steam.png</key>
             <key type="filename">../Game/EffectTiles/TauntGround.png</key>
@@ -3188,6 +3191,8 @@
             <key type="filename">../Game/Bullets/SmokeBombHit.png</key>
             <key type="filename">../Game/Bullets/SoulCrystalBind.png</key>
             <key type="filename">../Game/Bullets/SoulCrystalBind_2.png</key>
+            <key type="filename">../Game/Bullets/SpikeTrap.png</key>
+            <key type="filename">../Game/Bullets/SpikeTrapHit.png</key>
             <key type="filename">../Game/Bullets/Spores.png</key>
             <key type="filename">../Game/Bullets/SporesHappy.png</key>
             <key type="filename">../Game/Bullets/SporesHappyHit.png</key>

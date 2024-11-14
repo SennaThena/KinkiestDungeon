@@ -4320,6 +4320,12 @@ let KDEffectTileTooltips: Record<string, {color: string, code: (tile: effectTile
 	'MotionLamp': {
 		color: "#ff8933",
 		code: (tile, _x, _y, TooltipList) => {KDETileTooltipSimple(tile, TooltipList, "#ffffff");}},
+	'SpikeTrap': {
+		color: "#ffffff",
+		code: (tile, _x, _y, TooltipList) => {KDETileTooltipSimple(tile, TooltipList, "#ffffff");}},
+	'SpikeTrapSeen': {
+		color: "#ffffff",
+		code: (tile, _x, _y, TooltipList) => {KDETileTooltipSimple(tile, TooltipList, "#ffffff");}},
 	'ManaEmpty': {
 		color: "#ff8933",
 		code: (tile, _x, _y, TooltipList) => {KDETileTooltipSimple(tile, TooltipList, "#ffffff");}},

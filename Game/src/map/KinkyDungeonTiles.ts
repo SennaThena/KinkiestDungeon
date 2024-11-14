@@ -175,7 +175,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 		KinkyDungeonSendActionMessage(10, TextGet("KDStairsLocked").replace("NMB", "" + KinkyDungeonFlags.get("stairslocked")), "#ffffff", 1);
 	} else
 
-	if (toTile != 'H' && !KDCanEscape(KDGetEscapeMethod(MiniGameKinkyDungeonLevel))) {
+	if (toTile == 's' && !KDCanEscape(KDGetEscapeMethod(MiniGameKinkyDungeonLevel))) {
 		KinkyDungeonSendActionMessage(10, KDGetEscapeDoorText(KDGetEscapeMethod(MiniGameKinkyDungeonLevel)), "#ffffff", 1);
 	}
 	else if (KinkyDungeonTilesGet(KinkyDungeonPlayerEntity.x + "," + KinkyDungeonPlayerEntity.y)?.AltStairAction) {

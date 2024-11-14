@@ -745,7 +745,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 	"MotionLamp": (_delta, _entity, tile) => {
 		KDCreateEffectTile(tile.x, tile.y, {
 			name: "MotionLampLight",
-			duration: 12,
+			duration: 5,
 		}, 0);
 		return false;
 	},
@@ -1412,7 +1412,24 @@ let KDEffectTileMoveOnFunctions: Record<string, (entity: entity, tile: effectTil
 		}
 		return {cancelmove: false, returnvalue: false};
 	},
+	"SpikeTrap": (entity, tile, _willing, _dir, _sprint) => {
+		if (!KDEffectTileTags(tile.x, tile.y).trapactive) {
+			KDCreateEffectTile(tile.x, tile.y, {
+				name: "SpikeTrapActive",
+				duration: 5,
+			}, 0);
+			KDCreateEffectTile(tile.x, tile.y, {
+				name: "SpikeTrapSeen",
+				duration: 300,
+			}, 0);
+			let spell = KinkyDungeonFindSpell("SpikeTrap", true);
+			if (spell)
+				KinkyDungeonCastSpell(tile.x, tile.y, spell,
+				undefined, undefined, undefined, "Trap");
 
+		}
+		return {cancelmove: false, returnvalue: false};
+	},
 	"Rubble": (entity, tile, _willing, _dir, _sprint) => {
 		if (tile.pauseDuration > 0) {
 			// Meep

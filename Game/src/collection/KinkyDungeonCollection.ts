@@ -896,7 +896,7 @@ function KDDrawCollectionInventory(x: number, y: number, drawCallback?: (value: 
 
 	KDDraw(kdcanvas, kdpixisprites, "collScrollBar",
 		KinkyDungeonRootDirectory + "UI/Checked.png",
-		1775, 125 + 590*(KDCollectionIndex/Math.max(1, KDGameData.CollectionSorted.length - KDCollectionIndex)), 60, 60
+		1775, 125 + 590*(KDCollectionIndex/Math.max(1, KDGameData.CollectionSorted.length)), 60, 60
 	);
 	if (!KDGameData.NPCRestraints) KDGameData.NPCRestraints = {};
 

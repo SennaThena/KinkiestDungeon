@@ -49,7 +49,8 @@ let KinkyDungeonEscapeTypes = {
 	"Kill": {
 		selectValid: true,
 		worldgenstart: () => {
-			let enemytype = KinkyDungeonGetEnemy([], KDGetEffLevel(),(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), '0');
+			let enemytype = KinkyDungeonGetEnemy([], KDGetEffLevel(),(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), '0',
+				undefined, undefined, undefined, ["nokillescape"]);
 			let enemynumber = 3;
 			if (KinkyDungeonStatsChoice.get("extremeMode")) enemynumber = 5;
 			else if (KinkyDungeonStatsChoice.get("hardMode")) enemynumber = 4;
@@ -63,6 +64,7 @@ let KinkyDungeonEscapeTypes = {
 				if (point) {
 					let ens = KinkyDungeonSummonEnemy(point.x, point.y, data.enemy, 1, 2.9);
 					KinkyDungeonSetEnemyFlag(ens[0], "killtarget", -1);
+					KinkyDungeonSetEnemyFlag(ens[0], "no_pers_wander", -1);
 				}
 			}
 		},

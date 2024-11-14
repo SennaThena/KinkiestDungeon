@@ -31,6 +31,19 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.4
+- Universal solvent now rescues Encased Adventurers (if you choose to use it for such)
+- Universal solvent now removes encased debuffs from NPCs and grants glue resist to NPC/player for 30 turns
+- Being hit by an Observer's beam now attracts the Shadow to your position
+
+
+5.4.3
+- No longer need to pass room escape method to backtrack
+- dragon girls and dragon queens can no longer spawn as bounties for the Bounty escape method
+
+5.4.2
+- Added 'spike' trap
+
 5.3.50
 - More sound effects
 - Giving Good Girl Gifts to NPCs will now temporarily increase their submissiveness

@@ -1823,7 +1823,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Furniture", "Container", "CrystalEncase", "BlockKneel", "FeetLinked", "HandsBehind"], ignoreSpells: true, removeOnLeash: true, immobile: true,
 		alwaysEscapable: ["Struggle"],
 		struggleMinSpeed: {
-			Struggle: 0.01,
+			Struggle: 0.06,
 		},
 		struggleMaxSpeed: {
 			Struggle: 0.4,
@@ -1840,6 +1840,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		events: [
 			//{trigger: "tick", type: "callGuardFurniture", inheritLinked: true},
 			{trigger: "playerMove", type: "removeOnMove", inheritLinked: true},
+			{trigger: "tick", type: "callGuardFurniture", inheritLinked: true},
 			//{trigger: "beforeStruggleCalc", type: "latexDebuff", power: 0.15, inheritLinked: true},
 			{trigger: "afterPlayerDamage", type: "shatter", mult: 1.5, subMult: 0.5, count: 9, inheritLinked: true},
 		]
@@ -2685,13 +2686,28 @@ const KinkyDungeonRestraints: restraint[] = [
 		addTag: ["ForceStand"],
 		alwaysEscapable: ["Struggle"],
 		tightType: "Secure",
-		escapeChance: {"Struggle": -0.1, "Cut": -0.6, "Remove": 0.5, "Pick": 0.1, "Unlock": -0.05},
-		struggleMinSpeed: {Struggle: .1, Remove: 4, Unlock: 5, Pick: 2},
+		escapeChance: {"Struggle": 0.3, "Cut": -0.6, "Remove": 0.5, "Pick": 0.1, "Unlock": -0.05},
+		struggleMinSpeed: {Struggle: .5, Remove: 4, Unlock: 5, Pick: 2},
 		helpChance: {"Remove": 0.8, "Pick": 0.35, "Unlock": 0.8},
 		removeShrine: ["Hogties"],
 		DefaultLock: "White",
 		events: [{trigger: "tick", type: "callGuardFurniture", time: 300, inheritLinked: true}],
 		enemyTags: {"onebar":1000}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Furniture", "OneBar"], ignoreSpells: true, removeOnLeash: true,
+	},
+	{removePrison: true, name: "OneBarStand", Asset: "OneBarPrison", Color: ['Default'], Group: "ItemDevices", power: 3, weight: 1, immobile: true, alwaysStruggleable: true,
+		Model: "DisplayStand",
+		addTag: ["ForceStand"],
+		alwaysEscapable: ["Struggle"],
+		tightType: "Secure",
+		restriction: 10,
+		blockfeet: true,
+		escapeChance: {"Struggle": 0.3, "Cut": -0.6, "Remove": 0.5, "Pick": 0.1, "Unlock": -0.05},
+		struggleMinSpeed: {Struggle: .5, Remove: 4, Unlock: 5, Pick: 2},
+		helpChance: {"Remove": 0.8, "Pick": 0.35, "Unlock": 0.8},
+		removeShrine: ["Hogties"],
+		DefaultLock: "White",
+		events: [{trigger: "tick", type: "callGuardFurniture", time: 300, inheritLinked: true}],
+		enemyTags: {"onebar":1000}, playerTags: {"arousalMode": -1000}, minLevel: 0, allFloors: true, shrine: ["Furniture", "OneBar"], ignoreSpells: true, removeOnLeash: true,
 	},
 
 	{removePrison: true, name: "DollStandSFW", Asset: "TheDisplayFrame", Color: ['Default'], Group: "ItemDevices", power: 5, weight: 1, immobile: true, alwaysStruggleable: true,
@@ -2963,7 +2979,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		restriction: 10,
 		Color: "Default", bindarms: true, restricthands: 0.85, power: 6, weight: 0, DefaultLock: "Red",
 		escapeChance: {"Struggle": -0.5, "Cut": -0.5, "Remove": 10, "Pick": -0.15, "Unlock": -0.15},
-		helpChance: {"Pick": 0.5, "Unlock": 1.0}, enemyTags: {"trap":9, "yokeSpell": 10, "Unchained": -9, "steelbondage": 10, "onebar":1}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Metal", "Yokes", "Yoked"]},
+		helpChance: {"Pick": 0.5, "Unlock": 1.0}, enemyTags: {"trap":9, "yokeSpell": 10, "Unchained": -9, "steelbondage": 10}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Metal", "Yokes", "Yoked"]},
 	{inventory: true, trappable: true, name: "HeavyYoke", Asset: "Yoke", accessible: true, Group: "ItemArms",
 		Model: "HeavyYoke",
 		playerTagsMult: {
@@ -2973,7 +2989,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		restriction: 10,
 		Color: "Default", bindarms: true, restricthands: 0.85, power: 9, weight: 0, DefaultLock: "Disc",
 		escapeChance: {"Struggle": -1, "Cut": -0.8, "Remove": 0.4, "Pick": -0.25, "Unlock": -0.25},
-		helpChance: {"Pick": 0.25, "Unlock": 0.33}, enemyTags: {"trap":14, "yokeSpell": 50, "Unchained": -25, "steelbondage": 10, "onebar":1}, playerTags: {}, minLevel: 7, allFloors: true, shrine: ["Metal", "Yokes", "Yoked"]},
+		helpChance: {"Pick": 0.25, "Unlock": 0.33}, enemyTags: {"trap":14, "yokeSpell": 50, "Unchained": -25, "steelbondage": 10}, playerTags: {}, minLevel: 7, allFloors: true, shrine: ["Metal", "Yokes", "Yoked"]},
 	{inventory: true, trappable: true, name: "TrapFiddle", Asset: "Yoke", accessible: true, Group: "ItemArms",
 		Model: "HeavyFiddle",
 		playerTagsMult: {
@@ -4978,7 +4994,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Furniture", "Container", "IceEncase", "BlockKneel", "FeetLinked", "HandsBehind"], ignoreSpells: true, removeOnLeash: true, immobile: true,
 		alwaysEscapable: ["Struggle"],
 		struggleMinSpeed: {
-			Struggle: 0.01,
+			Struggle: 0.06,
 		},
 		struggleMaxSpeed: {
 			Struggle: 0.2,
@@ -4991,6 +5007,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		events: [
 			//{trigger: "tick", type: "callGuardFurniture", inheritLinked: true},
 			{trigger: "playerMove", type: "removeOnMove", inheritLinked: true},
+			{trigger: "tick", type: "callGuardFurniture", inheritLinked: true},
 			{trigger: "tick", type: "iceDrain", power: -0.025, inheritLinked: true},
 			{trigger: "tick", type: "iceMelt", power: 0.1, count: 13, inheritLinked: true},
 			{trigger: "afterPlayerDamage", type: "iceMelt", mult: 1.5, subMult: 0.5, count: 13, inheritLinked: true},
@@ -6078,7 +6095,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Furniture", "VineSuspend", "BlockKneel"], ignoreSpells: true, removeOnLeash: true, immobile: true,
 		alwaysEscapable: ["Struggle"],
 		struggleMinSpeed: {
-			Struggle: 0.01,
+			Struggle: 0.06,
 		},
 		struggleMaxSpeed: {
 			Struggle: 0.4,
@@ -6559,6 +6576,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		Model: "GasMask",
 		events: [
 			{type: "Buff", trigger: "tick", power: 2.0, buffType: "happygasDamageResist"},
+			{type: "Buff", trigger: "tick", power: 2.0, buffType: "poisongasDamageResist"},
 			{type: "Buff", trigger: "tick", power: 0.5, buffType: "poisonDamageResist"},
 		],
 		escapeChance: {"Struggle": 0.15, "Cut": -0.3, "Remove": 10, "Pick": 0.9}, enemyTags: {}, playerTags: {}, minLevel: 0, floors: KDMapInit([]), shrine: []},

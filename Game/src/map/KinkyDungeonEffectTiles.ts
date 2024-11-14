@@ -353,6 +353,25 @@ let KDEffectTiles: Record<string, effectTile> = {
 		lightColor: 0x7799ff,
 		tags: ["light"],
 	},
+
+	"SpikeTrap": {
+		name: "SpikeTrap",
+		duration: 9999, infinite: true,
+		priority: 2,
+		tags: ["floor", "trap", "hiddenmagic"],
+	},
+	"SpikeTrapSeen": {
+		name: "SpikeTrapSeen",
+		duration: 9999, infinite: true,
+		priority: 2,
+		tags: [],
+	},
+	"SpikeTrapActive": {
+		name: "SpikeTrapActive",
+		duration: 6,
+		priority: 50,
+		tags: ["trapactive"],
+	},
 	"Radiance": {
 		name: "Radiance",
 		duration: 2,

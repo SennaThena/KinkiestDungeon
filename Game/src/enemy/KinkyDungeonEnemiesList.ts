@@ -3033,7 +3033,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		tags: KDMapInit(["leashing", "mushroom", "soulresist", "mushy", "mushroomTrap", "melee", "minor", "slashweakness", "fireweakness", "glueresist", "poisonimmune", "coldweakness", "ropeMagicStrong", "ropeAuxiliary", "ropeRestraintsHogtie", "clothRestraints", "tapeRestraints"]),
 		Animations: ["squishy"],
 		squeeze: true, evasion: -0.5, followRange: 1, AI: "patrol", regen: 0.1,
-		visionRadius: 5, maxhp: 8, minLevel: 4, weight:14, movePoints: 4, attackPoints: 2, attack: "MeleeBindBlindWill", blindTime: 2, attackWidth: 3, attackRange: 1, power: 2, dmgType: "poison", fullBoundBonus: 2,
+		visionRadius: 5, maxhp: 8, minLevel: 4, weight:14, movePoints: 4, attackPoints: 2, attack: "MeleeBindBlindWill", blindTime: 2, attackWidth: 3, attackRange: 1, power: 2, dmgType: "poisongas", fullBoundBonus: 2,
 		terrainTags: {"mushy": 10, "mushroomTrap": 50}, floors:KDMapInit(["cry"]), shrines: [], ondeath: [{type: "spellOnSelf", spell: "Spores"}],
 		dropTable: [{name: "Gold", amountMin: 5, amountMax: 10, weight: 10}],
 		attackLock: "White",
@@ -3059,7 +3059,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		Animations: ["squishy"],
 		squeeze: true, evasion: -0.5, followRange: 1, AI: "hunt",
 		spells: ["SporesSick"], spellCooldownMult: 1, spellCooldownMod: 0, stopToCast: true, castWhileMoving: true,
-		visionRadius: 5, maxhp: 8, minLevel: 0, weight:4, movePoints: 4, attackPoints: 2, attack: "SpellMeleeWillBlind", blindTime: 2, attackWidth: 1, attackRange: 1, power: 2, dmgType: "crush",
+		visionRadius: 5, maxhp: 8, minLevel: 0, weight:4, movePoints: 4, attackPoints: 2, attack: "SpellMeleeWillBlind", blindTime: 2, attackWidth: 1, attackRange: 1, power: 2, dmgType: "poisongas",
 		terrainTags: {"mushy": 17, "mushroomTrap": 75}, floors:KDMapInit(["cry", "cat"]), shrines: ["Will"], ondeath: [{type: "spellOnSelf", spell: "Spores"}],
 		dropTable: [{name: "Gold", amountMin: 5, amountMax: 10, weight: 10}],
 		events: [
@@ -3067,10 +3067,9 @@ let KinkyDungeonEnemies: enemy[] = [
 			{trigger: "getLights", type: "enemyTorch", power: 4.5, color: "#4fd658"},
 		],},
 
-
 	{name: "DragonQueenPoison", color: "#9bd45d",
 		faction: "DragonQueen",
-		tags: KDMapInit(["opendoors", "noreinforce", "boss", "vineRestraints", "dragonqueen", "unstoppable",
+		tags: KDMapInit(["opendoors", "noreinforce", "boss", "vineRestraints", "nokillescape", "dragonqueen", "unstoppable",
 			"bulwark", "slashweakness", "meleeresist", "fireresist", "poisonresist", "melee", "beast", "search", "nature"]), cohesion: 0.1,
 		GFX: {
 			spriteHeight: 144,
@@ -3129,7 +3128,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	{name: "DragonGirlPoison", nameList: "DragonGirl", outfit: "DragonGirlPoison", style: "DragonPoison", faction: "DragonQueen", clusterWith: "beast",
 		bound: "DragonPoison", color: "#8d3fab",
 		playLine: "DragonGirl",
-		tags: KDMapInit(["opendoors", "noreinforce", "poison", "nature", "dragongirl", "human", "melee", "miniboss", "vineRestraints", "relentless",
+		tags: KDMapInit(["opendoors", "noreinforce", "poison", "nature", "dragongirl", "nokillescape", "human", "melee", "miniboss", "vineRestraints", "relentless",
 			"poisonresist", "fireresist", "chainweakness"]), cohesion: 0.75,
 		followLeashedOnly: true, ignorechance: 0, armor: 1.5, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenPoison", range: 4, loose: true, aggressive: true},
 		spells: ["SummonDragonFlower", "DragonSlash"], spellCooldownMult: 1, spellCooldownMod: 0, castWhileMoving: true, spellRdy: true,
@@ -3157,7 +3156,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 	{name: "DragonQueenCrystal", color: "#92e8c0",
 		faction: "DragonQueen",
-		tags: KDMapInit(["opendoors", "noreinforce", "boss", "dragonqueen", "pierceweakness", "unstoppable",
+		tags: KDMapInit(["opendoors", "noreinforce", "boss", "dragonqueen", "nokillescape", "pierceweakness", "unstoppable",
 			"bulwark", "meleeresist", "electricresist", "fireresist", "melee", "beast", "search", "crystalline"]), cohesion: 0.1,
 		GFX: {
 			spriteHeight: 144,
@@ -3218,7 +3217,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	{name: "DragonGirlCrystal", nameList: "DragonGirl", outfit: "DragonGirlCrystal", style: "DragonCrystal", faction: "DragonQueen", clusterWith: "beast",
 		bound: "DragonCrystal", color: "#ff5277",
 		playLine: "DragonGirl",
-		tags: KDMapInit(["opendoors", "noreinforce", "chaos", "crystal", "dragongirl", "human", "melee", "miniboss", "crystalRestraints", "relentless",
+		tags: KDMapInit(["opendoors", "noreinforce", "chaos", "crystal", "dragongirl", "nokillescape", "human", "melee", "miniboss", "crystalRestraints", "relentless",
 			"electricresist", "fireresist", "chainweakness"]), cohesion: 0.75,
 		followLeashedOnly: true, ignorechance: 0, armor: 1.5, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenCrystal", range: 4, loose: true, aggressive: true},
 		spells: ["CrystalShockBolt", "CrystalSlash", "CrystalBoltSingle"], spellCooldownMult: 1, spellCooldownMod: 2, castWhileMoving: true, spellRdy: true,
@@ -3244,7 +3243,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 	{name: "DragonQueenShadow", color: "#92e8c0",
 		faction: "DragonQueen",
-		tags: KDMapInit(["opendoors", "noreinforce", "boss", "dragonqueen", "chainweakness",
+		tags: KDMapInit(["opendoors", "noreinforce", "boss", "dragonqueen", "nokillescape", "chainweakness",
 			"bulwark", "unstoppable", "meleeresist", "coldresist", "fireresist", "melee", "beast", "search", "shadow", "shadowLatexRestraints"]), cohesion: 0.1,
 		GFX: {
 			spriteHeight: 144,
@@ -3301,7 +3300,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	{name: "DragonGirlShadow", nameList: "DragonGirl", outfit: "DragonGirlShadow", style: "DragonShadow", faction: "DragonQueen", clusterWith: "beast",
 		bound: "DragonShadow", color: "#999999",
 		playLine: "DragonGirl",
-		tags: KDMapInit(["opendoors", "noreinforce", "shadow", "dragongirl", "human", "melee", "miniboss", "shadowLatexRestraints", "relentless",
+		tags: KDMapInit(["opendoors", "noreinforce", "shadow", "dragongirl", "nokillescape", "human", "melee", "miniboss", "shadowLatexRestraints", "relentless",
 			"coldresist", "fireresist", "chainweakness"]), cohesion: 0.75,
 		followLeashedOnly: true, ignorechance: 0, armor: 0, spellResist: 2, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenShadow", range: 4, loose: true, aggressive: true},
 		spells: ["DarkTele", "ShadowShroudGirl",], spellCooldownMult: 1, spellCooldownMod: 0, castWhileMoving: true, spellRdy: true,
@@ -3331,7 +3330,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 	{name: "DragonQueenIce", color: "#92e8c0",
 		faction: "DragonQueen",
-		tags: KDMapInit(["opendoors", "noreinforce", "ice", "boss", "iceRestraints", "dragonqueen",
+		tags: KDMapInit(["opendoors", "noreinforce", "ice", "boss", "iceRestraints", "dragonqueen", "nokillescape",
 			"bulwark", "unstoppable", "crushweakness", "meleeresist", "soapresist", "fireresist", "iceresist", "melee", "beast", "search"]), cohesion: 0.1,
 		GFX: {
 			spriteHeight: 144,
@@ -3398,7 +3397,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	{name: "DragonGirlIce", nameList: "DragonGirl", outfit: "DragonGirlIce", style: "DragonIce", faction: "DragonQueen", clusterWith: "beast",
 		bound: "DragonIce", color: "#92e8c0",
 		playLine: "DragonGirl",
-		tags: KDMapInit(["opendoors", "noreinforce", "water", "ice", "dragongirl", "human", "melee", "miniboss", "iceRestraints", "relentless",
+		tags: KDMapInit(["opendoors", "noreinforce", "water", "ice", "dragongirl", "nokillescape", "human", "melee", "miniboss", "iceRestraints", "relentless",
 			"soapresist", "fireresist", "chainweakness"]), cohesion: 0.75,
 		followLeashedOnly: true, ignorechance: 0, armor: 1.5, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenCrystal", range: 4, loose: true, aggressive: true},
 		spells: [ "IceBreathChannel", "DragonIceBolt", "EnemyWinterblast"], spellCooldownMult: 1, spellCooldownMod: 2, castWhileMoving: true, spellRdy: true,
@@ -4120,7 +4119,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 
 	{name: "DemonEye", nameList: "cthulu", outfit: "Demon", style: "Demon", clusterWith: "demon", bound: "Demon", faction: "Observer", playLine: "Elemental", color: "#ff5577",
-		tags: KDMapInit(["opendoors", "chaos", "observer", "demon", "holyweakness", "melee", "miniboss", "obsidianRestraints", "electricresist", "fireresist", "coldresist", "soulweakness", "charmweakness"]),
+		tags: KDMapInit(["opendoors", "chaos", "observer", "demon", "holyweakness", "obsAttract", "melee", "miniboss", "obsidianRestraints", "electricresist", "fireresist", "coldresist", "soulweakness", "charmweakness"]),
 		armor: 2, spellResist: 2, followRange: 0, AI: "hunt", disarm: 0.33,
 		events: [
 			{trigger: "getLights", type: "enemyTorch", power: 4, color: "#ff5555"},
@@ -6040,7 +6039,26 @@ function KDMaintainEnemyAction(enemy: entity, delta: number) {
 	}
 }
 
-let KDEnemyAction: Record<string, KDEnemyAction> = {
+let KDEnemyAction: Record<string, KDEnemyActionType> = {
+	"observerchase": {
+		holdleash: true,
+		end: (enemy) => {
+			// Reset position
+			enemy.gx = enemy.x;
+			enemy.gy = enemy.y;
+		},
+		filter: (enemy) => {
+			return !(enemy.aware);
+		},
+		maintain: (enemy, _delta) => {
+			// Stops investigating if alerted or idle
+			return ((enemy.idle && KDRandom() < 0.1)
+				|| !(enemy.aware)
+				|| enemy.attackPoints
+				|| KDistChebyshev(enemy.x - enemy.gx, enemy.y - enemy.gy) <= 1.5);
+		},
+		sprint: false,
+	},
 	"investigatesound": {
 		holdleash: true,
 		end: (enemy) => {

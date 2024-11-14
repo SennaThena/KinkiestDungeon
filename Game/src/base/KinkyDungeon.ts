@@ -6397,7 +6397,8 @@ function KDSoundEnabled() {
 async function RunGenMapCallback() {
 	let ff = KDGenMapCallback;
 	KDGenMapCallback = null;
-	(() => {
-		KinkyDungeonState = ff();
-	})();
+	if (ff)
+		(() => {
+			KinkyDungeonState = ff();
+		})();
 }

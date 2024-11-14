@@ -53,6 +53,23 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 		return {sfx: "Evil", effect: true};
 	},
 	"ObserverBeam": (target, _damage, _playerEffect, spell, _faction, bullet, _entity) => {
+		// If you are hit then the shadow is called
+		for (let en of KDMapData.Entities) {
+			if (en.Enemy?.tags?.obsAttract) {
+				if ((!en.aware || en.idle) && (!en.action || en.action == "observerchase")
+				&& !en.path
+				&& !KDAllied(en)
+				&& (KDHostile(en) || KDRandom() < 0.33)
+				&& (!en.Enemy.tags.peaceful || KDRandom() < 0.15)) {
+					en.gx = target.x;
+					en.gy = target.y;
+					en.action = "observerchase";
+					KDAddThought(en.id, "Search", 2,
+						2 + 2*KDistEuclidean(en.x - target.x, en.y - target.y));
+
+				}
+			}
+		}
 		if (!KDBulletAlreadyHit(bullet, target, true)) {
 			let dmg = KinkyDungeonDealDamage({damage: spell.power, type: spell.damage}, bullet);
 			if (dmg.happened) {
@@ -86,6 +103,13 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 			let curse = KDGetByWeight(KinkyDungeonGetCurseByListWeighted(["Common"], "", false, 0, 100));
 			let restraint = KDChooseRestraintFromListGroupPri(
 				KDGetRestraintsEligible({tags: ['leatherRestraints', 'leatherRestraintsHeavy', "obsidianRestraints", "shadowLatexRestraints"]}, 10, 'grv', true, undefined, undefined, undefined, false, undefined, undefined, undefined, undefined, curse),
+				KDGetProgressiveOrderFun(), true)?.name;
+
+			if (!restraint) restraint = KDChooseRestraintFromListGroupPri(
+				KDGetRestraintsEligible({tags: ['leatherRestraints', 'leatherRestraintsHeavy', "obsidianRestraints", "shadowLatexRestraints"]}, 10, 'grv', true, undefined, undefined, undefined, false, undefined, undefined, undefined, undefined,
+					curse, undefined, undefined, undefined, undefined, {
+						extraOptions: entity?.items
+					}),
 				KDGetProgressiveOrderFun(), true)?.name;
 
 			if (restraint && KinkyDungeonAddRestraintIfWeaker(KinkyDungeonGetRestraintByName(restraint), 0, true, "", true, false, undefined, "Observer", true, curse)) {

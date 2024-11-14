@@ -3505,7 +3505,7 @@ interface KDSFXGroup {
 	sfx?: string,
 }
 
-interface KDEnemyAction {
+interface KDEnemyActionType {
 	/** Enemy will not willingly let go of leashes during this action */
 	holdleash?: boolean;
 	/** Enemy will sprint during this action */

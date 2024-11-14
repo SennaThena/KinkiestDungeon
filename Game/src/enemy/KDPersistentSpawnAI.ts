@@ -25,6 +25,7 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 				return ent.id == id;
 			})) {
 				let npc = KDGetPersistentNPC(id);
+				if (!npc.entity) return false;
 				let ent = KDAddEntity(npc.entity, false, false, true, mapData);
 
 				if (mapData == KDMapData) {

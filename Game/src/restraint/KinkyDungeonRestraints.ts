@@ -474,10 +474,12 @@ KDProgressiveOrder['Strict'] = [
 /** A funner restraining order, starting with non-impactful then locking down spells and finally sealing in helplessness */
 KDProgressiveOrder['Fun1'] = [
 	"ItemTorso", // Usually just makes other restraints harder
+	"ItemVulva", // Chastity is for good girls!
 	"ItemPelvis", // Chastity is for good girls!
 	"ItemMouth", // Blocks spells and potions
 	"ItemHands", // Blocks weapons but no spells
 	"ItemLegs", // Typically doesnt hobble completely, but sometimes does (hobbleskirts)
+	"ItemNipples", // Chastity is for good girls!
 	"ItemBreast", // Goes well with belts
 	"ItemHead", // Blind, but does not stop from wielding anything
 	"ItemEars", //  Sensory
@@ -489,6 +491,10 @@ KDProgressiveOrder['Fun1'] = [
 
 /** A funner restraining order, starting with non-impactful then locking down spells and finally sealing in helplessness */
 KDProgressiveOrder['Fun2'] = [
+	"ItemVulva", // Chastity is for good girls!
+	"ItemButt", // Chastity is for good girls!
+	"ItemVulvaPiercings", // Chastity is for good girls!
+	"ItemNipples", // Chastity is for good girls!
 	"ItemTorso", // Usually just makes other restraints harder
 	"ItemPelvis", // Chastity is for good girls!
 	"ItemMouth", // Blocks spells and potions
@@ -515,6 +521,10 @@ KDProgressiveOrder['Fun3'] = [
 	"ItemFeet", // Makes you very slow
 	"ItemTorso", // Usually just makes other restraints harder
 	"ItemEars", //  Sensory
+	"ItemVulva", // Chastity is for good girls!
+	"ItemButt", // Chastity is for good girls!
+	"ItemVulvaPiercings", // Chastity is for good girls!
+	"ItemNipples", // Chastity is for good girls!
 ];
 
 function KDGetProgressiveOrderFun() {
@@ -2184,7 +2194,10 @@ function KDGetStruggleData(data: KDStruggleData): string {
 	if (KDRestraint(data.restraint) && KDRestraint(data.restraint).struggleMaxSpeed && KDRestraint(data.restraint).struggleMaxSpeed[data.struggleType] != undefined)
 		data.escapeChance = Math.min(data.escapeChance, KDRestraint(data.restraint).struggleMaxSpeed[data.struggleType]);
 
-
+	if (data.escapeChance < data.limitChance && (KDRestraint(data.restraint).alwaysEscapable
+		&& KDRestraint(data.restraint).alwaysEscapable.includes(data.struggleType))) {
+			data.escapeChance = Math.max((data.minSpeed) || 0, data.limitChance + 0.01);
+		}
 
 	return "";
 }

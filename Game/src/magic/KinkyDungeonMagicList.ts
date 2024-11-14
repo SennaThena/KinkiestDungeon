@@ -2517,7 +2517,7 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		type:"inert", onhit:"aoe", time: 3, delay: 1, power: 1, range: 2.5, size: 3, aoe: 1.5, lifetime: 1, damage: "stun", playerEffect: {name: "Blind", time: 4}},
 
 	{enemySpell: true, name: "SleepGas", color: "#4fd658", sfx: "Miss", school: "Illusion", manacost: 4, specialCD: 24, components: ["Verbal"], level:1, type:"inert", passthrough: true, noTerrainHit: true, buffs: [
-		{id: "SleepGas", type: "SleepinessGas", power: 1, player: true, enemies: false, tags: ["sleep", "gas"], range: 1.5}], onhit:"", time:6, aoe: 1.5, power: 1, delay: 8, range: 4, size: 3, damage: "poison", playerEffect: {name: "DamageNoMsg", damage: "poison", power: 1}}, // Creates a shroud. Enemies within are hard to hit with melee attacks.
+		{id: "SleepGas", type: "SleepinessGas", power: 1, player: true, enemies: false, tags: ["sleep", "gas"], range: 1.5}], onhit:"", time:6, aoe: 1.5, power: 1, delay: 8, range: 4, size: 3, damage: "poisongas", playerEffect: {name: "DamageNoMsg", damage: "poisongas", power: 1}}, // Creates a shroud. Enemies within are hard to hit with melee attacks.
 
 
 	{enemySpell: true, name: "GlueBomb", color: "#e7cf1a", minRange: 2.5, sfx: "Miss", school: "Conjure",
@@ -2657,17 +2657,17 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 	{enemySpell: true, name: "NurseSyringe", color: "#ff00ff", minRange: 1.5, sfx: "Miss", manacost: 2, castRange: 6, components: ["Arms"], level:1, speed: 1,
 		type:"bolt", projectileTargeting:true, onhit:"", power: 4, delay: 0, range: 50, damage: "pain", playerEffect: {name: "NurseSyringe", power: 4, type: "poison", time: 8},},
 	{enemySpell: true, name: "RibbonBurst", color: "#ff00ff", sfx: "MagicSlash", manacost: 5, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 4, range: 6, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings",  text: "KinkyDungeonTrapBindingsRibbons", tags: ["magicRibbons"], power: 3, damage: "chain", count: 2, noGuard: true}},
-	{enemySpell: true, name: "Spores", bulletSpin: 0.1, color: "#6733aa", sfx: "MagicSlash", manacost: 4, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 3, range: 6, size: 3, aoe: 1.5, lifetime: 1, damage: "poison", playerEffect: {name: "Spores", power: 2, damage: "poison"}},
+	{enemySpell: true, name: "Spores", bulletSpin: 0.1, color: "#6733aa", sfx: "MagicSlash", manacost: 4, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 3, range: 6, size: 3, aoe: 1.5, lifetime: 1, damage: "poisongas", playerEffect: {name: "Spores", power: 2, damage: "poisongas"}},
 	{enemySpell: true, name: "DragonFlowerSpores", bulletSpin: 0.1, hideWarnings: true, selfcast: true, color: "#6733aa", sfx: "MagicSlash", manacost: 4, components: ["Verbal"], level:1, type:"inert",
-		onhit:"aoe", time: 5, delay: 2, power: 1.5, range: 2.5, size: 3, aoe: 1.5, lifetime: 1, damage: "poison", playerEffect: {
+		onhit:"aoe", time: 5, delay: 2, power: 1.5, range: 2.5, size: 3, aoe: 1.5, lifetime: 1, damage: "poisongas", playerEffect: {
 			name: "DragonFlowerSpores",
-			power: 1.5, amount: 0.75, damage: "poison"
+			power: 1.5, amount: 0.75, damage: "poisongas"
 		}},
 
 
 	{enemySpell: true, name: "SporesHappy", bulletSpin: 0.1,
 		color: "#ff00ff", sfx: "FireSpell", noCastMsg: true, selfcast: true, manacost: 3, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 1, power: 2.5, range: 3, size: 3, aoe: 1.5, lifetime: 1, damage: "happygas", playerEffect: {name: "SporesHappy", power: 2.5, damage: "happygas"}},
-	{enemySpell: true, name: "SporesSick", bulletSpin: 0.1, color: "#55ff55", noCastMsg: true, hitsfx: "DamageWeak", selfcast: true, manacost: 0, components: ["Verbal"], level:1, type:"hit", onhit:"aoe", time: 5, delay: 0, power: 0.5, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "poison", playerEffect: {name: "SporesSick", power: 0.5, damage: "poison"}},
+	{enemySpell: true, name: "SporesSick", bulletSpin: 0.1, color: "#55ff55", noCastMsg: true, hitsfx: "DamageWeak", selfcast: true, manacost: 0, components: ["Verbal"], level:1, type:"hit", onhit:"aoe", time: 5, delay: 0, power: 0.5, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "poisongas", playerEffect: {name: "SporesSick", power: 0.5, damage: "poisongas"}},
 	{enemySpell: true, name: "SoulCrystalBind", color: "#ff5277", minRange: 0, sfx: "Evil", manacost: 7, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 6, range: 6, size: 3, aoe: 1.5, lifetime: 1, damage: "drain", playerEffect: {name: "ObsidianEngulf", count: 1, power: 6, damage: "drain"}},
 
 	{name: "BombItem", color: "#ff5277", prerequisite: "ApprenticeSummon", tags: ["aoe", "offense"], noise: 5, sfx: "FireSpell", school: "Conjure", manacost: 5, components: ["Verbal"], level:1,
@@ -3009,7 +3009,8 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		},
 		events: [{type: "RubberMissileHoming", trigger: "bulletAfterTick", power: 0.4, dist: 15, count: 0.2, limit: 0},],
 		bind: 8,
-		level:1, type:"bolt", projectileTargeting:true, onhit:"",  power: .1, delay: 0, range: 50, damage: "crush", speed: 0.5, playerEffect: {name: "Bind", damage: "pierce", power: 7.2, tag: "onebar"}},
+		level:1, type:"bolt", projectileTargeting:true, onhit:"",  power: .1, delay: 0, range: 50, damage: "crush",
+		speed: 0.5, playerEffect: {name: "Bind", damage: "pierce", power: 7.2, tag: "onebar"}},
 	{enemySpell: true, name: "SummonOneBar", noSprite: true, minRange: 0, manacost: 2, specialCD: 12,
 		noSumMsg: true,
 		faction: "Warden",
@@ -3120,7 +3121,7 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 
 	{enemySpell: true, name: "PoisonBreath", color: "#4fa460", sfx: "FireSpell", manacost: 4, components: ["Verbal"], level:1, type:"inert", onhit:"aoe",
 		time: 5, delay: 2, power: 1.5, range: 2.6, size: 3, aoe: 1.5,
-		lifetime: 3, damage: "poison", playerEffect: {name: "PoisonBreath", power: 2, amount: 0.1, time: 12, damage: "poison"}},
+		lifetime: 3, damage: "poisongas", playerEffect: {name: "PoisonBreath", power: 2, amount: 0.1, time: 12, damage: "poisongas"}},
 
 	{enemySpell: true, name: "DragonVine", bindType: "Vine", color: "#88ff88", sfx: "Miss", effectTileDurationMod: 10, effectTile: {
 		name: "Vines",
@@ -3634,6 +3635,14 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		noTerrainHit: true, onhit:"", delay: 300, power: 2.5, range: 2, time: 8, size: 3, aoe: 1.5, lifetime: 1, bind: 8, damage: "glue"},
 
 	{enemySpell: true, faction: "Trap", name: "TrapCharmWeak", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsCharmWeak", tags: ["ribbonRestraints"], power: 4, count: 4}},
+	{enemySpell: true, faction: "Trap", name: "SpikeTrap", sfx: "SpikeTrapTrigger", hitsfx: "SpikeTrapHit",
+		manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true,
+		noTerrainHit: true, time: 5, delay: 1, power: 6, range: 2, size: 3, aoe: 1.5,
+		bind: 10,
+		bindType: "Furniture",
+		lifetime: 1, damage: "crush",
+		playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsOneBar",
+			tags: ["onebar"], power: 4, count: 4}},
 	{enemySpell: true, faction: "Trap", name: "TrapRibbons", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 4, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsRibbons", tags: ["magicRibbons"], power: 10, count: 3}},
 	{enemySpell: true, faction: "Trap", name: "TrapShackleWeak", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsShackleWeak", tags: ["shackleRestraints"], power: 6, count: 2}},
 	{enemySpell: true, faction: "Trap", name: "TrapMummyWeak", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsMummyWeak", tags: ["mummyRestraints"], power: 8, count: 2}},
@@ -3653,7 +3662,7 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 	{nonmagical: true, enemySpell: true, name: "TrapSleepDart", hideWarnings: true, sfx: "Gunfire", manacost: 1, components: [], level:1, type:"bolt", projectileTargeting:true, onhit:"", power: 4, time: 0, delay: 0, range: 50, damage: "poison", speed: 2, playerEffect: {name: "TrapSleepDart", realBind: true, power: 5}},
 	{enemySpell: true, faction: "Trap", distract: 20, name: "TrapLustCloud", sfx: "Freeze", manacost: 1, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "happygas", playerEffect: {name: "TrapLustCloud", realBind: true, damage: "happygas", power: 8 }},
 	{enemySpell: true, faction: "Trap", name: "TrapSCloud", sfx: "Freeze", manacost: 1, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "poison", playerEffect: {name: "TrapSPCloud", realBind: true, damage: "poison", power: 5.0 }},
-	{nonmagical: true, enemySpell: true, name: "SleepDart", sfx: "Miss", manacost: 1, components: [], level:1, type:"bolt", projectileTargeting:true, onhit:"", power: 4, time: 0, delay: 0, range: 50, damage: "poison", speed: 1, playerEffect: {name: "TrapSleepDart", realBind: true, power: 5}},
+	{nonmagical: true, enemySpell: true, name: "SleepDart", sfx: "SpikeTrapTrigger", manacost: 1, components: [], level:1, type:"bolt", projectileTargeting:true, onhit:"", power: 4, time: 0, delay: 0, range: 50, damage: "poison", speed: 1, playerEffect: {name: "TrapSleepDart", realBind: true, power: 5}},
 ];
 
 KDDefineSpellPage("Command", [

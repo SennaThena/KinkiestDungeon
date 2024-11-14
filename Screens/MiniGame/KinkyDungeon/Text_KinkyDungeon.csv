@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.1"
+KDVersionStr,"5.4.4"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -3630,6 +3630,10 @@ RestraintOneBar,One Bar Prison
 RestraintOneBarDesc,"A devious way to immobilize people."
 RestraintOneBarDesc2,"As long as it's... inserted, you won't be going anywhere!"
 
+RestraintOneBarStand,Metal Stand
+RestraintOneBarStandDesc,"A devious way to immobilize people."
+RestraintOneBarStandDesc2,"As long as it's locked around you, you won't be going anywhere!"
+
 
 RestraintDollStandSFW,Doll Stand
 RestraintDollStandSFWDesc,"A mobile display stand for dolls to keep them in place."
@@ -7150,6 +7154,7 @@ KinkyDungeonSpellCastTrapLatexBall,"A rubber ball starts forming around you!"
 KinkyDungeonSpellCastTrapLustCloud,"You hear the sound of glass breaking, and a cloud of pink gas rises around you!"
 KinkyDungeonSpellCastTrapSCloud,"You hear the sound of glass breaking, and a cloud of green gas rises around you!"
 KinkyDungeonTrapBindingsCharmWeak,"The charms stick themselves all over your body!"
+KinkyDungeonTrapBindingsOneBar,"A metal pole catches you from below!"
 KinkyDungeonTrapBindingsRibbons,"The ribbons tie themselves tightly around your body and won't let go!"
 KinkyDungeonTrapBindingsShackleWeak,"Shackles close themselves over your limbs!"
 KinkyDungeonTrapBindingsMummyWeak,"The wrappings close in over your body!"
@@ -7170,6 +7175,7 @@ KinkyDungeonTrapBindingsDress,"Your clothes are getting ripped away!"
 KinkyDungeonTrapSleepDart,"You feel a prick as a small dart hits you, and you start feeling drowsy..."
 KinkyDungeonTrapLustCloud,"You breathe in the gas, and a wave of pleasure hits your whole body."
 KinkyDungeonTrapSPCloud,"You breathe in the gas, and feel lethargic..."
+KinkyDungeonTrapSpikeTrap,"You hear a mechanism trip..."
 
 KinkyDungeonInventory,"Items"
 KinkyDungeonReputation,"Rep"
@@ -7870,6 +7876,7 @@ KinkyDungeonDamageTypefrost,"Ice"
 KinkyDungeonDamageTypeice,"Ice"
 KinkyDungeonDamageTypefire,"Fire"
 KinkyDungeonDamageTypepoison,"Poison"
+KinkyDungeonDamageTypepoisongas,"Poison Gas"
 KinkyDungeonDamageTypecharm,"Charm"
 KinkyDungeonDamageTypetickle,"Tickle"
 KinkyDungeonDamageTypegrope,"Grope"
@@ -24256,6 +24263,11 @@ KDEffectTileTooltipManaFullDesc,"It's giving off a strange energy!"
 
 KDEffectTileTooltipMotionLamp,"Glass Plate"
 KDEffectTileTooltipMotionLampDesc,"Looks like it has lighting elements inside."
+
+KDEffectTileTooltipSpikeTrap,"???"
+KDEffectTileTooltipSpikeTrapDesc,"???"
+KDEffectTileTooltipSpikeTrapSeen,"???"
+KDEffectTileTooltipSpikeTrapSeenDesc,"???"
 
 KinkyDungeonSpellOneBarMissileBind,Many bars come out of the ground and restrain you!
 KinkyDungeonSpellOneBarMissile,One Bar Missile

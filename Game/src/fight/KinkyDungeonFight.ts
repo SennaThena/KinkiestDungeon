@@ -126,6 +126,7 @@ let KinkyDungeonDamageTypesExtension = {
 	"grope": "charm",
 	"pain": "charm",
 	"happygas": "charm",
+	"poisongas": "poison",
 	"charm": "soul",
 };
 
@@ -150,6 +151,7 @@ let KinkyDungeonDamageTypes = {
 	frost: {name: "ice", color: "#00D8FF", bg: "black"},
 	fire: {name: "fire", color: "#FF6A00", bg: "black"},
 	poison: {name: "poison", color: "#00D404", bg: "black"},
+	poisongas: {name: "poisongas", color: "#20E424", bg: "black"},
 	happygas: {name: "happygas", color: "#E27CD0", bg: "black"},
 	charm: {name: "charm", color: "#E27CD0", bg: "black"},
 	soul: {name: "soul", color: "#E27CD0", bg: "black"},
@@ -648,36 +650,47 @@ function KinkyDungeonEvasion(Enemy: entity, IsSpell?: boolean, IsMagic?: boolean
  * @returns {boolean}
  */
 function KinkyDungeonGetImmunity(tags, profile, type, resist, mode = 0) {
-	let t = type;
-	if (KDDamageEquivalencies[type]) t = KDDamageEquivalencies[type];
 
-	for (let i = 0; i < 10 && KinkyDungeonDamageTypesExtension[t]; i++) {
-		if (KinkyDungeonDamageTypesExtension[t] && resist != "weakness" && resist != "severeweakness") t = KinkyDungeonDamageTypesExtension[t];
-	}
-	if (!mode || mode == 1) {
-		if (tags && tags[t + resist])
-			return true;
-		if (profile) {
-			for (let pp of profile) {
-				let p = KDResistanceProfiles[pp];
-				if (p && (p[t + resist]))
-					return true;
+	let doFunc = (t) => {
+		if (!mode || mode == 1) {
+			if (tags && tags[t + resist])
+				return true;
+			if (profile) {
+				for (let pp of profile) {
+					let p = KDResistanceProfiles[pp];
+					if (p && (p[t + resist]))
+						return true;
+				}
+			}
+		}
+		if (!mode || mode == 2) {
+			if (tags && (((KinkyDungeonMeleeDamageTypes.includes(t) && (type != "unarmed" || !resist.includes("weakness"))) && tags["melee" + resist])
+				|| (!KinkyDungeonMeleeDamageTypes.includes(t) && tags["magic"+resist])))
+				return true;
+			if (profile) {
+				for (let pp of profile) {
+					let p = KDResistanceProfiles[pp];
+					if (p && (((KinkyDungeonMeleeDamageTypes.includes(t) && (type != "unarmed" || !resist.includes("weakness"))) && p["melee" + resist])
+						|| (!KinkyDungeonMeleeDamageTypes.includes(t) && p["magic"+resist])))
+						return true;
+				}
 			}
 		}
 	}
-	if (!mode || mode == 2) {
-		if (tags && (((KinkyDungeonMeleeDamageTypes.includes(t) && (type != "unarmed" || !resist.includes("weakness"))) && tags["melee" + resist])
-			|| (!KinkyDungeonMeleeDamageTypes.includes(t) && tags["magic"+resist])))
-			return true;
-		if (profile) {
-			for (let pp of profile) {
-				let p = KDResistanceProfiles[pp];
-				if (p && (((KinkyDungeonMeleeDamageTypes.includes(t) && (type != "unarmed" || !resist.includes("weakness"))) && p["melee" + resist])
-					|| (!KinkyDungeonMeleeDamageTypes.includes(t) && p["magic"+resist])))
-					return true;
+	doFunc(KDDamageEquivalencies[type] || type);
+	let t = KDDamageEquivalencies[type] || type;
+
+	if (KinkyDungeonDamageTypesExtension[t]) {
+		for (let i = 0; i < 10; i++) {
+			if (KinkyDungeonDamageTypesExtension[t])
+				t = KinkyDungeonDamageTypesExtension[t];
+			else {
+				doFunc(t);
+				break;
 			}
 		}
 	}
+
 
 	return false;
 }

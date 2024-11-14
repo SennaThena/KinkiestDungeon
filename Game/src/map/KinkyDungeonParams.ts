@@ -360,7 +360,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			{Name: "SpecificSpell", Spell: "TrapShackleWeak", Level: 0, Power: 1, Weight: 30},
 			{Name: "SpecificSpell", Spell: "TrapRopeWeak", Level: 0, Power: 3, Weight: 30},
 			{Name: "SpecificSpell", Spell: "TrapLeatherWeak", Level: 0, Power: 3, Weight: 30},
-			{Name: "SpecificSpell", Spell: "TrapLustCloud", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "SpikeTrap", Level: 0, Power: 4, Weight: 70},
 			{Name: "SpawnEnemies", Enemy: "SummonedSkeleton", strict: true, Level: 0, Power: 4, Weight: 10},
 			{Name: "SpawnEnemies", Enemy: "HeavySkeleton", extraTag: "Single", strict: true, Level: 0, Power: 2, Weight: 2},
 			{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 2, Weight: 10},
@@ -659,6 +659,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			{Name: "SpecificSpell", Spell: "TrapRopeWeak", Level: 0, Power: 3, Weight: 10},
 			{Name: "SpecificSpell", Spell: "TrapShackleWeak", Level: 0, Power: 3, Weight: 10},
 			{Name: "SpecificSpell", Spell: "TrapMagicChainsWeak", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "SpikeTrap", Level: 0, Power: 4, Weight: 30},
 			{Name: "SpawnEnemies", Enemy: "GreaterSkeleton", strict: true, Level: 0, Power: 3, Weight: 10},
 			{Name: "SpawnEnemies", Enemy: "HeavySkeleton", strict: true, Level: 0, Power: 1, Weight: 10},
 
@@ -783,6 +784,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			{Name: "SpecificSpell", Spell: "TrapMagicChainsWeak", Level: 0, Power: 3, Weight: 30},
 			{Name: "SpecificSpell", Spell: "TrapLeatherWeak", Level: 0, Power: 3, Weight: 30},
 			{Name: "SpecificSpell", Spell: "TrapLustCloud", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "SpikeTrap", Level: 0, Power: 4, Weight: 30},
 			{Name: "SpawnEnemies", Enemy: "SummonedSkeleton", strict: true, Level: 0, Power: 5, Weight: 10},
 			{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 3, Weight: 10},
 

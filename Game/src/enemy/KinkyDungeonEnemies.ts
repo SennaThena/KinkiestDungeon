@@ -358,6 +358,7 @@ function KDEnemyCanDespawn(id: number, mapData: KDMapDataType): boolean {
 	let entity = KinkyDungeonFindID(id);
 	if (!entity) return true;
 	return KinkyDungeonVisionGet(entity.x, entity.y) < 0.1
+		&& !KDEnemyHasFlag(entity, "no_pers_wander")
 		&& KDistChebyshev(entity.x - KDPlayer().x, entity.y - KDPlayer().y) >= KDDespawnDistance;
 }
 

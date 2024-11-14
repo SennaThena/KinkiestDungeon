@@ -1207,6 +1207,12 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 			if ((KDRescueEnemy("Slime", en, true) || repgain) && !KDHelpless(en)) {
 				KDRescueRepGain(en);
 			}
+
+			KinkyDungeonRemoveBuffsWithTag(en, ["encased", "slimed"]);
+			KDRescueSlime(en, entity);
+
+			KinkyDungeonApplyBuffToEntity(en, KDGlueResist, {duration: 30});
+
 			KinkyDungeonSendActionMessage(3, TextGet("KDUniversalSolventSucceedEnemy")
 				.replace("ENMY", KDGenEnemyName(en)),
 			"#88FFAA", 2 + (spell.channel ? spell.channel - 1 : 0));
@@ -1254,6 +1260,9 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 					}
 				}
 			}
+
+			KinkyDungeonRemoveBuffsWithTag(en, ["encased", "slimed"]);
+			KinkyDungeonApplyBuffToEntity(en, KDGlueResist, {duration: 30});
 
 			KinkyDungeonSendActionMessage(3, TextGet("KDUniversalSolventSucceedSelf")
 				.KDReplaceOrAddDmg( dmg.string),
@@ -1700,20 +1709,7 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 					KDRescueRepGain(en);
 				}
 				KinkyDungeonRemoveBuffsWithTag(en, ["encased", "slimed"]);
-				if (en.Enemy.tags?.rescueslime && !KDEnemyIsTemporary(en)) {
-					// Replace with a random adventurer. We do NOT refresh the health
-					let newType = KDRandom() < 0.25 ? "Adventurer_Sub_Fighter"
-						: (KDRandom() < 0.25 ? "Adventurer_Brat_Fighter"
-							: KDRandom() < 0.25 ? "Adventurer_Switch_Fighter"
-								: "Adventurer_Dom_Fighter");
-					let enemyType = KinkyDungeonGetEnemyByName(newType);
-					if (enemyType) {
-						en.Enemy = JSON.parse(JSON.stringify(enemyType));
-					}
-					en.hp = Math.min(en.Enemy.maxhp, en.hp);
-					en.hostile = 0;
-					en.faction = "Player";
-				}
+				KDRescueSlime(en, _entity);
 
 				KinkyDungeonApplyBuffToEntity(en, KDGlueResist, {duration: 10});
 			}
@@ -1733,6 +1729,7 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 					tried = true;
 				}
 			}
+
 			if (active) count += 1;
 		}
 
@@ -2018,3 +2015,21 @@ let KDCommandBindBindings: Record<string, (spell: spell, x: number, y: number, f
 		KinkyDungeonCastSpell(x, y, KinkyDungeonFindSpell("BindBelt", true), undefined, undefined, undefined, "Player");
 	},
 };
+
+
+function KDRescueSlime(en: entity, rescuer: entity) {
+	if (en.Enemy.tags?.rescueslime && !KDEnemyIsTemporary(en)) {
+		// Replace with a random adventurer. We do NOT refresh the health
+		let newType = KDRandom() < 0.25 ? "Adventurer_Sub_Fighter"
+			: (KDRandom() < 0.25 ? "Adventurer_Brat_Fighter"
+				: KDRandom() < 0.25 ? "Adventurer_Switch_Fighter"
+					: "Adventurer_Dom_Fighter");
+		let enemyType = KinkyDungeonGetEnemyByName(newType);
+		if (enemyType) {
+			en.Enemy = JSON.parse(JSON.stringify(enemyType));
+		}
+		en.hp = Math.min(en.Enemy.maxhp, en.hp);
+		en.faction = KDGetFaction(rescuer);
+		en.hostile = 0;
+	}
+}

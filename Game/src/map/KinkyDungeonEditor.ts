@@ -177,6 +177,7 @@ let KDTilePalette = {
 	'Shrine': {type: "tile", tile: 'A', special: {Type: "Shrine", Name: "Metal"}},
 	'HighPriorityShrine': {type: "tile", tile: 'A', special: {Type: "Shrine", Name: "Will", Priority: true}},
 	'----Hazards----': {type: "none"},
+	'SpikeTrap':  {type: "effect", effectTile: "SpikeTrap"},
 	'Trap': {type: "tile", tile: 'T', special: {Type: "Trap", Always: true,}},
 	'PotentialTrap': {type: "tile", tile: 'T', special: {Type: "Trap"}},
 	'----Conveyors----': {type: "none"},

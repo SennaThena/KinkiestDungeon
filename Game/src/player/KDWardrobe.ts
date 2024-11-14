@@ -792,6 +792,25 @@ function KDDrawColorSliders(X: number, Y: number, C: Character, Model: Model): v
 	if (KDLayerIndex > layers.length - 10) KDLayerIndex = Math.max(0, layers.length - 10);
 }
 
+function KDUpdateChar(C: Character) {
+	KDCurrentModels.get(C).Poses = KDGeneratePoseArray(
+		KDNPCPoses.get(C).CurrentPoseArms,
+		KDNPCPoses.get(C).CurrentPoseLegs,
+		KDNPCPoses.get(C).CurrentPoseEyes,
+		KDNPCPoses.get(C).CurrentPoseBrows,
+		KDNPCPoses.get(C).CurrentPoseBlush,
+		KDNPCPoses.get(C).CurrentPoseMouth,
+		KDNPCPoses.get(C).CurrentPoseEyes2,
+		KDNPCPoses.get(C).CurrentPoseBrows2,
+		//KDGetPoseOfType(C, "Eyes"),
+		//KDGetPoseOfType(C, "Brows"),
+		//KDGetPoseOfType(C, "Blush"),
+		//KDGetPoseOfType(C, "Mouth"),
+	);
+	KDUpdateTempPoses(C);
+	UpdateModels(C);
+}
+
 let KDLayerIndex = 0;
 
 function KDDrawPoseButtons(C: Character, X: number = 960, Y: number = 750, allowRemove: boolean = false, dress: boolean = false, updateDesired: boolean = false) {
@@ -829,22 +848,7 @@ function KDDrawPoseButtons(C: Character, X: number = 960, Y: number = 750, allow
 			}
 
 			if (update) {
-				KDCurrentModels.get(C).Poses = KDGeneratePoseArray(
-					KDNPCPoses.get(C).CurrentPoseArms,
-					KDNPCPoses.get(C).CurrentPoseLegs,
-					KDNPCPoses.get(C).CurrentPoseEyes,
-					KDNPCPoses.get(C).CurrentPoseBrows,
-					KDNPCPoses.get(C).CurrentPoseBlush,
-					KDNPCPoses.get(C).CurrentPoseMouth,
-					KDNPCPoses.get(C).CurrentPoseEyes2,
-					KDNPCPoses.get(C).CurrentPoseBrows2,
-					//KDGetPoseOfType(C, "Eyes"),
-					//KDGetPoseOfType(C, "Brows"),
-					//KDGetPoseOfType(C, "Blush"),
-					//KDGetPoseOfType(C, "Mouth"),
-				);
-				KDUpdateTempPoses(C);
-				UpdateModels(C);
+				KDUpdateChar(C);
 			}
 			if (dress) {
 
@@ -1031,7 +1035,7 @@ function KDDrawModelList(X: number, C: Character) {
 					if (KDModelList_Sublevel_index == index) {
 						KDChangeWardrobe(C);
 						C.Appearance.splice(appIndex, 1);
-						UpdateModels(C);
+						KDUpdateChar(C);
 					}
 					removed = true;
 					break;
@@ -1042,7 +1046,7 @@ function KDDrawModelList(X: number, C: Character) {
 				if (M) {
 					KDChangeWardrobe(C);
 					KDAddModel(C, M.Group || M.Name, M, "Default", undefined);
-					UpdateModels(C);
+					KDUpdateChar(C);
 				}
 
 
