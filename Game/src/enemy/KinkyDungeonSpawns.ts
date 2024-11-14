@@ -280,6 +280,17 @@ function KinkyDungeonGetEnemy (
 	return undefined;
 }
 
+function KDEntityCanBeGuard(en: entity, faction: string, requireTags: string[]): boolean {
+	if (KDGetFaction(en) == faction) {
+		return !en.hostile && !KDIsImprisoned(en) && KDBoundEffects(en) <= 2
+			&& !en.action
+			&& !KDEntityHasFlag(en, "overrideMove")
+			&& !KinkyDungeonIsDisabled(en)
+			&& en.Enemy?.tags && requireTags.every((tag) => {return !!en.Enemy.tags[tag];});
+	}
+	return false;
+}
+
 /**
  * @param x
  * @param y
@@ -293,6 +304,23 @@ function KinkyDungeonCallGuard(x: number, y: number, _noTransgress: boolean, nor
 	let point = KinkyDungeonGetNearbyPoint(x, y, true, undefined, true, true);
 	if (!point) point = KinkyDungeonGetRandomEnemyPoint(true);
 	if (point) {
+
+		if (!KinkyDungeonJailGuard()) {
+			let mainFaction = KDGetMainFaction();
+
+			let entities = KDNearbyEnemies(x, y, 20).filter((en) => {
+				return KDEntityCanBeGuard(en, mainFaction, requireTags || ["jail"]);
+			});
+			if (entities.length == 0) {
+				entities = KDMapData.Entities.filter((en) => {return KDEntityCanBeGuard(en, mainFaction, requireTags || ["jail"]);});
+			}
+			if (entities.length > 0) {
+				let en = entities[Math.floor(KDRandom() * entities.length)];
+				KDGameData.JailGuard = en.id;
+				en.gx = point.x;
+				en.gy = point.y;
+			}
+		}
 		if (!KinkyDungeonJailGuard()) {
 			// Jail tag
 			let mainFaction = KDGetMainFaction();
@@ -307,11 +335,11 @@ function KinkyDungeonCallGuard(x: number, y: number, _noTransgress: boolean, nor
 					Enemy = KinkyDungeonGetEnemy(["Guard", jt], KDGetEffLevel(),(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), '0', [jt, "jail"], undefined);
 				}
 			}
-			let guard = {summoned: true, noDrop: !normalDrops, Enemy: Enemy, id: KinkyDungeonGetEnemyID(),
+			let guard: entity = {summoned: true, noDrop: !normalDrops, Enemy: Enemy, id: KinkyDungeonGetEnemyID(),
 				x:KDMapData.StartPosition.x, y:KDMapData.StartPosition.y, gx: point.x, gy: point.y,
 				hp: (Enemy && Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, movePoints: 0, attackPoints: 0};
 
-			if (mainFaction) guard['faction'] = mainFaction;
+			if (mainFaction) guard.faction = mainFaction;
 			KinkyDungeonSetEnemyFlag(guard, "norep", -1);
 			KDGameData.JailGuard = guard.id;
 			KDAddEntity(guard);

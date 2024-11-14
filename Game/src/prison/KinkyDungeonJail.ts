@@ -664,25 +664,33 @@ function KinkyDungeonHandleJailSpawns(delta: number): void {
 				&& !KinkyDungeonJailGuard().hostile
 				&& !KinkyDungeonFlags.has("notickguardtimer")
 				&& !KinkyDungeonFlags.has("nojailbreak")) {
+
 				let g = KinkyDungeonJailGuard();
-				console.log("Despawned guard");
-				KDClearItems(g);
-				KDRemoveEntity(KinkyDungeonJailGuard());
-				let doorOff = 1;
-				//KDSpliceIndex(KDMapData.Entities.indexOf(KinkyDungeonJailGuard()), 1);
-				// Close the door
-				if (KinkyDungeonTilesGet((xx-doorOff) + "," + yy) && 'dD'.includes(KinkyDungeonMapGet(xx-doorOff, yy))) {
-					KinkyDungeonMapSet(xx-doorOff, yy, 'D');
-					if (KDGameData.PrisonerState == 'jail') {
-						KinkyDungeonTilesGet((xx-doorOff) + "," + yy).Type = "Door";
-						KinkyDungeonTilesGet((xx-doorOff) + "," + yy).Lock = KinkyDungeonGenerateLock(true, KDGetEffLevel(), false, "Door", {x: (xx-doorOff), y: yy, tile: KinkyDungeonTilesGet((xx-doorOff) + "," + yy)});
+
+				if (g.summoned) {
+					console.log("Despawned guard");
+					KDClearItems(g);
+					KDRemoveEntity(KinkyDungeonJailGuard());
+					let doorOff = 1;
+					//KDSpliceIndex(KDMapData.Entities.indexOf(KinkyDungeonJailGuard()), 1);
+					// Close the door
+					if (KinkyDungeonTilesGet((xx-doorOff) + "," + yy) && 'dD'.includes(KinkyDungeonMapGet(xx-doorOff, yy))) {
+						KinkyDungeonMapSet(xx-doorOff, yy, 'D');
+						if (KDGameData.PrisonerState == 'jail') {
+							KinkyDungeonTilesGet((xx-doorOff) + "," + yy).Type = "Door";
+							KinkyDungeonTilesGet((xx-doorOff) + "," + yy).Lock = KinkyDungeonGenerateLock(true, KDGetEffLevel(), false, "Door", {x: (xx-doorOff), y: yy, tile: KinkyDungeonTilesGet((xx-doorOff) + "," + yy)});
+						}
+						if (KDGameData.PrisonerState == 'jail' && KinkyDungeonVisionGet(g.x, g.y))
+							KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardDisappear").replace("EnemyName", TextGet("Name" + g.Enemy.name)), "#ff5277", 6);
+						if (KinkyDungeonPlayerInCell(true))
+							KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+						KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
 					}
-					if (KDGameData.PrisonerState == 'jail' && KinkyDungeonVisionGet(g.x, g.y))
-						KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardDisappear").replace("EnemyName", TextGet("Name" + g.Enemy.name)), "#ff5277", 6);
-					if (KinkyDungeonPlayerInCell(true))
-						KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
-					KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
+				} else {
+					// She is no longer the guard
+					KDGameData.JailGuard = 0;
 				}
+
 			} else if (!KinkyDungeonJailGuard().IntentAction || KinkyDungeonJailGuard().IntentAction.startsWith('jail')) {
 				if (!KinkyDungeonFlags.has("notickguardtimer")
 					&& !KinkyDungeonFlags.has("nojailbreak")) {

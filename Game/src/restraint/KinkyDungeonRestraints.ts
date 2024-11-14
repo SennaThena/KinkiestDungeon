@@ -5043,7 +5043,14 @@ function KDChooseRestraintFromListGroupPri(RestraintList: {restraint: restraint,
 		if (skip && (!cycled ||
 			(KinkyDungeonGetRestraintItem(group)
 				&& !KDRestraint(KinkyDungeonGetRestraintItem(group))?.armor
-				&& !KDRestraint(KinkyDungeonGetRestraintItem(group))?.good))) continue;
+				&& !KDRestraint(KinkyDungeonGetRestraintItem(group))?.good))) {
+
+					if (i == GroupOrder.length - 1 && !cycled) {
+						i = 0;
+						cycled = true;
+					}
+					continue;
+				}
 		let Restraints = RestraintList.filter((rest) => {
 			return rest.restraint.Group == group;
 		});
