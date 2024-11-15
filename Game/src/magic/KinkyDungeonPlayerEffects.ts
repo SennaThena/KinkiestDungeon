@@ -1278,7 +1278,8 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 
 				if (transmuteLevel > 1) {
 					for (let inv of KinkyDungeonAllRestraintDynamic()) {
-						if (KDRestraint(inv.item)?.shrine?.includes("WeakMagicRopes")) {
+						if (KDRestraint(inv.item)?.shrine?.includes("WeakMagicRopes")
+							&& !inv.item.inventoryVariant) {
 							if (transmuteLevel > 3 || KDRestraint(inv.item)?.Group != "ItemNeck") {
 								let newRes = KDRestraint(inv.item).name.replace("WeakMagicRope", "StrongMagicRope");
 								//if (KDCanAddRestraint(KinkyDungeonGetRestraintByName(newRes), true, "", false, inv.item))
@@ -1291,7 +1292,8 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 
 				if (transmuteLevel > 0) {
 					for (let inv of KinkyDungeonAllRestraintDynamic()) {
-						if (KDRestraint(inv.item)?.shrine?.includes("RopeSnake")) {
+						if (KDRestraint(inv.item)?.shrine?.includes("RopeSnake")
+							&& !inv.item.inventoryVariant) {
 							if (transmuteLevel > 2 || KDRestraint(inv.item)?.Group != "ItemNeck") {
 								let newRes = KDRestraint(inv.item).name.replace("RopeSnake", "WeakMagicRope");
 								//if (KDCanAddRestraint(KinkyDungeonGetRestraintByName(newRes), true, "", false, inv.item))

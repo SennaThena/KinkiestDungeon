@@ -5620,6 +5620,34 @@ function KDChangeRestraintType(item: item, type: string, name: string) {
 		KDChangeItemName(item, type, name);
 }
 
+
+
+function KDChangeNPCRestraint(inv: NPCRestraint, newRes: string): NPCRestraint {
+	let rrr: NPCRestraint = {
+		lock: inv.lock,
+		name: newRes,
+		id: inv.id,
+		faction: inv.faction,
+
+		inventoryVariant: inv.inventoryVariant,
+		powerbonus: inv.inventoryVariant ? KinkyDungeonRestraintVariants[inv.inventoryVariant]?.power : inv.powerbonus,
+	};
+	if (inv.inventoryVariant && KinkyDungeonRestraintVariants[inv.inventoryVariant]) {
+		KinkyDungeonRestraintVariants[inv.inventoryVariant].template = newRes;
+	}
+
+	if (inv.inventoryVariant) {
+		rrr.events = KDGetEventsForRestraint(newRes);
+		if (rrr.events && KinkyDungeonRestraintVariants[inv.inventoryVariant]?.events)
+			Object.assign(rrr.events,
+				JSON.parse(JSON.stringify(KinkyDungeonRestraintVariants[inv.inventoryVariant]?.events)));
+	} else if (inv.events) {
+		rrr.events = JSON.parse(JSON.stringify(inv.events));
+	}
+
+	Object.assign(inv, rrr);
+	return rrr;
+}
 /**
  * Gets the total curse power rating of the player
  * @param {boolean} activatedOnly

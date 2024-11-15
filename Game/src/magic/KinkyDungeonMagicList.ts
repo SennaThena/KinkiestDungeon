@@ -1285,7 +1285,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 			level:1, type:"hit", onhit:"instant", evadeable: false, noblock: true, power: 1.0, range: 2.99, size: 3, lifetime: 1, aoe: 1.5, damage: "arcane",
 			playerEffect: {name: "EnchantRope", power: 2},
 			events: [
-				{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0},
+				{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0, power: 2},
 			]},
 		{name: "RopeStrike", prerequisite: "RopeBoltLaunch", tags: ["rope", "binding", "aoe", "offense"], sfx: "MagicSlash", effectTileDurationMod: 10, effectTile: {
 			name: "Ropes",
@@ -1911,21 +1911,21 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		level:1, type:"inert", onhit:"aoe", evadeable: false, noblock: true, power: 1.0, range: 2.99, size: 3, lifetime: 1, aoe: 1.5, damage: "arcane", delay: 1,
 		playerEffect: {name: "EnchantRope", power: 1},
 		events: [
-			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 0.5},
+			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 0.5, power: 1},
 		]},
 
 	{enemySpell: true, name: "EnemyEnchantRope2", castCondition: "EnemyEnchantRope2", color: "#92e8c0", tags: ["rope", "utility", "binding", "offense"], prerequisite: "ApprenticeRope", sfx: "Freeze", school: "Conjure", manacost: 5.5, components: ["Verbal"],
 		level:1, type:"inert", onhit:"aoe", evadeable: false, noblock: true, power: 1.0, range: 2.99, size: 3, lifetime: 1, aoe: 1.5, damage: "arcane", delay: 1,
 		playerEffect: {name: "EnchantRope", power: 3},
 		events: [
-			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0},
+			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0, power: 3},
 		]},
 
 	{enemySpell: true, name: "EnemyEnchantRope3", castCondition: "EnemyEnchantRope3", color: "#92e8c0", tags: ["rope", "utility", "binding", "offense"], prerequisite: "ApprenticeRope", sfx: "Freeze", school: "Conjure", manacost: 5.5, components: ["Verbal"],
 		level:1, type:"inert", onhit:"aoe", evadeable: false, noblock: true, power: 1.0, range: 2.99, size: 3, lifetime: 1, aoe: 1.5, damage: "arcane", delay: 1,
 		playerEffect: {name: "EnchantRope", power: 4},
 		events: [
-			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0},
+			{type: "EnchantRope", trigger: "bulletHitEnemy", mult: 1.0, power: 4},
 		]},
 
 	{enemySpell: true, name: "EnemyLatexRestraintBolt", tags: ["binding", "leather", "bolt", "offense"], sfx: "MagicSlash", hitsfx: "LightSwing", school: "Conjure", manacost: 4, components: ["Arms"], level:1, type:"bolt",

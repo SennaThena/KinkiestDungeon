@@ -470,7 +470,6 @@ function KDSetNPCRestraint(id: number, slot: string, restraint: NPCRestraint): i
 
 	KDSetNPCRestraints(id, restraints);
 
-
 	return item;
 }
 
@@ -712,6 +711,7 @@ function KDFreeNPCRestraints(id: number, player: number) {
 		}
 	}
 }
+
 
 function KDInputSetNPCRestraint(data, container?: Record<string, item>): boolean {
 	let row = KDGetEncaseGroupRow(data.slot);

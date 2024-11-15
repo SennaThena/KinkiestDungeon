@@ -7736,6 +7736,59 @@ let KDEventMapBullet: Record<string, Record<string, (e: KinkyDungeonEvent, b: an
 
 		"EnchantRope": (_e, b, data) => {
 			if (b && data.enemy) {
+				KDQuickGenNPC(data.enemy, true);
+				let npcSprite = KDNPCChar.get(data.enemy.id);
+				if (npcSprite) {
+					NPCTags.set(npcSprite, KinkyDungeonUpdateRestraints(npcSprite, data.enemy.id, 0));
+				}
+
+				if (npcSprite) {
+					let enemyTags = NPCTags.get(npcSprite);
+
+					let transmuteLevel = 0;
+					if (enemyTags.get("RopeSnake")) {
+						transmuteLevel = 1;
+					}
+					if (_e.power > 1 && enemyTags.get("WeakMagicRopes")) {
+						transmuteLevel = 2;
+					}
+					if (_e.power > 2) {
+						transmuteLevel = 3;
+					}
+					if (_e.power > 3) {
+						transmuteLevel = 4;
+					}
+
+					if (transmuteLevel > 0 && KDGetNPCRestraints(data.enemy.id)) {
+						if (transmuteLevel > 1) {
+							for (let inv of Object.values(KDGetNPCRestraints(data.enemy.id))) {
+								if (KDRestraint(inv)?.shrine?.includes("WeakMagicRopes")
+									&& !inv.inventoryVariant) {
+									if (transmuteLevel > 3 || KDRestraint(inv)?.Group != "ItemNeck") {
+										let newRes = KDRestraint(inv).name.replace("WeakMagicRope", "StrongMagicRope");
+										//if (KDCanAddRestraint(KinkyDungeonGetRestraintByName(newRes), true, "", false, inv.item))
+										KDChangeNPCRestraint(inv, newRes);
+									}
+								}
+							}
+						}
+
+						if (transmuteLevel > 0) {
+							for (let inv of Object.values(KDGetNPCRestraints(data.enemy.id))) {
+								if (KDRestraint(inv)?.shrine?.includes("RopeSnake")
+									&& !inv.inventoryVariant) {
+									if (transmuteLevel > 2 || KDRestraint(inv)?.Group != "ItemNeck") {
+										let newRes = KDRestraint(inv).name.replace("RopeSnake", "WeakMagicRope");
+										//if (KDCanAddRestraint(KinkyDungeonGetRestraintByName(newRes), true, "", false, inv.item))
+										KDChangeNPCRestraint(inv, newRes);
+									}
+								}
+							}
+						}
+					}
+				}
+
+
 				if (data.enemy.specialBoundLevel?.Rope) {
 					KDTieUpEnemy(data.enemy, data.enemy.specialBoundLevel.Rope, "MagicRope", "arcane", true);
 					data.enemy.boundLevel -= data.enemy.specialBoundLevel.Rope;
@@ -10234,7 +10287,6 @@ let KDEventMapGeneric: Record<string, Record<string, (e: string, data: any) => v
 								.replace("ITMN2", KDGetItemNameString(KDRestraint(gag).biggerVersion)),
 							"#ffff00", 2);
 							KDChangeRestraintType(gag, Restraint, KDRestraint(gag).biggerVersion);
-
 						}
 					}
 				}

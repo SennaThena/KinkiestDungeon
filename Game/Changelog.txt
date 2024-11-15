@@ -37,6 +37,7 @@ TODO Add Cuddle play type
 - Being hit by an Observer's beam now attracts the Shadow to your position
 - The shadow now properly applies a cursed item when she catches you
 - Calling a guard should now pick an eligible character on the map instead of spawning one
+- Enchant Rope now affects NPC restraints properly
 
 5.4.3
 - No longer need to pass room escape method to backtrack

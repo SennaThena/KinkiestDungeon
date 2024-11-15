@@ -340,6 +340,7 @@ function KinkyDungeonCallGuard(x: number, y: number, _noTransgress: boolean, nor
 				hp: (Enemy && Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, movePoints: 0, attackPoints: 0};
 
 			if (mainFaction) guard.faction = mainFaction;
+			if (mainFaction == "Player") guard.faction = "Enemy";
 			KinkyDungeonSetEnemyFlag(guard, "norep", -1);
 			KDGameData.JailGuard = guard.id;
 			KDAddEntity(guard);
