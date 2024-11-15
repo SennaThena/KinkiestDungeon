@@ -3086,6 +3086,38 @@ function KDGiveConsumableVariant(variant: KDConsumableVariant, prefix: string = 
  * @param [powerBonus]
  * @param [quantity]
  */
+function KDReturnInventoryVariant(variant: KDRestraintVariant, prefix: string = "", curse: string = undefined, ID: string = "", forceName?: string, suffix: string = "", faction: string = "", powerBonus?: number, quantity: number = 1): item {
+	let origRestraint = KinkyDungeonGetRestraintByName(variant.template);
+	let events = origRestraint.events ? JSON.parse(JSON.stringify(origRestraint.events)) : [];
+	let newname = forceName ? forceName : (prefix + variant.template + (ID || (KinkyDungeonGetItemID() + "")) + (curse ? curse : ""));
+	if (prefix) variant.prefix = prefix;
+	if (suffix) variant.suffix = suffix;
+	if (curse) {
+		variant = JSON.parse(JSON.stringify(variant));
+		variant.curse = curse;
+	}
+	if (powerBonus) variant.power = powerBonus;
+	if (!KinkyDungeonRestraintVariants[newname])
+		KinkyDungeonRestraintVariants[newname] = variant;
+	if (variant.events)
+		Object.assign(events, variant.events);
+	let q = quantity;
+	return {faction: faction, name: newname, curse: curse, id: KinkyDungeonGetItemID(), type: LooseRestraint, events:events, quantity: q, showInQuickInv: true,};
+}
+
+
+/**
+ * Adds an inventory variant to the player's inventory
+ * @param variant
+ * @param [prefix]
+ * @param [curse]
+ * @param [ID]
+ * @param [forceName]
+ * @param [suffix]
+ * @param [faction]
+ * @param [powerBonus]
+ * @param [quantity]
+ */
 function KDGiveInventoryVariant(variant: KDRestraintVariant, prefix: string = "", curse: string = undefined, ID: string = "", forceName?: string, suffix: string = "", faction: string = "", powerBonus?: number, quantity: number = 1, container?: KDContainer) {
 	let origRestraint = KinkyDungeonGetRestraintByName(variant.template);
 	let events = origRestraint.events ? JSON.parse(JSON.stringify(origRestraint.events)) : [];

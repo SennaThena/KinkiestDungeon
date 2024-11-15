@@ -2555,7 +2555,9 @@ function DialogueAddCursedEnchantedHexed(
 	hexlevelmax: number = 10,
 	enchantlevelmin: number = 0,
 	enchantlevelmax: number = 10,
-) {
+	returnOnly: boolean = false,
+	inventory: boolean = false,
+): item {
 
 	let unlockcurse = null;
 	let hexVariant = "";
@@ -2613,8 +2615,23 @@ function DialogueAddCursedEnchantedHexed(
 			events.push(...KDEventEnchantmentModular[e].types[KDModifierEnum.restraint].events(restraint.name, undefined, hexVariant, enchantVariant, enchant_extra, {variant: variant}));
 		}
 
-		KDEquipInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, 0, true, undefined, true, false,
-			(enemy ? KDGetFaction(enemy) : undefined) || (unlockcurse ? "Curse" : undefined), true, unlockcurse, enemy, false, undefined, undefined, KDEventEnchantmentModular[enchantVariant]?.suffix);
+		if (returnOnly) {
+			return KDReturnInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, unlockcurse, undefined, undefined, KDEventEnchantmentModular[enchantVariant]?.suffix,
+				(enemy ? KDGetFaction(enemy) : undefined) || (unlockcurse ? "Curse" : undefined),
+				undefined, 1);
+		} else {
+			if (inventory) {
+				KDGiveInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, unlockcurse, undefined, undefined, KDEventEnchantmentModular[enchantVariant]?.suffix,
+					(enemy ? KDGetFaction(enemy) : undefined) || (unlockcurse ? "Curse" : undefined),
+					undefined, 1);
+
+			} else {
+				KDEquipInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, 0, true, undefined, true, false,
+					(enemy ? KDGetFaction(enemy) : undefined) || (unlockcurse ? "Curse" : undefined), true, unlockcurse, enemy, false, undefined, undefined, KDEventEnchantmentModular[enchantVariant]?.suffix);
+
+			}
+		}
 
 	}
+	return null;
 }
