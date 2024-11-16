@@ -4739,7 +4739,9 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 	},
 	"duringCrit": {
 		"RogueTargets": (e, _spell, data) => {
-			if (data.dmg > 0 && data.critical && data.enemy && !data.customCrit && KDHostile(data.enemy) && !KDEnemyHasFlag(data.enemy, "RogueTarget")) {
+			if (data.dmg > 0 && data.critical && data.enemy
+				&& data.attacker?.player
+				&& !data.customCrit && KDHostile(data.enemy) && !KDEnemyHasFlag(data.enemy, "RogueTarget")) {
 				data.crit *= e.mult;
 				data.bindcrit *= e.mult;
 				KinkyDungeonSetEnemyFlag(data.enemy, "RogueTarget", -1);
@@ -4748,7 +4750,8 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 			}
 		},
 		"RogueBind": (_e, _spell, data) => {
-			if (data.dmg > 0 && data.critical && data.enemy && !data.customCrit && KDHostile(data.enemy)) {
+			if (data.dmg > 0 && data.critical && data.enemy && !data.customCrit && KDHostile(data.enemy)
+				&& data.attacker?.player) {
 				if (data.bind || KinkyDungeonBindingDamageTypes.includes(data.type)) {
 					KDDamageQueue.push({floater: TextGet("KDBindCritical"), Entity: data.enemy, Color: "#ff55aa", Delay: data.Delay});
 					data.customCrit = true;

@@ -38,6 +38,9 @@ TODO Add Cuddle play type
 - The shadow now properly applies a cursed item when she catches you
 - Calling a guard should now pick an eligible character on the map instead of spawning one
 - Enchant Rope now affects NPC restraints properly
+- Fixed a bug where entities other than player would benefit from rogue super crit/surprise bondage
+- fixed missing nurse bound sprite
+- Can no longer backtrack in boss rooms until you defeat the boss / are defeated
 
 5.4.3
 - No longer need to pass room escape method to backtrack

@@ -5082,7 +5082,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackWidth: 1, attackRange: 1, power: 3, dmgType: "grope", fullBoundBonus: 3, focusPlayer: true, attackLock: "Purple",
 		terrainTags: {"secondhalf":2, "lastthird":1, "open": 4, "dressmaker": 20, "conjureAnger": 5, "conjureRage": 4, "ropeAnger": 3, "ropeRage": 2}, allFloors: true, shrines: ["Conjure", "Rope"],
 		dropTable: [{name: "RibbonRaw", amount: 7, weight: 14}]},
-	{name: "Nurse", outfit: "Nurse", style: "Earth", clusterWith: "construct", bound: "Dressmaker", playLine: "Nurse", faction: "Dressmaker", color: "#f135a4",
+	{name: "Nurse", outfit: "Nurse", style: "Earth", clusterWith: "construct", bound: "Nurse", playLine: "Nurse", faction: "Dressmaker", color: "#f135a4",
 		RestraintFilter: {
 			requiredItems: ["AsylumJacket"],
 		},

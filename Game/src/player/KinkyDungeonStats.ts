@@ -1350,7 +1350,7 @@ function KDGetDistractionRate(delta: number): number {
 	if (KinkyDungeonStatDistraction < KinkyDungeonStatDistractionLower) {
 		distractionRate +=
 		Math.min(
-			Math.max(0, KinkyDungeonStatDistractionLower - KinkyDungeonStatDistraction),
+			Math.max(0, 0.25*(KinkyDungeonStatDistractionLower - KinkyDungeonStatDistraction)),
 			KDGetDistractionDesireRate());
 	}
 	if (!KDGameData.DistractionCooldown) KDGameData.DistractionCooldown = 0;

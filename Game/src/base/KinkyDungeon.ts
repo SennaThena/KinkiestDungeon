@@ -5747,7 +5747,7 @@ function KinkyDungeonSaveGame(ToString: boolean = false): KinkyDungeonSave {
 }
 
 
-let KDSaveTimeout = 5000;
+let KDSaveTimeout = 600000; // 10 minutes
 async function KinkyDungeonCompressSave(save: string): Promise<string> {
 	if (window.Worker) {
 		let pp = new Promise<string>(function (resolve, reject) {

@@ -3641,7 +3641,7 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		bind: 10,
 		bindType: "Furniture",
 		lifetime: 1, damage: "crush",
-		playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsOneBar",
+		playerEffect: {name: "TrapBindings", text: "KinkyDungeonTrapBindingsOneBar",
 			tags: ["onebar"], power: 4, count: 4}},
 	{enemySpell: true, faction: "Trap", name: "TrapRibbons", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 4, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsRibbons", tags: ["magicRibbons"], power: 10, count: 3}},
 	{enemySpell: true, faction: "Trap", name: "TrapShackleWeak", sfx: "Struggle", manacost: 4, components: [], level:1, type:"inert", onhit:"aoe", passthrough: true, noTerrainHit: true, time: 5, delay: 1, power: 3, range: 2, size: 3, aoe: 1.5, lifetime: 1, damage: "chain", playerEffect: {name: "TrapBindings", realBind: true, text: "KinkyDungeonTrapBindingsShackleWeak", tags: ["shackleRestraints"], power: 6, count: 2}},
