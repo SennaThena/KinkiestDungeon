@@ -25448,6 +25448,7 @@ KDModVer," v"
 
 KDLivingCollarSuspendDisenchant,Magical disenchantment suspends your living collar for AMNT turns
 
+KDBindingAdd,"(will add AMNT TPE binding)"
 KDBindType_Energy,Hardlight
 KDBindType_Magic,Magic
 KDBindType_Leather,Leather

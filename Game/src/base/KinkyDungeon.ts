@@ -629,7 +629,7 @@ interface KDGameDataBase {
 	JourneyTarget:			{x: number, y: number},
 	LastDragon:			string,
 	ElevatorsUnlocked:		Record<number, string | boolean>,
-	TeleportLocations:		Record<string, {x: number, y: number, type: string, checkpoint: string, level: number}>,
+	TeleportLocations:		Record<string, {x: number, y: number, portalpos_x: number, portalpos_y: number, type: string, checkpoint: string, level: number}>,
 	MaxVisionDist:			number,
 	MinVisionDist:			number,
 	NightVision:			number,

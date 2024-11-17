@@ -749,7 +749,7 @@ function KDStaggerEnemy(enemy: entity) {
 }
 
 
-function KDMovePlayer(moveX: number, moveY: number, willing: boolean, sprint?: boolean, forceHitBullets?: boolean, suppressNoise?: boolean): boolean {
+function KDMovePlayer(moveX: number, moveY: number, willing: boolean, sprint?: boolean, forceHitBullets?: boolean, suppressNoise?: boolean, noEvent?: boolean): boolean {
 	KinkyDungeonPlayerEntity.lastx = KinkyDungeonPlayerEntity.x;
 	KinkyDungeonPlayerEntity.lasty = KinkyDungeonPlayerEntity.y;
 	let cancel = {cancelmove: false, returnvalue: false};
@@ -784,7 +784,8 @@ function KDMovePlayer(moveX: number, moveY: number, willing: boolean, sprint?: b
 		sound: (sprint && !suppressNoise) ? (4): 0,
 		dist: KDistChebyshev(KinkyDungeonPlayerEntity.lastx - moveX, KinkyDungeonPlayerEntity.lasty - moveY),
 	};
-	KinkyDungeonSendEvent("playerMove", data);
+	if (!noEvent)
+		KinkyDungeonSendEvent("playerMove", data);
 	if (data.sound > 0) {
 		KinkyDungeonMakeNoise(data.sound, data.moveX, data.moveY);
 	}

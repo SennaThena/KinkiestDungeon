@@ -1642,7 +1642,8 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 		clickFunction: (_gagged, _player) => {
 			KinkyDungeonSetFlag("noportal", 1);
 			if (!KDGameData.TeleportLocations) KDGameData.TeleportLocations = {};
-			KDGameData.TeleportLocations.commerce = {x: KDCurrentWorldSlot.x, y: KDCurrentWorldSlot.y, type: KDGameData.RoomType, level: MiniGameKinkyDungeonLevel, checkpoint: MiniGameKinkyDungeonCheckpoint};
+			KDGameData.TeleportLocations.commerce = {portalpos_x: KDPlayer().x, portalpos_y: KDPlayer().y,
+				x: KDCurrentWorldSlot.x, y: KDCurrentWorldSlot.y, type: KDGameData.RoomType, level: MiniGameKinkyDungeonLevel, checkpoint: MiniGameKinkyDungeonCheckpoint};
 			return false;
 		},
 		options: {
@@ -1706,6 +1707,12 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 					KinkyDungeonCreateMap(params, KDGameData.TeleportLocations.commerce.type, "", KDGameData.TeleportLocations.commerce.level,
 						undefined, undefined, undefined, {x: KDGameData.TeleportLocations.commerce.x, y: KDGameData.TeleportLocations.commerce.y}, true, undefined);
 
+					if (KDGameData.TeleportLocations.commerce.portalpos_x && KDGameData.TeleportLocations.commerce.portalpos_y) {
+						KDMovePlayer(KDGameData.TeleportLocations.commerce.portalpos_x,
+							KDGameData.TeleportLocations.commerce.portalpos_y,
+							false, undefined, undefined, true, true
+						)
+					}
 					return false;
 				},
 				options: {
