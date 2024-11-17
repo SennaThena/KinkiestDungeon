@@ -1889,8 +1889,10 @@ let KDEventMapInventory: Record<string, Record<string, (e: KinkyDungeonEvent, it
 		},
 	},
 	"apply": {
-		"FilterLayer": (e, _item, data) => {
-			data.Filters[e.kind] = e.filter;
+		"FilterLayer": (e, item, data) => {
+			if (item?.id == data.item?.id) {
+				data.Filters[e.kind] = e.filter;
+			}
 		},
 	},
 	"missPlayer": {

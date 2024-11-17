@@ -5718,7 +5718,7 @@ function KDAddModel (
 	ItemModel:   Model,
 	NewColor:    string | string[],
 	filters:     Record<string, LayerFilter>,
-	item?:       Item,
+	item?:       item,
 	Properties?: Record<string, LayerProperties>
 ): Item
 {

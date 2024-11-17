@@ -4630,6 +4630,12 @@ function KDGetLightColorGreyscale(x: number, y: number): number {
 	return color;
 }
 
+function KDMouseInModalArea(): boolean {
+	return (KDModalArea && MouseIn(KDModalArea_x, KDModalArea_y, KDModalArea_width, KDModalArea_height));
+}
+
+
+
 function KDMouseInPlayableArea(): boolean {
 	return MouseIn(canvasOffsetX, canvasOffsetY, KinkyDungeonCanvas.width, KinkyDungeonCanvas.height)
 		&& !MouseIn(0, 0, 500, 1000)

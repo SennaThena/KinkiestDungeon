@@ -833,7 +833,7 @@ function KDCharacterAppearanceNaked(C: Character): void {
  * @param tags
  * @param customFaction
  */
-function KDApplyItem(C: Character, inv: any, tags: any, customFaction: string = undefined): void {
+function KDApplyItem(C: Character, inv: item, tags: any, customFaction: string = undefined): void {
 	if (StandalonePatched) {
 		let restraint = KDRestraint(inv);
 		let AssetGroup = restraint.AssetGroup ? restraint.AssetGroup : restraint.Group;
@@ -876,6 +876,7 @@ function KDApplyItem(C: Character, inv: any, tags: any, customFaction: string = 
 			Properties: Properties,
 			faction: faction,
 			Character: C,
+			item: inv,
 			Wornitems: KDGetCharacterID(C) && KDGameData.NPCRestraints[KDGetCharacterID(C)] ?
 				Object.values(KDGameData.NPCRestraints[KDGetCharacterID(C)])
 					.filter((rest) => {return rest.events})

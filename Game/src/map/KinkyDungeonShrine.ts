@@ -370,7 +370,7 @@ function KinkyDungeonHandleShrine() {
 
 		}
 	}
-	return false;
+	return KDMouseInModalArea();
 }
 
 function KinkyDungeonDrawShrine() {
@@ -614,6 +614,7 @@ function KinkyDungeonDrawShrine() {
 
 		KDModalArea_y = YY - shrineHeight + 115;
 		KDModalArea_width = 1000;
+		KDModalArea_height = shrineHeight;
 
 		FillRectKD(kdcanvas, kdpixisprites, "shrinebg", {
 			Left: KDModalArea_x - 25,
