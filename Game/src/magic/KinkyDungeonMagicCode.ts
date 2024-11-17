@@ -526,7 +526,7 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 							b.duration = 0;
 						}
 					}
-				en.boundLevel = Math.max(0, en.boundLevel - 2*spell.power);
+				KDUntieEnemy(en, 2*spell.power, false, false);
 
 				cc = true;
 
@@ -1703,7 +1703,7 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 				let repgain = false;
 				if (en.boundLevel) {
 					repgain = true;
-					en.boundLevel = Math.max(0, en.boundLevel - 5);
+					KDUntieEnemy(en, 5, false, false);
 				}
 				if ((KDRescueEnemy("Slime", en, true) || repgain) && !KDHelpless(en)) {
 					KDRescueRepGain(en);
@@ -1754,7 +1754,8 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 				let repgain = false;
 				if (en.boundLevel) {
 					repgain = true;
-					en.boundLevel = Math.max(0, en.boundLevel - spell.power);
+
+					KDUntieEnemy(en, spell.power, false, false);
 
 				}
 

@@ -943,14 +943,14 @@ function KDGetRestraintBondageStats(item: Named, target: entity): KDBondageStats
 	};
 }
 
-/** Gets the expected total bondage amounts */
-function KDGetExpectedBondageAmount(id: number, target: entity): Record<string, number> {
+/** Gets the expected total bondage amounts. allowConjured means conjured items contribute. includeunlocked means unlocked items (items with no lock) contribute*/
+function KDGetExpectedBondageAmount(id: number, target: entity, allowConjured: boolean = true, includeUnlocked: boolean = true): Record<string, number> {
 	if (!KDGameData.NPCRestraints) return {};
 	let result : Record<string, number> = {};
 	let restraints = Object.values(KDGameData.NPCRestraints[id + ""] || {});
 	let already = {};
 	for (let item of restraints) {
-		if (!already[item.id]) {
+		if (!already[item.id] && (allowConjured || !item.conjured) && (includeUnlocked || item.lock)) {
 			if (KDRestraint(item)) {
 				let stats = KDGetRestraintBondageStats(item, target)
 				already[item.id] = true;
@@ -963,13 +963,13 @@ function KDGetExpectedBondageAmount(id: number, target: entity): Record<string, 
 	return result;
 }
 /** Gets the expected total bondage amounts */
-function KDGetExpectedBondageAmountTotal(id: number, target: entity, allowConjured: boolean = true): number {
+function KDGetExpectedBondageAmountTotal(id: number, target: entity, allowConjured: boolean = true, includeUnlocked: boolean = true): number {
 	if (!KDGameData.NPCRestraints) return 0;
 	let result = 0;
 	let restraints = Object.values(KDGameData.NPCRestraints[id + ""] || {});
 	let already = {};
 	for (let item of restraints) {
-		if (!already[item.id] && KDRestraint(item) && (allowConjured || !item.conjured)) {
+		if (!already[item.id] && KDRestraint(item) && (allowConjured || !item.conjured) && (includeUnlocked || item.lock)) {
 			let stats = KDGetRestraintBondageStats(item, target)
 			already[item.id] = true;
 			result +=  stats.amount;

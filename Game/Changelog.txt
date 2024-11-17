@@ -31,6 +31,10 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.5
+- Show owned items in NPC shop interface
+- Add option to untie NPC
+
 5.4.4
 - Universal solvent now rescues Encased Adventurers (if you choose to use it for such)
 - Universal solvent now removes encased debuffs from NPCs and grants glue resist to NPC/player for 30 turns

@@ -352,9 +352,18 @@ function KinkyDungeonCallGuard(x: number, y: number, _noTransgress: boolean, nor
 			KinkyDungeonJailGuard().gyy = point.y;
 			if (KinkyDungeonFindPath(KinkyDungeonJailGuard().x, KinkyDungeonJailGuard().y, KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, true, false, true, KinkyDungeonMovableTilesSmartEnemy)?.length < 15) {
 				let p = KinkyDungeonGetRandomEnemyPoint(true, true, undefined, 20, 10);
-				KinkyDungeonJailGuard().x = p.x;
-				KinkyDungeonJailGuard().y = p.y;
-				KinkyDungeonJailGuard().path = undefined;
+				if (p) {
+					KinkyDungeonJailGuard().x = p.x;
+					KinkyDungeonJailGuard().y = p.y;
+					KinkyDungeonJailGuard().path = undefined;
+				} else {
+					let p = KinkyDungeonGetRandomEnemyPoint(true, true, undefined, 20, 5);
+					if (p) {
+						KinkyDungeonJailGuard().x = p.x;
+						KinkyDungeonJailGuard().y = p.y;
+						KinkyDungeonJailGuard().path = undefined;
+					}
+				}
 			}
 			return KinkyDungeonJailGuard();
 		}

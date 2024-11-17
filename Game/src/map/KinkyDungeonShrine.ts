@@ -453,7 +453,10 @@ function KinkyDungeonDrawShrine() {
 				}
 				//175/2
 				DrawTextFitKD(TextGet("KinkyDungeonInventoryItem" + l.name), KDModalArea_x + 25, YY + 65 - ii * 50, 200, KinkyDungeonShopIndex == ii ? "white" : KDTextGray3, KDTextGray2, 20, "left", 70);
-				DrawTextFitKD(TextGet("KinkyDungeonCommerceCost").replace("ItemCost", "" + KinkyDungeonItemCost(l)), KDModalArea_x + 300 + 50, YY + 65 - ii * 50, 130, KDMapData.ShopItems[KinkyDungeonShopIndex].name == l.name ? "#ffffff" : KDTextGray3, KDTextGray2, 20, undefined, 70);
+				DrawTextFitKD(TextGet("KinkyDungeonCommerceCost").replace("ItemCost", "" + KinkyDungeonItemCost(l)), KDModalArea_x + 300 + 50, YY + 58 - ii * 50, 130, KDMapData.ShopItems[KinkyDungeonShopIndex].name == l.name ? "#ffffff" : KDTextGray3, KDTextGray2, 20, undefined, 70);
+				DrawTextFitKD(TextGet("KinkyDungeonCommerceOwned").replace("AMNT", "" + (
+					KinkyDungeonInventoryGetSafe(l.consumable || l.name) ? (KinkyDungeonInventoryGetSafe(l.consumable || l.name).quantity || 1) + (KinkyDungeonInventoryGetWorn(l.name) ? 1 : 0) : 0
+				)), KDModalArea_x + 300 + 50, YY + 76 - ii * 50, 130, KDMapData.ShopItems[KinkyDungeonShopIndex].name == l.name ? "#ffffff" : KDTextGray3, KDTextGray2, 14, undefined, 70);
 				ii++;
 			}
 			let item = KDGetItemPreview({name: KDMapData.ShopItems[KinkyDungeonShopIndex].name, type: KDMapData.ShopItems[KinkyDungeonShopIndex].shoptype});

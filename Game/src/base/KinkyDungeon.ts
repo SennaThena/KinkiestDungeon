@@ -5834,6 +5834,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 			if (saveData.aid != undefined) KinkyDungeonAid = saveData.aid;
 			if (saveData.KDCurrentWorldSlot) KDCurrentWorldSlot = saveData.KDCurrentWorldSlot;
 
+
 			KDOrigStamina = KinkyDungeonStatStamina*10;
 			KDOrigWill = KinkyDungeonStatWill*10;
 			KDOrigMana = KinkyDungeonStatMana*10;
@@ -5843,6 +5844,7 @@ function KinkyDungeonLoadGame(String: string = "") {
 
 			if (!KDGameData.NamesGenerated) KDGameData.NamesGenerated = {};
 			if (!KDGameData.Containers) KDGameData.Containers = {};
+			if (!KDGameData.NPCRestraints) KDGameData.NPCRestraints = {};
 
 			InitFacilities();
 

@@ -503,6 +503,14 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 		 */
 	let dialog: KinkyDialogue = {
 		response: "Default",
+		clickFunction: () => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
+				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
+			}
+			return false;
+		},
 		options: {},
 	};
 
@@ -695,6 +703,33 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 		}
 	};
 
+	dialog.options.Untie = {playertext: name + "Untie", response: "Default",
+		prerequisiteFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				return KDGameData.CurrentDialogMsgValue.BINDAMNT > 0;
+			}
+			return false;
+		},
+		clickFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				let amtOld = enemy.boundLevel;
+				KDUntieEnemy(enemy, KDGameData.CurrentDialogMsgValue.BINDAMNT, false, true);
+
+				let amtNew = enemy.boundLevel;
+
+				KDGameData.CurrentDialogMsgValue.BINDANTPREV = Math.max(0, amtOld - amtNew);
+				KDGameData.CurrentDialogMsgData.BINDANTPREV = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDANTPREV*10)}`;
+
+				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
+				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
+			}
+			return false;
+		},
+		leadsToStage: "", dontTouchText: true,
+	};
+
 	dialog.options.Food = {playertext: name + "Food", response: "Default",
 		prerequisiteFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
@@ -717,6 +752,8 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 		},
 		leadsToStage: "", dontTouchText: true,
 	};
+
+
 	dialog.options.Flirt = {playertext: name + "Flirt", response: "Default",
 		clickFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
@@ -1577,6 +1614,9 @@ function KDShopDialogue(name: string, items: string[], requireTags: string[], re
 				KDGameData.CurrentDialogMsgData["Item"+i] = KDGetItemNameString(item);
 				KDGameData.CurrentDialogMsgValue["ItemCost"+i] = Math.round(Math.min(bonus, 3.0) * KinkyDungeonItemCost(KDItem({name: item}), true, true));
 				KDGameData.CurrentDialogMsgData["ItemCost"+i] = "" + KDGameData.CurrentDialogMsgValue["ItemCost"+i];
+				KDGameData.CurrentDialogMsgData["AMNT"+i] = "" + (
+					KinkyDungeonInventoryGetSafe(item) ?
+					(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
 			}
 			return false;
 		},
@@ -1656,6 +1696,13 @@ function KDShopDialogue(name: string, items: string[], requireTags: string[], re
 					if (!enemy.items) enemy.items = [];
 					enemy.items.push(itemInv.name);
 				}
+
+				for (let i = 0; i < items.length; i++) {
+					let item = items[i];
+					KDGameData.CurrentDialogMsgData["AMNT"+i] = "" + (
+						KinkyDungeonInventoryGetSafe(item) ?
+						(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
+				}
 				KinkyDungeonAddGold(KDGameData.CurrentDialogMsgValue["ItemCost"+i]);
 				KDPleaseSpeaker(0.05 * (KDGameData.CurrentDialogMsgValue["ItemCost"+i]/100));
 				enemy.gold = enemy.gold ? Math.max(0, enemy.gold - KDGameData.CurrentDialogMsgValue["ItemCost"+i]) : 0;
@@ -1687,7 +1734,10 @@ function KDShopBuyDialogue(name: string): KinkyDialogue {
 				KDGameData.CurrentDialogMsgData["ITM_"+i+"_"] = KDGetItemNameString(item);
 				KDGameData.CurrentDialogMsgValue["IC_"+i+"_"] = Math.round(itemMult *
 					KinkyDungeonItemCost(KDItem({name: item})));
-				KDGameData.CurrentDialogMsgData["IC_"+i+"_"] = "" + KDGameData.CurrentDialogMsgValue["IC_"+i+"_"];
+					KDGameData.CurrentDialogMsgData["IC_"+i+"_"] = "" + KDGameData.CurrentDialogMsgValue["IC_"+i+"_"];
+				KDGameData.CurrentDialogMsgData["AMNT_"+i+"_"] = "" + (
+					KinkyDungeonInventoryGetSafe(item) ?
+					(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
 				//}
 			}
 			return false;
@@ -1752,6 +1802,7 @@ function KDShopBuyDialogue(name: string): KinkyDialogue {
 			addTextKey("dShopBuyItem" + i, TextGet("dShopBuy")
 				.replace("#", "_"+i+"_")
 				.replace("#", "_"+i+"_")
+				.replace("#", "_"+i+"_")
 			);
 		}
 		_KDModsAfterLoad();
@@ -1809,6 +1860,10 @@ function KDShopBuyDialogue(name: string): KinkyDialogue {
 						KDGameData.CurrentDialogMsgValue["IC_"+ii+"_"] = Math.round(itemMult *
 							KinkyDungeonItemCost(KDItem({name: item})));
 						KDGameData.CurrentDialogMsgData["IC_"+ii+"_"] = "" + KDGameData.CurrentDialogMsgValue["IC_"+ii+"_"];
+
+						KDGameData.CurrentDialogMsgData["AMNT_"+ii+"_"] = "" + (
+							KinkyDungeonInventoryGetSafe(item) ?
+							(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
 						//}
 					}
 				} else {
@@ -2289,6 +2344,9 @@ function KDSaleShop(name: string, items: string[], requireTags: string[], requir
 				KDGameData.CurrentDialogMsgData["Item"+i] = KDGetItemNameString(item);
 				KDGameData.CurrentDialogMsgValue["ItemCost"+i] = Math.round(KinkyDungeonItemCost(KDItem({name: item})) * markup);
 				KDGameData.CurrentDialogMsgData["ItemCost"+i] = "" + KDGameData.CurrentDialogMsgValue["ItemCost"+i];
+				KDGameData.CurrentDialogMsgData["AMNT"+i] = "" + (
+					KinkyDungeonInventoryGetSafe(item) ?
+					(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
 			}
 			return false;
 		},
@@ -2375,6 +2433,12 @@ function KDSaleShop(name: string, items: string[], requireTags: string[], requir
 						if (!KinkyDungeonHiddenFactions.has(faction)) {
 							KinkyDungeonChangeFactionRep(faction, Math.max(0.0001, KDGameData.CurrentDialogMsgValue["ItemCost"+i] * 0.00025));
 						}
+					}
+					for (let i = 0; i < items.length; i++) {
+						let item = items[i];
+						KDGameData.CurrentDialogMsgData["AMNT"+i] = "" + (
+							KinkyDungeonInventoryGetSafe(item) ?
+							(KinkyDungeonInventoryGetSafe(item).quantity || 1) : 0);
 					}
 				}
 				return false;
@@ -2634,4 +2698,43 @@ function DialogueAddCursedEnchantedHexed(
 
 	}
 	return null;
+}
+
+/** Returns 10% of current binding or 10, whichever is more, but not including protected bondage */
+function KDGetPlayerUntieBindAmt(enemy: entity): number {
+	let baseAmnt = Math.max(10, (enemy.boundLevel || 0) * 0.1);
+	if (!enemy.boundLevel || baseAmnt > enemy.boundLevel) baseAmnt = enemy.boundLevel;
+	let minimumBondage = KDGetExpectedBondageAmountTotal(enemy.id, enemy, false, true);
+	baseAmnt -= minimumBondage;
+	return Math.max(baseAmnt, 0);
+}
+
+function KDUntieEnemy(enemy: entity, amount: number, includeConjured: boolean = false, includeUnlocked: boolean = false) {
+	let expected = KDGetExpectedBondageAmount(enemy.id, enemy, includeConjured, includeUnlocked);
+	let entries = Object.entries(enemy.specialBoundLevel || {}).sort((entry, entry2) => {
+		return (KDSpecialBondage[entry[0]]?.priority || 0) - (KDSpecialBondage[entry2[0]]?.priority || 0)
+	});
+	for (let i = 0; i < entries.length && amount > 0; i++) {
+		let entry = entries[i];
+		let amtOld = entry[1];
+		entry[1] -= amount;
+		if (expected[entry[0]] && entry[1] < expected[entry[0]]) {
+			entry[1] = expected[entry[0]];
+		}
+		if (entry[1] < 0) entry[1] = 0;
+		let amtNew = entry[1];
+		let amntRemoved = amtOld - amtNew;
+		if (!enemy.specialBoundLevel) enemy.specialBoundLevel = {};
+		if (entry[1] > 0) enemy.specialBoundLevel[entry[0]] = entry[1];
+		else delete enemy.specialBoundLevel[entry[0]];
+		amount -= amntRemoved;
+		if (!enemy.boundLevel) enemy.boundLevel = 0;
+		enemy.boundLevel -= amntRemoved;
+	}
+	if (amount > 0 && enemy.boundLevel > 0) {
+		enemy.boundLevel -= amount;
+	}
+	if (enemy.boundLevel < 0) {
+		enemy.boundLevel = 0;
+	}
 }
