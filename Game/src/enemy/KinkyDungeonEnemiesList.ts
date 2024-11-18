@@ -6100,6 +6100,13 @@ let KDEnemyAction: Record<string, KDEnemyActionType> = {
 };
 
 
+
+
+let SpecialPersistentScriptSettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
+	Default: (npc: KDPersistentNPC, enemy: enemy) => {
+		return undefined;
+	},
+}
 let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
 	Default: (npc: KDPersistentNPC, enemy: enemy) => {
 		return "Default";

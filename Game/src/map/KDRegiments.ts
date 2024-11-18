@@ -139,6 +139,7 @@ function KDTickMaps(delta: number,
 		}
 		KDSpawnPersistentNPCs(coords, data == KDMapData);
 		KDWanderPersistentNPCs(coords, data == KDMapData);
+		KDRunPersistentNPCScripts(coords, data == KDMapData);
 
 	}
 

@@ -862,6 +862,8 @@ interface enemy extends KDHasTags {
 		decay?: number,
 	},
 
+	/** Which subroutine to select for persistent script */
+	specialScript?: string,
 	/** Which subroutine to select spawnAI */
 	spawnAISetting?: string,
 	/** Which subroutine to select wanderAI */

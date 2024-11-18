@@ -31,6 +31,8 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.6
+
 5.4.5
 - Show owned items in NPC shop interface
 - Add option to untie NPC

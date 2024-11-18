@@ -86,6 +86,7 @@
         "Game/src/enemy/KDPersistence.ts",
         "Game/src/enemy/KDPersistentSpawnAI.ts",
         "Game/src/enemy/KDPersistentWanderAI.ts",
+        "Game/src/enemy/KDPersistentScriptList.ts",
         "Game/src/map/KinkyDungeonEffectTiles.ts",
         "Game/src/player/KinkyDungeonDressList.ts",
         "Game/src/item/KinkyDungeonConsumables.ts",

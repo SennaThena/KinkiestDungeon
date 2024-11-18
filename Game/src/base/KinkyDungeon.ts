@@ -1768,6 +1768,10 @@ function KinkyDungeonRun() {
 				KDWardrobeCallback = null;
 				KDWardrobeRevertCallback = null;
 				KDPlayerSetPose = false;
+				KDInitInventory();
+				KinkyDungeonPlayerTags = new Map();
+				CharacterReleaseTotal(KinkyDungeonPlayer);
+				KDUpdateChar(KinkyDungeonPlayer);
 				KDInitCurrentPose();
 				KinkyDungeonInitializeDresses();
 				KDUpdateModelList();
