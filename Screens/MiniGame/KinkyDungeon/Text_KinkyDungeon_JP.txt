@@ -26260,7 +26260,7 @@ The chef spanks you with her frying pan! (DamageTaken)
 シェフがフライパンで叩いてきた！ (DamageTaken)
 
 
-As you finish, you look up and notice that someone is not very happy with you.
+As you eat, you look up and notice that someone is not very happy with you.
 最後の一口を食べて顔を上げると、不機嫌そうな何者かが立っていた！
 
 

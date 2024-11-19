@@ -21478,7 +21478,7 @@ AttackChefLock,"The chef makes sure you'll never steal again! (DamageTaken)"
 AttackChefBind,"The chef makes sure you'll never steal again! (+RestraintAdded)"
 AttackChef,"The chef spanks you with her frying pan! (DamageTaken)"
 
-KDSpawnChef,"As you finish, you look up and notice that someone is not very happy with you."
+KDSpawnChef,"As you eat, you look up and notice that someone is not very happy with you."
 
 ItemPickupBrownies,"You find some delicious brownies!"
 KinkyDungeonInventoryItemBrownies,Double Fudge Brownie

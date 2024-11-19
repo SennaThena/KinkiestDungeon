@@ -26036,7 +26036,7 @@ The chef spanks you with her frying pan! (DamageTaken)
 Шеф-повар шлепает вас своей сковородой! (Нанесен урон)
 
 
-As you finish, you look up and notice that someone is not very happy with you.
+As you eat, you look up and notice that someone is not very happy with you.
 Когда вы заканчиваете, вы поднимаете глаза и замечаете, что кто-то вами не очень доволен.
 
 
