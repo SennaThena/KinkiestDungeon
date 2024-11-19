@@ -161,7 +161,7 @@ function KDCalcPlayChance(playChance: number, enemy: entity): number {
 		else playChance = 0.9;
 	}
 
-	if (KinkyDungeonFlags.get("noPlay")) playChance = 0;
+	if (KinkyDungeonFlags.get("noPlay") || KDEnemyHasFlag(enemy, "noPlay")) playChance = 0;
 
 	return playChance;
 }

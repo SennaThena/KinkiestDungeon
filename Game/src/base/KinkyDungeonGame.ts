@@ -1828,7 +1828,7 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 
 	let currentCluster = null;
 
-	let spawns = [];
+	let spawns: SpawnEntry[] = [];
 	for (let sp of spawnPoints) {
 		spawns.push(sp);
 	}
@@ -1894,8 +1894,9 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 		let faction = undefined;
 		let tags = [];
 		let levelBoost = 0;
-		let forceIndex = undefined;
+		let forceIndex: string = undefined;
 		let keys = false;
+		let noPlay = false;
 
 		let filterTags = JSON.parse(JSON.stringify(filterTagsBase));
 
@@ -1947,6 +1948,7 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				}
 				X = spawns[0].x;
 				Y = spawns[0].y;
+				if (spawns[0].noPlay) noPlay = true;
 				if (spawns[0].keys) keys = true;
 				AI = spawns[0].AI;
 				levelBoost = spawns[0].levelBoost || 0;
@@ -2072,7 +2074,11 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 						e['keys'] = true;
 					}
 				}
+
 				KDAddEntity(e);
+				if (noPlay) {
+					KinkyDungeonSetEnemyFlag(e, "noPlay", -1);
+				}
 				let clusterChance = 0.5; //1.1 + 0.9 * MiniGameKinkyDungeonLevel/KinkyDungeonMaxLevel;
 				let clusterLeader = !spawnPoint && !currentCluster && Enemy.clusterWith && KDRandom() < clusterChance;
 				// Give it a custom name, higher chance if cluster
