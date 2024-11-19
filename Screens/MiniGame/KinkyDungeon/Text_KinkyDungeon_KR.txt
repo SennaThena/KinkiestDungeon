@@ -1312,9 +1312,9 @@ Everywhere!
 모든 부위!
 
 
-### Physical Armor:
+### Physical Armor: 
 
-### Magic Armor:
+### Magic Armor: 
 
 In the Shadows: You are harder to see.
 그림자 속에서: 당신은 보기가 더 어렵습니다.
@@ -1322,7 +1322,7 @@ Invisible: You are very difficult to see.
 보이지 않음: 당신은 보기가 매우 어렵습니다.
 Quickness: Your next movement is so fast it doesn't advance a turn.
 빠름: 다음 이동은 매우 신속해 턴을 소모하지 않습니다.
-### All Damage Reduction:
+### All Damage Reduction: 
 
 You take PERCENT1 DAMAGETYPE damage, based on PERCENT2 DAMAGETYPE resist and PERCENT3 DAMAGECATEGORY modifier.
 PERCENT2 DAMAGETYPE 저항과 PERCENT3 DAMAGECATEGORY 수정자를 기준으로 PERCENT1 DAMAGETYPE 피해를 받습니다.
@@ -1606,7 +1606,7 @@ Missing key
 열쇠 미발견
 ### You are protected from damage and can't be bound until the shield is broken!
 
-### Chance for a spell to fizzle:
+### Chance for a spell to fizzle: 
 
 ### Dodge Chance: Percent%, based on EVASIONSUM Evasion and EVASIONPENALTY% penalty.
 
@@ -1772,7 +1772,7 @@ Delete Mod
 모드 삭제
 Clear Perks
 클리어 특전
-### Config
+### Config 
 
 Cancel
 취소
@@ -1900,15 +1900,15 @@ Floor FLOORNUMBER: DUNGEONNAME
 FLOORNUMBER 층 : DUNGEONNAME
 
 
-### Lockpicks:
+### Lockpicks: 
 
-### Keys:
+### Keys: 
 
-### Magic Keys:
+### Magic Keys: 
 
-### Knife:
+### Knife: 
 
-### Mag. Knife:
+### Mag. Knife: 
 
 You climb down the stairs. The passage closes behind you.
 당신은 계단을 내려갔습니다. 뒤의 통로가 닫힙니다.
@@ -2116,7 +2116,7 @@ You find a medley of potions.
 당신은 여러종류의 물약을 찾았습니다.
 
 
-### Rarity:
+### Rarity: 
 
 Lesser
 저급
@@ -2808,7 +2808,7 @@ Deals fire damage. Provides light.
 화염 피해를 입힙니다. 빛을 제공합니다.
 Unarmed
 비무장
-### Fight with your hands and feet. 50% chance to stun target if the target is disarmed.
+### Fight with your hands and feet. Counts as teasing if arms are free. 50% chance to stun target if the target is disarmed.
 
 Deals unarmed damage.
 비무장 피해를 입힙니다.
@@ -2962,7 +2962,7 @@ Dreamcatcher
 드림캐쳐
 Forged in nightmares, woven in steel. Summons a Shadow Warrior on unaware targets for 2% ancient energy.
 악몽 속에서 벼려지고 강철로 짜여져 있습니다. 모르는 대상에게 그림자 전사를 소환하여 2%의 고대 에너지를 얻습니다.
-### Deals shadow damage. Deals up to 30 bonus psychic damage on unaware (100%) or vulnerable (50%) targets.
+### Deals shadow damage. Deals up to 30 bonus psychic damage on unaware (100%) or vulnerable (50%) targets. 
 
 Axe
 도끼
@@ -2970,11 +2970,11 @@ Great for cutting trees that happen to be underground.
 우연히 지하에 있는 나무를 베는 데 좋습니다.
 Also deals 20 damage to enemies next to you. Deals slash damage.
 옆에 있는 적에게도 20의 피해를 줍니다. 참격 피해를 입힙니다.
-### Accuracy:
+### Accuracy: 
 
-### Crit Multiplier:
+### Crit Multiplier: 
 
-### Bind Crit Multiplier:
+### Bind Crit Multiplier: 
 
 Find the keys..
 열쇠를 찾아라..
@@ -2992,9 +2992,9 @@ You found a crack and could maybe wedge a knife or tool into it to keep it still
 균열을 발견하고 칼이나 도구를 쐐기로 고정하여 고정시킬 수 있습니다.
 You found something sticky and might be able to pull off fabrics.
 끈적끈적한 무언가를 찾았고 천을 떼어낼 수 있을지도 모릅니다.
-### Evasion:
+### Evasion: 
 
-### Visibility:
+### Visibility: 
 
 
 
@@ -3040,13 +3040,13 @@ Edged!
 
 
 
-### Damage:
+### Damage: 
 
-### Bind:
+### Bind: 
 
-### Crit:
+### Crit: 
 
-### SP Cost:
+### SP Cost: 
 
 ### Cut PWR: AMNT%
 
@@ -4212,12 +4212,22 @@ The Bast Warrior tickles you with her claws! (DamageTaken)
 
 
 
+### Bast High Cleric
+
+### The Bast High Cleric vanishes into a puff of ribbons.
+
+A ray of light shoots out and paralyzes you! (DamageTaken)
+한 줄기 빛이 당신을 마비시킵니다! (DamageTaken)
+### The Bast Cleric conjures wrappings upon you! (+RestraintAdded)
+
+### The Bast Cleric conjures a lock and slips it onto you! (DamageTaken)
+
+
+
 Bast Cleric
 바스트 클레릭
 The Bast Cleric collapses and meows softly.
 바스트 클레릭이 쓰러지고 부드럽게 야옹거린다.
-A ray of light shoots out and paralyzes you! (DamageTaken)
-한 줄기 빛이 당신을 마비시킵니다! (DamageTaken)
 The Bast Cleric restrains you! (+RestraintAdded)
 바스트 클레릭이 당신을 구속합니다! (+RestraintAdded)
 ### The Bast Cleric pulls out a lock and slips it on! (DamageTaken)
@@ -5928,17 +5938,17 @@ Commerce
 상업
 ### Shrine of SHRINETYPE
 
-### Tablet of
+### Tablet of 
 
-### Goddess:
+### Goddess: 
 
-### Goddess Blessing:
+### Goddess Blessing: 
 
-### Goddess Curse:
+### Goddess Curse: 
 
-### Mana Bonus:
+### Mana Bonus: 
 
-### Lack of Mana Penalty:
+### Lack of Mana Penalty: 
 
 ### Your excess mana helps you suppress the enchantment!
 
@@ -5962,11 +5972,11 @@ You try to read the runes but cannot understand them.
 당신은 룬을 읽으려고 하지만 이해할 수 없습니다.
 
 
-### Allies:
+### Allies: 
 
-### Enemies:
+### Enemies: 
 
-### Favorable:
+### Favorable: 
 
 ### None
 
@@ -6094,7 +6104,7 @@ Next Offer
 
 Cost: ItemCostgp
 비용: ItemCostgp
-
+### Owned: AMNT
 
 You climb down to the next level
 당신은 다음 단계로 내려갑니다
@@ -6219,6 +6229,10 @@ You hear a click as the door shuts behind you...
 ### One Bar Prison
 
 ### A devious way to immobilize people.
+
+### Metal Stand
+
+### As long as it's locked around you, you won't be going anywhere!
 
 
 
@@ -6520,7 +6534,7 @@ They will slow you down, but you can walk on slime without getting stuck!
 
 
 
-### You find
+### You find 
 
 
 
@@ -7166,12 +7180,14 @@ An energetic little friend that likes to tease you and takes orders from the hea
 놀리기를 좋아하고 메이드장의 지시를 받는 활기찬 꼬마 친구.
 ### It is charged by residual magic from your spells. Type: Teasing, Edging
 
-Stainless Plug
-스테인리스 플러그
+### Stainless Plug (F)
+
 A weighty plug that doesn't vibrate, but you'll certainly notice it walking around...
 진동을 일으키지 않는 무거운 플러그지만 확실히 걸어다니는 것을 알아차릴 수 있을 것입니다...
 This one goes in the front.
 이쪽이 앞에 갑니다.
+### Stainless Plug (R)
+
 This one goes in the back.
 이건 뒤로 갑니다.
 
@@ -8506,6 +8522,8 @@ Liquid Latex
 액체 라텍스
 Engulfs creatures
 생물을 삼킨다
+### Engulfs pets (like you)
+
 Slows creatures
 느린 생물
 Glue
@@ -8668,7 +8686,7 @@ Verbal
 언어 적
 
 
-### Components:
+### Components: 
 
 Arm Movements
 팔의 움직임
@@ -8928,11 +8946,11 @@ The roaring inferno deals 10 damage to you!
 
 ### Mental Resistance
 
-### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is 0 or are teased directly by an enemy or damage (click the buff to toggle), and willpower drains 70% slower while edged.
+### +100 Psychic and Charm Resist. You can no longer let go involuntarily unless your willpower is less than 25% (click the buff to toggle), and willpower drains 70% slower while edged.
 
-### Mental Resistance: You cannot orgasm except by choice, or being forced by an enemy. Click to toggle.
+### Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle.
 
-### Mental Resistance: You are allowing yourself to let go if forced to. Click to toggle.
+### Mental Resistance: You are allowing yourself to let go. Click to toggle.
 
 
 
@@ -9526,6 +9544,8 @@ Chaos Beam
 카오스 빔
 Mystic Beam
 미스틱 빔
+### Mystic Barrage
+
 ### A beam of light that channels for 2 turns (stunning you briefly) then instantly deals DamageDealt holy damage to the first target hit. Blinds for 12 turns. 150% crit multiplier.
 
 You charge a powerful beam attack!!!
@@ -11172,6 +11192,10 @@ Ropes wrap themselves around your body from all sides!
 로프가 사방에서 몸을 감쌉니다!
 ### Wrappings appear and wrap you head to toe!
 
+### A spell transforms your wrappings into hexed latex!
+
+### A spell engulfs you in wrappings!
+
 ### Vines sprout around you and grab hold of your limbs!
 
 Your clothes are stripped and replaced!
@@ -11264,6 +11288,8 @@ You hear the sound of glass breaking, and a cloud of green gas rises around you!
 유리가 깨지는 소리가 들리고 녹색 가스 구름이 주위로 솟아오릅니다!
 The charms stick themselves all over your body!
 매력이 온 몸에 달라붙는다!
+### A metal pole catches you from below!
+
 The ribbons tie themselves tightly around your body and won't let go!
 리본이 당신의 몸을 단단히 묶고 놓지 않을 것입니다!
 Shackles close themselves over your limbs!
@@ -11304,7 +11330,7 @@ You breathe in the gas, and a wave of pleasure hits your whole body.
 가스를 들이마시면 쾌감의 물결이 온몸을 강타합니다.
 You breathe in the gas, and feel lethargic...
 당신은 가스를 들이마시고 무기력함을 느낍니다...
-
+### You hear a mechanism trip...
 
 ### Items
 
@@ -11354,7 +11380,7 @@ You need more spell points.
 주문 포인트가 더 필요합니다.
 You don't have enough maximum mana to cast this spell!
 이 주문을 시전하기에는 최대 마나가 부족합니다!
-### School:
+### School: 
 
 Generic
 일반적인
@@ -11364,15 +11390,15 @@ Generic
 
 Learn Spell
 마법 배우기
-### Spell Points:
+### Spell Points: 
 
 
 
-### Level:
+### Level: 
 
-### Spell Point Cost:
+### Spell Point Cost: 
 
-### Mana Cost:
+### Mana Cost: 
 
 
 
@@ -11404,19 +11430,19 @@ Replace Spell 6
 교체 마법 6
 Replace Spell 7
 교체 마법 7
-### Current Spell 1:
+### Current Spell 1: 
 
-### Current Spell 2:
+### Current Spell 2: 
 
-### Current Spell 3:
+### Current Spell 3: 
 
-### Current Spell 4:
+### Current Spell 4: 
 
-### Current Spell 5:
+### Current Spell 5: 
 
-### Current Spell 6:
+### Current Spell 6: 
 
-### Current Spell 7:
+### Current Spell 7: 
 
 ### ???
 
@@ -11452,7 +11478,7 @@ Library
 
 ### (A page from the Book of Aeons)|They say that Archmagus Sariel Vinlaga studied in this very library. Having gathered together all of human knowledge, magical, spiritual, technological, she tasked her twelve lesser magi with the job of sorting and collating the wealth of knowledge she had acquired. No one knows why she suddenly abandoned it, or why it remains in such disrepair today.
 
-### (A page from the Book of Aeons)|The Overgown Ruins remain a puzzle to scholars. Hardly any light comes through the cracks in the ceiling, and yet the area teems with life. It is known that the regenerative powers that keep humans from dying relies on an individual's own mana supply. So how do plants and beasts without mana survive? The devout say it is the Goddess of Restoration who preserves the jungle, but could it be that the Old Civilization developed a means of sustaining life underground?
+### (A page from the Book of Aeons)|The Overgown Ruins remain a puzzle to scholars. Hardly any light comes through the cracks in the ceiling, and yet the area teems with life. It is known that the regenerative powers that keep humans from dying relies on an individual's own mana supply. So how do plants and beasts without mana survive? The devout say it is the Goddess of Restoration who preserves the jungle, but could it be that the Old Civilization developed a means of sustaining life underground? 
 
 ### (A page from the Book of Aeons)|The problem of Energy has plagued civilization for millenia. Before the leylines were discovered, humankind relied on natural sources of power such as rivers and firewood. When the Crystal Caves were discovered, a great revolution occurred. No longer reliant on natural sources, civilizations could tap the wellsprings of chaotic energy underground to power machinery like never seen before.
 
@@ -12094,11 +12120,11 @@ For 3 rep the goddess will grant you slipperiness, boosting your struggling.
 3렙 동안 여신이 당신에게 미끄러움을 부여하여 당신의 고군분투를 강화할 것입니다.
 For 3 rep the goddess will grant you a key.
 3렙이면 여신이 당신에게 열쇠를 줄 것입니다.
-### For 3 rep the goddess will grant you
+### For 3 rep the goddess will grant you 
 
 For 3 rep the goddess
 3렙 여신님
-For 3 rep the goddess
+For 3 rep the goddess 
 3렙 여신님
 
 
@@ -12470,9 +12496,9 @@ Can disarm (chance: DISARMCHANCE%)
 무장 해제 가능(확률: DISARMCHANCE%)
 Resistances:
 저항:
-### HP:
+### HP: 
 
-### Binding:
+### Binding: 
 
 Ambivalent
 양가적
@@ -12564,6 +12590,8 @@ Acid
 
 Poison
 독
+### Poison Gas
+
 Charm
 매력
 Tickle
@@ -12770,17 +12798,17 @@ Many ropes emerge around you, removing weaker ropes from your body and binding e
 
 ### You know the exact restraints a perk shrine will apply.
 
-### Hard Mode:
+### Difficulty:
 
 ### Normal Mode
 
 ### Hard Mode
 
-### Extreme
+### Extreme Mode
 
 ### A supposedly reasonable difficulty curve.
 
-### Play the game the way it was intended. Cruel and restrictive.
+### Play the game the way it was intended. Cruel and restrictive. 
 
 ### Play at your own peril. Unlocked by double-clicking the Hard Mode button.
 
@@ -18578,7 +18606,7 @@ What? (PERCENT chance to avoid)
 (화자가 목을 가다듬는다)|음, 우리는 실제로 모집하고 있습니다!|정의를 위해 싸우는 데 동의한다면 우리와 함께 할 수 있습니다!
 (The SPEAKER gives you a firm handshake)|Welcome to the sisterhood, adventurer!
 (SPEAKER 가 힘차게 악수를 건넸다)|자매 관계에 오신 것을 환영합니다, 모험가님!
-### (The SPEAKER tilts her head and shrugs)|Ah well.
+### (The SPEAKER tilts her head and shrugs)|Ah well. 
 
 (The SPEAKER frowns)|What is it?|You're not an enemy of justice, are you?
 (화자가 눈살을 찌푸리며)|뭐야?|당신은 정의의 적이 아니지, 그렇지?
@@ -18872,7 +18900,7 @@ This is unethical! I refuse! (PERCENT chance to avoid)
 
 ### (Attack the SPEAKER?)
 
-### (Buy ITM# for IC# gp)
+### (Buy ITM# for IC# gp) (Owned: AMNT#)
 
 ### (The SPEAKER sells you the item)
 
@@ -19096,49 +19124,45 @@ You're giving me everything you have.
 
 ### (Look at what she has to sell)
 
-(Sell Item0 for ItemCost0 gp)
-(ItemCost0 gp에 대해 Item0 판매)
-(Sell Item1 for ItemCost1 gp)
-(ItemCost1gp로 Item1 판매)
-(Sell Item2 for ItemCost2 gp)
-(ItemCost2 gp에 대해 Item2 판매)
-(Sell Item3 for ItemCost3 gp)
-(ItemCost3 gp로 Item3 판매)
-(Sell Item4 for ItemCost4 gp)
-(ItemCost4 gp에 대해 Item4 판매)
-(Sell Item5 for ItemCost5 gp)
-(ItemCost5gp로 Item5 판매)
-(Sell Item6 for ItemCost6 gp)
-(ItemCost6 gp에 대해 Item6 판매)
-(Sell Item7 for ItemCost7 gp)
-(ItemCost7 gp에 대해 Item7 판매)
-(Sell Item8 for ItemCost8 gp)
-(ItemCost8 gp에 대해 Item8 판매)
-(Sell Item9 for ItemCost9 gp)
-(ItemCost9 gp로 Item9 판매)
+### (Sell Item0 for ItemCost0 gp) (Owned: AMNT0)
 
+### (Sell Item1 for ItemCost1 gp) (Owned: AMNT1)
 
-(Buy Item0 for ItemCost0 gp)
-(ItemCost0 gp로 Item0 구매)
-(Buy Item1 for ItemCost1 gp)
-(ItemCost1 gp로 Item1 구매)
-(Buy Item2 for ItemCost2 gp)
-(ItemCost2 gp로 Item2 구매)
-(Buy Item3 for ItemCost3 gp)
-(ItemCost3 gp로 Item3 구매)
-(Buy Item4 for ItemCost4 gp)
-(ItemCost4 gp로 Item4 구매)
-(Buy Item5 for ItemCost5 gp)
-(ItemCost5gp로 Item5 구매)
-(Buy Item6 for ItemCost6 gp)
-(ItemCost6 gp로 Item6 구매)
-(Buy Item7 for ItemCost7 gp)
-(ItemCost7 gp로 Item7 구매)
-(Buy Item8 for ItemCost8 gp)
-(ItemCost8 gp로 Item8 구매)
-(Buy Item9 for ItemCost9 gp)
-(ItemCost9 gp로 Item9 구매)
+### (Sell Item2 for ItemCost2 gp) (Owned: AMNT2)
 
+### (Sell Item3 for ItemCost3 gp) (Owned: AMNT3)
+
+### (Sell Item4 for ItemCost4 gp) (Owned: AMNT4)
+
+### (Sell Item5 for ItemCost5 gp) (Owned: AMNT5)
+
+### (Sell Item6 for ItemCost6 gp) (Owned: AMNT6)
+
+### (Sell Item7 for ItemCost7 gp) (Owned: AMNT7)
+
+### (Sell Item8 for ItemCost8 gp) (Owned: AMNT8)
+
+### (Sell Item9 for ItemCost9 gp) (Owned: AMNT9)
+
+### (Buy Item0 for ItemCost0 gp) (Owned: AMNT0)
+
+### (Buy Item1 for ItemCost1 gp) (Owned: AMNT1)
+
+### (Buy Item2 for ItemCost2 gp) (Owned: AMNT2)
+
+### (Buy Item3 for ItemCost3 gp) (Owned: AMNT3)
+
+### (Buy Item4 for ItemCost4 gp) (Owned: AMNT4)
+
+### (Buy Item5 for ItemCost5 gp) (Owned: AMNT5)
+
+### (Buy Item6 for ItemCost6 gp) (Owned: AMNT6)
+
+### (Buy Item7 for ItemCost7 gp) (Owned: AMNT7)
+
+### (Buy Item8 for ItemCost8 gp) (Owned: AMNT8)
+
+### (Buy Item9 for ItemCost9 gp) (Owned: AMNT9)
 
 (The SPEAKER appears in a flash of light)|I come in the name of the Goddess.|I presume you need my aid?|(She will remain and help you with restraints for 50 turns)
 (SPEAKER 가 섬광 속에서 나타납니다)|나는 여신의 이름으로 왔습니다.|내 도움이 필요한 것 같습니까?|(그녀는 남아서 50턴 동안 구속을 도와줄 것입니다)
@@ -19205,6 +19229,10 @@ There is no valid space next to you!
 (The SPEAKER refuses to follow your orders)
 (SPEAKER 가 당신의 명령을 따르기를 거부합니다)
 
+
+### (Remove BINDAMNT binding from her)
+
+### (You remove BINDANTPREV binding from the SPEAKER, excluding actual bindings)|(Use the 'Truss em Up' skill to remove bindings)
 
 ### (Give her a restoration item)
 
@@ -20142,7 +20170,7 @@ Give her a Scroll of Purity
 
 ### Hmmmph? Mmmm! (Act worried and whimper)
 
-### (The SPEAKER folds her arms)|Mistress Oriel's orders
+### (The SPEAKER folds her arms)|Mistress Oriel's orders 
 
 ### Not in the 'System'?
 
@@ -20384,7 +20412,7 @@ Upcast Level LEVEL
 업캐스트 레벨 LEVEL
 Prerequisite
 전제 조건
-### Unlocks:
+### Unlocks: 
 
 You need to learn REQUIREDSPELL before you can learn this one.
 이것을 배우기 전에 REQUIREDSPELL을 배워야 합니다.
@@ -20440,7 +20468,7 @@ Initiating prisoner lockdown protocol
 
 ### Your harness projects energy tethers between your cuffs EnemyName activates it!
 
-### Turn Count:
+### Turn Count: 
 
 ### The Shopkeeper leashes you!
 
@@ -20824,7 +20852,7 @@ Blue
 
 ### Items on Ground:
 
-### Preloading Character Assets:
+### Preloading Character Assets: 
 
 ### Uniforms
 
@@ -25732,7 +25760,7 @@ Mithril Crotch Rope
 
 ### A rubber cylinder without any lewd intentions whatsoever.
 
-### Deals grope damage.
+### Deals grope damage. 
 
 ### You pick up a flexible rubber stick.
 
@@ -26614,9 +26642,9 @@ Ranged Attack
 
 ### Your RestraintName shatters and falls off!
 
-### Load Hotbar
+### Load Hotbar 
 
-### Save Hotbar
+### Save Hotbar 
 
 ### Clear Hotbar
 
@@ -27210,7 +27238,7 @@ Ranged Attack
 
 ### Rescue some alchemists from their own experiment.
 
-### Stop a rebels from making a pact with primordial beings.
+### Stop rebels from making a pact with primordial beings.
 
 ### Decommission some malfunctioning drones.
 
@@ -27736,7 +27764,7 @@ Hogtied!
 
 
 
-### Receive the following restraints:
+### Receive the following restraints: 
 
 ### You will be bound with some form of restraint.
 
@@ -28304,7 +28332,7 @@ Hogtied!
 
 ### Select a character to examine
 
-### Former Faction:
+### Former Faction: 
 
 
 
@@ -28367,6 +28395,10 @@ Hogtied!
 ### Promote to Servant
 
 ### Demote
+
+### Delete Guest
+
+### Really Delete Guest?
 
 ### The ENMY tries to grab you!
 
@@ -28490,7 +28522,7 @@ Hogtied!
 
 ### You crouch and move slowly.
 
-### Owned by:
+### Owned by: 
 
 ### Warden's Belt
 
@@ -28946,6 +28978,8 @@ Hogtied!
 
 ### Looks like it has lighting elements inside.
 
+
+
 ### Many bars come out of the ground and restrain you!
 
 ### One Bar Missile
@@ -29144,7 +29178,7 @@ Hogtied!
 
 ### You retrieve an interesting article dubbed 'the Robe of Chastity.
 
-### Took
+### Took 
 
 ### (As you slay the dragon, it begins shapeshifting into human form!)
 
@@ -29168,6 +29202,8 @@ Hogtied!
 
 ### The dragon girl conjures a cloud of crystals that solidify! (+RestraintAdded)
 
+### The dragon girl conjures crystalline locks on you! (+RestraintAdded)
+
 
 
 ### Poison Dragon Queen
@@ -29188,6 +29224,8 @@ Hogtied!
 
 ### The dragon girl raises vines out of the ground to bind you! (+RestraintAdded)
 
+### The dragon girl holds you in place and locks your restraints! (+RestraintAdded)
+
 
 
 ### Ice Dragon Queen
@@ -29204,6 +29242,8 @@ Hogtied!
 
 ### The dragon girl splashes you with instantly freezing ice! (+RestraintAdded)
 
+### The dragon girl conjures magical locks on you! (+RestraintAdded)
+
 
 
 ### Shadow Dragon Queen
@@ -29219,6 +29259,8 @@ Hogtied!
 ### The dragon girl stares into your eyes! (DamageTaken)
 
 ### The dragon girl reaches out with a shadowy grip! (+RestraintAdded)
+
+### The dragon girl reaches out and locks your restraints! (+RestraintAdded)
 
 
 
@@ -30008,17 +30050,15 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### R
 
-### Owned: AMNT
-
 
 
 ### Fiber
 
 ### Runes
 
-### Stock:
+### Stock: 
 
-### Inputs:
+### Inputs: 
 
 ### You slip off the conveyor!
 
@@ -30084,17 +30124,17 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### Heels
 
-### Equipped:
+### Equipped: 
 
-### Click to Add
+### Click to Add 
 
-### Apply
+### Apply 
 
-### Raw Material:
+### Raw Material: 
 
 ### Free Prisoner
 
-### Perk Unlocked:
+### Perk Unlocked: 
 
 ### Latex Solvent
 
@@ -30124,21 +30164,21 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### Choose Restraint
 
-### Def. Palette:
+### Def. Palette: 
 
 ### Set All Palette
 
 ### Guests
 
-### Assign to
+### Assign to 
 
-### Remove from
+### Remove from 
 
-### Can't assign to
+### Can't assign to 
 
 ### Imprison
 
-### Opinion:
+### Opinion: 
 
 ### Last Seen on Floor FLR, LOC
 
@@ -30164,17 +30204,17 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### Any
 
-### NPC Opinion:
+### NPC Opinion: 
 
-### NPC Escape Status:
+### NPC Escape Status: 
 
-### NPC Binding:
+### NPC Binding: 
 
-### NPC Availability:
+### NPC Availability: 
 
-### Favorited:
+### Favorited: 
 
-### Rank:
+### Rank: 
 
 ### Minor
 
@@ -30276,7 +30316,7 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### Select a Binding Slot
 
-### Cost:
+### Cost: 
 
 ### Zoom set to PCNT%
 
@@ -30300,7 +30340,7 @@ You found a magical amulet! Choose one of the following to determine its benefit
 
 ### If arm components are unavailable, you can now apply bindings with verbal components only. Increases range of Truss em Up by 2 and all CMD spells by 1
 
-### Save Slot
+### Save Slot 
 
 ### Load Game
 
@@ -30358,11 +30398,11 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 
 ### Chaos Route
 
-### Map Seed:
+### Map Seed: 
 
 ### Will Overwrite NME!
 
-### Play Slot
+### Play Slot 
 
 ### Play (NO SLOT!)
 
@@ -30492,6 +30532,8 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 
 ### Magical disenchantment suspends your living collar for AMNT turns
 
+### (will add AMNT TPE binding)
+
 ### Hardlight
 
 ### Knocked Out
@@ -30544,7 +30586,7 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 
 ### Deposit All
 
-### Auto-loot found
+### Auto-loot found 
 
 ###  (not picked up)
 
@@ -30785,3 +30827,331 @@ You've gotten yourself lost wandering in the ruins.|The order of tilesets is rev
 ### That is none of your business. Now kneel.
 
 ### (Fight without listening.)
+
+
+
+### Blessed Hex
+
+### Hexing Orb
+
+### Hexed Latex Engulf
+
+### Hex Binding
+
+### Here you will find various scraps of documents and lore you've recovered throughout your adventures.
+
+### Your Journal
+
+### Cover
+
+### I am writing this journal in the off chance that I do not come return from the Agarthan ruins. If you find this, please make an effort to deliver it back to the surface for the good of all the women lured in by its secrets.
+
+### Catherine Willows' Journal (preface)
+
+### Willows 0
+
+### As I scaled the mountain, I came across a massive graveyard above the treeline, a grand memorial to those who died before the Great Work. This graveyard extends into the mouth of the cave, and the guards told me not to deface any of the graves, or else the ghosts will come and get me. It would be easier to follow their instructions if there weren't so much treasure still hidden here! After all, most of us are deep in the red after sailing all this way.
+
+### Catherine Willows' Journal (pg. 7)
+
+### Willows 7
+
+### It's hard to imagine I'm in a cave. Everything is so decorated and well-preserved, it's almost as if decades of adventurers never found their way to this island. In the distant future when every last piece of treasure has been hauled out of here, I imagine they'll set this place up as a tourist attraction.
+
+### Catherine Willows' Journal (pg. 8)
+
+### Willows 8
+
+### I spoke with a few locals while resupplying at the port. Apparently the village up here is far older than the twenty-some years the Adventurer's Guild has been on the island. The locals call the mountain 'Ejahl,' but the consensus is that this is the site of the legendary city Agartha where the Archmagus herself made her discovery.|(The page is dated about fifty years ago)
+
+### Catherine Willows' Journal (pg. 14)
+
+### Willows 14
+
+### I made it to a deeper floor today, and was greeted by a skeleton trying to tie me up. Great.|I've looked into the local name for this mountain, 'Ejahl,' and found a footnote in the history books talking about some petty kingdom that laid siege to Agartha. There's no record of them actually winning the siege, though. I've heard there's a massive library somewhere down here, maybe I'll find answers there.
+
+### Catherine Willows' Journal (pg. 17)
+
+### Willows 17
+
+### There was a warrior in the catacombs today. She appears to have mastered the art of witty comebacks, as I truly could not come up with anything to say that did not further humiliate myself. Fortunately her insults came at her companions' expense, and they allowed me to defeat her in a solitary duel.
+
+### Catherine Willows' Journal (pg. 20)
+
+### Willows 20
+
+### I almost found myself the recipient of a powerful binding arrow enchanted with force runes. Had I been hit, I would have been knocked back against the walls with my arms pinned by glowing conjured cuffs. Fortunately, this projectile hit a skeleton that was attacking me instead, and I was able to retreat.
+
+### Catherine Willows' Journal (pg. 21)
+
+### Willows 21
+
+### In my travels I encountered a curious tomb filled with the scent of incense and herbs. Strange statues lined the halls on stone pedestals, standing as an intimidating reminder of what happens to those who disturb the locals...|I encountered resistance from the locals, who seemed to regard outsiders as 'cursed' and sought to capture me in an effort to give me a 'blessing.' I highly doubt that anyone has been truly blessed by their efforts, well-intentioned or not.
+
+### Catherine Willows' Journal (pg. 24)
+
+### Willows 24
+
+### This 'blessing' of theirs appears to be an old ritual for immortality. I believe these peoples are older than the Great Work, based on the ancient dialect they speak and the outdated script they use.|Whatever the case may be, their method seems inexact and prone to failure, as demonstrated by their near maniacal devotion to 'bless' every adventurer they come across.
+
+### Catherine Willows' Journal (pg. 25)
+
+### Willows 25
+
+### There are two 'castes' in the Bast cult. The first are the 'blessed,' and the second are their watchful guardians. The unintuitive bit is that the 'blessed' are the ones wrapped up and sealed away inside statues, sarcophagi, and anything else the guardians can stick a person into. The free ones wandering around grabbing people? They're the ones who weren't 'blessed' apparently.
+
+### Catherine Willows' Journal (pg. 26)
+
+### Willows 26
+
+### I've found it! The Archmagus' library! Much to my chagrin, however, the place has been ransacked by witches and a curious group of mages in search of inspiration from ancient fashion choices.
+
+### Catherine Willows' Journal (pg. 30)
+
+### Willows 30
+
+### It appears someone got to the Archmagus' writings before I could. Nonetheless, I will continue my search for Vinlaga's personal study. Perhaps her research materials and drafts might shed some light on my condition.
+
+### Catherine Willows' Journal (pg. 31)
+
+### Willows 31
+
+### I have learned of an ancient artifact, called the Mistress' Staff. Its history and owner are hotly debated, with some attributing it to the Archmagus herself, while others say it was developed by the magical warlords that followed. Most all sources agree that its signature feature is the ability to reverse the effects of the Great Work on any person.
+
+### Catherine Willows' Journal (pg. 36)
+
+### Willows 33
+
+### There is a treasure trove of ancient history here that the blasted Dressmakers had no use for. I found a map from the 'Kingdom of Ejahl,' with sketches of many islands including this one. Like most of the warlord states, they failed to make a lasting impact on the architecture of the island, but it appears the island was uninhabited for some time between the fall of Agartha and its resettlement by Ejahl.
+
+### Catherine Willows' Journal (pg. 41)
+
+### Willows 41
+
+### ...I must find it.|They are looking for it.|They CANNOT be allowed to have it.
+
+### Catherine Willows' Journal (pg. 47)
+
+### Willows 37
+
+### I saw my reflection in a pool of water today. My hair looked much more silver than I remember it. I hope this isn't a side effect of all the magic I'd used to make it to this point.
+
+### Catherine Willows' Journal (pg. 50)
+
+### Willows 50
+
+### I heard the bandits are looking for the Mistress' Staff. I'm not too worried--they wouldn't know what to do with it. It's that damned witch I'm worried about.|If my astute reader has come this far, you should beware the Silver Witch. She is working with forces that cannot be trusted.
+
+### Catherine Willows' Journal (pg. 51)
+
+### Willows 51
+
+### It seems I am not alone in my search for the Staff. To whom it may concern: the Great Work is a lie, and it will doom us all. If you care for your soul, you need to break the cycle, and for that we need a key: the Mistress' Staff.
+
+### Silver Witch's Notes #10
+
+### Silver 10
+
+### I met an adventurer who managed to erase weeks of golem research in the blink of an eye. This is why we Summoners have to scatter our works far and wide... if only they knew what we are working towards.
+
+### Silver Witch's Notes #2
+
+### Silver 2
+
+### The dimensional rift is especially active today. I spoke with some of the voices the other night, they offered me immortality in exchange for material wealth. They must have called the wrong universe or something...
+
+### Silver Witch's Notes #3
+
+### Silver 3
+
+### My new golem project did not go as expected. I'd expected the primordial one to answer once I'd opened the gate, but there was nothing but a horde of star demons which I quickly dispatched. Could this mean the source of primordial latex is not outside this universe, as I had thought, but inside? I must investigate further.
+
+### Silver Witch's Notes #18
+
+### Silver 18
+
+### She did it again. Barged in on my work and called me a 'purveyor of evil magics,' whatever that means. Magic isn't evil, it was given to us directly by the gods! At least I hid my new golem in a different study of mine...
+
+### Silver Witch's Notes #15
+
+### Silver 15
+
+### Throughout my studies I have chased after the existence of a being I call 'the Primordial One.' My theories stem from the following observations:|1)Slimes were not present in ancient history, and appeared during my lifetime as a force of nature.|2)Slime can be transmuted into almost any known material, like a Prima Materia of sorts.|3) A fragment of Sariel's notes, one of my most guarded possessions, discusses the existence of slimes long before they were first observed in the world.|Based on this, I believe the world must have been created through the influence of some primordial being who then left, but must be returning somehow.|I'm sure this being holds the key to repairing our bodies.
+
+### Silver Witch's Notes on the Primordial One
+
+### Silver 4
+
+### Blast. An adventurer stole one of my notebooks, and now I'm encountering various cultists and weirdos trying to summon the Primordial One themselves. This is why I never bother to publish my works...
+
+### Silver Witch's Notes #7
+
+### Silver 7
+
+### I haven't heard of that adventurer in decades. Perhaps her nosiness finally caught up to her?
+
+### Silver Witch's Notes #106
+
+### Silver 106
+
+### There is a new presence in the mountain. An opportunist that calls herself 'the Dollmaker.' Claims to be the lost heir to the Kingdom of Ejahl. Please~.|I've seen those hackjobs and reprogrammed wrecks. If there even was a Kingdom of Ejahl, surely their army would consist of more than just scrapped combat drones?
+
+### Silver Witch's Notes #117
+
+### Silver 117
+
+### The Kingdom of Ejahl appeared in Agartha 170 years after the death of Sariel Vinlaga. It had three* rulers who vied for the throne at different times:|Diana, Princess of Machinery|Emer, the Warsage|And the Dollmaker, High General of the Kingdom||*Some manuscripts read 'two'
+
+### The Chronicles of Ejahl
+
+### Ejahl 1
+
+### The Kingdom of Ejahl ruled the island of Agartha for 30 years before its collapse. During the last war, an unknown figure captured the majority of its army and the majority of the population fled by boat. No one was left on the island.
+
+### The Fall of Ejahl
+
+### Ejahl 2
+
+### Danger Level: Nearly Harmless|A reanimated corpse from before the Great Work. I can't tell if the original soul still inhabits the body, since it can barely speak let alone explain its identity.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: Normal|These zombies are more motivated than the others. Their behavior is similar to that of vengeful spirits I've encountered in the depths.||-Denizens of the Dungeon by Catherine Willows
+
+### Fast Z.
+
+### Danger Level: Normal|A zombie that can use magic. It doesn't look like any magic I've seen outside the ruins, which makes me think that it was taught to use magic. Some of them have tattoos associated with magic in the old times. Since magic comes from the soul, I assume there is some hint of the original soul still present.|-Denizens of the Dungeon by Catherine Willows
+
+### Mage Z.
+
+### Danger Level: High|A zombie with impeccable sword technique. I've never seen an undead handle a sword so smoothly. Probably buried with their weapons and gear, since most of it is aged. Even their binding techniques resemble those in the textbooks rather than modern ropework.||-Denizens of the Dungeon by Catherine Willows
+
+### Warrior Z.
+
+### Danger Level: High|A zombie that uses sealing charms and healing magic. Irony aside, I've seen these with rope marks and gag strap marks on their skin and face. It seems like someone is playing with them. Who could that be?||-Denizens of the Dungeon by Catherine Willows
+
+### Talisman Z.
+
+### Danger Level: Annoying|A playful spirit residing in the dungeon, taking advantage of any adventurers they come across. They can pass through walls, and most physical weapons go right through them. Using a magical weapon seems to banish them for some time, at least.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: Very Annoying|It is said that ghosts are the spirits of pre-Great Work humans whose souls are bound to this world by unfinished dreams and ambitions. But I don't believe a word of that. These little guys care about nothing except humiliating people. Ask me how I know.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: Medium|A very playful ghost with a penchant for teasing. It even carries spectral restraints of its own for use in 'games,' which tend to consist of tickling tied up girls.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: Low|The feelings of a person who desired wealth in life. While it is unable to claim any physical wealth for itself, it nonetheless will rummage through your pockets and possessions if it gets a chance.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: High|A constricting mass of negative thoughts. According to local myths, the other ghosts attempt to cheer this one up by hugging it, but its wails end up attracting them to your position. Be prepared to take it down lest you find yourself a plaything for the beyond.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: High|While most wizards spend literal centuries mastering the art of magic, there are those lacking the patience or discipline to study magic the old fashioned way. Driven by a need for power, these individuals make contracts with otherworldly beings and become Witches.||-Denizens of the Dungeon by Catherine Willows
+
+### The Witches' Coven
+
+### Witches
+
+### Danger Level: Extreme|A witch gifted in the arts of conjuration. Backed by an army of animated spectral hands and devious tomes, this variety of witch is extremely dangerous. Her close range attacks are slow and unwieldy, but take care not to get surrounded.||-Denizens of the Dungeon by Catherine Willows
+
+### Danger Level: High|They appear to be influential figures in the ancient Bast cult. Not only are they able to wield explosive magics, they can conjure magical wrappings at close range.||-Denizens of the Dungeon by Catherine Willows
+
+### Bast Mummy
+
+### Danger Level: Medium|Worshippers of the Cat Goddess. Devoted to the sole task of defending the tombs from outsiders, they are rarely willing to negotiate. Some maintain peak physical prowess, while others can even cast spells.||-Denizens of the Dungeon by Catherine Willows
+
+### Bast Clerics
+
+### Rock-solid and form-fitting.
+
+### Provides minor protection against enemy attacks. Decreases stealth.
+
+### Adventuring Corset
+
+### Protects your organs and your sense of style.
+
+### Provides minor protection against enemy attacks at the cost of flexibility.
+
+### The best uniform. Has a (lockable) zipper in the back for convenience!
+
+### Removes excess clothing and adds +10 Evasion. +20 Soap and Glue resist, and being drenched dries faster.
+
+### Robe of Chastity
+
+### Chainmail Tank Top
+
+### Cumbersome, but effective!
+
+### Provides +10 armor and protection against enemy attacks. Decreases stealth/evasion and makes struggling harder.
+
+### Chainmail Bikini
+
+### Covers the important bits, anyway.
+
+### +20 Bondage Resist. Conducts electricity.
+
+### Light Plate Armor
+
+### Knight in shining rest-err, armor!
+
+### Provides +5 armor and high protection. No impact to stealth or evasion
+
+### Wizard's Robe
+
+### I have the power!
+
+### +30% spell damage and +10 spell ward
+
+### Chain Skirt
+
+### A defensive garment providing optimal coverage to the lower torso.
+
+### Provides medium protection. No impact to stealth or evasion
+
+### Armored Skirt
+
+### Gloves with an iron grip.
+
+### Provides +5 armor and minor protection against enemy attacks. Makes noise when attacking.
+
+### Leather Gloves
+
+### Protecting you in style.
+
+### Provides minor protection against enemy attacks.
+
+### Steel Pauldrons
+
+### Dependable protection for the average adventurer.
+
+### Ranger's Cape
+
+### Inbued with the powers of moss and ferns and stuff.
+
+### +25 Evasion. Increases stealth slightly.
+
+### Oracle's Armbands
+
+### Armbands made of a slightly magical material.
+
+### +5% spell damage. +5 Magic Armor.
+
+### Armored Boots
+
+### Noisy, but fashionable!
+
+### Provides +5 armor and protection against enemy attacks. Decreases stealth.
+
+### Hide Boots
+
+### For stepping into all kinds of trouble!
+
+### Generating Map...
+
+### Mystic wrappings constrict around your body!
+
+### You'll need a sharp object to cut items. Look for a knife or a piece of scrap on the floor.
+
+### If you can't get your knife into place, try sitting next to a crack on the wall.
+
+### Your character will automatically try to lodge the knife into the wall.
+
+### You'll need to find a cutting weapon with the magic tag to cut magic items.
+
+### You need to equip your magic cutting weapon to cut magic items.
+
+### You can surrender in the menu if you want to be treated more gently.
