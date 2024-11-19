@@ -36,6 +36,8 @@ interface KDPersistentNPC {
 	Palette?: string,
 
 	storedParty?: entity[],
+	persistentParty?: number[],
+	partyLeader?: number,
 
 	spawned?: boolean,
 
@@ -88,6 +90,20 @@ function KDGetEnemyStoredParty(partyid: number): entity[] {
 	}
 	return [];
 }
+function KDGetEnemyPersistentParty(partyid: number): entity[] {
+	let npc = KDIsNPCPersistent(partyid) ? KDGetPersistentNPC(partyid) : undefined;
+	if (npc) {
+		return npc.persistentParty?.filter((id) => {
+			return KDIsNPCPersistent(id);
+		}).map((id) => {
+			return KDGetGlobalEntity(id);
+		}) || [];
+	}
+	return [];
+}
+function KDGetEnemyParty(partyid: number): entity[] {
+	return [...KDGetEnemyPersistentParty(partyid), ...KDGetEnemyStoredParty(partyid)];
+}
 function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapDataType): boolean {
 	if (!enemy) return false;
 	let npc = KDGetPersistentNPC(partyid,
@@ -98,11 +114,21 @@ function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapD
 		}
 	);
 	if (npc) {
-		if (!npc.storedParty) npc.storedParty = [];
+		if (KDIsNPCPersistent(enemy.id)) {
+			if (!npc.persistentParty) npc.persistentParty = [];
 
-		if (!npc.storedParty.some((pm) => {return enemy.id == pm.id;})) {
-			npc.storedParty.push(enemy);
-			return true;
+			if (!npc.persistentParty.some((pm) => {return enemy.id == pm;})) {
+				npc.persistentParty.push(enemy.id);
+				KDGetPersistentNPC(enemy.id).partyLeader = partyid;
+				return true;
+			}
+		} else {
+			if (!npc.storedParty) npc.storedParty = [];
+
+			if (!npc.storedParty.some((pm) => {return enemy.id == pm.id;})) {
+				npc.storedParty.push(enemy);
+				return true;
+			}
 		}
 	}
 	return false;
@@ -110,14 +136,28 @@ function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapD
 function KDPopEnemyPartyMember(pmid: number, partyid: number): entity {
 	let npc = KDIsNPCPersistent(partyid) ? KDGetPersistentNPC(partyid) : undefined;
 	if (npc) {
-		if (!npc.storedParty || npc.storedParty.length == 0) return null;
-		let index = pmid ? npc.storedParty.findIndex((pm) => {return pmid == pm.id;}) : 0;
-		if (index >= 0) {
-			return npc.storedParty.splice(index, 1)[0];
+		if (KDIsNPCPersistent(pmid)) {
+			if (!npc.persistentParty || npc.persistentParty.length == 0) return null;
+			let index = pmid ? npc.persistentParty.findIndex((pm) => {return pmid == pm;}) : 0;
+			if (index >= 0) {
+				let id = npc.persistentParty.splice(index, 1)[0];
+				let pnpc = KDGetPersistentNPC(id);
+				pnpc.partyLeader = undefined;
+				return KDGetGlobalEntity(id);
+			}
+		} else {
+			if (!npc.storedParty || npc.storedParty.length == 0) return null;
+			let index = pmid ? npc.storedParty.findIndex((pm) => {return pmid == pm.id;}) : 0;
+			if (index >= 0) {
+				return npc.storedParty.splice(index, 1)[0];
+			}
 		}
+
 	}
 	return null;
 }
+
+
 
 function KDMovePersistentNPC(id: number, coord: WorldCoord): boolean {
 	let PNPC = KDPersistentNPCs[id];
@@ -145,6 +185,18 @@ function KDMovePersistentNPC(id: number, coord: WorldCoord): boolean {
 
 		if (altered) {
 			PNPC.spawned = false;
+			if (PNPC.persistentParty) {
+				for (let pmid of PNPC.persistentParty) {
+					if (KDCompareLocation(oldCoord, KDGetNPCLocation(pmid))) {
+						// Move with them if they are in same slot, otherwise dont
+						let npc = KDGetPersistentNPC(pmid);
+						npc.spawned = false;
+						npc.room = coord.room;
+						npc.mapY = coord.mapY;
+						npc.mapX = coord.mapX;
+					}
+				}
+			}
 			// Force both caches to refresh
 			if (KDGameData.PersistentNPCCache) {
 				delete KDGameData.PersistentNPCCache[coordHash(oldCoord)];
