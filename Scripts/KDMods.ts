@@ -11,6 +11,7 @@ let KDOffline = false;
 
 let KDModCompat = {
 	"KinkyDungeonHiddenFactions.push(": "KinkyDungeonHiddenFactionsPush(",
+	"KDSetNPCLocation(": "KDMovePersistentNPC(",
 };
 
 let KDModToggleTab = "None";
