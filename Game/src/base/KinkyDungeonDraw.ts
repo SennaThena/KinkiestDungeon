@@ -4657,9 +4657,11 @@ function KDGetTargetRetType(x: number, y: number): string {
 	let enemy = KinkyDungeonEnemyAt(x, y);
 
 	if (enemy) {
-		if (KDHostile(enemy) && KinkyDungeonAggressive(enemy)) return "Attack";
-		if (!KDHostile(enemy) && KinkyDungeonAggressive(enemy) && KDCanDom(enemy)) return "Sub";
-		if (KDCanPassEnemy(KinkyDungeonPlayerEntity, enemy)) return "Pass";
+		let agg = KinkyDungeonAggressive(enemy);
+		if (KDCanPassEnemy(KinkyDungeonPlayerEntity, enemy) &&
+			(!agg || KDHelpless(enemy))) return "Pass";
+		if (KDHostile(enemy) && agg) return "Attack";
+		if (!KDHostile(enemy) && agg && KDCanDom(enemy)) return "Sub";
 		return "Talk";
 	}
 

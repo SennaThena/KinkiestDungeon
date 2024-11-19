@@ -1218,6 +1218,7 @@ function KDProcessInput(type: string, data: any): string {
 
 						let type = KinkyDungeonGetEnemyByName(KDGameData.Collection[v + ""].type);
 						let rep = -0.05*KDGetEnemyTypeRep(type, KDGameData.Collection[v + ""].Faction);
+						if ((KDGetModifiedOpinionID(parseInt(v)) > 0)) rep = -rep; // Positive if they are happy!
 						KinkyDungeonChangeFactionRep(KDGameData.Collection[v + ""].Faction, rep);
 						DisposeEntity(parseInt(v), false, false,
 							KDIsNPCPersistent(parseInt(v))

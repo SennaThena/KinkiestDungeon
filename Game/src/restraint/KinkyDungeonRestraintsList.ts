@@ -1204,6 +1204,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		sfxRemove: "SciFiConfigure",
 		Model: "Goggles",
 		curse: "DollLock",
+		special: true,
 		Color: ['#91023a'],
 		Group: "ItemHead", LinkableBy: [...KDVisorLink],
 		power: 40, weight: 0, escapeChance: {"Struggle": -0.6, "Cut": -1.0, "Remove": 0.5, "Pick": -0.5},
@@ -1229,6 +1230,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		factionColor: [[2]], Color: ["#ff5277"], Group: "ItemHead", Asset: "DroneMask", LinkableBy: [...KDMaskLink],
 		power: 39, weight: 0, escapeChance: {"Struggle": -0.6, "Cut": -1.0, "Remove": 0.5, "Pick": -0.5},
 		maxwill: 0.1,
+		special: true,
 		enemyTags: {},
 		playerTags: {},
 		events: [
@@ -2304,6 +2306,7 @@ const KinkyDungeonRestraints: restraint[] = [
 	{inventory: true, curse: "GhostLock", name: "MikoCollar", Asset: "HighCollar", Color: ["#ffffff", "#AA2222"],Group: "ItemNeck", LinkableBy: [...KDCollarLink],renderWhenLinked: [...KDHighCollarRender],magic: true, power: 40, weight: 0, difficultyBonus: 10,
 		Model: "MikoCollar",
 		struggleBreak: true,
+		special: true,
 		factionFilters: {
 			Rim: {color: "Highlight", override: true,},
 			Neck: {color: "DarkNeutral", override: true,},
@@ -2316,6 +2319,7 @@ const KinkyDungeonRestraints: restraint[] = [
 	{inventory: true, curse: "GhostLock", name: "MikoCollar2", Asset: "HighCollar", Color: ["#ffffff", "#AA2222"],Group: "ItemNeck", LinkableBy: [...KDCollarLink],renderWhenLinked: [...KDHighCollarRender],magic: true, power: 40, weight: 0, difficultyBonus: 10,
 		Model: "MikoCollar",
 		struggleBreak: true,
+		special: true,
 		linkCategory: "SpecialCollar",
 		factionFilters: {
 			Rim: {color: "Highlight", override: true,},
@@ -4450,7 +4454,7 @@ const KinkyDungeonRestraints: restraint[] = [
 			Belt: {"gamma":1,"saturation":0,"contrast":0.9666666666666667,"brightness":4.016666666666667,"red":1,"green":1,"blue":1.1,"alpha":1},
 		},
 		escapeChance: {"Struggle": -0.5, "Cut": 0.05, "Remove": 0.1, "Pick": 0.25},
-		maxwill: 1.0, enemyTags: {"maidRestraints":10, "maidRestraintsNonChastity": 10, "maidRestraintsLight":1}, playerTags: {"ItemLegsFull":-2}, minLevel: 2, allFloors: true, shrine: ["Leather", "Belts"]},
+		maxwill: 1.0, enemyTags: {"maidRestraints":10, "maidRestraintsNonChastity": 10, "maidRestraintsLight":1}, playerTags: {"ItemLegsFull":-2}, minLevel: 3, allFloors: true, shrine: ["Leather", "Belts"]},
 	{inventory: true, name: "MaidAnkleCuffs", debris: "Chains", Asset: "SteelAnkleCuffs", LinkableBy: [...KDBindable, ...KDDevices], Type: "Chained", Color: "Default", Group: "ItemFeet",
 		alwaysDressModel: [
 			{Model: "AnkleLink", inheritFilters: true}
@@ -5870,6 +5874,7 @@ const KinkyDungeonRestraints: restraint[] = [
 
 		accessible: true,
 		cloneTag: "wardenCuffs",
+		special: true,
 
 		debris: "Chains",
 		Group: "ItemTorso",
@@ -5896,6 +5901,7 @@ const KinkyDungeonRestraints: restraint[] = [
 
 		cloneTag: "wardenCuffs",
 		accessible: true,
+		special: true,
 
 		debris: "Chains",
 		Group: "ItemTorso",
@@ -6865,6 +6871,7 @@ KDAddRopeVariants(
 	{
 		magic: true,
 		Color: "#bb3cd7",
+		minLevel: 2,
 	},
 	[
 		{trigger: "drawSGTooltip", type: "StruggleManaBonus", inheritLinked: true, power: 0.2, mult: 0.1, threshold: 10},
@@ -6918,6 +6925,7 @@ KDAddRopeVariants(
 	{
 		magic: true,
 		Color: "#4fa4b8",
+		minLevel: 5,
 	},
 	[
 		{trigger: "drawSGTooltip", type: "StruggleManaBonus", inheritLinked: true, power: 0.3, mult: 0.1, threshold: 10},

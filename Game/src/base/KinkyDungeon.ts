@@ -2809,7 +2809,7 @@ function KinkyDungeonRun() {
 		DrawTextKD(TextGet("KinkyDungeonSaveIntro3"), 1250, 625, "#ffffff", KDTextGray2);
 		DrawTextKD(TextGet("KinkyDungeonSaveIntro4"), 1250, 700, "#ffffff", KDTextGray2);*/
 
-		ElementPosition("saveDataField", 1250, 150, 1000, 230);
+		KDTextArea("saveDataField", 750, 100, 1000, 230);
 
 		KDTextField("savename", 1275, 650, 350, 64, undefined, KDGameData.PlayerName, "100");
 

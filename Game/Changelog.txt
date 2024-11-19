@@ -31,7 +31,13 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.7
+
+
 5.4.6
+- Clear restraints from outfit when loading into wardrobe from title screen
+- Fix save game code missing in non roguelike mode
+- Changed layer of pantyhose to go under socks/stockings
 
 5.4.5
 - Show owned items in NPC shop interface
@@ -967,7 +973,7 @@ Release F
 - Added explosive barrels to levels. Beat them down without igniting them to take their gunpowder.
 - Blink split into 3 spells for 1 spell point, each adding +1 range
 - Changed Secure Defense to give more block at 0 willpower but half at max willpower
-- New spells: Shield of (un)Clarity (Trainee only), Desire Burst (Trainee only), Liquid Metal, Raise Defense (Fighter only), Evasive Maneuvers (Rogue only), Break Free (Fighter only), Phase Dance, Double/Triple/Quadro/Total Accel, Spatial swap
+- New spells: Shield of (un)Clarity (Trainee only), Desire Burst (Trainee only), Liquid Metal, Raise Defense (Fighter only), Evasive Maneuvers (Rogue only), Break Free (Fighter only), Phase Dance, Double/Triple/Quad/Total Accel, Spatial swap
 - Inner power now applies before multipliers
 - Slime ball trail does 20 damage instead of 40
 - Added divine locks for enforcing Bound Crusaders!

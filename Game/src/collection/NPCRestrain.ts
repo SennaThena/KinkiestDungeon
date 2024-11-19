@@ -993,7 +993,7 @@ function KDGetNPCStrugglePoints(id: number): Record<string, number> {
 	return result;
 }
 
-function KDGetNPCEscapableRestraints(id: number, target: entity): {slot: string, inv: NPCRestraint, points: number, target: number}[] {
+function KDGetNPCEscapableRestraints(id: number, target: entity, bypass: boolean = false): {slot: string, inv: NPCRestraint, points: number, target: number}[] {
 	let restraints = KDGetNPCRestraints(id);
 	let retval: {slot: string, inv: NPCRestraint, points: number, target: number}[] = [];
 	if (restraints) {
@@ -1001,6 +1001,13 @@ function KDGetNPCEscapableRestraints(id: number, target: entity): {slot: string,
 		let strugglePoints = KDGetNPCStrugglePoints(id);
 		for (let entry of entries) {
 			if (KDRestraint(entry[1])) {
+				if (!bypass) {
+					let slot = KDGetEncaseGroupSlot(entry[0]);
+					if (slot?.encasedBy?.length > 0 && slot.encasedBy.some((slt) => {
+						return slt != slot.id && !!restraints[slt];
+					})) continue;
+				}
+
 				let stats = KDGetRestraintBondageStats(entry[1], target);
 				if (strugglePoints[stats.type] >= stats.amount) {
 					retval.push({slot: entry[0], inv: entry[1], points: strugglePoints[stats.type], target: stats.amount});

@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.6"
+KDVersionStr,"5.4.7"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -23018,7 +23018,7 @@ KDQuest_LatexQuest,Rescue some alchemists from their own experiment.
 KDQuestFail_LatexQuest,You did not do your quest! The Goddess has decided to punish you.
 KDQuestSucceed_LatexQuest,You have pleased the Goddess.
 KDQuestSucceedSub_LatexQuest,The Goddess calls you a good girl.
-KDQuest_LeatherQuest,Stop a rebels from making a pact with primordial beings.
+KDQuest_LeatherQuest,Stop rebels from making a pact with primordial beings.
 KDQuestFail_LeatherQuest,You did not do your quest! The Goddess has decided to punish you.
 KDQuestSucceed_LeatherQuest,You have pleased the Goddess.
 KDQuestSucceedSub_LeatherQuest,You have pleased the Goddess.
@@ -23147,7 +23147,7 @@ KinkyDungeonBuffQuickness2,"Time is slowed by 2x"
 KinkyDungeonSpellQuickness3,Triple Accel
 KinkyDungeonSpellDescriptionQuickness3,"Slow down time by 1/3 for 10 turns (world time). Stamina regens 75% slower."
 KinkyDungeonBuffQuickness3,"Time is slowed by 3x"
-KinkyDungeonSpellQuickness4,Quadro Accel
+KinkyDungeonSpellQuickness4,Quad Accel
 KinkyDungeonSpellDescriptionQuickness4,"Slow down time by 1/4 for 10 turns (world time). Stamina does not regen."
 KinkyDungeonBuffQuickness5,"Time is slowed by 4x"
 KinkyDungeonSpellQuickness5,Total Accel
@@ -23159,7 +23159,7 @@ KDQuickness2_Floater,"Double Accel!"
 KDQuickness3_Yes,"Time slows down by 3x!"
 KDQuickness3_Floater,"Triple Accel!"
 KDQuickness4_Yes,"Time slows down by 4x!"
-KDQuickness4_Floater,"Quadro Accel!"
+KDQuickness4_Floater,"Quad Accel!"
 KDQuickness5_Yes,"Time has ceased to pass."
 KDQuickness5_Floater,"Total Accel!"
 
@@ -25894,3 +25894,10 @@ RestraintLeatherBootsCommonDesc2,"Provides minor protection against enemy attack
 KDGenMap,Generating Map...
 
 KinkyDungeonSpellHexWrappingDamage,Mystic wrappings constrict around your body!
+
+KDTut_Cut,You'll need a sharp object to cut items. Look for a knife or a piece of scrap on the floor.
+KDTut_CutCrack,"If you can't get your knife into place, try sitting next to a crack on the wall."
+KDTut_CutCrack2,"Your character will automatically try to lodge the knife into the wall."
+KDTut_CutMagic,"You'll need to find a cutting weapon with the magic tag to cut magic items."
+KDTut_CutMagicHas,"You need to equip your magic cutting weapon to cut magic items."
+KDTut_Surr,You can surrender in the menu if you want to be treated more gently.

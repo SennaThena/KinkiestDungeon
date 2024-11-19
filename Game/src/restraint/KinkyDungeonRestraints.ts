@@ -1773,6 +1773,15 @@ function KDGetStruggleData(data: KDStruggleData): string {
 
 	// Bonuses go here. Buffs dont get added to orig escape chance, but
 	if (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostStruggle")) data.escapePenalty -= KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostStruggle");
+
+
+	// Finger extensions will help if your hands are unbound. Some items cant be removed without them!
+	// Mouth counts as a finger extension on your hands if your arms aren't tied
+	let armsBound = KinkyDungeonIsArmsBound(true);
+	let armsBoundOverride = false;
+	let handsBoundOverride = false;
+
+
 	if (data.struggleType == "Cut") {
 		if (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostCutting")) data.escapePenalty -= KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostCutting");
 		if (data.hasAffinity) {
@@ -1794,18 +1803,45 @@ function KDGetStruggleData(data: KDStruggleData): string {
 				//cancut = true;
 			}
 		}
+		if (!data.query && (!data.hasAffinity ||
+			(!data.canCutMagic && KDRestraint(data.restraint)?.magic)
+		)) {
+			if (!KinkyDungeonPlayerDamage || !KinkyDungeonPlayerDamage.cutBonus) {
+				if (!KinkyDungeonFlags.get("tut_cut")) {
+					KinkyDungeonSendTextMessage(10, TextGet("KDTut_Cut"), "#ffffff", 10);
+				}
+			} else if (data.handsBound || data.armsBound || (!data.canCutMagic && KDRestraint(data.restraint)?.magic)) {
+				if (!KinkyDungeonFlags.get("tut_cutcrack") || !KinkyDungeonFlags.get("tut_cutmagic")) {
+					let maxBonus = 0;
+					let canCutMagic = false;
+					let weaponsToTest = KinkyDungeonAllWeapon();//KinkyDungeonCanUseWeapon() ? KinkyDungeonAllWeapon() : [KinkyDungeonPlayerDamage];
+					for (let inv of weaponsToTest) {
+						if (KDWeapon(inv).cutBonus > maxBonus) maxBonus = KDWeapon(inv).cutBonus;
+						if (KDWeapon(inv).cutBonus != undefined && KDWeaponIsMagic(inv)) canCutMagic = true;
+					}
+					if (!KinkyDungeonFlags.get("tut_cutmagic") && !data.canCutMagic && KDRestraint(data.restraint)?.magic) {
+						if (!canCutMagic) {
+							KinkyDungeonSendTextMessage(10, TextGet("KDTut_CutMagic"), "#ffffff", 10);
+							KinkyDungeonSetFlag("tut_cutmagic", -1);
+						} else {
+							KinkyDungeonSendTextMessage(10, TextGet("KDTut_CutMagicHas"), "#ffffff", 10);
+							KinkyDungeonSetFlag("tut_cutmagic", -1);
+						}
+					} else if (!KinkyDungeonFlags.get("tut_cutcrack") && maxBonus && !(!data.canCutMagic && KDRestraint(data.restraint)?.magic)) {
+						KinkyDungeonSetFlag("tut_cutcrack", -1);
+						KinkyDungeonSendTextMessage(10, TextGet("KDTut_CutCrack2"), "#ffffff", 10);
+						KinkyDungeonSendTextMessage(10, TextGet("KDTut_CutCrack"), "#ffffff", 10);
+					}
+				}
+			}
+
+		}
 		if (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostCuttingMinimum")) data.escapeChance = Math.max(data.escapeChance, KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BoostCuttingMinimum"));
 	}
 	if (data.struggleType == "Cut" && !KDRestraint(data.restraint).magic && KinkyDungeonWeaponCanCut(false, true)) {
 		data.escapeChance += KinkyDungeonEnchantedKnifeBonus*toolMult;
 		data.origEscapeChance += KinkyDungeonEnchantedKnifeBonus*toolMult;
 	}
-
-	// Finger extensions will help if your hands are unbound. Some items cant be removed without them!
-	// Mouth counts as a finger extension on your hands if your arms aren't tied
-	let armsBound = KinkyDungeonIsArmsBound(true);
-	let armsBoundOverride = false;
-	let handsBoundOverride = false;
 
 	if (KDUnboundAffinityOverride[data.affinity] && (!data.handsBound || handsBoundOverride) && (!armsBound || armsBoundOverride)) data.hasAffinity = true;
 

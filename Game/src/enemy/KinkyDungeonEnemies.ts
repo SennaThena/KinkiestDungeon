@@ -4973,6 +4973,10 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 						} else {
 							enemy.gx = enemy.IntentLeashPoint.x;
 							enemy.gy = enemy.IntentLeashPoint.y;
+							if (!KinkyDungeonFlags.get("tut_surr")) {
+								KinkyDungeonSetFlag("tut_surr", -1);
+								KinkyDungeonSendTextMessage(10, TextGet("KDTut_Surr"), "#ffffff", 10);
+							}
 						}
 					}
 
@@ -6973,6 +6977,8 @@ function KDPredictStruggle(enemy: entity, struggleMod: number, delta: number, al
 		}
 	}
 
+	// Reduce to delta amount;
+	data.struggleMod *= data.delta;
 
 	let minLevel = Math.max(data.minBoundLevel,
 		(enemy.buffs && KinkyDungeonGetBuffedStat(enemy.buffs, "MinBoundLevel"))
@@ -6982,7 +6988,7 @@ function KDPredictStruggle(enemy: entity, struggleMod: number, delta: number, al
 	if (Object.keys(data.specialBoundLevel).length < 1) {
 		// Simple math, reduce bound level, dont have to worry.
 		data.struggleMod *= (10 + Math.pow(Math.max(0.01, enemy.hp ** KDEnemyStruggleHPExp), 0.75));
-		data.boundLevel = Math.max(Math.min(Math.max(0, data.boundLevel), minLevel), data.boundLevel - data.delta * data.struggleMod);
+		data.boundLevel = Math.max(Math.min(Math.max(0, data.boundLevel), minLevel), data.boundLevel - data.struggleMod);
 	} else {
 		// We go layer by layer
 		let bondage = Object.entries(data.specialBoundLevel);
@@ -7014,7 +7020,7 @@ function KDPredictStruggle(enemy: entity, struggleMod: number, delta: number, al
 			totalCost *= 3/(3 + (pBoost * enemy.Enemy.power || 0));
 			totalCost *= 2/(2 + (mBoost * enemy.Enemy.unlockCommandLevel || 0));
 
-			let effect = Math.min(data.struggleMod, totalCost);
+			let effect = Math.min(data.delta, totalCost);
 			let difference = layer[1] * (totalCost ? (effect / totalCost) : 1);
 			let origBL = data.boundLevel;
 			data.boundLevel = Math.max(minLevel, data.boundLevel - difference);
@@ -9086,30 +9092,33 @@ function KDEnemyStruggleTurn(enemy: entity, delta: number, allowStruggleAlwaysTh
 	}
 
 	/** Do NPC restraint struggling */
-	let struggleNPCTarget = KDNPCStruggleTick(enemy.id, delta);
-	if (struggleNPCTarget) {
-		let result = KDNPCDoStruggle(enemy.id,
-			struggleNPCTarget.slot,
-			struggleNPCTarget.inv,
-			KDEntityHasFlag(enemy, "bound") ? 0 :
-				-0.1 * struggleNPCTarget.target + 0.1 * (enemy.strugglePoints || 0) +
-				(1 + struggleNPCTarget.points) / (3 + struggleNPCTarget.target + struggleNPCTarget.points)
-		);
-		if (result == "Struggle") {
-			if (!enemy.strugglePoints) enemy.strugglePoints = 0;
-			enemy.strugglePoints += delta;
-		} else if (result != "Struggle") {
-			if (struggleNPCTarget.inv.conjured && result == "Remove") result = "ConjuredRemove";
-			KinkyDungeonSendTextMessage(3, TextGet("KDNPCEscape" + result)
-				.replace("ENMY", KDEnemyName(enemy))
-				.replace("ITMN", KDGetItemName(struggleNPCTarget.inv, Restraint)),
-			"#ffffff", 2);
-			delete enemy.strugglePoints;
+	if (delta > 0) {
+		let struggleNPCTarget = KDNPCStruggleTick(enemy.id, delta);
+		if (struggleNPCTarget) {
+			let result = KDNPCDoStruggle(enemy.id,
+				struggleNPCTarget.slot,
+				struggleNPCTarget.inv,
+				KDEntityHasFlag(enemy, "bound") ? 0 :
+					-0.1 * struggleNPCTarget.target + 0.1 * (enemy.strugglePoints || 0) +
+					(1 + struggleNPCTarget.points) / (3 + struggleNPCTarget.target + struggleNPCTarget.points)
+			);
+			if (result == "Struggle") {
+				if (!enemy.strugglePoints) enemy.strugglePoints = 0;
+				enemy.strugglePoints += delta;
+			} else if (result != "Struggle") {
+				if (struggleNPCTarget.inv.conjured && result == "Remove") result = "ConjuredRemove";
+				KinkyDungeonSendTextMessage(3, TextGet("KDNPCEscape" + result)
+					.replace("ENMY", KDEnemyName(enemy))
+					.replace("ITMN", KDGetItemName(struggleNPCTarget.inv, Restraint)),
+				"#ffffff", 2);
+				delete enemy.strugglePoints;
+			}
+		} else {
+			if (enemy.strugglePoints > 0) enemy.strugglePoints -= delta;
+			else delete enemy.strugglePoints
 		}
-	} else {
-		if (enemy.strugglePoints > 0) enemy.strugglePoints -= delta;
-		else delete enemy.strugglePoints
 	}
+
 }
 
 /**

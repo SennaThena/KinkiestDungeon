@@ -1146,7 +1146,8 @@ function KinkyDungeonPassOut(noteleport?: boolean) {
 	KinkyDungeonChangeDistraction(-100);
 
 	KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonPassOut"), "#ff5277", 5);
-	KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonPassOut2"), "#ff5277", 5);
+	if (!noteleport)
+		KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonPassOut2"), "#ff5277", 5);
 
 
 	if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/StoneDoor_Close.ogg");

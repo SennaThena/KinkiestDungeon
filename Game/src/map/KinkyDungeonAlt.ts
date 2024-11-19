@@ -2275,7 +2275,10 @@ function KinkyDungeonCreatePerkRoom(POI: any, VisitedRooms: any[], width: number
 
 			if (newperks.length > 0) {
 				KinkyDungeonMapSet(p1x + i * 2, py, 'P');
-				KinkyDungeonTilesSet("" + (p1x + i * 2) + "," + (py), {Perks: newperks, Bondage: bondage, Method: method});
+				KinkyDungeonTilesSet("" + (p1x + i * 2) + "," + (py), {Perks: newperks,
+					Light: 5,
+					lightColor: 0xffff88,
+					Bondage: bondage, Method: method});
 				perksplaced += 1;
 				for (let p of newperks) {
 					perks[p] = true;

@@ -373,7 +373,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 						if (KDGameData.RoomType == "PerkRoom" && MiniGameKinkyDungeonLevel >= 1 && MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent) { //  && Math.floor(MiniGameKinkyDungeonLevel / 3) == MiniGameKinkyDungeonLevel / 3
 							if ((!KinkyDungeonStatsChoice.get("saveMode")) && !suppressCheckPoint) {
 								KinkyDungeonState = "Save";
-								KDTextArea("saveDataField", 1250, 150, 1000, 230);
+								KDTextArea("saveDataField", 750, 100, 1000, 230);
 								ElementValue("saveDataField", saveData);
 							}
 						}
@@ -388,7 +388,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 
 
 
-				if (KinkyDungeonState != "End"
+				if (MiniGameKinkyDungeonLevel < KinkyDungeonMaxLevel - 1
 					&& !((!altRoomTarget || !altRoomTarget.alwaysRegen)
 					&& (location?.data[KDGameData.RoomType])))
 					KinkyDungeonState = "GenMap";

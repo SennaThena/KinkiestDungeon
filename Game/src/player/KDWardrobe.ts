@@ -794,14 +794,14 @@ function KDDrawColorSliders(X: number, Y: number, C: Character, Model: Model): v
 
 function KDUpdateChar(C: Character) {
 	KDCurrentModels.get(C).Poses = KDGeneratePoseArray(
-		KDNPCPoses.get(C).CurrentPoseArms,
-		KDNPCPoses.get(C).CurrentPoseLegs,
-		KDNPCPoses.get(C).CurrentPoseEyes,
-		KDNPCPoses.get(C).CurrentPoseBrows,
-		KDNPCPoses.get(C).CurrentPoseBlush,
-		KDNPCPoses.get(C).CurrentPoseMouth,
-		KDNPCPoses.get(C).CurrentPoseEyes2,
-		KDNPCPoses.get(C).CurrentPoseBrows2,
+		KDNPCPoses.get(C)?.CurrentPoseArms,
+		KDNPCPoses.get(C)?.CurrentPoseLegs,
+		KDNPCPoses.get(C)?.CurrentPoseEyes,
+		KDNPCPoses.get(C)?.CurrentPoseBrows,
+		KDNPCPoses.get(C)?.CurrentPoseBlush,
+		KDNPCPoses.get(C)?.CurrentPoseMouth,
+		KDNPCPoses.get(C)?.CurrentPoseEyes2,
+		KDNPCPoses.get(C)?.CurrentPoseBrows2,
 		//KDGetPoseOfType(C, "Eyes"),
 		//KDGetPoseOfType(C, "Brows"),
 		//KDGetPoseOfType(C, "Blush"),
