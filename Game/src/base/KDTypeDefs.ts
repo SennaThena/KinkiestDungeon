@@ -1638,6 +1638,8 @@ interface entity {
 
 	strugglePoints?: number,
 
+	partyLeader?: number,
+
 	/** Optional leash data, used for both NPC and player */
 	leash?: KDLeashData,
 	blockedordodged?: number,

@@ -104,14 +104,23 @@ function KDGetEnemyPersistentParty(partyid: number): entity[] {
 function KDGetEnemyParty(partyid: number): entity[] {
 	return [...KDGetEnemyPersistentParty(partyid), ...KDGetEnemyStoredParty(partyid)];
 }
-function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapDataType): boolean {
+function KDNPCInParty(pmid: number, partyid: number): boolean {
+	let npc = KDGetPersistentNPC(partyid, undefined, false);
+	if (KDIsNPCPersistent(pmid)) {
+		if (npc.persistentParty) {
+			return npc.persistentParty.includes(pmid);
+		}
+	} else {
+		if (npc.storedParty) {
+			return npc.storedParty.some((pm) => {return pm.id == pmid;});
+		}
+	}
+	return false;
+}
+function KDStoreEnemyPartyMember(enemy: entity, partyid: number, location?: WorldCoord): boolean {
 	if (!enemy) return false;
 	let npc = KDGetPersistentNPC(partyid,
-		undefined, undefined, {
-			mapX: mapData.mapX,
-			mapY: mapData.mapY,
-			room: mapData.RoomType,
-		}
+		undefined, undefined, location
 	);
 	if (npc) {
 		if (KDIsNPCPersistent(enemy.id)) {
@@ -120,6 +129,7 @@ function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapD
 			if (!npc.persistentParty.some((pm) => {return enemy.id == pm;})) {
 				npc.persistentParty.push(enemy.id);
 				KDGetPersistentNPC(enemy.id).partyLeader = partyid;
+				enemy.partyLeader = partyid;
 				return true;
 			}
 		} else {
@@ -127,13 +137,14 @@ function KDStoreEnemyPartyMember(enemy: entity, partyid: number, mapData: KDMapD
 
 			if (!npc.storedParty.some((pm) => {return enemy.id == pm.id;})) {
 				npc.storedParty.push(enemy);
+				enemy.partyLeader = partyid;
 				return true;
 			}
 		}
 	}
 	return false;
 }
-function KDPopEnemyPartyMember(pmid: number, partyid: number): entity {
+function KDPopEnemyPartyMember(pmid: number, partyid: number, freeFromParty?: boolean): entity {
 	let npc = KDIsNPCPersistent(partyid) ? KDGetPersistentNPC(partyid) : undefined;
 	if (npc) {
 		if (KDIsNPCPersistent(pmid)) {
@@ -143,13 +154,17 @@ function KDPopEnemyPartyMember(pmid: number, partyid: number): entity {
 				let id = npc.persistentParty.splice(index, 1)[0];
 				let pnpc = KDGetPersistentNPC(id);
 				pnpc.partyLeader = undefined;
-				return KDGetGlobalEntity(id);
+				let en = KDGetGlobalEntity(id);
+				if (freeFromParty) en.partyLeader = undefined;
+				return en;
 			}
 		} else {
 			if (!npc.storedParty || npc.storedParty.length == 0) return null;
 			let index = pmid ? npc.storedParty.findIndex((pm) => {return pmid == pm.id;}) : 0;
 			if (index >= 0) {
-				return npc.storedParty.splice(index, 1)[0];
+				let en = npc.storedParty.splice(index, 1)[0];
+				if (freeFromParty) en.partyLeader = undefined;
+				return en;
 			}
 		}
 
@@ -306,10 +321,18 @@ function KDIsNPCPersistent(id: number): boolean {
 }
 
 function KDGetPersistentNPC(id: number, entity?: entity, force: boolean = true, location?: WorldCoord): KDPersistentNPC {
+	let addToParty = 0;
+	let addMember: entity = null;
 	if (!KDPersistentNPCs[id] && force) {
 
 		let enemy = entity || KinkyDungeonFindID(id);
 		if (enemy) {
+			if (enemy.partyLeader) {
+				if (KDPopEnemyPartyMember(enemy.id, enemy.partyLeader)) {
+					addToParty = enemy.partyLeader;
+				}
+
+			}
 			let entry = {
 				Name: enemy.CustomName || KDGenEnemyName(enemy),
 				id: enemy.id,
@@ -330,9 +353,14 @@ function KDGetPersistentNPC(id: number, entity?: entity, force: boolean = true, 
 				cosplaystyle: KDGameData.Collection[enemy.id + ""]?.cosplaystyle,
 			};
 			KDPersistentNPCs[enemy.id] = entry;
+			if (addToParty)
+				addMember = enemy;
 		}
 	}
 	KDUpdatePersistentNPC(id);
+	if (addToParty && addMember) {
+		KDStoreEnemyPartyMember(addMember, addToParty, location);
+	}
 	return KDPersistentNPCs[id];
 }
 
