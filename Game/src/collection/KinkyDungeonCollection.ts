@@ -640,6 +640,7 @@ function KDDrawSelectedCollectionMember(value: KDCollectionEntry, x: number, y: 
 	} else {
 		KDSpeakerNPC = KDNPCChar.get(value.id);
 		KDNPCChar_ID.set(KDSpeakerNPC, value.id);
+		KDNPCStyle.set(KDSpeakerNPC, value);
 	}
 
 	if (KDSpeakerNPC) {

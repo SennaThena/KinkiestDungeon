@@ -1349,7 +1349,7 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				KDRefreshCharacter.set(C, true);
 				KinkyDungeonDressPlayer(C, true);
 				let newOut = DecompressB64(NewOutfit);
-				CharacterAppearanceRestore(C, newOut, C != KinkyDungeonPlayer, true);
+				CharacterAppearanceRestore(C, newOut, C != KinkyDungeonPlayer, false);
 				let newParsed = JSON.parse(newOut);
 				if (newParsed?.metadata) {
 					C.Palette = newParsed.metadata.palette;
