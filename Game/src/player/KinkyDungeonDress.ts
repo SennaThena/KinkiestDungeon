@@ -125,8 +125,9 @@ function KinkyDungeonSetDress(Dress: string, Outfit?: string, Character?: Charac
 			}
 		}
 		//KinkyDungeonCheckClothesLoss = true;
+		KDCharacterNaked(Character);
 		KDRefreshCharacter.set(Character || KinkyDungeonPlayer, true);
-		KinkyDungeonDressPlayer(Character, NoRestraints);
+		KinkyDungeonDressPlayer(Character, NoRestraints, false, undefined, undefined, undefined, undefined, undefined, true);
 		KDRefresh = true;
 	}
 }
@@ -156,7 +157,8 @@ function KinkyDungeonDressPlayer (
 	customInventory?:   item[],
 	customPlayerTags?:  Map<string, boolean>,
 	customFaction?:     string,
-	noDressOutfit?:     boolean
+	noDressOutfit?:     boolean,
+	forceUseOutfit?:     boolean
 )
 {
 	if (!Character) Character = KinkyDungeonPlayer;
@@ -177,7 +179,7 @@ function KinkyDungeonDressPlayer (
 		: (Character == KDPreviewModel ? KinkyDungeonCurrentDress : (KDCharacterDress.get(Character) || "Bandit"));
 	let DressList = noDressOutfit ? [] : KDGetDressList()[CurrentDress];
 
-	if (!noDressOutfit && KDNPCStyle.get(Character)?.customOutfit) {
+	if (!noDressOutfit && !forceUseOutfit && KDNPCStyle.get(Character)?.customOutfit) {
 		DressList = [];
 		for (let a of JSON.parse(DecompressB64(KDNPCStyle.get(Character)?.customOutfit))) {
 			if (a.Model && !KDModelIsProtected(a.Model) && !a.Model.Restraint && !a.Model.Cosplay) {

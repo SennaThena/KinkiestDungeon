@@ -3457,7 +3457,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 				if (enemy.slow <= 0)
 					KinkyDungeonSendEvent("enemyStatusEnd", {enemy: enemy, status: "slow"});
 			}
-			if (!(enemy.stun > 0 || enemy.freeze > 0 || enemy.teleporting > 0) && (enemy.hp > 0.52)) {
+			if (!(enemy.stun > 0 || enemy.freeze > 0 || enemy.teleporting > 0) && (!KDHelpless(enemy))) {
 				KDEnemyStruggleTurn(enemy, delta, KDNPCStruggleThreshMult(enemy), false, false);
 			}
 			let vibe = KDEntityMaxBuffedStat(enemy, "Vibration");
@@ -7041,7 +7041,7 @@ function KDPredictStruggle(enemy: entity, struggleMod: number, delta: number, al
 			totalCost *= 3/(3 + (pBoost * enemy.Enemy.power || 0));
 			totalCost *= 2/(2 + (mBoost * enemy.Enemy.unlockCommandLevel || 0));
 
-			let effect = Math.min(data.delta, totalCost);
+			let effect = Math.min(data.struggleMod, totalCost);
 			let difference = layer[1] * (totalCost ? (effect / totalCost) : 1);
 			let origBL = data.boundLevel;
 			data.boundLevel = Math.max(minLevel, data.boundLevel - difference);

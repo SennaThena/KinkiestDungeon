@@ -1347,7 +1347,7 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				KDOriginalValue = KDOutfitOriginalStore[KDCurrentOutfit] || "";
 				KinkyDungeonSetDress("None", "None", C, true);
 				KDRefreshCharacter.set(C, true);
-				KinkyDungeonDressPlayer(C, true);
+				KinkyDungeonDressPlayer(C, true, false, undefined, undefined, undefined, undefined, undefined, true);
 				let newOut = DecompressB64(NewOutfit);
 				CharacterAppearanceRestore(C, newOut, C != KinkyDungeonPlayer, false);
 				let newParsed = JSON.parse(newOut);
@@ -1357,7 +1357,9 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				CharacterRefresh(C);
 				KDInitProtectedGroups(C);
 				KDRefreshCharacter.set(C, true);
-				KinkyDungeonDressPlayer(C, true);
+				KinkyDungeonDressPlayer(C, true, undefined, undefined, undefined,
+					undefined, undefined, true
+				);
 			} else if (C == KinkyDungeonPlayer) {
 				KDGetDressList().Default = KinkyDungeonDefaultDefaultDress;
 				CharacterAppearanceRestore(KinkyDungeonPlayer,
@@ -1437,7 +1439,7 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				KinkyDungeonSetDress("Bikini", "Bikini", C, true);
 			} else
 				KinkyDungeonSetDress("None", "None", C, true);
-			KinkyDungeonDressPlayer(C, true);
+			KinkyDungeonDressPlayer(C, true, false, undefined, undefined, undefined, undefined, undefined, true);
 			if (C == KinkyDungeonPlayer) {
 				KDInitProtectedGroups(C);
 				KinkyDungeonConfigAppearance = true;
@@ -1742,7 +1744,8 @@ function KDSaveCodeOutfit(C: Character, clothesOnly: boolean = false): void {
 	}
 
 	KDRefreshCharacter.set(C, true);
-	KinkyDungeonDressPlayer(C, true);
+	KinkyDungeonDressPlayer(C, true, undefined, undefined, undefined, undefined, undefined, true);
+
 
 	//KinkyDungeonNewDress = true;
 }
@@ -1891,15 +1894,15 @@ function KDLoadOutfitDirect(files: File[], Char: Character) {
 						if (decompressed) {
 							let origAppearance = Char.Appearance;
 							try {
-								CharacterAppearanceRestore(Char, decompressed, false, true);
+								CharacterAppearanceRestore(Char, decompressed, Char == KDSpeakerNPC, Char != KDSpeakerNPC);
 								let newParsed = JSON.parse(decompressed);
-								if (newParsed) {
+								if (newParsed && newParsed.metadata) {
 									Char.Palette = newParsed.metadata.palette;
 								}
 								CharacterRefresh(Char);
 								KDOldValue = str;
 								KDInitProtectedGroups(Char);
-								KinkyDungeonDressPlayer(Char, true);
+								KinkyDungeonDressPlayer(Char, true, undefined, undefined, undefined, undefined, undefined, true);
 
 								if (Char.Appearance.length == 0)
 									throw new DOMException();
