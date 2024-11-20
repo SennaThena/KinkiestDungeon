@@ -31,8 +31,8 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
-5.4.7
-
+5.4.7 & 5.4.8
+- Lots of small bugfixes
 
 5.4.6
 - Clear restraints from outfit when loading into wardrobe from title screen

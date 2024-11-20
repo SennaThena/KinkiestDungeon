@@ -172,6 +172,61 @@ function KDPopEnemyPartyMember(pmid: number, partyid: number, freeFromParty?: bo
 	return null;
 }
 
+/** Despawns all party members belonging to the party ID */
+function KDDespawnParty(partyid: number, mapData: KDMapDataType) {
+	for (let en of mapData.Entities) {
+		if (en.partyLeader == partyid) {
+			KDRemoveEntity(en, false, false, true, undefined, mapData);
+		}
+	}
+}
+/** Helper function to avoid repetition. Returns true if success*/
+function KDChangeParty(pmid: number, partyid: number): boolean {
+	let en = KDGetGlobalEntity(pmid);
+	if (en) {
+		let npc = KDGetPersistentNPC(partyid, undefined, true);
+		if (npc) {
+			if (en.partyLeader) {
+				KDPopEnemyPartyMember(pmid, partyid, true);
+			}
+			KDStoreEnemyPartyMember(en, npc.id, KDGetNPCLocation(npc.id));
+		}
+
+
+	}
+	return false;
+}
+
+function KDIsPartyLeaderCapturedOrGone(partyid: number) {
+	let npc = KDGetPersistentNPC(partyid, undefined, true);
+	if (npc) {
+		return npc.captured || KDIsImprisoned(KDGetGlobalEntity(partyid));
+	}
+	return true;
+}
+
+/** Gets all party members on this level */
+function KDGetPartyOnLevel(partyid: number, spawnedOnly: boolean): entity[] {
+	let party = KDGetEnemyParty(partyid);
+	let loc = KDGetCurrentLocation();
+
+	return party.filter((en) => {
+		return (!spawnedOnly && KDIsNPCPersistent(en.id) && KDCompareLocation(KDGetNPCLocation(en.id), loc))
+			|| KinkyDungeonFindID(en.id)
+	});
+}
+/** Gets all party members on a specific coord */
+function KDGetPartyAtCoord(partyid: number, spawnedOnly: boolean, coord: WorldCoord): entity[]  {
+	let party = KDGetEnemyParty(partyid);
+	let mapData = KDGetMapData(coord);
+
+	return party.filter((en) => {
+		return (KDIsNPCPersistent(en.id)
+			&& (!spawnedOnly || KDGetPersistentNPC(en.id).spawned)
+			&& KDCompareLocation(KDGetNPCLocation(en.id), coord))
+		|| (mapData && KinkyDungeonFindID(en.id, mapData))
+	});
+}
 
 
 function KDMovePersistentNPC(id: number, coord: WorldCoord): boolean {

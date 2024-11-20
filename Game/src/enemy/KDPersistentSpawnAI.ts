@@ -32,8 +32,8 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 					ent.runSpawnAI = true;
 					entity = ent;
 				} else {
-					ent.x = KDMapData.StartPosition.x;
-					ent.y = KDMapData.StartPosition.y;
+					ent.x = mapData.StartPosition.x;
+					ent.y = mapData.StartPosition.y;
 					ent.runSpawnAI = true;
 					return true;
 				}

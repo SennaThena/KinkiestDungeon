@@ -8496,7 +8496,7 @@ function KDAddEntity(entity: entity, makepersistent?: boolean, dontteleportpersi
 		KDGetEnemyCache();
 	}
 
-	if (!dontteleportpersistent && KDIsNPCPersistent(data.enemy.id) && KinkyDungeonFindID(data.enemy.id)) {
+	if (!dontteleportpersistent && KDIsNPCPersistent(data.enemy.id) && KinkyDungeonFindID(data.enemy.id, mapData)) {
 		// Move the enemy instead of creating
 
 		let npc = KinkyDungeonFindID(data.enemy.id, mapData);
