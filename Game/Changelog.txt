@@ -31,6 +31,10 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.9
+- Added wait speed options
+- Made settings for toggles appear after hovering over the buttons for a bit
+
 5.4.7 & 5.4.8
 - Lots of small bugfixes
 

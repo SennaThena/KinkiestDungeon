@@ -4195,6 +4195,9 @@ function KinkyDungeonClickGame(_Level?: number) {
 
 		if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Damage.ogg");
 	}
+	else if (KDFocusControls) {
+		KDSetFocusControl("");
+	}
 	// If no buttons are clicked then we handle move
 	else if ((KinkyDungeonControlsEnabled() || KinkyDungeonInspect) && KinkyDungeonDrawState == "Game") {
 		//KDSetFocusControl("");

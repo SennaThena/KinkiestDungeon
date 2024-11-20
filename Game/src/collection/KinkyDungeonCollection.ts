@@ -609,20 +609,33 @@ function KDDrawSelectedCollectionMember(value: KDCollectionEntry, x: number, y: 
 		KDSpeakerNPC = suppressCanvasUpdate(() => CharacterLoadNPC(value.id, value.name, value.Palette));
 		KDNPCChar.set(value.id, KDSpeakerNPC);
 		KDNPCChar_ID.set(KDSpeakerNPC, value.id);
+		let oldstyle = KDNPCStyle.get(KDSpeakerNPC);
 		KDNPCStyle.set(KDSpeakerNPC, value);
 		if (!value.bodystyle && !value.facestyle && !value.hairstyle) {
 			if (enemyType?.style || KinkyDungeonGetEnemyByName(value.type)?.style) {
 				if (KDModelStyles[enemyType?.style || KinkyDungeonGetEnemyByName(value.type)?.style]) {
 					let style = KDModelStyles[enemyType?.style || KinkyDungeonGetEnemyByName(value.type)?.style];
+					if (!value.bodystyle && oldstyle?.bodystyle) {
+						value.bodystyle = oldstyle.bodystyle;
+					} else
 					if (!value.bodystyle && style.Bodystyle) {
 						value.bodystyle = style.Bodystyle[Math.floor(Math.random() * style.Bodystyle.length)];
 					}
+					if (!value.hairstyle && oldstyle?.hairstyle) {
+						value.hairstyle = oldstyle.hairstyle;
+					} else
 					if (!value.hairstyle && style.Hairstyle) {
 						value.hairstyle = style.Hairstyle[Math.floor(Math.random() * style.Hairstyle.length)];
 					}
+					if (!value.facestyle && oldstyle?.facestyle) {
+						value.facestyle = oldstyle.facestyle;
+					} else
 					if (!value.facestyle && style.Facestyle) {
 						value.facestyle = style.Facestyle[Math.floor(Math.random() * style.Facestyle.length)];
 					}
+					if (!value.cosplaystyle && oldstyle?.cosplaystyle) {
+						value.cosplaystyle = oldstyle.cosplaystyle;
+					} else
 					if (!value.cosplaystyle && style.Cosplay) {
 						value.cosplaystyle = style.Cosplay[Math.floor(Math.random() * style.Cosplay.length)];
 					}

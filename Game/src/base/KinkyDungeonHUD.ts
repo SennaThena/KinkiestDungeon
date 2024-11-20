@@ -88,12 +88,25 @@ let KDFocusControlButtons = {
 		SuppressDuringCombat: true,
 		StepDuringCombat: false,
 	},
+	"AutoWait": {
+		Slow: false,
+		Normal: true,
+		Fast: false,
+		VeryFast: false,
+	},
 };
 let KDFocusControlButtonsExclude = {
 	AutoPathStepDuringCombat: ["AutoPathSuppressDuringCombat"],
 	AutoPathSuppressDuringCombat: ["AutoPathStepDuringCombat"],
+	AutoWaitSlow: ["AutoWaitNormal", "AutoWaitFast", "AutoWaitVeryFast"],
+	AutoWaitFast: ["AutoWaitNormal", "AutoWaitSlow", "AutoWaitVeryFast"],
+	AutoWaitVeryFast: ["AutoWaitNormal", "AutoWaitFast", "AutoWaitSlow"],
+	AutoWaitNormal: ["AutoWaitSlow", "AutoWaitFast", "AutoWaitVeryFast"],
 };
 
+let KDFocusHoverEnter = 0;
+let KDFocusHoverDelay = 500;
+let KDFocusHoverLast = "";
 
 let KDBuffSprites = {
 	"Camo": true,
@@ -1299,7 +1312,10 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 	KinkyDungeonRootDirectory + (KinkyDungeonToggleAutoPass ? "UI/Pass.png" : "UI/NoPass.png"),
 	undefined, undefined, !KinkyDungeonToggleAutoPass, KDTextGray05, undefined, false, {alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[1]),
-	})) str = "KDPass";
+	})) {
+		KDTrySetFocusControl("AutoPass");
+		str = "KDPass";
+	}
 
 	if (DrawButtonKDEx("toggleFastMove", (_bdata) => {
 		if (!KinkyDungeonFastMoveSuppress)
@@ -1312,7 +1328,10 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 	"", "", KinkyDungeonRootDirectory + (KinkyDungeonFastMove ? "FastMove" : "FastMoveOff") + ".png",
 	undefined, undefined, !KinkyDungeonFastMove, KDTextGray05, undefined, false, {alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[4]),
-	})) str = "KDAutoPath";
+	})) {
+		KDTrySetFocusControl("AutoPath")
+		str = "KDAutoPath";
+	}
 
 	// Auto Struggle Button
 	if (DrawButtonKDEx("AutoStruggle", (_bdata) => {
@@ -1416,11 +1435,13 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 			KinkyDungeonAutoWait = false;
 			KinkyDungeonTempWait = false;
 			KinkyDungeonAutoWaitSuppress = false;
+			KDSetFocusControl("");
 		} else {
 			KinkyDungeonAutoWait = true;
 			KinkyDungeonTempWait = true;
 			KinkyDungeonAutoWaitSuppress = true;
 			KinkyDungeonSleepTime = CommonTime() + 100;
+			KDSetFocusControl("AutoWait");
 		}
 		return true;
 	}, true, actionBarXX + actionBarSpacing*actionBarII++, actionBarYY, actionBarWidth, actionbarHeight, "", "",
@@ -1429,7 +1450,11 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 		alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[6]),
 		hotkeyPress: KinkyDungeonKeyToggle[6],
-	})) str = "KDWait";
+	})) {
+		KDTrySetFocusControl("AutoWait");
+
+		str = "KDWait";
+	}
 
 	// Make Noise button
 	if (DrawButtonKDEx("HelpButton", (_bdata) => {
@@ -1578,6 +1603,7 @@ function KinkyDungeonRangedAttack() {
 
 function KinkyDungeonHandleHUD() {
 	if (KinkyDungeonDrawState == "Game") {
+		KDSetFocusControl("");
 		if (KDHandleGame()) return true;
 	} else if (KinkyDungeonDrawState == "Orb") {
 		// Done, converted to input
@@ -1984,6 +2010,7 @@ let currentDrawnSGLength = 0;
  */
 function KDSetFocusControl(control: string) {
 	KDFocusControls = control;
+	if (!control) KDFocusHoverEnter = 0;
 
 	if (control)
 		KDInitFocusControl(control);
@@ -3269,4 +3296,14 @@ function KDDrawStruggleGroups() {
 function KDTightnessRank(tightness: number): string {
 	let factor = Math.min(10, Math.max(0, Math.floor(tightness/2) * 2));
 	return factor + "";
+}
+
+function KDTrySetFocusControl(control: string) {
+	if (!KDFocusControls) {
+		if (!KDFocusHoverEnter || KDFocusHoverLast != control) {
+			KDFocusHoverEnter = CommonTime();
+		} else if (CommonTime() > KDFocusHoverEnter + KDFocusHoverDelay)
+			KDSetFocusControl(control);
+	}
+	KDFocusHoverLast = KDFocusControls || control;
 }

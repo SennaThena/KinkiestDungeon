@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.8"
+KDVersionStr,"5.4.9"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -22724,6 +22724,11 @@ KDFocusControlsAutoPassSpecial,"Pass thru special NPCs"
 KDFocusControlsAutoPathSuppressBeforeCombat,"Stop when enemies are first sighted"
 KDFocusControlsAutoPathSuppressDuringCombat,"Suppress during combat"
 KDFocusControlsAutoPathStepDuringCombat,"Step during combat"
+
+KDFocusControlsAutoWaitFast,"0.1s/turn"
+KDFocusControlsAutoWaitSlow,"1.5s/turn"
+KDFocusControlsAutoWaitNormal,"0.5s/turn"
+KDFocusControlsAutoWaitVeryFast,"0.01s/turn"
 
 KinkyDungeonSpellShadowGrasp,Shadowy Grasp
 

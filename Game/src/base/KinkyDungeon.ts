@@ -25,7 +25,9 @@ let KDModsAfterGameStart = () => {};
 let KDModsAfterLoad = () => {};
 
 let KDFastWaitTime = 100;
-let KDSlowWaitTime = 300;
+let KDVeryFastWaitTime = 10;
+let KDNormalWaitTime = 500;
+let KDSlowWaitTime = 1500;
 
 let maxSaveSlots = 4;
 
@@ -2910,7 +2912,12 @@ function KinkyDungeonRun() {
 						if (KinkyDungeonTempWait && !KDGameData.KinkyDungeonLeashedPlayer && !KinkyDungeonInDanger())
 							KDDisableAutoWait();
 					}
-					KinkyDungeonSleepTime = CommonTime() + (KinkyDungeonFastWait ? KDFastWaitTime : KDSlowWaitTime);
+					let wt = KDNormalWaitTime;
+					if (KDGameData.FocusControlToggle.AutoWaitSlow) wt = KDSlowWaitTime;
+					else if (KDGameData.FocusControlToggle.AutoWaitNormal) wt = KDNormalWaitTime;
+					else if (KDGameData.FocusControlToggle.AutoWaitFast) wt = KDFastWaitTime;
+					else if (KDGameData.FocusControlToggle.AutoWaitVeryFast) wt = KDVeryFastWaitTime;
+					KinkyDungeonSleepTime = CommonTime() + (wt);
 				}
 			} else if (KinkyDungeonAutoWaitStruggle) {
 				if (CommonTime() > KinkyDungeonSleepTime) {

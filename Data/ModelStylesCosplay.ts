@@ -15,6 +15,12 @@ let KDModelCosplay: {[_: string]: KinkyDungeonDress} = {
 		{
 			Item: "ElfEarrings", Color: "#ffffff", Lost: false		},
 	],
+	"Glasses": [
+		{
+			Item: "Glasses", Color: "#ffffff", Lost: false, Filters: {"Lens":{"gamma":1,"saturation":0.16666666666666666,"contrast":1.02,"brightness":1,"red":1.0196078431372548,"green":1.0196078431372548,"blue":1.0196078431372548,"alpha":0.4}},
+		},
+	],
+
 	"Elf2": [
 		{
 			Item: "ElfEarsLong", Color: "#ffffff", Lost: false
