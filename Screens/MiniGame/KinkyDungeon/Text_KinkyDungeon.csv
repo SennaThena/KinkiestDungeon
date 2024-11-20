@@ -2369,7 +2369,8 @@ AttackBanditChiefLock,"The bandit chuckles and applies a lock! (DamageTaken)"
 NameBanditPet,Bandit Pet
 KillBanditPet,"The bandit blushes and runs away."
 AttackBanditPetBind,"The girl nervously restrains you! (+RestraintAdded)"
-AttackBanditPet,"The bandit tickes you nervously! (DamageTaken)"
+AttackBanditPet,"The bandit tickles you nervously! (DamageTaken)"
+AttackBanditPetLock,"The bandit pet applies a lock! (DamageTaken)"
 
 NameBanditHunter,Bandit Hunter
 KillBanditHunter,"The bandit hunter retreats."
@@ -23457,9 +23458,9 @@ KinkyDungeonTrapSpawnCuffs,A set of shackles opens wide and starts going for you
 KinkyDungeonTrapSpawnMummyCursed,You hear moaning as the statues start to move...
 KinkyDungeonTrapSpawnBookBondage,Devious tomes emerge from the bookshelves!
 KinkyDungeonTrapSpawnMushy,Armed mushrooms emerge from the ground to defend their home!
-KinkyDungeonTrapPoltergeist,"Playful ghosts slip through the walls, giggling to themselves!"
-KinkyDungeonTrapOldDrones,"Ancient drones drop from the ceiling and come to life!"
-KinkyDungeonTrapObserver,"You were always being watched..."
+KinkyDungeonTrapSpawnPoltergeist,"Playful ghosts slip through the walls, giggling to themselves!"
+KinkyDungeonTrapSpawnOldDrones,"Ancient drones drop from the ceiling and come to life!"
+KinkyDungeonTrapSpawnObserver,"You were always being watched..."
 
 LootChestGunpowder,You find a store of gunpowder!
 
@@ -25894,6 +25895,7 @@ RestraintLeatherBootsCommonDesc2,"Provides minor protection against enemy attack
 KDGenMap,Generating Map...
 
 KinkyDungeonSpellHexWrappingDamage,Mystic wrappings constrict around your body!
+KinkyDungeonSpellOneBarMissile,One Bar Missile
 
 KDTut_Cut,You'll need a sharp object to cut items. Look for a knife or a piece of scrap on the floor.
 KDTut_CutCrack,"If you can't get your knife into place, try sitting next to a crack on the wall."
@@ -25901,3 +25903,10 @@ KDTut_CutCrack2,"Your character will automatically try to lodge the knife into t
 KDTut_CutMagic,"You'll need to find a cutting weapon with the magic tag to cut magic items."
 KDTut_CutMagicHas,"You need to equip your magic cutting weapon to cut magic items."
 KDTut_Surr,You can surrender in the menu if you want to be treated more gently.
+
+KDTut_TeleCrit,You flanked the enemy! Now attack its weak point for massive damage!
+KDTut_Vulnerable2,Enemies that miss an attack become vulnerable for a turn.
+KDTut_Vulnerable,Attack them for a guaranteed critical hit!
+KDTut_Dodge,before the attack lands! You can tell the difference by the border of the tiles.
+KDTut_Dodge2,Enemy attacks take time to hit. Make sure to step out of the warning tiles,
+KDTut_Projec,You can dodge out of the way of most projectiles. Avoid the marked tiles.

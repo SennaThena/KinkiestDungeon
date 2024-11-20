@@ -368,6 +368,10 @@ function KinkyDungeonInDanger() {
 		let bdist = 1.5;
 		if (b.vx && b.vy) bdist = 2*Math.sqrt(b.vx*b.vx + b.vy*b.vy);
 		if (KinkyDungeonVisionGet(Math.round(b.x), Math.round(b.y)) > 0 && Math.max(Math.abs(b.x - KinkyDungeonPlayerEntity.x), Math.abs(b.y - KinkyDungeonPlayerEntity.y)) < bdist) {
+			if (!KinkyDungeonFlags.get("tut_projec")) {
+				KinkyDungeonSetFlag("tut_projec", -1);
+				KinkyDungeonSendTextMessage(10, TextGet("KDTut_Projec"), "#ffffff", 10);
+			}
 			return true;
 		}
 	}
@@ -4016,6 +4020,12 @@ function KDCheckVulnerableBackstab(enemy: entity): boolean {
 				if (enemy.x * 2 - enemy.fx == KinkyDungeonPlayerEntity.x && enemy.y * 2 - enemy.fy == KinkyDungeonPlayerEntity.y) {
 					KDAddThought(enemy.id, "Annoyed", 4, 1);
 					enemy.vulnerable = Math.max(enemy.vulnerable, 1);
+
+
+					if (!KinkyDungeonFlags.get("tut_nothingpersonnel")) {
+						KinkyDungeonSetFlag("tut_nothingpersonnel", -1);
+						KinkyDungeonSendTextMessage(10, TextGet("KDTut_TeleCrit"), "#ffffff", 10);
+					}
 					return true;
 				}
 			} else if (!enemy.fx && !enemy.fy) {
@@ -5423,6 +5433,11 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 					KDAddThought(enemy.id, "Annoyed", 4, 1);
 
 					enemy.vulnerable = Math.max(enemy.vulnerable, 1);
+					if (!KinkyDungeonFlags.get("tut_dodge")) {
+						KinkyDungeonSetFlag("tut_dodge", -1);
+						KinkyDungeonSendTextMessage(10, TextGet("KDTut_Dodge"), "#ffffff", 10);
+						KinkyDungeonSendTextMessage(10, TextGet("KDTut_Dodge2"), "#ffffff", 10);
+					}
 					if (dash && !enemy.Enemy.Dash?.noDashOnMiss) {
 						KDDash(enemy, player, AIData.MovableTiles);
 					}
@@ -6591,6 +6606,12 @@ function KinkyDungeonEnemyTryAttack (
 				return false;
 			}
 		}
+	}
+
+	if (player?.player && !KinkyDungeonFlags.get("tut_dodge")) {
+		KinkyDungeonSetFlag("tut_dodge", -1);
+		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Dodge"), "#ffffff", 10);
+		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Dodge2"), "#ffffff", 10);
 	}
 
 	enemy.attackPoints += delta * KinkyDungeonMultiplicativeStat(-KinkyDungeonGetBuffedStat(enemy.buffs, "AttackSpeed"));
