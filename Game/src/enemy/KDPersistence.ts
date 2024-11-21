@@ -101,8 +101,27 @@ function KDGetEnemyPersistentParty(partyid: number): entity[] {
 	}
 	return [];
 }
+function KDGetEnemyStoredPartyIDs(partyid: number): number[] {
+	let npc = KDIsNPCPersistent(partyid) ? KDGetPersistentNPC(partyid) : undefined;
+	if (npc) {
+		return npc.storedParty?.map((en) => {return en.id;}) || [];
+	}
+	return [];
+}
+function KDGetEnemyPersistentPartyIDs(partyid: number): number[] {
+	let npc = KDIsNPCPersistent(partyid) ? KDGetPersistentNPC(partyid) : undefined;
+	if (npc) {
+		return npc.persistentParty?.filter((id) => {
+			return KDIsNPCPersistent(id);
+		}) || [];
+	}
+	return [];
+}
 function KDGetEnemyParty(partyid: number): entity[] {
 	return [...KDGetEnemyPersistentParty(partyid), ...KDGetEnemyStoredParty(partyid)];
+}
+function KDGetEnemyPartyIDs(partyid: number): number[] {
+	return [...KDGetEnemyPersistentPartyIDs(partyid), ...KDGetEnemyStoredPartyIDs(partyid)];
 }
 function KDNPCInParty(pmid: number, partyid: number): boolean {
 	let npc = KDGetPersistentNPC(partyid, undefined, false);
@@ -175,7 +194,7 @@ function KDPopEnemyPartyMember(pmid: number, partyid: number, freeFromParty?: bo
 /** Despawns all party members belonging to the party ID */
 function KDDespawnParty(partyid: number, mapData: KDMapDataType) {
 	for (let en of mapData.Entities) {
-		if (en.partyLeader == partyid) {
+		if (en.partyLeader == partyid && KDEnemyCanDespawn(en.id, mapData)) {
 			KDRemoveEntity(en, false, false, true, undefined, mapData);
 		}
 	}
@@ -203,6 +222,57 @@ function KDIsPartyLeaderCapturedOrGone(partyid: number) {
 		return npc.captured || KDIsImprisoned(KDGetGlobalEntity(partyid));
 	}
 	return true;
+}
+
+
+function KDIsInEnemyParty(entity: entity) {
+	if (entity.partyLeader) {
+		let npc = KDGetPersistentNPC(entity.partyLeader, undefined, true);
+		if (npc) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function KDPurgeParty(partyid: number) {
+	// Disbands a party
+	let npc = KDGetPersistentNPC(partyid, undefined, true);
+	if (npc) {
+		let party = KDGetEnemyPartyIDs(partyid);
+		for (let p of party) {
+			let en = KDPopEnemyPartyMember(p, partyid, true);
+			if (en && (!en.homeCoord)) {
+				en.goToDespawn = true;
+			}
+		}
+		KDPurgePartyGlobal(partyid);
+	}
+}
+
+function KDPurgePartyGlobal(pid: number) {
+	for (let v of Object.values(KDWorldMap)) {
+		if (v.data) {
+			for (let d of Object.values(v.data)) {
+				if (d?.Entities) {
+					for (let en of d.Entities) {
+						if (en.partyLeader == pid) {
+							delete en.partyLeader;
+							if (!en.homeCoord ||
+								(en.homeCoord.mapX != d.mapX
+									|| en.homeCoord.mapY != d.mapY
+									|| en.homeCoord.room != d.RoomType
+								)
+							) {
+								en.goToDespawn = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /** Gets all party members on this level */

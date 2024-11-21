@@ -1536,7 +1536,8 @@ function KDKickEnemies(nearestJail: any, ignoreAware: boolean, Level: number, no
 	let enemies = [];
 	let already = new Map();
 	for (let e of  KDMapData.Entities) {
-		if (!e.Enemy?.tags.temporary && !KDIsImmobile(e) && e.spawnX && e.spawnY) {
+		if (!e.Enemy?.tags.temporary && !KDIsImmobile(e) && e.spawnX && e.spawnY
+			&& (!e.homeCoord || KDCompareLocation(e.homeCoord, KDGetCurrentLocation()))) {
 			if (e.aware && KDHostile(e) && KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, KDistEuclidean(e.x - KinkyDungeonPlayerEntity.x, e.y - KinkyDungeonPlayerEntity.y),
 				10, true, false)) {
 				atLeastOneAware = true;
@@ -1656,7 +1657,9 @@ function KDWanderEnemy(en: entity) {
 function KDKickEnemy(e: entity, minDist: number = 10, force: boolean = false) {
 	if (!e.Enemy.tags.temporary || force) {
 		if (!e.Enemy.tags.prisoner && !KDEnemyHasFlag(e, "imprisoned")) {
-			let p = (e.spawnX != undefined && e.spawnY != undefined) ? {x: e.spawnX, y: e.spawnY} : undefined;
+			let p = (e.spawnX != undefined && e.spawnY != undefined
+				&& (!e.homeCoord || (KDCompareLocation(e.homeCoord, KDGetCurrentLocation())))
+			) ? {x: e.spawnX, y: e.spawnY} : undefined;
 			if (!p  ||  KDistEuclidean (e.x - (e.spawnX != undefined ? e.spawnX : e.x),
 				                    e.y - (e.spawnY != undefined ? e.spawnY : e.y)) < minDist)
 			{

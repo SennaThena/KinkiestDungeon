@@ -1678,6 +1678,8 @@ interface entity {
 	scaleX?: number,
 	scaleY?: number,
 	animTime?: number,
+
+	homeCoord?: WorldCoord,
 	/** Spawn location */
 	spawnX?: number,
 	/** Spawn location */
@@ -1766,6 +1768,9 @@ interface entity {
 	path?: {x: number, y: number}[],
 	gx?: number,
 	gy?: number,
+	despawnX?: number,
+	despawnY?: number,
+	goToDespawn?: boolean,
 	gxx?: number,
 	gyy?: number,
 	rage?: number,

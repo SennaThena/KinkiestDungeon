@@ -354,14 +354,54 @@ function KDEnemyHidden(enemy: entity): boolean {
 }
 
 function KDEnemyCanDespawn(id: number, mapData: KDMapDataType): boolean {
-	if (mapData != KDMapData) return true; // TODO make this a bit more complex
+	let en = KDGetGlobalEntity(id)
+	if (en && !KDIsImprisoned(en)) return false;
+	if (mapData != KDMapData) return !en || !KDEnemyHasFlag(en, "no_pers_wander"); // TODO make this a bit more complex
 	let entity = KinkyDungeonFindID(id);
 	if (!entity) return true;
-	return KinkyDungeonVisionGet(entity.x, entity.y) < 0.1
-		&& !KDEnemyHasFlag(entity, "no_pers_wander")
-		&& KDistChebyshev(entity.x - KDPlayer().x, entity.y - KDPlayer().y) >= KDDespawnDistance;
+	return !KDEnemyHasFlag(entity, "no_pers_wander")
+		&& (mapData != KDMapData ||
+		(KinkyDungeonVisionGet(entity.x, entity.y) < 0.1
+		&& KDistChebyshev(entity.x - KDPlayer().x, entity.y - KDPlayer().y) >= KDDespawnDistance)
+		|| KDEnemyNearTargetExit(entity, mapData));
 }
 
+function KDEnemyNearTargetExit(entity: entity, mapData: KDMapDataType): boolean {
+	if (mapData != KDMapData) return true;
+	let gx = entity.despawnX || entity.gx || entity.x;
+	let gy = entity.despawnY || entity.gy || entity.y;
+	let nearestPoint = KDGetNearestExit(gx, gy, mapData);
+
+	return nearestPoint && KDistChebyshev(gx - nearestPoint.x, gy - nearestPoint.y) < 1.5;
+}
+
+function KDGetNearestExit(x: number, y: number, mapData: KDMapDataType, backup?: boolean): KDPoint {
+	let possible: KDPoint[] = [mapData.StartPosition, mapData.EndPosition, ...(mapData.ShortcutPositions || [])];
+	possible = possible.filter((pos) => {
+		return !!pos && KinkyDungeonStairTiles.includes(KinkyDungeonMapDataGet(mapData, pos.x, pos.y));
+	});
+	if (possible.length == 0) {
+		possible = [mapData.StartPosition, mapData.EndPosition, ...(mapData.ShortcutPositions || [])];
+		possible = possible.filter((pos) => {
+			return !!pos;
+		});
+	}
+
+	if (possible.length > 0) {
+		let cand = null;
+		let canddist = 10000000;
+		for (let p of possible) {
+			let dist = KDistChebyshev(p.x - x, p.y - y);
+			if (!canddist || dist < canddist) {
+				canddist = dist;
+				cand = p;
+			}
+		}
+		return cand;
+	}
+
+	return null;
+}
 
 function KinkyDungeonInDanger() {
 	for (let b of KDMapData.Bullets) {
@@ -2582,6 +2622,39 @@ function KDDropStolenItems(enemy: entity, mapData?: KDMapDataType) {
 
 /**
  * @param enemy
+ */
+function KDClearStolenItems(enemy: entity) {
+	if (enemy.items) {
+		for (let name of enemy.items) {
+			if (!enemy.tempitems || !enemy.tempitems.includes(name)) {
+				KDAddLostItemSingle(name);
+			}
+		}
+		enemy.items = [];
+		enemy.tempitems = undefined;
+	}
+}
+
+/**
+ * @param enemy
+ */
+function KDGetStolenItems(enemy: entity): string[] {
+	let items = [];
+	if (enemy.items) {
+		for (let name of enemy.items) {
+			if (!enemy.tempitems || !enemy.tempitems.includes(name)) {
+				items.push(name);
+			}
+		}
+		enemy.items = [];
+		enemy.tempitems = undefined;
+	}
+	return items;
+}
+
+
+/**
+ * @param enemy
  * @param E
  */
 function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
@@ -2686,6 +2759,30 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 		KDDropStolenItems(enemy);
 		if (!enemy.droppedItems)
 			KDDropItems(enemy);
+	}
+	return false;
+}
+
+
+/**
+ * @param enemy
+ * @param E
+ */
+function KDCheckDespawn(enemy: entity, E: number, mapData: KDMapDataType): boolean {
+	if (enemy.despawnX && enemy.despawnY && KDEnemyCanDespawn(enemy.id, mapData)) {
+		if (KDistChebyshev(enemy.despawnX - enemy.x, enemy.despawnY - enemy.y) < 1.5) {
+			KDDespawnEnemy(enemy, E, mapData);
+			return true;
+		}
+	} else if (enemy.goToDespawn && !(enemy.despawnX && enemy.despawnY)) {
+		let point = KDGetNearestExit(enemy.x, enemy.y, mapData, true);
+		if (point) {
+			enemy.despawnX = point.x;
+			enemy.despawnY = point.y;
+		} else {
+			KDDespawnEnemy(enemy, E, mapData);
+			return true;
+		}
 	}
 	return false;
 }
@@ -5111,7 +5208,10 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 					enemy.gy = enemy.gyy;
 				}
 
-				if (allyHoming) {
+				if (enemy.despawnX && enemy.despawnY) {
+					enemy.gx = enemy.despawnX;
+					enemy.gy = enemy.despawnY;
+				} else if (allyHoming) {
 					// TODO add mechanism for allies finding where you are
 					enemy.gx = KDPlayer().x;
 					enemy.gy = KDPlayer().y;
@@ -8578,6 +8678,42 @@ function KDSpliceIndex(index: number, num: number = 1, mapData?: KDMapDataType) 
 
 	if (mapData == KDMapData)
 		KDUpdateEnemyCache = true;
+}
+
+
+
+/**
+ * Removes an enemy and does some stuff like party management, etc to keep things sanitary
+ * @param enemy
+ * @param [kill]
+ * @param [capture]
+ * @param [noEvent]
+ * @param [forceIndex]
+ */
+function KDDespawnEnemy(enemy: entity, E: number,  mapData?: KDMapDataType): boolean {
+	KinkyDungeonSendEvent("despawn", {enemy: enemy, mapData: mapData});
+
+	KDRemoveEntity(enemy, true, false, false, E);
+
+	if (!KDIsNPCPersistent(enemy.id) && !KDIsInEnemyParty(enemy)) {
+		KDClearStolenItems(enemy);
+		DisposeEntity(enemy.id);
+	} else if (KDIsInEnemyParty(enemy) && !KDIsPartyLeaderCapturedOrGone(enemy.partyLeader)) {
+
+		let npc = KDGetPersistentNPC(enemy.partyLeader);
+		if (npc?.entity) {
+			let items = KDGetStolenItems(enemy);
+			// Hand it over
+			if (items.length > 0 && !npc.entity.items) {
+				npc.entity.items = [];
+			}
+			for (let item of items) {
+				npc.entity.items.push(item);
+			}
+		}
+
+	}
+	return true;
 }
 
 /**

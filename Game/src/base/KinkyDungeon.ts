@@ -2942,7 +2942,7 @@ function KinkyDungeonRun() {
 		DrawTextKD(TextGet("EndWin2"), 1250, 500, "#ffffff", KDTextGray2);
 
 		DrawButtonVis(1075, 650, 350, 64, TextGet("KinkyDungeonNewGamePlus"), "#ffffff", "");
-		DrawButtonVis(1075, 750, 350, 64, TextGet("GameReturnToMenu"), "#ffffff", "");
+		DrawButtonVis(1075, 750, 350, 64, TextGet("KinkyDungeonMenu"), "#ffffff", "");
 	} else if (KinkyDungeonState == "Toggles") {
 		KDDrawToggleTabs(500);
 

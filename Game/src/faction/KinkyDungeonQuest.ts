@@ -604,6 +604,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -626,6 +627,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -654,6 +656,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -675,6 +678,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -694,6 +698,7 @@ let KDQuests: Record<string, KDQuest> = {
 				enemy.spawnX = point.x;
 				enemy.spawnY = point.y;
 				enemy.AI = "looseguard";
+				enemy.homeCoord = KDGetCurrentLocation();
 			}
 		}
 	}, 2, ["dressRestraints", "leatherRestraints", "leatherRestraintsHeavy"]),
@@ -728,6 +733,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -750,6 +756,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -779,6 +786,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -802,6 +810,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -831,6 +840,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -854,6 +864,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -883,6 +894,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -906,6 +918,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}
@@ -935,6 +948,7 @@ let KDQuests: Record<string, KDQuest> = {
 							ee.gyy = point.y;
 							ee.spawnX = point.x;
 							ee.spawnY = point.y;
+							ee.homeCoord = KDGetCurrentLocation();
 						}
 					}
 				}
@@ -957,6 +971,7 @@ let KDQuests: Record<string, KDQuest> = {
 						ee.gyy = point.y;
 						ee.spawnX = point.x;
 						ee.spawnY = point.y;
+						ee.homeCoord = KDGetCurrentLocation();
 					}
 				}
 			}

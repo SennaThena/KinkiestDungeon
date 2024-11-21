@@ -296,6 +296,7 @@ function DisposeEntity(id: number, resort: boolean = true, deleteSpecial = false
 	}
 	KDNPCChar.delete(id);
 	if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+		KDPurgeParty(id);
 		if (KDPersistentNPCs[id + ""]?.Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
 			delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 		delete KDPersistentNPCs[id + ""];

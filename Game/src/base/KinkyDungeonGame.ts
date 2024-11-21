@@ -2065,11 +2065,13 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				box.currentCount += 0.05;
 			}
 			if (Enemy && (!InJail || (Enemy.tags.jailer || Enemy.tags.jail || Enemy.tags.leashing))) {
-				let e = {Enemy: Enemy, id: KinkyDungeonGetEnemyID(), x:X, y:Y, hp: (Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, shield: Enemy.shield,
+				let e: entity = {Enemy: Enemy, id: KinkyDungeonGetEnemyID(), x:X, y:Y, hp: (Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, shield: Enemy.shield,
 					movePoints: 0, attackPoints: 0, AI: KDGetAITypeOverride(Enemy, AI) || AI || Enemy.AI, faction: faction};
 				if (spawnPoint) {
-					e['spawnX'] = X;
-					e['spawnY'] = Y;
+					e.spawnX = X;
+					e.spawnY = Y;
+
+					e.homeCoord = KDGetCurrentLocation();
 					if (keys) {
 						e['keys'] = true;
 					}
@@ -5420,6 +5422,7 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 	for (let E = 0; E < KDMapData.Entities.length; E++) {
 		let enemy = KDMapData.Entities[E];
 		if (KinkyDungeonEnemyCheckHP(enemy, E)) { E -= 1; continue;}
+		if (KDCheckDespawn(enemy, E, KDMapData)) { E -= 1; continue;}
 	}
 
 	KinkyDungeonUpdateTether(true, KinkyDungeonPlayerEntity);

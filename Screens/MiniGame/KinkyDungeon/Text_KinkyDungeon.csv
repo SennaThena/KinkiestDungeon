@@ -7187,6 +7187,7 @@ KinkyDungeonMagicSpellsQuick,"Click a spell to replace SPELLNAME with."
 KinkyDungeonSpellNone,"Empty Slot"
 KinkyDungeonMagicSpellsBack,"Back to Spellbook"
 KinkyDungeonGame,"Return to Game"
+KinkyDungeonMenu,"Return to Game"
 
 KinkyDungeonSpellsPageAll,"Known Abilities"
 KinkyDungeonSpellsPageUpgrade,"Spell Tree"
