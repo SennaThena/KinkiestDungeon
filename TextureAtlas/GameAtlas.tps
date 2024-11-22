@@ -2415,6 +2415,8 @@
             <key type="filename">../Game/Spells/Fireblast.png</key>
             <key type="filename">../Game/Spells/Firebolt.png</key>
             <key type="filename">../Game/Spells/Firecracker.png</key>
+            <key type="filename">../Game/Spells/FirstWind.png</key>
+            <key type="filename">../Game/Spells/FirstWindHigher.png</key>
             <key type="filename">../Game/Spells/Fissure.png</key>
             <key type="filename">../Game/Spells/FlameBlade.png</key>
             <key type="filename">../Game/Spells/FlameRune.png</key>
@@ -3932,6 +3934,7 @@
             <key type="filename">../Game/Particles/Heart.png</key>
             <key type="filename">../Game/UI/Heart.png</key>
             <key type="filename">../Game/UI/HeartExtreme.png</key>
+            <key type="filename">../Game/UI/RallyWill.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>

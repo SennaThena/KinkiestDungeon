@@ -1496,6 +1496,14 @@
 	"spriteSourceSize": {"x":25,"y":19,"w":13,"h":21},
 	"sourceSize": {"w":60,"h":60}
 },
+"Game/UI/RallyWill.png":
+{
+	"frame": {"x":2036,"y":649,"w":10,"h":14},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":10,"h":14},
+	"sourceSize": {"w":14,"h":14}
+},
 "Game/UI/Rank/Rank5.png":
 {
 	"frame": {"x":1220,"y":1460,"w":64,"h":72},
@@ -1576,6 +1584,6 @@
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
 	"related_multi_packs": [ "game0.json", "game2.json", "game3.json", "game4.json", "game5.json" ],
-	"smartupdate": "$TexturePacker:SmartUpdate:7b9eebc060e00b315164cff1143b6d35:6663e3f38fd0d2f6da4aa89512983ab0:54a7432a0665349a58c0c74f51e75c65$"
+	"smartupdate": "$TexturePacker:SmartUpdate:8e1b1a7fda10360eedeb4025c3948e52:ee5899a2efc762fe3a475a0427057ae7:54a7432a0665349a58c0c74f51e75c65$"
 }
 }
