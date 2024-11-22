@@ -34,6 +34,10 @@ TODO Add Cuddle play type
 5.4.9
 - Added wait speed options
 - Made settings for toggles appear after hovering over the buttons for a bit
+- Mental Resistance now always works if you are shielded
+- Removed Second Wind from the perk selection
+- New Trainee upgrade: "Mental Fortitude: While WP >75%, regenerate to full"
+
 
 5.4.7 & 5.4.8
 - Lots of small bugfixes

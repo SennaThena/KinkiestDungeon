@@ -130,11 +130,10 @@ let KinkyDungeonLearnableSpells = [
 			"OrgasmMana1", "EdgeMana1",
 		],
 		[
-			"SecondWind1",
 			"BattleCrit", "BattleCost",
 			"RogueTraps", "RogueTraps2", "RogueStudy",
 			"ManaHarvesting",
-			"OrgasmBuff", "MagicalOverload",
+			"FirstWind", "OrgasmBuff", "MagicalOverload",
 		],
 	],
 	//Page 4: Upgrades
@@ -634,6 +633,10 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 
 		{name: "SecondWind0", tags: ["mana", "utility"], school: "Special", manacost: 0, components: [], prerequisite: "Null", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 		{name: "SecondWind1", tags: ["mana", "utility"], spellPointCost: 2, school: "Special", manacost: 0, components: [], prerequisite: "SecondWind0", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
+		{name: "FirstWind", tags: ["mana", "utility"], spellPointCost: 2, school: "Special", classSpecific: "Trainee",
+			manacost: 0, components: [], prerequisite: "DistractionCast", hideUnlearnable: true,
+			learnFlags: ["FirstWind"],
+			level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 
 		{name: "NovicePet0", tags: ["mana", "utility"], school: "Special", manacost: 0, components: [], prerequisite: "Null", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 		{name: "NovicePet1", tags: ["mana", "utility"], spellPointCost: 1, school: "Special", manacost: 0, components: [], hideLearned: true, prerequisite: "NovicePet0", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
@@ -677,18 +680,18 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 				{type: "AkashicConflux", trigger: "toggleSpell", power: 10.0, time: 3},
 			]},
 
-		{name: "ChaoticOverflow", tags: ["will", "mana", "utility"], castCondition: "requireCrystallable", prerequisite: "DistractionCast", hideWithout: "DistractionCast", school: "Special", manacost: 0, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
+		{name: "ChaoticOverflow", tags: ["will", "mana", "utility"], castCondition: "requireCrystallable", classSpecific: "Trainee", prerequisite: "DistractionCast", hideWithout: "DistractionCast", school: "Special", manacost: 0, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
 				{type: "ChaoticOverflow", trigger: "toggleSpell", time: 10, mult: 0.25},
 			]},
 
 
-		{name: "DistractionShield", tags: ["will", "defense"], prerequisite: "DistractionCast", hideWithout: "DistractionCast", school: "Special", manacost: 2.5, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
+		{name: "DistractionShield", tags: ["will", "defense"], prerequisite: "DistractionCast", classSpecific: "Trainee", hideWithout: "DistractionCast", school: "Special", manacost: 2.5, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
 				{type: "DistractionShield", trigger: "toggleSpell", power: 0.5, mult: 0.1, time: 10}, // power: shield per DP, mult: percentage gained as Desire
 			]},
 
-		{name: "DistractionBurst", tags: ["will", "offense"], prerequisite: "OrgasmMana1", hideWithout: "DistractionCast", school: "Special", manacost: 7, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
+		{name: "DistractionBurst", tags: ["will", "offense"], prerequisite: "OrgasmMana1", classSpecific: "Trainee", hideWithout: "DistractionCast", school: "Special", manacost: 7, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
 				{type: "DistractionBurst", trigger: "toggleSpell", mult: 0.25, power: 3, aoe: 2.99, crit: 2, damage: "charm"},
 			]},

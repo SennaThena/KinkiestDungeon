@@ -1157,6 +1157,7 @@
             <key type="filename">../Game/Enemies/LockMaster.png</key>
             <key type="filename">../Game/Enemies/MageZombie.png</key>
             <key type="filename">../Game/Enemies/Magician_Sparkle.png</key>
+            <key type="filename">../Game/Enemies/MaidKnightHeavy.png</key>
             <key type="filename">../Game/Enemies/MaidKnightLight.png</key>
             <key type="filename">../Game/Enemies/Maidforce.png</key>
             <key type="filename">../Game/Enemies/MaidforceHead.png</key>
@@ -1448,6 +1449,8 @@
             <key type="filename">../Game/EnemiesBound/Librarian.png</key>
             <key type="filename">../Game/EnemiesBound/MageZombie.png</key>
             <key type="filename">../Game/EnemiesBound/Maid.png</key>
+            <key type="filename">../Game/EnemiesBound/MaidKnightHeavy.png</key>
+            <key type="filename">../Game/EnemiesBound/MaidKnightLight.png</key>
             <key type="filename">../Game/EnemiesBound/MaidforceHead.png</key>
             <key type="filename">../Game/EnemiesBound/MaidforceMafia.png</key>
             <key type="filename">../Game/EnemiesBound/MaidforceMini.png</key>
@@ -3436,6 +3439,10 @@
             <key type="filename">../Game/UI/AutoPath/SuppressBeforeCombat.png</key>
             <key type="filename">../Game/UI/AutoPath/SuppressDuringCombat.png</key>
             <key type="filename">../Game/UI/AutoStruggle.png</key>
+            <key type="filename">../Game/UI/AutoWait/Fast.png</key>
+            <key type="filename">../Game/UI/AutoWait/Normal.png</key>
+            <key type="filename">../Game/UI/AutoWait/Slow.png</key>
+            <key type="filename">../Game/UI/AutoWait/VeryFast.png</key>
             <key type="filename">../Game/UI/Checked.png</key>
             <key type="filename">../Game/UI/CrouchOff.png</key>
             <key type="filename">../Game/UI/CrouchOn.png</key>

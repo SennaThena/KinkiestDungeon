@@ -4052,7 +4052,12 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 	"calcInvolOrgasmChance": {
 		"OrgasmResist": (e, _spell, data) => {
 			if (KinkyDungeonStatWill >= 0.1 && !KinkyDungeonPlayerBuffs?.d_OrgasmResist) {
-				data.invol_chance *= Math.max(0, 1 -  4*KinkyDungeonStatWill/KinkyDungeonStatWillMax);
+				if (KDGameData.Shield > 0) {
+					data.invol_chance *= 0;
+				} else {
+					data.invol_chance *= Math.max(0, 1 -4*KinkyDungeonStatWill/KinkyDungeonStatWillMax);
+				}
+
 			}
 		},
 	},
@@ -10409,6 +10414,17 @@ let KDEventMapGeneric: Record<string, Record<string, (e: string, data: any) => v
 					if (KDHasSpell("SecondWind1")) {
 						KinkyDungeonSetFlag("SecondWind1", -1);
 					}
+				}
+			}
+		},
+		"FirstWind": (_e, _data) => {
+			if (KinkyDungeonFlags.get("FirstWind")) {
+
+				let amount = 0.75;
+
+				if (KinkyDungeonStatWill >= KinkyDungeonStatWillMax * amount)
+				{
+					KinkyDungeonChangeWill(0.2, false);
 				}
 			}
 		},

@@ -776,14 +776,6 @@
 	"spriteSourceSize": {"x":17,"y":0,"w":43,"h":67},
 	"sourceSize": {"w":72,"h":72}
 },
-"Game/EnemiesBound/Angel.png":
-{
-	"frame": {"x":528,"y":1416,"w":32,"h":67},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":24,"y":1,"w":32,"h":67},
-	"sourceSize": {"w":72,"h":72}
-},
 "Game/EnemiesBound/CyborgGuardian.png":
 {
 	"frame": {"x":1444,"y":645,"w":40,"h":69},
@@ -810,7 +802,7 @@
 },
 "Game/EnemiesBound/Head/TemplateHead.png":
 {
-	"frame": {"x":304,"y":1818,"w":13,"h":14},
+	"frame": {"x":304,"y":1854,"w":13,"h":14},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":28,"y":18,"w":13,"h":14},
@@ -822,6 +814,14 @@
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":26,"y":8,"w":22,"h":58},
+	"sourceSize": {"w":72,"h":72}
+},
+"Game/EnemiesBound/MaidKnightLight.png":
+{
+	"frame": {"x":528,"y":1416,"w":33,"h":67},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":1,"w":33,"h":67},
 	"sourceSize": {"w":72,"h":72}
 },
 "Game/EnemiesBound/NawashiZombie.png":
@@ -1186,7 +1186,7 @@
 },
 "Game/Lock.png":
 {
-	"frame": {"x":2034,"y":950,"w":13,"h":17},
+	"frame": {"x":304,"y":1818,"w":13,"h":17},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":29,"y":0,"w":13,"h":17},
@@ -1298,7 +1298,7 @@
 },
 "Game/Poses/Eyes2Heart.png":
 {
-	"frame": {"x":465,"y":1471,"w":13,"h":13},
+	"frame": {"x":2034,"y":973,"w":13,"h":13},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":28,"y":15,"w":13,"h":13},
@@ -1306,7 +1306,7 @@
 },
 "Game/Poses/Eyes2Neutral.png":
 {
-	"frame": {"x":2034,"y":969,"w":12,"h":15},
+	"frame": {"x":304,"y":1837,"w":12,"h":15},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":27,"y":14,"w":12,"h":15},
@@ -1314,7 +1314,7 @@
 },
 "Game/Poses/EyesHeart.png":
 {
-	"frame": {"x":465,"y":1471,"w":13,"h":13},
+	"frame": {"x":2034,"y":973,"w":13,"h":13},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":6,"y":15,"w":13,"h":13},
@@ -1448,6 +1448,14 @@
 	"spriteSourceSize": {"x":25,"y":16,"w":23,"h":40},
 	"sourceSize": {"w":72,"h":72}
 },
+"Game/UI/AutoWait/Slow.png":
+{
+	"frame": {"x":2034,"y":905,"w":13,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":25,"y":19,"w":13,"h":21},
+	"sourceSize": {"w":60,"h":60}
+},
 "Game/UI/BoxSmall.png":
 {
 	"frame": {"x":1972,"y":1343,"w":22,"h":22},
@@ -1482,7 +1490,7 @@
 },
 "Game/UI/NoSprint.png":
 {
-	"frame": {"x":2034,"y":905,"w":13,"h":21},
+	"frame": {"x":2034,"y":928,"w":13,"h":21},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":25,"y":19,"w":13,"h":21},
@@ -1530,7 +1538,7 @@
 },
 "Game/UI/UsePotionAncient.png":
 {
-	"frame": {"x":2034,"y":928,"w":11,"h":20},
+	"frame": {"x":2034,"y":951,"w":11,"h":20},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":7,"y":4,"w":11,"h":20},
@@ -1568,6 +1576,6 @@
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
 	"related_multi_packs": [ "game0.json", "game2.json", "game3.json", "game4.json", "game5.json" ],
-	"smartupdate": "$TexturePacker:SmartUpdate:69c17a8a29bf421460795a6d5836f1ce:8b27cf1bcd9040c90803dbb4b913edfa:54a7432a0665349a58c0c74f51e75c65$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7b9eebc060e00b315164cff1143b6d35:6663e3f38fd0d2f6da4aa89512983ab0:54a7432a0665349a58c0c74f51e75c65$"
 }
 }

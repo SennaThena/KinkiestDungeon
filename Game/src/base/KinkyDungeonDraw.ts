@@ -976,7 +976,12 @@ function KinkyDungeonDrawGame() {
 
 
 	if (!KinkyDungeonFlags.get("lastAuto") && KinkyDungeonStatsChoice.get("saveMode")) {
-		KinkyDungeonSetFlag("lastAuto", Math.floor(50 + KDRandom() * 50));
+		let wt = 50;
+		if (KDGameData.FocusControlToggle.AutoWaitSlow) wt = 50;
+		else if (KDGameData.FocusControlToggle.AutoWaitNormal) wt = 50;
+		else if (KDGameData.FocusControlToggle.AutoWaitFast) wt = 150;
+		else if (KDGameData.FocusControlToggle.AutoWaitVeryFast) wt = 950;
+		KinkyDungeonSetFlag("lastAuto", Math.floor(wt + KDRandom() * 50));
 		KinkyDungeonSaveGame();
 	}
 

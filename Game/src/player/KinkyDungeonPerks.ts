@@ -272,7 +272,7 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	"DirectionSlow":  {category: "Major", id: "DirectionSlow", cost: -1, block: ["DirectionSlow2"]},
 	"DirectionSlow2":  {category: "Major", id: "DirectionSlow2", cost: -2, block: ["DirectionSlow"]},
 	"FutileStruggles":  {category: "Restraints", id: "FutileStruggles", cost: -1},
-	"SecondWind":  {category: "Restraints", id: "SecondWind", cost: 1},
+	//"SecondWind":  {category: "Restraints", id: "SecondWind", cost: 1},
 
 	"Stranger": {startPriority: 1000, category: "Enemies", id: "Stranger", cost: 0, block: ["Bandit", "WrongNeighborhood"], tags: ["start"]},
 	"Bandit": {startPriority: 1000, category: "Enemies", id: "Bandit", cost: 0, block: ["Stranger", "WrongNeighborhood"], tags: ["start"]},
