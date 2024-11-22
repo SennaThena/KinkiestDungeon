@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.9"
+KDVersionStr,"5.4.10"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -25918,3 +25918,8 @@ KDTut_Vulnerable,Attack them for a guaranteed critical hit!
 KDTut_Dodge,before the attack lands! You can tell the difference by the border of the tiles.
 KDTut_Dodge2,Enemy attacks take time to hit. Make sure to step out of the warning tiles,
 KDTut_Projec,You can dodge out of the way of most projectiles. Avoid the marked tiles.
+
+KDTut_WPOnKill2,Defeating enemies recovers some willpower.
+KDTut_WPOnKill,"Temporary enemies and summons don't restore anything, however."
+KDTut_Capture2,"Attacking a helpless enemy captures her and sends her to your Collection."
+KDTut_Capture,"You can access the Collection in the Items screen, 2nd tab."

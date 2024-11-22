@@ -1004,7 +1004,8 @@ function KinkyDungeonChangeStamina(Amount: number, NoFloater?: boolean, Pause?: 
 		Math.max(minLevel, KinkyDungeonStatStamina),
 		Amount > 0 ? Math.max(stamPre, data.Cap) : KinkyDungeonStatStamina);
 	if (!NoFloater && Math.abs(KDOrigStamina - Math.floor(KinkyDungeonStatStamina * 10)) >= 0.99) {
-		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatStamina * 10) - KDOrigStamina, "#44ff66", undefined, undefined, " sp");
+		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatStamina * 10) - KDOrigStamina,
+		"#44ff66", undefined, undefined, " sp", undefined, Amount > 0 ? "+" : undefined);
 		KDOrigStamina = Math.floor(KinkyDungeonStatStamina * 10);
 	}
 	if (Pause) {
@@ -1070,7 +1071,8 @@ function KinkyDungeonChangeMana(Amount: number, NoFloater?: boolean, PoolAmount?
 		KinkyDungeonStatManaPool = Math.min(Math.max(0, KinkyDungeonStatManaPool), KinkyDungeonStatManaPoolMax);
 	}
 	if (!NoFloater && Math.abs(KDOrigMana - Math.floor(KinkyDungeonStatMana * 10)) >= 0.99) {
-		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatMana * 10) - KDOrigMana, "#4499ff", undefined, undefined, " mp");
+		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatMana * 10) - KDOrigMana,
+		"#4499ff", undefined, undefined, " mp", undefined, Amount > 0 ? "+" : undefined);
 		KDOrigMana = Math.floor(KinkyDungeonStatMana * 10);
 	}
 	if (Pause) {
@@ -1113,7 +1115,8 @@ function KinkyDungeonChangeWill(Amount: number, NoFloater?: boolean, minimum: nu
 	KinkyDungeonStatWill += Amount;
 	KinkyDungeonStatWill = Math.min(Math.max(minLevel, KinkyDungeonStatWill), KinkyDungeonStatWillMax);
 	if (!NoFloater && Math.abs(KDOrigWill - Math.floor(KinkyDungeonStatWill * 10)) >= 0.99) {
-		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatWill * 10) - KDOrigWill, "#ff4444", undefined, undefined, " wp");
+		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KinkyDungeonStatWill * 10) - KDOrigWill,
+		"#ff4444", Amount > 0 ? 5 : undefined, undefined, " wp", undefined, Amount > 0 ? "+" : undefined);
 		KDOrigWill = Math.floor(KinkyDungeonStatWill * 10);
 	}
 
@@ -1155,7 +1158,8 @@ function KDChangeBalance(Amount: number, NoFloater: boolean) {
 	data.change = KDGameData.Balance - orig;
 	KinkyDungeonSendEvent("afterChangeBalance", data);
 	if (!NoFloater && Math.abs(KDOrigBalance - Math.floor(KDGameData.Balance * 100)) >= 0.99) {
-		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.Balance * 100) - KDOrigBalance, "#ffff44", undefined, undefined, " balance");
+		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.Balance * 100) - KDOrigBalance,
+		"#ffff44", undefined, undefined, " balance", undefined, Amount > 0 ? "+" : undefined);
 		KDOrigBalance = Math.floor(KDGameData.Balance * 100);
 	}
 
@@ -1192,7 +1196,8 @@ function KinkyDungeonChangeCharge(Amount: number, NoFloater?: boolean) {
 	data.change = KDGameData.AncientEnergyLevel - orig;
 	KinkyDungeonSendEvent("afterChangeCharge", data);
 	if (!NoFloater && Math.abs(KDOrigCharge - Math.floor(KDGameData.AncientEnergyLevel * 1000)) >= 0.99) {
-		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.AncientEnergyLevel * 1000) - KDOrigCharge, "#ffff44", undefined, undefined, " charge");
+		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.AncientEnergyLevel * 1000) - KDOrigCharge,
+		"#ffff44", undefined, undefined, " charge", undefined, Amount > 0 ? "+" : undefined);
 		KDOrigCharge = Math.floor(KDGameData.AncientEnergyLevel * 1000);
 	}
 

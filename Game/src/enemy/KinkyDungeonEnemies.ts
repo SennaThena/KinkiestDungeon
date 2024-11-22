@@ -2588,6 +2588,11 @@ function KinkyDungeonCapture(enemy: entity): boolean {
 	let msg = "KinkyDungeonCapture";
 	//let goddessCapture = false;
 	msg = "KinkyDungeonCaptureBasic";
+	if (!KinkyDungeonFlags.get("tut_capture")) {
+		KinkyDungeonSetFlag("tut_capture", -1);
+		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Capture"), "#ffffff", 10);
+		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Capture2"), "#ffffff", 10);
+	}
 	KDDropStolenItems(enemy);
 	KinkyDungeonSetEnemyFlag(enemy, "questtarget", 0);
 	if (KDIsImprisoned(enemy)) KDFreeNPC(enemy);
@@ -2667,6 +2672,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 		} else {
 			KDDropStolenItems(enemy);
 			if (enemy == KinkyDungeonKilledEnemy) {
+
 				if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 10)
 					KinkyDungeonSendActionMessage(9, TextGet("Kill"+enemy.Enemy.name), "orange", 2, false, false, undefined, "Kills");
 				KinkyDungeonKilledEnemy = null;
@@ -2676,6 +2682,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 
 		if (!(enemy.lifetime < 9000)) {
 			if (enemy.playerdmg) {
+
 				if (enemy.Enemy && enemy.Enemy.tags && enemy.Enemy.tags.boss)
 					KinkyDungeonChangeRep("Ghost", -3);
 				else if (enemy.Enemy && enemy.Enemy.tags && enemy.Enemy.tags.miniboss)
@@ -2706,9 +2713,22 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 
 				let faction = KDGetFaction(enemy);
 				let amount = KDGetEnemyRep(enemy);
+				if (!noRepHit && !KDEnemyHasFlag(enemy, "norep")) {
+					let will = KDGetEnemyWillReward(enemy);
+					if (will > 0) {
+						if (!KinkyDungeonFlags.get("tut_kill")) {
+							KinkyDungeonSetFlag("tut_kill", -1);
+							KinkyDungeonSendTextMessage(10, TextGet("KDTut_WPOnKill"), "#ffffff", 10);
+							KinkyDungeonSendTextMessage(10, TextGet("KDTut_WPOnKill2"), "#ffffff", 10);
+						}
+						KinkyDungeonChangeWill(will, false);
+					}
+				}
 
 
 				if (amount && !noRepHit && !enemy.Enemy.Reputation?.noRepLoss) {
+
+
 					KinkyDungeonChangeFactionRep(faction, -amount);
 
 					// For being near a faction
@@ -9276,6 +9296,24 @@ function KDEnemyStruggleTurn(enemy: entity, delta: number, allowStruggleAlwaysTh
 		}
 	}
 
+}
+
+function KDGetEnemyWillReward(enemy: entity): number {
+	if (enemy.temporary) return 0;
+	switch (KDEnemyRank(enemy)) {
+		case 5:
+			return 1;
+		case 4:
+			return .8;
+		case 3:
+			return .5;
+		case 2:
+			return .3;
+		case 1:
+			return .2;
+		default:
+			return .1;
+	}
 }
 
 /**
