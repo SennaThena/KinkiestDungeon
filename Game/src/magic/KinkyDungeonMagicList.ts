@@ -636,9 +636,19 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 		{name: "FirstWind", tags: ["mana", "utility"], spellPointCost: 2, school: "Special", classSpecific: "Trainee",
 			manacost: 0, components: [], prerequisite: "DistractionCast", hideUnlearnable: true,
 			learnFlags: ["FirstWind"],
+			blockedBy: ["FirstWindHigher"],
 			events: [
 				{type: "FirstWind", trigger: "tick", power: 0.5},
-				{type: "FirstWindStore", trigger: "afterPlayerDamage", always: true},
+				{type: "FirstWindStore", trigger: "afterChangeWill", always: true},
+			],
+			level:1, mixedPassive: true, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
+		{name: "FirstWindHigher", tags: ["mana", "utility"], spellPointCost: 2, school: "Special", classSpecific: "Trainee",
+			manacost: 0, components: [], prerequisite: "DistractionCast", hideUnlearnable: true,
+			learnFlags: ["FirstWindHigher"],
+			blockedBy: ["FirstWind"],
+			events: [
+				{type: "FirstWindHigher", trigger: "tick", power: 0.5},
+				{type: "FirstWindStore", trigger: "afterChangeWill", always: true},
 			],
 			level:1, mixedPassive: true, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 

@@ -3732,12 +3732,12 @@ function KinkyDungeonHandleOutfitEvent(Event: string, e: KinkyDungeonEvent, outf
 let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell: spell, data: any) => void>> = {
 	"afterChangeCharge": {
 		"Gunslinger": (e, _spell, data) => {
-			if (-data.change > 0) {
+			if (-data.amountChanged > 0) {
 				let player = KinkyDungeonPlayerEntity;
 				let buff = KDEntityGetBuff(player, "BattleRhythm");
 				let max = 0.4 * KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(player, "MaxBattleRhythm"));
 				let mult = e.mult * KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(player, "MultBattleRhythm"));
-				let powerAdded = 10 * -data.change * mult;
+				let powerAdded = 10 * -data.amountChanged * mult;
 				if (powerAdded > 0)
 					KinkyDungeonSetFlag("BRCombat", 20);
 				if (!buff) {
@@ -4426,14 +4426,19 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 		},
 	},
 
-	"afterPlayerDamage": {
+	"afterChangeWill": {
 		"FirstWindStore": (e, _spell, data) => {
-			if (data.Amount < 0) {
+			if (data.Amount < 0
+				&& (
+					data.type == "tease"
+					|| data.type == "edge"
+					|| data.type == "deny"
+					|| data.type == "orgasm"
+				)
+			) {
 				let player = KinkyDungeonPlayerEntity;
-				let oldWP = data.stats[3];
-				let newWP = data.newstats[3];
-				if (newWP < oldWP) {
-					KDAddTraineeWP(player, oldWP - newWP);
+				if (data.amountChanged < 0) {
+					KDAddTraineeWP(player, -data.amountChanged);
 				}
 			}
 		},
@@ -4455,7 +4460,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 			if (buff?.power > max) {
 				buff.power = max;
 				if (buff.power <= 0) buff.duration = 0;
-				buff.text = Math.round(10 * KDEntityBuffedStat(player, "TraineeWP"));
+				buff.text = Math.round(10 * KDEntityBuffedStat(player, "RallyWill"));
 			}
 
 
@@ -4469,7 +4474,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 					buff.power = Math.max(0, buff.power - data.delta * amt);
 					KDChangeWill("trainee", "regen", "tick", Math.min(amt, buff.power), false);
 					if (buff.power <= 0) buff.duration = 0;
-					buff.text = Math.round(10 * KDEntityBuffedStat(player, "TraineeWP"));
+					buff.text = Math.round(10 * KDEntityBuffedStat(player, "RallyWill"));
 				}
 			}
 			/*} else {
@@ -4490,7 +4495,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 			if (buff?.power > max) {
 				buff.power = max;
 				if (buff.power <= 0) buff.duration = 0;
-				buff.text = Math.round(10 * KDEntityBuffedStat(player, "TraineeWP"));
+				buff.text = Math.round(10 * KDEntityBuffedStat(player, "RallyWill"));
 			}
 
 
@@ -4501,10 +4506,10 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 
 				if (buff?.power > 0) {
 					let amt = Math.min(Math.abs(KinkyDungeonStatWillMax - KinkyDungeonStatWill), e.power);
+					KDChangeWill("trainee", "regen", "tick", data.delta * Math.min(amt, buff.power), false);
 					buff.power = Math.max(0, buff.power - data.delta * amt);
-					KDChangeWill("trainee", "regen", "tick", Math.min(amt, buff.power), false);
 					if (buff.power <= 0) buff.duration = 0;
-					buff.text = Math.round(10 * KDEntityBuffedStat(player, "TraineeWP"));
+					buff.text = Math.round(10 * KDEntityBuffedStat(player, "RallyWill"));
 				}
 			}
 		},
@@ -10963,7 +10968,7 @@ function KDAddTraineeWP(player: entity, powerAdded: number) {
 		KinkyDungeonApplyBuffToEntity(player,
 			{
 				id: "TraineeWP",
-				type: "TraineeWP",
+				type: "RallyWill",
 				aura: "#ff5277",
 				aurasprite: "Null",
 				buffSprite: true,
@@ -10978,7 +10983,7 @@ function KDAddTraineeWP(player: entity, powerAdded: number) {
 		//let origPower = buff.power;
 		buff.power += powerAdded;
 		buff.power = Math.min(buff.power, max);
-		buff.text = Math.round(10 * KDEntityBuffedStat(player, "TraineeWP"));
+		buff.text = Math.round(10 * KDEntityBuffedStat(player, "RallyWill"));
 		//KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, `+${Math.round((buff.power - origPower)*10)} ${TextGet("KDArcaneEnergy")}`, "#8888ff", 3);
 	}
 

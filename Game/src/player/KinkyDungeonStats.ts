@@ -844,6 +844,7 @@ function KDChangeDistraction(src: string, type: string, trig: string, Amount: nu
 		NoFloater: NoFloater,
 		lowerPerc: lowerPerc,
 		minimum: minimum,
+		amountChanged: 0,
 		mult: Math.max(0,
 			Amount > 0 ? (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatGainDistraction"))
 			: (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatLossDistraction"))
@@ -907,6 +908,9 @@ function KDChangeDistraction(src: string, type: string, trig: string, Amount: nu
 		console.trace();
 		KinkyDungeonStatDistraction = 0;
 	}
+
+	data.amountChanged = amountChanged;
+	KinkyDungeonSendEvent("afterChangeWill", data);
 
 	return amountChanged;
 }
@@ -1119,6 +1123,7 @@ function KDChangeWill(src: string, type: string, trig: string, Amount: number, N
 			Amount > 0 ? (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatGainWill"))
 			: (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatLossWill"))
 		),
+		amountChanged: 0,
 	};
 	let amountChanged = KinkyDungeonStatWill;
 	KinkyDungeonSendEvent("changeWill", data);
@@ -1145,6 +1150,9 @@ function KDChangeWill(src: string, type: string, trig: string, Amount: number, N
 	}
 
 	amountChanged = KinkyDungeonStatWill - amountChanged;
+
+	data.amountChanged = amountChanged;
+	KinkyDungeonSendEvent("afterChangeWill", data);
 	return amountChanged;
 }
 
@@ -1166,7 +1174,7 @@ function KDChangeBalanceSrc(src: string, type: string, trig: string, Amount: num
 			Amount > 0 ? (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatGainBalance"))
 			: (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatLossBalance"))
 		),
-		change: undefined,
+		amountChanged: 0,
 	};
 	KinkyDungeonSendEvent("changeBalance", data);
 	NoFloater = data.NoFloater;
@@ -1177,7 +1185,7 @@ function KDChangeBalanceSrc(src: string, type: string, trig: string, Amount: num
 	KDGameData.Balance = Math.min(1, Math.max(0, KDGameData.Balance + Amount));
 	if (Amount < 0) KDGameData.BalancePause = true;
 
-	data.change = KDGameData.Balance - orig;
+	data.amountChanged = KDGameData.Balance - orig;
 	KinkyDungeonSendEvent("afterChangeBalance", data);
 	if (!NoFloater && Math.abs(KDOrigBalance - Math.floor(KDGameData.Balance * 100)) >= 0.99) {
 		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.Balance * 100) - KDOrigBalance,
@@ -1208,7 +1216,7 @@ function KDChangeCharge(src: string, type: string, trig: string, Amount: number,
 			Amount > 0 ? (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatGainCharge"))
 			: (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatLossCharge"))
 		),
-		change: undefined,
+		amountChanged: undefined,
 	};
 	KinkyDungeonSendEvent("changeCharge", data);
 	NoFloater = data.NoFloater;
@@ -1218,7 +1226,7 @@ function KDChangeCharge(src: string, type: string, trig: string, Amount: number,
 	let orig = KDGameData.AncientEnergyLevel;
 	KDGameData.AncientEnergyLevel = Math.min(1, Math.max(0, KDGameData.AncientEnergyLevel + Amount));
 
-	data.change = KDGameData.AncientEnergyLevel - orig;
+	data.amountChanged = KDGameData.AncientEnergyLevel - orig;
 	KinkyDungeonSendEvent("afterChangeCharge", data);
 	if (!NoFloater && Math.abs(KDOrigCharge - Math.floor(KDGameData.AncientEnergyLevel * 1000)) >= 0.99) {
 		KinkyDungeonSendFloater(KinkyDungeonPlayerEntity, Math.floor(KDGameData.AncientEnergyLevel * 1000) - KDOrigCharge,

@@ -31,6 +31,9 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+
+5.4.11
+- Reworked Mental Fortitude. Added Mental Defiance
 - Changed all "ChangeX" stat change functions to have an src field
 - Added mod compat setting for above, changed names of functions
 
