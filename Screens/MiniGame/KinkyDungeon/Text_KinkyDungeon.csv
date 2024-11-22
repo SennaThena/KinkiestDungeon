@@ -510,8 +510,11 @@ KinkyDungeonSpellSecondWind0,Second Wind Perk
 KinkyDungeonSpellDescriptionSecondWind0,"Regenerate WP when you are unimpaired, up to 10% of max WP. Unimpaired means no arm, hand, leg, blindfold, or gag bondage, and no slows."
 KinkyDungeonSpellSecondWind1,Triumphant Wind
 KinkyDungeonSpellDescriptionSecondWind1,"Second Wind now regenerates up to 25% of your max WP"
-KinkyDungeonSpellFirstWind,Mental Fortitude
-KinkyDungeonSpellDescriptionFirstWind,"While WP is above 75%, restore 2 WP per second."
+KinkyDungeonSpellFirstWind,Mental Defiance
+KinkyDungeonSpellDescriptionFirstWind,"Passive: Losing WP from edging, letting go, or teasing damage stores 'Defiance', capped at the value of your missing DP. Toggle: While below 25% WP, quickly convert 'Defiance' into WP. Exclusive with Mental Fortitude."
+KinkyDungeonSpellFirstWindHigher,Mental Fortitude
+KinkyDungeonSpellDescriptionFirstWindHigher,"Passive: Losing WP from edging, letting go, or teasing damage stores 'Fortitude', capped at the value of your missing DP. Toggle: While above 75% WP but below 100%, quickly convert 'Fortitude' into WP. Exclusive with Mental Defiance."
+
 
 KinkyDungeonStatLockedUp,"Locked Up"
 KinkyDungeonStatDescLockedUp,"While wearing a chastity belt, your Desire lowers when you perform actions such as defeating enemies, opening chests, and breaking orbs. (Upgrades available in spell tree)"
@@ -5725,7 +5728,7 @@ KinkyDungeonSpellBattleRhythm,"Battle Rhythm"
 KinkyDungeonSpellDescriptionBattleRhythm,"Stores 10% of the stamina cost of attacks as Rhythm, up to a total of 40. While you have over 10 Rhythm, you gain +10 Block and Evasion. Enemy base accuracy against you is decreased by a % equal to your Rhythm. If an attack misses or is blocked because of this, reduce Rhythm by 25% of the enemy attack power. Decays when not attacking."
 
 KinkyDungeonSpellLimitSurge,"Limit Surge"
-KinkyDungeonSpellDescriptionLimitSurge,"Spend 50 WP to fully restore Stamina, also stamina gain is increased by 30% for 20 turns. If your Willpower ends up 0 because of this, you are stunned for 2 turns."
+KinkyDungeonSpellDescriptionLimitSurge,"Spend 40 WP to fully restore Stamina, also stamina gain is increased by 30% for 20 turns. If your Willpower ends up 0 because of this, you are stunned for 2 turns."
 
 KinkyDungeonSpellBattleTrance,"Battle Trance"
 KinkyDungeonSpellDescriptionBattleTrance,"While at 40 Battle Rhythm, you attack twice per turn."
@@ -5771,7 +5774,7 @@ KinkyDungeonSpellOrgasmFrequency2,Pleasure Training II
 KinkyDungeonSpellDescriptionOrgasmFrequency2,"You are quite difficult to satisfy. Letting go costs 50% less stamina (75% total) and 50% less willpower."
 
 KinkyDungeonSpellOrgasmResist,Mental Resistance
-KinkyDungeonSpellDescriptionOrgasmResist,"+100 Psychic and Charm Resist. You can no longer let go involuntarily while your WP is above 25% or you are shielded, and willpower drains 70% slower while edged. (click the buff to toggle)"
+KinkyDungeonSpellDescriptionOrgasmResist,"+100 Psychic and Charm Resist. You can no longer let go involuntarily while your WP is above 10% or you are shielded, and willpower drains 70% slower while edged. (click the buff to toggle)"
 KinkyDungeonBuffe_OrgasmResist,"Mental Resistance: You cannot orgasm except by choice or below 25% WP. Click to toggle."
 KinkyDungeonBuffd_OrgasmResist,"Mental Resistance: You are allowing yourself to let go. Click to toggle."
 

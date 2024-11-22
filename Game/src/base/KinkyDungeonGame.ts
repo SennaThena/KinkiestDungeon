@@ -4822,10 +4822,10 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 				};
 				KinkyDungeonSendEvent("beforePlayerLaunchAttack", data);
 				if (attackCost < 0 && KinkyDungeonStatsChoice.has("BerserkerRage")) {
-					KinkyDungeonChangeDistraction(0.7 - 0.5 * data.attackCost, false, 0.33);
+					KDChangeDistraction("BerserkerRage", "perk", "attack", 0.7 - 0.5 * data.attackCost, false, 0.33);
 				}
 				if (KDGameData.HeelPower > 0)
-					KDChangeBalance(data.attackCost * KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceAttackMult*10*KDFitnessMult(), true);
+					KDChangeBalanceSrc("heels", "debuff", "attack", data.attackCost * KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceAttackMult*10*KDFitnessMult(), true);
 
 				let origHP = Enemy.hp;
 				if (KinkyDungeonAttackEnemy(data.target, data.attackData)) {
@@ -4860,7 +4860,7 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 				}
 
 				if (data.skipTurn) skip = 1;
-				KinkyDungeonChangeStamina(data.attackCost, false, 1);
+				KDChangeStamina("attack", "weapon", "attack", data.attackCost, false, 1);
 				KinkyDungeonTickBuffTag(KinkyDungeonPlayerEntity, "attack", 1);
 				KinkyDungeonSetFlag("armattack", 1);
 				KinkyDungeonSetEnemyFlag(data.target, "targetedForAttack", 4);
@@ -4874,7 +4874,7 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 					KDSetIDFlag(Enemy.id, "capOpPen", -1);
 					KDAddOpinionPersistent(Enemy.id, -50);
 				}
-				KinkyDungeonChangeStamina(attackCost, false, 1);
+				KDChangeStamina("capture", "capture", "attack", attackCost, false, 1);
 				KinkyDungeonTickBuffTag(KinkyDungeonPlayerEntity, "capture", 1);
 				if (KDGameData.Collection[Enemy.id + ""]) {
 					KDGameData.Collection[Enemy.id + ""].status = "";
@@ -5091,12 +5091,12 @@ function KinkyDungeonMove(moveDirection: {x: number, y: number }, delta: number,
 							if (moved) {
 								if (KinkyDungeonSlowLevel > 1 || (!KinkyDungeonStatsChoice.has("HeelWalker") && KinkyDungeonSlowLevel > 0)) {
 									if (KinkyDungeonSlowLevel < 10) {
-										KinkyDungeonChangeStamina(moveMult * (KinkyDungeonStatStaminaRegenPerSlowLevel * KinkyDungeonSlowLevel) * delta, false, moveMult, true);
+										KDChangeStamina("slow", "debuff", "move", moveMult * (KinkyDungeonStatStaminaRegenPerSlowLevel * KinkyDungeonSlowLevel) * delta, false, moveMult, true);
 									}
 								}
 								if (KDGameData.HeelPower > 0 && !KDGameData.Crouch ) {
 
-									KDChangeBalance(-KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * (1 + Math.max(-inertia, 0) * KDBalanceInertiaMult)*moveMult, true);
+									KDChangeBalanceSrc("heels", "debuff", "move", -KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * (1 + Math.max(-inertia, 0) * KDBalanceInertiaMult)*moveMult, true);
 								} else {
 									//KDChangeBalance((KDGameData.KneelTurns > 0 ? 0.5 : 0.25) * KDGetBalanceRate()*delta, true);
 								}
@@ -5261,9 +5261,9 @@ function KinkyDungeonMoveTo(moveX: number, moveY: number, willSprint: boolean, _
 
 				if (!data.cancelSprint) {
 					KinkyDungeonSetFlag("sprinted", 2);
-					KinkyDungeonChangeStamina(data.sprintCost, false, 1);
+					KDChangeStamina("sprint", "move", "sprint", data.sprintCost, false, 1);
 					KinkyDungeonSendActionMessage(5, TextGet("KDSprinting" + (KinkyDungeonSlowLevel > 1 ? "Hop" : "")), "lightgreen", 2);
-					KDChangeBalance(-KDGetBalanceCost() * (0.5 + 1 * KDRandom()) * KDBalanceSprintMult*10*KDFitnessMult(), true);
+					KDChangeBalanceSrc("sprint", "move", "sprint", -KDGetBalanceCost() * (0.5 + 1 * KDRandom()) * KDBalanceSprintMult*10*KDFitnessMult(), true);
 					KinkyDungeonSetFlag("sprint", 2);
 					if (KinkyDungeonSlowLevel < 2) {
 						// Move faster

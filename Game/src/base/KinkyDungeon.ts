@@ -2851,8 +2851,8 @@ function KinkyDungeonRun() {
 					KinkyDungeonSleepTime = CommonTime() + 10;
 				}
 				if (KDGameData.SleepTurns == 0) {
-					KinkyDungeonChangeStamina(0);
-					KinkyDungeonChangeWill(0);
+					KDChangeStamina("", "", "", 0);
+					KDChangeWill("", "", "", 0);
 					KDGameData.KneelTurns = 1;
 				}
 			} else if (KDGameData.PlaySelfTurns > 0) {
@@ -2863,7 +2863,7 @@ function KinkyDungeonRun() {
 					KinkyDungeonSleepTime = CommonTime() + (KinkyDungeonFlags.get("PlayerOrgasm") ? KinkyDungeonOrgasmTime : KinkyDungeonPlaySelfTime) * (0.25 + KDAnimSpeed * 0.75);
 				}
 				if (KDGameData.SleepTurns == 0) {
-					KinkyDungeonChangeStamina(0);
+					KDChangeStamina("", "", "", 0);
 				}
 			} else if (KinkyDungeonStatFreeze > 0) {
 				if (CommonTime() > KinkyDungeonSleepTime) {

@@ -177,7 +177,7 @@ function KinkyDungeonConsumableEffect(Consumable: consumable, type?: string) {
 		KinkyDungeonTargetingSpellItem = Consumable;
 		KinkyDungeonTargetingSpellWeapon = null;
 	} else if (type == "charge") {
-		KinkyDungeonChangeCharge(Consumable.amount);
+		KDChangeCharge(Consumable.name, type, "consumable", Consumable.amount);
 		//KDGameData.AncientEnergyLevel = Math.min(Math.max(0, KDGameData.AncientEnergyLevel + Consumable.amount), 1.0);
 		if (!KinkyDungeonStatsChoice.get("LostTechnology"))
 			KinkyDungeonChangeConsumable(KinkyDungeonConsumables.AncientPowerSourceSpent, 1);

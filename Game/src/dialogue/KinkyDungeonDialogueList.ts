@@ -985,7 +985,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 					}
 					//KinkyDungeonChangeWill(KinkyDungeonStatWillMax * KDSleepBedPercentage);
 					KDGameData.SleepTurns = KinkyDungeonSleepTurnsMax;
-					KinkyDungeonChangeMana(KinkyDungeonStatManaMax, false, 0, false, true);
+					KDChangeMana("player","sleep", "tick", KinkyDungeonStatManaMax, false, 0, false, true);
 					return false;
 				},
 				options: {
@@ -1758,7 +1758,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 							// Perform the deed
 							let Willmulti = Math.max(KinkyDungeonStatWillMax / KDMaxStatStart);
 							let amount = tile.Amount ? tile.Amount : 1.0;
-							KinkyDungeonChangeWill(amount * Willmulti);
+							KDChangeWill(tile.Food, "food", "consumable", amount * Willmulti);
 
 							// Send the message and advance time
 							KinkyDungeonAdvanceTime(1);
@@ -2006,7 +2006,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			"Use": {
 				playertext: "Default", response: "Default",
 				clickFunction: (_gagged, player) => {
-					KinkyDungeonChangeMana(0, false, 100, false, false);
+					KDChangeMana(KDPlayer().x + ',' + KDPlayer().y, "map", "interact", 0, false, 100, false, false);
 					if (KDTile() && KDTile().Leyline) {
 						KinkyDungeonMapSet(player.x, player.y, '0');
 						KDTileDelete();

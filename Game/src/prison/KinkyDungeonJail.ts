@@ -1141,9 +1141,9 @@ function KinkyDungeonPassOut(noteleport?: boolean) {
 		KinkyDungeonSetDress("Bikini", "Bikini");
 	KinkyDungeonDressPlayer();
 
-	KinkyDungeonChangeStamina(-100);
-	KinkyDungeonChangeMana(-100);
-	KinkyDungeonChangeDistraction(-100);
+	KDChangeStamina("", "passout", "defeat", -100);
+	KDChangeMana("", "passout", "defeat", -100);
+	KDChangeDistraction("", "passout", "defeat", -100);
 
 	KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonPassOut"), "#ff5277", 5);
 	if (!noteleport)

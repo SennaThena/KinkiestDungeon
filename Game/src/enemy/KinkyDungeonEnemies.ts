@@ -2708,7 +2708,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 						KinkyDungeonChangeFactionRep(rep, enemy.Enemy.factionrep[rep]);
 
 				if (KinkyDungeonStatsChoice.has("Vengeance")) {
-					KinkyDungeonChangeDistraction(Math.max(0, Math.ceil(Math.pow(enemy.Enemy.maxhp, 0.7))), false, 0.75);
+					KDChangeDistraction("Vengeance", "perk", "kill", Math.max(0, 0.1*Math.ceil(Math.pow(enemy.Enemy.maxhp, 0.7))), false, 0.75);
 				}
 
 				let faction = KDGetFaction(enemy);
@@ -2721,7 +2721,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 							KinkyDungeonSendTextMessage(10, TextGet("KDTut_WPOnKill"), "#ffffff", 10);
 							KinkyDungeonSendTextMessage(10, TextGet("KDTut_WPOnKill2"), "#ffffff", 10);
 						}
-						KinkyDungeonChangeWill(will, false);
+						KDChangeWill("enemy" + enemy.id, "reward", "kill", will, false);
 					}
 				}
 
@@ -6033,7 +6033,7 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 						}
 						data.happened += dmg.happened;
 						if (staminaDamage) {
-							KinkyDungeonChangeStamina(-staminaDamage, false, 1, false, KDGetStamDamageThresh());
+							KDChangeStamina("enemy" + enemy.id, "enemy", "enemyHit", -staminaDamage, false, 1, false, KDGetStamDamageThresh());
 							data.happened += staminaDamage;
 						}
 						if (!enemy.playWithPlayer)

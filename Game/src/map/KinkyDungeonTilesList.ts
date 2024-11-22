@@ -354,7 +354,13 @@ let KDTileUpdateFunctions: Record<string, (delta: number) => boolean> = {
 		return true;
 	},
 	"]": (delta) => { // Happy Gas!
-		KinkyDungeonChangeDistraction(1 * delta * KinkyDungeonMultiplicativeStat(KDEntityBuffedStat(KinkyDungeonPlayerEntity, "happygasDamageResist") * 2), false, 0.1);
+		/*KDDealEnvironmentalDamage(KDPlayer().x, KDPlayer().x, 0.5, {
+			type: "happygas",
+			damage: 0.0,
+			time: 0,
+			bind: 0,
+			distract: 2.5,
+		});*/
 		KinkyDungeonSendTextMessage(5, TextGet("KinkyDungeonHappyGas"), "pink", 1);
 		return true;
 	},
@@ -756,7 +762,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 	"ManaEmpty": (_delta, entity, tile) => {
 		if (entity.player) {
 			if (KinkyDungeonStatMana + KinkyDungeonStatManaPool >= 5) {
-				KinkyDungeonChangeMana(-5, false, 0, true, true);
+				KDChangeMana(tile.x + "," + tile.y, "trap", "trap", -5, false, 0, true, true);
 				tile.duration = 0;
 				KDCreateEffectTile(tile.x, tile.y, {
 					name: "ManaPartial",
@@ -773,7 +779,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 	"ManaPartial": (_delta, entity, tile) => {
 		if (entity.player) {
 			if (KinkyDungeonStatMana + KinkyDungeonStatManaPool >= 5) {
-				KinkyDungeonChangeMana(-5, false, 0, true, true);
+				KDChangeMana(tile.x + "," + tile.y, "trap", "trap", -5, false, 0, true, true);
 				tile.duration = 0;
 				KDCreateEffectTile(tile.x, tile.y, {
 					name: "ManaFull",

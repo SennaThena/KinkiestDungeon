@@ -313,7 +313,7 @@ let KDCurses: Record<string, KDCursedDef> = {
 			return 10;
 		},
 		onApply: (_item, _host) => {
-			KinkyDungeonChangeWill(-1);
+			KDChangeWill("Will", "curse", "curse", -1);
 		},
 		condition: (_item) => {
 			return KinkyDungeonStatWill >= KinkyDungeonStatWillMax*0.99;
@@ -334,7 +334,7 @@ let KDCurses: Record<string, KDCursedDef> = {
 		},
 		remove: (_item, _host, _specialMethod) => {
 			if (!_specialMethod)
-				KinkyDungeonChangeMana(-20, false, 0, true, true);
+				KDChangeMana("Mana", "curse", "uncurse", -20, false, 0, true, true);
 		}
 	},
 	"ShrineWill" : {

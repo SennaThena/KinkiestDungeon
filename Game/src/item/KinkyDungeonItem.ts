@@ -240,9 +240,9 @@ function KinkyDungeonItemEvent(Item: any, nomsg?: boolean) {
 	} else if (Item.name == "Heart") {
 		if (KinkyDungeonStatDistractionMax >= KDMaxStat && KinkyDungeonStatStaminaMax >= KDMaxStat && KinkyDungeonStatManaMax >= KDMaxStat && KinkyDungeonStatWillMax >= KDMaxStat) {
 			KinkyDungeonDrawState = "Game";
-			KinkyDungeonChangeStamina(10);
-			KinkyDungeonChangeMana(5);
-			KinkyDungeonChangeWill(5.0);
+			KDChangeStamina("tablet", "restore", "interact", 10);
+			KDChangeMana("tablet", "restore", "interact", 5);
+			KDChangeWill("tablet", "restore", "interact", 5.0);
 			KDGameData.HeartTaken = true;
 		} else if (KinkyDungeonIsPlayer()) {
 			KinkyDungeonDrawState = "Heart";

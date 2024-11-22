@@ -31,8 +31,14 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+- Changed all "ChangeX" stat change functions to have an src field
+- Added mod compat setting for above, changed names of functions
+
 5.4.10
 - Defeating enemies now restores WP
+- Vengeance now gives 10% of the DP from before
+- Limit surge is now 40 WP instead of 50
+
 
 5.4.9
 - Added wait speed options

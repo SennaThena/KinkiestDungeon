@@ -1040,7 +1040,8 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 			let dmg = KinkyDungeonDealDamage({damage: playerEffect?.power || spell?.power || 1, type: KinkyDungeonStatsChoice.get("Estim") ? "estim" : "electric"}, bullet);
 			if (!dmg.happened) return{sfx: "Shield", effect: false};
 			if (KinkyDungeonStatsChoice.get("Estim")) {
-				KinkyDungeonChangeDistraction(playerEffect?.power || spell?.power, false, 0.3);
+				KDChangeDistraction(_entity ? "enemy" + _entity.id : (spell ? spell.name : (bullet ? bullet.spriteID || "bullet" : "")),
+				_entity ? "enemy" : (spell ? "spell" : (bullet ? "bullet" : "")), "playerEffect", playerEffect?.power || spell?.power, false, 0.3);
 			} else {
 				KinkyDungeonStatBlind = Math.max(KinkyDungeonStatBlind, playerEffect.time);
 			}
@@ -2101,7 +2102,8 @@ let KDPlayerEffects: Record<string, (target: any, damage: string, playerEffect: 
 			let dmg = KinkyDungeonDealDamage({damage: playerEffect?.power || spell?.power || 1, type: KinkyDungeonStatsChoice.get("Estim") ? "estim" : "electric"}, bullet);
 			if (!dmg) return {sfx: "Shield", effect: false};
 			if (KinkyDungeonStatsChoice.get("Estim")) {
-				KinkyDungeonChangeDistraction(playerEffect?.power || spell?.power, false, 0.35);
+				KDChangeDistraction(_entity ? "enemy" + _entity.id : (spell ? spell.name : (bullet ? bullet.spriteID || "bullet" : "")),
+				_entity ? "enemy" : (spell ? "spell" : (bullet ? "bullet" : "")), "playerEffect", playerEffect?.power || spell?.power, false, 0.35);
 			} else {
 				if (Math.round(
 					playerEffect.time * KinkyDungeonMultiplicativeStat(KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "electricDamageResist"))

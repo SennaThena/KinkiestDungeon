@@ -133,7 +133,7 @@ let KinkyDungeonLearnableSpells = [
 			"BattleCrit", "BattleCost",
 			"RogueTraps", "RogueTraps2", "RogueStudy",
 			"ManaHarvesting",
-			"FirstWind", "OrgasmBuff", "MagicalOverload",
+			"FirstWind", "FirstWindHigher", "OrgasmBuff", "MagicalOverload",
 		],
 	],
 	//Page 4: Upgrades
@@ -610,7 +610,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 
 		{name: "LimitSurge", tags: ["will", "stamina", "utility"], prerequisite: "BattleRhythm", classSpecific: "Fighter", hideWithout: "BattleRhythm", school: "Special", customCost: "LimitSurge", manacost: 0, components: [], defaultOff: true, level:1, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
-				{type: "LimitSurge", trigger: "toggleSpell", power: 5.0, mult: 1.0, time: 2},
+				{type: "LimitSurge", trigger: "toggleSpell", power: 4.0, mult: 1.0, time: 2},
 			]},
 
 		{name: "CombatTraining", tags: ["will", "stamina", "utility"], prerequisite: "BattleRhythm", classSpecific: "Fighter", hideWithout: "BattleRhythm", school: "Special", manacost: 0, components: [], level:1, type:"", passive: true, onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
@@ -636,7 +636,11 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 		{name: "FirstWind", tags: ["mana", "utility"], spellPointCost: 2, school: "Special", classSpecific: "Trainee",
 			manacost: 0, components: [], prerequisite: "DistractionCast", hideUnlearnable: true,
 			learnFlags: ["FirstWind"],
-			level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
+			events: [
+				{type: "FirstWind", trigger: "tick", power: 0.5},
+				{type: "FirstWindStore", trigger: "afterPlayerDamage", always: true},
+			],
+			level:1, mixedPassive: true, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 
 		{name: "NovicePet0", tags: ["mana", "utility"], school: "Special", manacost: 0, components: [], prerequisite: "Null", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 		{name: "NovicePet1", tags: ["mana", "utility"], spellPointCost: 1, school: "Special", manacost: 0, components: [], hideLearned: true, prerequisite: "NovicePet0", hideUnlearnable: true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},

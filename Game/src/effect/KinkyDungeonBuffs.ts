@@ -45,10 +45,10 @@ function KinkyDungeonTickBuffs(entity: entity, delta: number, endFloor: boolean)
 			else if (value.endSleep && KDGameData.SleepTurns > 1) KinkyDungeonExpireBuff(entity, key);
 			else if (!value.duration || value.duration < 0) KinkyDungeonExpireBuff(entity, key);
 			else {
-				if (value.type == "restore_mp") KinkyDungeonChangeMana(value.power);
-				else if (value.type == "restore_wp") KinkyDungeonChangeWill(value.power);
-				else if (value.type == "restore_sp") KinkyDungeonChangeStamina(value.power);
-				else if (value.type == "restore_ap") KinkyDungeonChangeDistraction(value.power, true);
+				if (value.type == "restore_mp") KDChangeMana(value.id, "buff", "tick", value.power);
+				else if (value.type == "restore_wp") KDChangeWill(value.id, "buff", "tick", value.power);
+				else if (value.type == "restore_sp") KDChangeStamina(value.id, "buff", "tick", value.power);
+				else if (value.type == "restore_ap") KDChangeDistraction(value.id, "buff", "tick", value.power, true);
 
 				else if (value.type == "SpellCastConstant" && value.spell && entity) {
 					KinkyDungeonCastSpell(entity.x, entity.y, KinkyDungeonFindSpell(value.spell, true), undefined, undefined, undefined);

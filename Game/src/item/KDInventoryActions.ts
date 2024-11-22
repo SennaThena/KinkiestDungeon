@@ -623,10 +623,10 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 		/** Happens when you click the button */
 		click: (_player, item) => {
 			if (KDMagicLocks.includes(item.lock)) {
+				KDChangeMana(item.lock, "lock", "unlock", -KDGameData.InventoryActionManaCost || 0);
 				KinkyDungeonLock(item, "");
 
 				KinkyDungeonSendTextMessage(4, TextGet("KinkyDungeonPurpleLockRemove"), "#e7cf1a", 2);
-				KinkyDungeonChangeMana(-KDGameData.InventoryActionManaCost || 0);
 				if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 
 				KDGameData.InventoryAction = "";

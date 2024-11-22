@@ -289,8 +289,8 @@ function KinkyDungeonPayShrine(type: string, mult: number = 1) {
 		rep = 2;
 	} else if (type == "Will") {
 		rep = Math.min(2, Math.ceil(5 - KinkyDungeonStatMana * 1.5 / KinkyDungeonStatManaMax - KinkyDungeonStatWill * 3.5 / KinkyDungeonStatWillMax));
-		KinkyDungeonChangeMana(KinkyDungeonStatManaMax, false, 0, false, true);
-		KinkyDungeonChangeWill(KDWillShrineWill * KinkyDungeonStatWillMax);
+		KDChangeMana("Will", "goddess", "interact", KinkyDungeonStatManaMax, false, 0, false, true);
+		KDChangeWill("Will", "goddess", "interact", KDWillShrineWill * KinkyDungeonStatWillMax);
 		KinkyDungeonNextDataSendStatsTime = 0;
 
 		ShrineMsg = TextGet("KinkyDungeonPayShrineHeal");

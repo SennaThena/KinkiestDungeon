@@ -12,6 +12,13 @@ let KDOffline = false;
 let KDModCompat = {
 	"KinkyDungeonHiddenFactions.push(": "KinkyDungeonHiddenFactionsPush(",
 	"KDSetNPCLocation(": "KDMovePersistentNPC(",
+	"KinkyDungeonChangeDesire(": "KDChangeDesire('','','',",
+	"KinkyDungeonChangeCharge(": "KDChangeCharge('','','',",
+	"KinkyDungeonChangeWill(": "KDChangeWill('','','',",
+	"KinkyDungeonChangeStamina(": "KDChangeStamina('','','',",
+	"KinkyDungeonChangeMana(": "KDChangeMana('','','',",
+	"KDChangeBalance(": "KDChangeBalanceSrc('','','',",
+	"KinkyDungeonChangeDistraction(": "KDChangeDistraction('','','',",
 };
 
 let KDModToggleTab = "None";

@@ -62,7 +62,7 @@ let KDFurniture = {
 		restraintTag: "bed",
 		tickFunction: (_delta) => {
 			// Small stamina regen :)
-			KinkyDungeonChangeStamina(0.1, true, 0, false);
+			KDChangeStamina("bed", "sleep", "tick", 0.1, true, 0, false);
 		}
 	},
 	"DisplayEgyptian": {

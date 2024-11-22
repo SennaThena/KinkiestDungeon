@@ -1476,8 +1476,8 @@ function KinkyDungeonPickAttempt(): boolean {
 	}
 	KinkyDungeonSendActionMessage(2, TextGet("KinkyDungeonAttemptPick" + Pass).replace("TargetRestraint", TextGet("KinkyDungeonObject")), (Pass == "Success") ? "lightgreen" : "#ff5277", 1);
 	if (chargecosts) {
-		KinkyDungeonChangeStamina(cost, true);
-		KinkyDungeonChangeWill(wcost);
+		KDChangeStamina(KinkyDungeonTargetTileLocation, "map", "pick", cost, true);
+		KDChangeWill(KinkyDungeonTargetTileLocation, "map", "pick", wcost);
 	}
 	KinkyDungeonSetFlag("tryescaping", 3);
 	return Pass == "Success";
@@ -2009,9 +2009,10 @@ function KDGetStruggleData(data: KDStruggleData): string {
 						result: "Impossible",
 					});
 
-					KinkyDungeonChangeStamina(data.cost, true, 1);
-					KinkyDungeonChangeWill(data.wcost);
-					if (KinkyDungeonStatsChoice.get("BondageLover")) KinkyDungeonChangeDistraction(KDBondageLoverAmount, false, 0.1);
+					KDChangeStamina(data.struggleGroup, data.struggleType, "struggle", data.cost, true, 1);
+					KDChangeWill(data.struggleGroup, data.struggleType, "struggle", data.wcost);
+					if (KinkyDungeonStatsChoice.get("BondageLover")) KDChangeDistraction(
+						"BondageLover", "perk", "struggle", KDBondageLoverAmount, false, 0.1);
 				}
 				KinkyDungeonAdvanceTime(1);
 				KinkyDungeonSetFlag("escapeimpossible", 2);
@@ -2168,9 +2169,10 @@ function KDGetStruggleData(data: KDStruggleData): string {
 						struggleType: data.struggleType,
 						result: "Impossible",
 					});
-					KinkyDungeonChangeStamina(data.cost, true, 1);
-					KinkyDungeonChangeWill(data.wcost);
-					if (KinkyDungeonStatsChoice.get("BondageLover")) KinkyDungeonChangeDistraction(KDBondageLoverAmount, false, 0.1);
+					KDChangeStamina(data.struggleGroup, data.struggleType, "struggle", data.cost, true, 1);
+					KDChangeWill(data.struggleGroup, data.struggleType, "struggle", data.wcost);
+					if (KinkyDungeonStatsChoice.get("BondageLover"))
+						KDChangeDistraction("BondageLover", "perk", "struggle", KDBondageLoverAmount, false, 0.1);
 				}
 				KinkyDungeonAdvanceTime(1);
 				KinkyDungeonSetFlag("escapeimpossible", 2);
@@ -2697,9 +2699,10 @@ function KinkyDungeonStruggle(struggleGroup: string, StruggleType: string, index
 				KinkyDungeonSendActionMessage(9, TextGet("KinkyDungeonStruggle" + StruggleType + Pass + suff).replace("TargetRestraint", TextGet("Restraint" + KDRestraint(restraint).name)), (Pass == "Success") ? "lightgreen" : "#ff5277", 2);
 
 			if (KinkyDungeonHasStamina(-data.cost)) {
-				KinkyDungeonChangeStamina(data.cost, true, 1);
-				KinkyDungeonChangeWill(data.wcost);
-				if (KinkyDungeonStatsChoice.get("BondageLover")) KinkyDungeonChangeDistraction(KDBondageLoverAmount, false, 0.1);
+				KDChangeStamina(data.struggleGroup, data.struggleType, "struggle", data.cost, true, 1);
+				KDChangeWill(data.struggleGroup, data.struggleType, "struggle", data.wcost);
+				if (KinkyDungeonStatsChoice.get("BondageLover"))
+					KDChangeDistraction("BondageLover", "perk", "struggle", KDBondageLoverAmount, false, 0.1);
 
 				if (Pass != "Success") {
 					// Reduce the progress
@@ -4987,7 +4990,8 @@ function KDSuccessRemove(StruggleType: string, restraint: item, lockType: KDLock
 		} else {
 			KinkyDungeonRemoveRestraint(KDRestraint(restraint).Group, !destroy, undefined, undefined, undefined, undefined, KinkyDungeonPlayerEntity);
 		}
-		if (KinkyDungeonStatsChoice.get("FutileStruggles") && data.escapeChance < 0.25) KinkyDungeonChangeWill(KinkyDungeonStatWillCostEscape);
+		if (KinkyDungeonStatsChoice.get("FutileStruggles") && data.escapeChance < 0.25)
+			KDChangeWill("FutileStruggles", "perk", "struggle", KinkyDungeonStatWillCostEscape);
 		if (trap) {
 			let summon = KinkyDungeonSummonEnemy(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, trap, 1, 2.5).length;
 			if (summon) {

@@ -1241,7 +1241,7 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 									if (!KinkyDungeonPlayerDamage.special.noSkip)
 										return {result: "Fail", data: data};
 								} else {
-									if (energyCost) KinkyDungeonChangeCharge(- energyCost);
+									if (energyCost) KDChangeCharge(KinkyDungeonPlayerDamage?.name, "weapon", "wepSpecial", - energyCost);
 								}
 								KinkyDungeonSendEvent("playerCastSpecial", data);
 								KinkyDungeonSendEvent("afterPlayerCastSpecial", data);
@@ -1256,9 +1256,9 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 						KinkyDungeonSendEvent("playerCast", data);
 						if (KDGameData.HeelPower > 0) {
 							if (spell.components?.includes("Arms"))
-								KDChangeBalance(-KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceCastArmsMult, true);
+								KDChangeBalanceSrc(KinkyDungeonPlayerDamage?.name, "debuff", "wepSpecial", -KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceCastArmsMult, true);
 							if (spell.components?.includes("Legs"))
-								KDChangeBalance(-KDGetBalanceCost() * (0.5 + 1.0 * KDRandom()) * KDBalanceCastLegsMult, true);
+								KDChangeBalanceSrc(KinkyDungeonPlayerDamage?.name, "debuff", "wepSpecial", -KDGetBalanceCost() * (0.5 + 1.0 * KDRandom()) * KDBalanceCastLegsMult, true);
 						}
 						if (spell.school) KinkyDungeonTickBuffTag(KinkyDungeonPlayerEntity, "cast_" + spell.school.toLowerCase(), 1);
 						KinkyDungeonTickBuffTag(KinkyDungeonPlayerEntity, "cast", 1);
@@ -1314,7 +1314,7 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 			if (special) {
 				let energyCost = KinkyDungeonPlayerDamage.special.energyCost;
 				if (KDGameData.AncientEnergyLevel < energyCost) return {result: "Fail", data: data};
-				if (energyCost) KinkyDungeonChangeCharge(- energyCost);
+				if (energyCost) KDChangeCharge(KinkyDungeonPlayerDamage?.name, "weapon", "wepSpecial", - energyCost);
 
 				KinkyDungeonSendEvent("playerCastSpecial", data);
 				KinkyDungeonSendEvent("afterPlayerCastSpecial", data);
@@ -1333,9 +1333,9 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 		KinkyDungeonSendEvent("playerCast", data);
 		if (KDGameData.HeelPower > 0) {
 			if (spell.components?.includes("Arms"))
-				KDChangeBalance(-KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceCastArmsMult, true);
+				KDChangeBalanceSrc(spell?.name, "debuff", "cast", -KDGetBalanceCost() * (0.75 + 0.5 * KDRandom()) * KDBalanceCastArmsMult, true);
 			if (spell.components?.includes("Legs"))
-				KDChangeBalance(-KDGetBalanceCost() * (0.5 + 1.0 * KDRandom()) * KDBalanceCastLegsMult, true);
+				KDChangeBalanceSrc(spell?.name, "debuff", "cast", -KDGetBalanceCost() * (0.5 + 1.0 * KDRandom()) * KDBalanceCastLegsMult, true);
 		}
 		//let cost = spell.staminacost ? spell.staminacost : KinkyDungeonGetCost(spell.level);
 
@@ -1346,8 +1346,8 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 				KinkyDungeonTickBuffTag(KinkyDungeonPlayerEntity, "cast_" + t, 1);
 			}
 		}
-		KinkyDungeonChangeMana(-data.manacost);
-		if (spell.staminacost) KinkyDungeonChangeStamina(-spell.staminacost, false, 1);
+		KDChangeMana(spell?.name, "spell", "cast", -data.manacost);
+		if (spell.staminacost) KDChangeStamina(spell?.name, "spell", "cast", -spell.staminacost, false, 1);
 		if (data.channel) {
 			KinkyDungeonSetFlag("channeling", data.channel);
 			KDGameData.SlowMoveTurns = Math.max(KDGameData.SlowMoveTurns, data.channel);

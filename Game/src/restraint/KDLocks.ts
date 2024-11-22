@@ -105,7 +105,7 @@ let KDLocks: Record<string, KDLockType> = {
 		doUnlock: (data) => {
 			KinkyDungeonSendTextMessage(10, TextGet("KDCrystalUnlock"), "#ffff00", 2);
 			KinkyDungeonLock(data.item, "ExCrystal");
-			KinkyDungeonChangeDistraction(-1);
+			KDChangeDistraction("crystal", "lock", "unlock", -1);
 			return false;
 		},
 		removeKeys: (_data) => {

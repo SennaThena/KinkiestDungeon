@@ -195,11 +195,11 @@ let KDConsumableEffects: Record<string, (Consumable: consumable, entity: entity)
 			}
 			if (Consumable.mp_instant != undefined) {
 				//let manaAmt = Math.min(KinkyDungeonStatManaMax, KinkyDungeonStatMana + Consumable.mp_instant * Manamulti * gagMult) - KinkyDungeonStatMana;
-				KinkyDungeonChangeMana(Consumable.mp_instant * Manamulti * gagMult, false, Consumable.mpool_instant * Manamulti * gagMult, false, true);
+				KDChangeMana(Consumable.name, "restore", "consumable", Consumable.mp_instant * Manamulti * gagMult, false, Consumable.mpool_instant * Manamulti * gagMult, false, true);
 			}
-			if (Consumable.wp_instant) KinkyDungeonChangeWill(Consumable.wp_instant * Willmulti * gagMult);
-			if (Consumable.sp_instant) KinkyDungeonChangeStamina(Consumable.sp_instant * multi * gagMult);
-			if (Consumable.ap_instant) KinkyDungeonChangeDistraction(Consumable.ap_instant * Distmulti * gagMult, false, Consumable.arousalRatio ? Consumable.arousalRatio : 0);
+			if (Consumable.wp_instant) KDChangeWill(Consumable.name, "restore", "consumable", Consumable.wp_instant * Willmulti * gagMult);
+			if (Consumable.sp_instant) KDChangeStamina(Consumable.name, "restore", "consumable", Consumable.sp_instant * multi * gagMult);
+			if (Consumable.ap_instant) KDChangeDistraction(Consumable.name, "restore", "consumable", Consumable.ap_instant * Distmulti * gagMult, false, Consumable.arousalRatio ? Consumable.arousalRatio : 0);
 
 			KinkyDungeonCalculateMiscastChance();
 			if (Consumable.mp_gradual) KinkyDungeonApplyBuffToEntity(entity, {id: "PotionMana", type: "restore_mp", power: Consumable.mp_gradual/Consumable.duration * gagMult * Manamulti, duration: Consumable.duration});

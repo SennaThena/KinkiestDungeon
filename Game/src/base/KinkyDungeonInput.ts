@@ -28,7 +28,7 @@ function KDProcessInput(type: string, data: any): string {
 			if (data.sleep == 10 && (KDGameData.PrisonerState == 'jail' || KDGameData.PrisonerState == 'parole') && KinkyDungeonPlayerInCell()) {
 				KDKickEnemies(KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y), false, MiniGameKinkyDungeonLevel, true);
 			}
-			if (data.sleep && KinkyDungeonStatWill < KinkyDungeonStatWillMax * KDGetSleepWillFraction()) KinkyDungeonChangeWill(KinkyDungeonStatWillMax/KDMaxStatStart * KDSleepRegenWill, false);
+			if (data.sleep && KinkyDungeonStatWill < KinkyDungeonStatWillMax * KDGetSleepWillFraction()) KDChangeWill("player","wait", "tick", KinkyDungeonStatWillMax/KDMaxStatStart * KDSleepRegenWill, false);
 			KinkyDungeonAdvanceTime(data.delta, data.NoUpdate, data.NoMsgTick);
 			break;
 		case "tryCastSpell": {
@@ -89,7 +89,7 @@ function KDProcessInput(type: string, data: any): string {
 
 			if (KinkyDungeonSpellChoicesToggle[data.i] && spell.costOnToggle) {
 				if (KinkyDungeonHasMana(KinkyDungeonGetManaCost(spell))) {
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(spell));
+					KDChangeMana(spell.name,"spell", "cast", -KinkyDungeonGetManaCost(spell));
 				} else KinkyDungeonSpellChoicesToggle[data.i] = false;
 			}
 
@@ -437,7 +437,7 @@ function KDProcessInput(type: string, data: any): string {
 					} else {
 						KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonUnlockDoorPurpleUse"), "#aa44ff", 1);
 					}
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(spell));
+					KDChangeMana(spell.name,"spell", "cast", -KinkyDungeonGetManaCost(spell));
 				} else {
 					KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonUnlockDoorPurpleUseGaggedFail"), "#ff5277", 1);
 				}
@@ -585,15 +585,17 @@ function KDProcessInput(type: string, data: any): string {
 				KinkyDungeonChangeRep(data.type, -slimed * 2);
 			}
 			else KinkyDungeonSendActionMessage(9, TextGet(KinkyDungeonGagTotal() > 0 ? "KinkyDungeonPoolDrinkFace" : "KinkyDungeonPoolDrink"), "#AAFFFF", 2);
-			KinkyDungeonChangeMana(KinkyDungeonStatManaMax * 0.5, false, 0, false, true);
+
+			let x =  data.targetTile.split(',')[0];
+			let y =  data.targetTile.split(',')[1];
+
+			KDChangeMana(x + ',' + y,"map", "interact", KinkyDungeonStatManaMax * 0.5, false, 0, false, true);
 			KDSendStatus('goddess', data.type, 'shrineDrink');
 			KinkyDungeonAggroAction('shrine', {});
 			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 
 			KinkyDungeonAdvanceTime(1, true);
 
-			let x =  data.targetTile.split(',')[0];
-			let y =  data.targetTile.split(',')[1];
 
 			if (KinkyDungeonGoddessRep[data.type] <= -45) {
 				//Cursed
@@ -823,7 +825,7 @@ function KDProcessInput(type: string, data: any): string {
 		case "aid":
 			KDDelayedActionPrune(["Action", "World"]);
 			KinkyDungeonChangeRep(data.rep, -KinkyDungeonAidManaCost(data.rep, data.value));
-			KinkyDungeonChangeMana(KinkyDungeonAidManaAmount(data.rep, data.value));
+			KDChangeMana("player", "aid", "pray", KinkyDungeonAidManaAmount(data.rep, data.value));
 			KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonAidManaMe"), "purple", 2);
 			KDSendStatus('goddess', data.rep, 'helpMana');
 			break;
@@ -874,7 +876,7 @@ function KDProcessInput(type: string, data: any): string {
 			KinkyDungeonSpellChoicesToggle[data.I] = !KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].defaultOff;
 			if (KinkyDungeonSpellChoicesToggle[data.I] && KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].costOnToggle) {
 				if (KinkyDungeonHasMana(KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]))) {
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]));
+					KDChangeMana(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].name, "spell", "cast", -KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]));
 				} else KinkyDungeonSpellChoicesToggle[data.I] = false;
 			}
 			if (KinkyDungeonStatsChoice.has("Disorganized")) {
@@ -1127,7 +1129,7 @@ function KDProcessInput(type: string, data: any): string {
 						// Perform the deed
 						let Willmulti = Math.max(KinkyDungeonStatWillMax / KDMaxStatStart);
 						let amount = tile.Amount ? tile.Amount : 1.0;
-						KinkyDungeonChangeWill(amount * Willmulti);
+						KDChangeWill(tile.Food, "food", "consumable", amount * Willmulti);
 
 
 						// Send the message and advance time
