@@ -33,6 +33,7 @@ AddModel({
 	TopLevel: true,
 	Restraint: true,
 	Categories: ["Restraints"],
+	AddPose: ["Leash"],
 	Layers: ToLayerMap([
 		{ Name: "Leash", Layer: "Leash", Pri: 0,
 			Invariant: true,

@@ -1561,6 +1561,7 @@ interface KinkyDungeonEvent {
 	desc?: string;
 	buffSprite?: string;
 	msg?: string;
+	source?: number,
 	/** Like a prereq, but always active even if the event doesnt specify*/
 	condition?: string;
 	/** Specifies a prereq that the event itself can use */

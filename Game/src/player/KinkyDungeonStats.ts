@@ -830,7 +830,7 @@ let KDOrigBalance = 100;
 let KDOrigDistraction = 0;
 let KDOrigDesire = 0;
 
-function KDChangeDistraction(src: string, type: string, trig: string, Amount: number, NoFloater?: boolean, lowerPerc?: number, minimum: number = 0): number {
+function KDChangeDistraction(src: string, type: string, trig: string, Amount: number, NoFloater?: boolean, lowerPerc?: number, minimum: number = 0, noEvent?: boolean): number {
 
 	if (isNaN(Amount)) {
 		console.trace();
@@ -850,7 +850,8 @@ function KDChangeDistraction(src: string, type: string, trig: string, Amount: nu
 			: (1 + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "StatLossDistraction"))
 		),
 	};
-	KinkyDungeonSendEvent("changeDistraction", data);
+	if (!noEvent)
+		KinkyDungeonSendEvent("changeDistraction", data);
 	Amount = data.Amount * data.mult;
 	lowerPerc = data.lowerPerc;
 	minimum = data.minimum;
@@ -863,6 +864,9 @@ function KDChangeDistraction(src: string, type: string, trig: string, Amount: nu
 	if (Amount > 0) {
 		KDNoRegenFlag = true;
 	}
+
+	if (!noEvent)
+		KinkyDungeonSendEvent("duringChangeDistraction", data);
 	let amountChanged = KinkyDungeonStatDistraction;
 	KinkyDungeonStatDistraction += Amount;
 	KinkyDungeonStatDistraction = Math.min(Math.max(minLevel, KinkyDungeonStatDistraction), KinkyDungeonStatDistractionMax);
@@ -910,7 +914,8 @@ function KDChangeDistraction(src: string, type: string, trig: string, Amount: nu
 	}
 
 	data.amountChanged = amountChanged;
-	KinkyDungeonSendEvent("afterChangeWill", data);
+	if (!noEvent)
+		KinkyDungeonSendEvent("afterChangeDistraction", data);
 
 	return amountChanged;
 }

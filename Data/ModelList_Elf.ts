@@ -72,6 +72,15 @@ AddModel({
 			Invariant: true,
 			HideWhenOverridden: true,
 		},
+
+		{ Name: "CollarHardware", Layer: "CollarRing", Pri: -5,
+			Invariant: true,
+			InheritColor: "Hardware",
+			TieToLayer: "Collar",
+			NoOverride: true,
+			HidePoses: {HideModuleMiddle: true},
+			RequirePoses: {Leash: true},
+		},
 	])
 });
 

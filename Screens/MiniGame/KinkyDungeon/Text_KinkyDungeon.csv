@@ -5598,14 +5598,17 @@ KinkyDungeonBookIllusionDescription,A book of manipulative spells
 KDShortCompVerbal,"Verbal"
 KDShortCompArms,"Arms"
 KDShortCompLegs,"Legs"
+KDShortCompVision,"Vision"
 
 KinkyDungeonComponents,"Components: "
 KinkyDungeonComponentsVerbal,"Verbal"
 KinkyDungeonComponentsArms,"Arm Movements"
 KinkyDungeonComponentsLegs,"Leg Gestures"
+KinkyDungeonComponentsVision,"Vision"
 KinkyDungeonComponentsFailVerbal,"You mumble incoherently trying to cast the spell..."
 KinkyDungeonComponentsFailArms,"You wiggle uselessly trying to cast the spell..."
 KinkyDungeonComponentsFailLegs,"Your feet are too clumsy to perform the magic gesture..."
+KinkyDungeonComponentsFailVision,"You are unable to see, so you can't target this spell..."
 
 KinkyDungeonBookNextPage,Next Page
 KinkyDungeonBookLastPage,Last Page
@@ -5689,6 +5692,7 @@ KDSpellUpcastsFrom,"Upcast from SPELL"
 KinkyDungeonSpellMiscast,You fail to concentrate on the spell and it fizzles!
 KinkyDungeonSpellMiscastGagged,Your gag causes you to mispronounce the magic words!
 KinkyDungeonSpellMiscastPoorForm,You are too clumsy to perform the leg movements!
+KinkyDungeonSpellMiscastVision,You can't get a good look at the target!
 KinkyDungeonSpellMiscastLegs,You trip up while casting the spell!
 KinkyDungeonSpellMiscastBug,You miscast the spell because of a bug. Please report.
 KinkyDungeonSpellMiscastArms,You wave your arms around and make the wrong symbol with your hands!
@@ -7900,6 +7904,7 @@ KinkyDungeonDamageTypesouldrain,"Spirit Draining"
 KinkyDungeonDamageTypesoul,"Psychic"
 KinkyDungeonDamageTypedrain,"Mana Draining"
 KinkyDungeonDamageTypeelectric,"Electric"
+KinkyDungeonDamageTypeestim,"E-Stim"
 KinkyDungeonDamageTypeshock,"Shock"
 KinkyDungeonDamageTypeplush,"Plush"
 KinkyDungeonDamageTypestun,"Blast"
@@ -25946,11 +25951,16 @@ KinkyDungeonSpellTooDistractedMakeEssenceMote,You're too distracted to concentra
 KDDistractionBurstEffect,The burst of desire overwhelms you!
 
 KinkyDungeonSpellPsychicLink,Psychic Link
-KinkyDungeonSpellDescriptionPsychicLink,"Create a psychic link between you and a single target, splitting distraction gain between the two of you. Requires that you and the target be able to see each other."
+KinkyDungeonSpellDescriptionPsychicLink,"Deals 20 Psychic damage, then creates a psychic link between you and a single target for 30 turns, splitting distraction gain between the two of you. Requires that you and the target be able to see each other."
 KinkyDungeonSpellTargetPsychicLink,Target a non-blinded enemy.
 KinkyDungeonSpellCastPsychicLink,"You briefly lock eyes with the target, forming a psychic link!"
 KDPsychicLinkBreak,"The psychic link ends between you and the ENMY."
 
 KinkyDungeonSpellShockCollar,Shock Collar
-KinkyDungeonSpellDescriptionShockCollar,"Condense your aroused thoughts into stimulating electricity, consuming 40 DP to zap anyone that's currently holding your leash for 40 e-stim damage. 50% chance to stun briefly. Subsequent uses cost 2x the DP."
+KinkyDungeonSpellDescriptionShockCollar,"Condense your aroused thoughts into stimulating electricity, consuming 30 DP to zap anyone that's currently holding your leash for 40 e-stim damage. 25% chance to stun for a long time, otherwise stuns briefly. Subsequent uses cost 2x the DP."
 KDShockCollarNotLeashed,You must be leashed by someone to use this.
+KDShockCollarNoDistraction,You don't have enough distraction.
+KDShockCollarHit,You zap your leasher!
+
+KinkyDungeonBuffPsychicLink,You are psychically connected!
+KinkyDungeonBuffShockCollarCD,You've used Shock Collar recently and it costs more DP.

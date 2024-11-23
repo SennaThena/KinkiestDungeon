@@ -1390,7 +1390,7 @@ function KDMaxEnemyViewDist(enemy: entity) {
 		blindMult: (KinkyDungeonStatsChoice.get("Blackout") || KinkyDungeonStatsChoice.get("TotalBlackout")) ? 100 : 2,
 	};
 	//KinkyDungeonSendEvent("calcEnemyRad", data);
-	if (enemy.hp < enemy.Enemy.maxhp || enemy.attackPoints > 0) return KDGameData.MaxVisionDist;
+	if (enemy?.hp < enemy?.Enemy.maxhp || enemy?.attackPoints > 0) return KDGameData.MaxVisionDist;
 	if (KinkyDungeonBlindLevel < 2) return KDGameData.MaxVisionDist;
 	else return Math.max(KinkyDungeonStatsChoice.get("TotalBlackout") ? 0.5 : 1.5, KDGameData.MaxVisionDist - KinkyDungeonBlindLevel * data.blindMult);
 }
@@ -8939,16 +8939,34 @@ function KDIsTimeImmune(enemy: entity): boolean {
  * @param amount
  * @param desireMult
  */
-function KDAddDistraction(entity: entity, amount: number, desireMult: number = 0.25): number {
+function KDAddDistraction(entity: entity, amt: number, desireMult: number = 0.25, noEvent?: boolean): number {
 	if (entity?.Enemy?.nonHumanoid) return 0;
 	let origDistraction = entity.distraction || 0;
-	entity.distraction = Math.max(entity.desire || 0, Math.min(entity.Enemy.maxhp, (entity.distraction || 0) + amount));
 
-	entity.desire = Math.max(0, Math.min(entity.Enemy.maxhp, (entity.desire || 0) + amount * desireMult));
-	if (amount > 0) {
+	let data = {
+		enemy: entity,
+		origDistraction: origDistraction,
+		amount: amt,
+		changed: 0,
+		desireMult: desireMult,
+	}
+	if (!noEvent) {
+		KinkyDungeonSendEvent("beforeDistractEnemy", data);
+		KinkyDungeonSendEvent("duringDistractEnemy", data);
+	}
+	entity.distraction = Math.max(entity.desire || 0,
+		Math.min(entity.Enemy.maxhp, (entity.distraction || 0) + data.amount));
+
+	entity.desire = Math.max(0, Math.min(entity.Enemy.maxhp, (entity.desire || 0) + data.amount * data.desireMult));
+	if (data.amount > 0) {
 		KinkyDungeonSetEnemyFlag(entity, "d_turn", 2);
 	}
-	return entity.distraction - origDistraction;
+	data.changed = entity.distraction - origDistraction;
+
+	if (!noEvent) {
+		KinkyDungeonSendEvent("afterDistractEnemy", data);
+	}
+	return data.changed;
 }
 
 /**
@@ -9500,3 +9518,19 @@ function KDEntityAtRiskOfCapture(enemy: entity, mapData: KDMapDataType): boolean
 	if (KDFactionHostile(KDGetFaction(enemy), KDGetMainFaction(mapData))) return true;
 	return false;
 }
+
+function KDGetEntityMaxDistraction(entity: entity) {
+	if (entity == KDPlayer()) {
+		return KinkyDungeonStatDistractionMax;
+	} else {
+		return entity.Enemy.maxhp;
+	}
+}
+function KDGetDistraction(entity: entity) {
+	if (entity == KDPlayer()) {
+		return KinkyDungeonStatDistraction;
+	} else {
+		return entity.distraction || 0;
+	}
+}
+

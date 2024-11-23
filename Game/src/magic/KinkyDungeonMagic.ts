@@ -142,6 +142,34 @@ let KDSpellComponentTypes: Record<string, KDSpellComponent> = {
 			KinkyDungeonSetFlag("legspell", 1);
 		}
 	},
+	"Vision": {
+		stringShort: (_ret) => {
+			return TextGet("KDShortCompVision");
+		},
+		stringLong: (_spell) => {
+			return TextGet("KinkyDungeonComponentsVision");
+		},
+		check: (_spell, _x, _y) => {
+			if (KDMaxEnemyViewDist(undefined) < 2 && !(KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "NoVisionComp") > 0)) return false;
+			return true;
+		},
+		ignore: (_spell, _x, _y) => {
+			return (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "NoVisionComp") > 0);
+		},
+		partialMiscastChance: (_spell, _x, _y) => {
+			let vd = KDMaxEnemyViewDist(undefined);
+			if (vd < KDGameData.MaxVisionDist) {
+				return (KDGameData.MaxVisionDist - vd) / KDGameData.MaxVisionDist;
+			}
+			return 0;
+		},
+		partialMiscastType: (_spell, _x, _y) => {
+			return "Vision";
+		},
+		cast: (_spell, _data) => {
+			KinkyDungeonSetFlag("visionspell", 1);
+		}
+	},
 
 };
 
@@ -2688,4 +2716,9 @@ function KinkyDungeonSpellRemove(spellobject: spell | string) {
 	// Finally, splice this from the list.
 	KinkyDungeonSpells.splice(spellloc, 1);
 	KDRefreshSpellCache = true;
+}
+
+
+function KDShockCollarCost() {
+	return 3*(2**Math.max(0, KDEntityBuffedStat(KDPlayer(), "ShockCollarCD")));
 }

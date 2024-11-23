@@ -32,6 +32,12 @@ TODO remove hogtie when released
 TODO Add Cuddle play type
 
 
+5.4.12
+- Replaced Trainee's Mana Burst with Essence Motes (active spell)
+- Reworked Trainee's Desire Burst to use motes
+- New Trainee spells: Conjure Essence Mote, Shock Collar, Psychic Link
+- Removed Mental Fortitude for now
+
 5.4.11
 - Reworked Mental Fortitude. Added Mental Defiance
 - Changed all "ChangeX" stat change functions to have an src field

@@ -2707,6 +2707,65 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 				});
 		},
 	},
+	"duringDistractEnemy": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			if (data.enemy != entity) return;
+			let amount = data.amount;
+			let target = KDLookupID(_e.source, true);
+			let maxDistractionSRC = KDGetEntityMaxDistraction(entity);
+			let maxDistractionTRG = KDGetEntityMaxDistraction(target);
+			let missingSRC = maxDistractionSRC - (KDGetDistraction(entity) || 0);
+			let missingTRG = maxDistractionTRG - (KDGetDistraction(target) || 0);
+
+			let amountToSrc = amount*_e.mult;
+			let amountToTrg = amount*(1-_e.mult);
+
+			if (amountToSrc > missingSRC) {
+				amountToTrg == amountToSrc - missingSRC;
+				amountToSrc = missingSRC;
+			} else if (amountToTrg > missingTRG) {
+				amountToSrc == amountToTrg - missingTRG;
+				amountToTrg = missingTRG;
+			}
+			data.amount = amountToSrc;
+			if (target == KDPlayer()) {
+				KDChangeDistraction("PsychicLink", "spell", "distract",
+					amountToTrg, false, data.desireMult, undefined, true
+				);
+			} else {
+				KDAddDistraction(target, amountToTrg, data.desireMult, true);
+			}
+		},
+	},
+	"duringChangeDistraction": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			let amount = data.Amount;
+			let target = KDLookupID(_e.source, true);
+			let maxDistractionSRC = KDGetEntityMaxDistraction(entity);
+			let maxDistractionTRG = KDGetEntityMaxDistraction(target);
+			let missingSRC = maxDistractionSRC - (KDGetDistraction(entity) || 0);
+			let missingTRG = maxDistractionTRG - (KDGetDistraction(target) || 0);
+
+			let amountToSrc = amount*_e.mult;
+			let amountToTrg = amount*(1-_e.mult);
+
+			if (amountToSrc > missingSRC) {
+				amountToTrg == amountToSrc - missingSRC;
+				amountToSrc = missingSRC;
+			} else if (amountToTrg > missingTRG) {
+				amountToSrc == amountToTrg - missingTRG;
+				amountToTrg = missingTRG;
+			}
+			data.amount = amountToSrc;
+			if (target == KDPlayer()) {
+				KDChangeDistraction("PsychicLink", "spell", "distract",
+					amountToTrg, false, data.lowerPerc, undefined, true
+				);
+			} else {
+				KDAddDistraction(target, amountToTrg, data.lowerPerc, true);
+			}
+		},
+	},
 	"tickFlags": {
 		"latexIntegration": (_e, buff, _entity, _data) => {
 			buff.duration -= 100;
@@ -3738,7 +3797,7 @@ function KinkyDungeonHandleOutfitEvent(Event: string, e: KinkyDungeonEvent, outf
 let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell: spell, data: any) => void>> = {
 	"miscast": {
 		"EssenceMote": (e, spell, data) => {
-			if (!spell.manacost || spell.noMiscast) return;
+			if (data.spell && (!data.spell.manacost || data.spell.noMiscast)) return;
 			let slots: KDPoint[] = [];
 			let x = KDPlayer().x;
 			let y = KDPlayer().y;
@@ -5546,6 +5605,64 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 					KinkyDungeonSendTextMessage(10, TextGet("KDDistractionShield_No"), "#ff8888", 2, true);
 				}
 
+			}
+		},
+		"ShockCollar": (e, spell, data) => {
+			if (data.spell?.name == spell?.name) {
+				KinkyDungeonSpellChoicesToggle[data.index] = false;
+
+				let player: entity = KDPlayer();
+				if (player.leash?.entity) {
+					let target = KinkyDungeonFindID(player.leash.entity);
+
+					let cost = KDShockCollarCost();
+					if (KinkyDungeonStatDistraction >= cost) {
+						let amount = KDChangeDistraction(spell.name, "spell", "cast",
+							-cost, false, 0);
+
+
+
+						let power = Math.max(0,
+							KDEntityBuffedStat(player, "ShockCollarCD"))
+						KinkyDungeonApplyBuffToEntity(player, {
+							id: "ShockCollarCD",
+							type: "ShockCollarCD",
+							aura: "#ffffff",
+							buffSprite: true,
+							aurasprite: "ShockCollarSpell",
+							power: power + 1,
+							duration: 40,
+						});
+
+						KinkyDungeonDamageEnemy(target, {
+							type: spell.damage,
+							damage: spell.power,
+						}, false, false, spell, undefined, player);
+						KinkyDungeonDamageEnemy(target, {
+							type: "stun",
+							damage: 0,
+							time: KDRandom() < e.mult ? e.time : 3,
+						}, false, false, spell, undefined, player);
+
+						if (!KDEventData.shockwaves) KDEventData.shockwaves = [];
+							KDEventData.shockwaves.push({
+								x: target.x,
+								y: target.y,
+								radius: 1,
+								sprite: "Particles/ShockCollarHit.png",
+							});
+
+
+						if (e.sfx) KinkyDungeonPlaySound(`${KinkyDungeonRootDirectory}/Audio/${e.sfx}.ogg`);
+						KDTriggerSpell(spell, data, false, false);
+						KinkyDungeonSendActionMessage(10, TextGet("KDShockCollarHit").replace("AMNT", "" + Math.round(10 * amount*e.power)), "#ff44ff", 2);
+						KinkyDungeonAdvanceTime(1);
+					} else {
+						KinkyDungeonSendTextMessage(10, TextGet("KDShockCollarNoDistraction"), "#ff8888", 2, true);
+					}
+				} else {
+					KinkyDungeonSendTextMessage(10, TextGet("KDShockCollarNotLeashed"), "#ff8888", 2, true);
+				}
 			}
 		},
 
@@ -7643,6 +7760,43 @@ let KDEventMapBullet: Record<string, Record<string, (e: KinkyDungeonEvent, b: an
 				else data.enemy.rage = Math.max(data.enemy.rage, time);
 
 				KDAddThought(data.enemy.id, "Play", 11, time);
+			}
+		},
+
+
+		"PsychicLink": (e, b, data) => {
+			if (b && data.enemy && !(data.enemy.blind > 0)
+				&& !data.enemy.Enemy?.nonHumanoid
+				&& data.enemy.Enemy?.bound
+			) {
+				let source = KDLookupID(b.source || b.bullet.source);
+				if (source) {
+					KinkyDungeonApplyBuffToEntity(data.enemy, {
+						id: "PsychicLink",
+						power: 0.5,
+						duration: e.time || 10,
+						type: "PsychicLink",
+						aura: "#ff5277",
+						aurasprite: "PsychicLink",
+						noAuraColor: true,
+						events: [
+							{type: "PsychicLink", trigger: "duringDistractEnemy", mult: 0.5, source: b.source || b.bullet.source},
+						],
+					});
+					KinkyDungeonApplyBuffToEntity(source, {
+						id: "PsychicLink",
+						power: 0.5,
+						duration: e.time || 10,
+						type: "PsychicLink",
+						aura: "#ff5277",
+						aurasprite: "PsychicLink",
+						noAuraColor: true,
+						events: [
+							{type: "PsychicLink", trigger: "duringChangeDistraction", mult: 0.5, source: data.enemy.id},
+						],
+					});
+				}
+
 			}
 		},
 		"ElementalOnSlowOrBind": (e, b, data) => {

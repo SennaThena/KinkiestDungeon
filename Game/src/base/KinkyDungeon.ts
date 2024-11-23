@@ -6036,6 +6036,11 @@ function KinkyDungeonLoadGame(String: string = "") {
 			}
 
 			KDUnPackEnemies(KDMapData);
+			for (let en of KDMapData.Entities) {
+				if (en.id == -1 || en.player) {
+					KinkyDungeonPlayerEntity = en;
+				}
+			}
 			KinkyDungeonLeashingEnemy();
 			KinkyDungeonJailGuard();
 			if (saveData.KDCommanderRoles) KDCommanderRoles = new Map(saveData.KDCommanderRoles);

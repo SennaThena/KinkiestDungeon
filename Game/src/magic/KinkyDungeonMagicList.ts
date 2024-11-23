@@ -120,7 +120,7 @@ let KinkyDungeonLearnableSpells = [
 			"ArcaneBlast", "AkashicConflux", "ArcaneBarrier",
 
 
-			"MakeEssenceMote", "ChaoticOverflow", "DistractionBurst", "DistractionShield",
+			"MakeEssenceMote", "ChaoticOverflow", "DistractionBurst", "DistractionShield", "ShockCollar", "PsychicLink",
 		],
 		[
 			"Gunslinger", "BattleTrance", "CombatManeuver",
@@ -133,7 +133,7 @@ let KinkyDungeonLearnableSpells = [
 			"BattleCrit", "BattleCost",
 			"RogueTraps", "RogueTraps2", "RogueStudy",
 			"ManaHarvesting",
-			"FirstWind", "FirstWindHigher", "OrgasmBuff", "MagicalOverload",
+			"FirstWind", "OrgasmBuff", "MagicalOverload",
 		],
 	],
 	//Page 4: Upgrades
@@ -719,6 +719,25 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 		},
 
 
+		{name: "ShockCollar", tags: ["electric", "defense"],
+			prerequisite: "DistractionCast", classSpecific: "Trainee",
+			hideWithout: "DistractionCast", school: "Special", manacost: 0.0,
+			customCost: "ShockCollar",
+			components: [], defaultOff: true, time: 10, level:1, type:"passive",
+			onhit:"", delay: 0, range: 0, lifetime: 0, power: 4.0, damage: "estim",
+			events: [
+				{type: "ShockCollar", trigger: "toggleSpell", power: 4.0, mult: 0.25, time: 7,
+					sfx: "Estim",
+				},
+			]},
+
+		{name: "PsychicLink", tags: ["psychic", "defense"],
+			prerequisite: "DistractionCast", classSpecific: "Trainee",
+			hideWithout: "DistractionCast", school: "Special", manacost: 2.5,
+			components: ["Vision"], time: 0, level:1, type:"hit",
+			onhit:"instant", delay: 0, range: 4.5, lifetime: 0, power: 2.0, damage: "soul",
+			events: [{type: "PsychicLink", trigger: "bulletHitEnemy", time: 30},]
+		},
 
 		{name: "ManaRecharge", tags: ["will", "mana", "utility"], prerequisite: "ManaRegen", classSpecific: "Mage", hideWithout: "ManaRegen", school: "Special", manacost: 0, components: [], defaultOff: true, level:1, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
@@ -4009,6 +4028,10 @@ let KDPlayerCastConditions: Record<string, (player: entity, x: number, y: number
 	},
 	"FloatingWeapon": (_player, _x, _y) => {
 		return KinkyDungeonPlayerDamage && !KinkyDungeonPlayerDamage.unarmed && (!KinkyDungeonPlayerDamage.noHands || KinkyDungeonPlayerDamage.telekinetic);
+
+	},
+	"ShockCollar": (_player, _x, _y) => {
+		return !!KinkyDungeonLeashingEnemy() && !!_player.leash;
 	},
 
 
@@ -4054,7 +4077,11 @@ let KDCustomCost: Record<string, (data: any) => void> = {
 		data.cost = Math.round(10 * cost) + "MP";
 		data.color = "#8888ff";
 	},
-
+	"ShockCollar": (data) => {
+		let cost = KDShockCollarCost();
+		data.cost = Math.round(10 * cost) + "DP";
+		data.color = "#ff5277";
+	},
 	"Enrage": (data) => {
 		if (KinkyDungeonFlags.get("Enraged")) {
 			data.cost = Math.round(KinkyDungeonFlags.get("Enraged")) + " " + TextGet("KDTurns");
