@@ -133,7 +133,7 @@ let KinkyDungeonLearnableSpells = [
 			"BattleCrit", "BattleCost",
 			"RogueTraps", "RogueTraps2", "RogueStudy",
 			"ManaHarvesting",
-			"FirstWind", "OrgasmBuff", "MagicalOverload",
+			"ManaBurst", "FirstWind", "OrgasmBuff", "MagicalOverload",
 		],
 	],
 	//Page 4: Upgrades
@@ -736,7 +736,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 			hideWithout: "DistractionCast", school: "Special", manacost: 2.5,
 			components: ["Vision"], time: 0, level:1, type:"hit",
 			onhit:"instant", delay: 0, range: 4.5, lifetime: 0, power: 2.0, damage: "soul",
-			events: [{type: "PsychicLink", trigger: "bulletHitEnemy", time: 30},]
+			events: [{type: "PsychicLink", trigger: "bulletHitEnemy", time: 50},]
 		},
 
 		{name: "ManaRecharge", tags: ["will", "mana", "utility"], prerequisite: "ManaRegen", classSpecific: "Mage", hideWithout: "ManaRegen", school: "Special", manacost: 0, components: [], defaultOff: true, level:1, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
@@ -753,6 +753,15 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 			//{type: "DistractionCast", trigger: "tick"},
 			//{type: "DistractionCast", trigger: "playerCast"},
 			{type: "EssenceMote", trigger: "miscast", dist: 1.5},
+		]},
+		{name: "ManaBurst", tags: ["will", "utility"], school: "Special",
+			passive: true,
+			manacost: 0, components: [], classSpecific: "Trainee", prerequisite: "DistractionCast",
+			hideUnlearnable: true, decreaseCost:true, level:1, type:"", onhit:"", time: 0,
+			delay: 0, range: 2.5, lifetime: 0, aoe: 1.5, power: 0, damage: "inert", events: [
+			{type: "ManaBurst", trigger: "calcMiscast"},
+			{type: "ManaBurst", trigger: "tick"},
+			{type: "ManaBurst", trigger: "playerCast"},
 		]},
 		{name: "OrgasmMana1", tags: ["will", "utility"], school: "Special", manacost: 0, components: [], classSpecific: "Trainee", prerequisite: "DistractionCast", hideWithout: "DistractionCast", level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			blockedBy: ["EdgeMana1"], events: [

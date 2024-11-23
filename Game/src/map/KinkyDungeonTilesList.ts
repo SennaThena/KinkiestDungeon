@@ -747,6 +747,51 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 		return false;
 	},
 
+	"DistractionMoteContact": (_delta, _entity, tile) => {
+		if (_entity?.player) {
+			tile.duration = 0;
+			KDEventData.shockwaves.push({
+				x: tile.x,
+				y: tile.y,// - .167,
+				radius: 1,
+				sprite: "Particles/PinkGlow.png",
+			});
+			KinkyDungeonApplyBuffToEntity(_entity, {
+				id: "DistractionCast", type: "MiscastChance", power: -1, duration: KDEssenceMoteDuration(),
+				aura: "#ff8888", aurasprite: "Heart", buffsprite: true,
+				events: [{type: "EssenceMote", trigger: "tick", mult: -1/KDEssenceMoteDuration()}],
+			});
+			KDAddEssenceMoteDP();
+			KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/PowerMagic.ogg");
+			KinkyDungeonSendActionMessage(3, TextGet("KDEssenceMoteContact"),
+			"#88AAFF", 2);
+
+		}
+		return false;
+	},
+
+	"DistractionMote": (_delta, _entity, tile) => {
+		if (_entity?.player) {
+			tile.duration = 0;
+			KDEventData.shockwaves.push({
+				x: tile.x,
+				y: tile.y,// - .167,
+				radius: 1,
+				sprite: "Particles/PinkGlow.png",
+			});
+			KinkyDungeonApplyBuffToEntity(_entity, {
+				id: "DistractionCast", type: "MiscastChance", power: -1, duration: KDEssenceMoteDuration(),
+				aura: "#ff8888", aurasprite: "Heart", buffsprite: true,
+				events: [{type: "EssenceMote", trigger: "tick", mult: -1/KDEssenceMoteDuration()}],
+			});
+			KDAddEssenceMoteDP();
+			KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/PowerMagic.ogg");
+			KinkyDungeonSendActionMessage(3, TextGet("KDEssenceMoteContact"),
+			"#88AAFF", 2);
+
+		}
+		return false;
+	},
 
 	"MotionLamp": (_delta, _entity, tile) => {
 		KDCreateEffectTile(tile.x, tile.y, {

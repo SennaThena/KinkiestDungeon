@@ -73,8 +73,6 @@ let KinkyDungneonBasic = {
 	"Keyring" : {name: "Key", rarity: 0, shop: false},
 	"RedKey" : {name: "RedKey", rarity: 0, shop: true},
 	"BlueKey" : {name: "BlueKey", rarity: 2, costMod: 2, shop: true},
-	"Lockpick" : {name: "Lockpick", rarity: 0, shop: true},
-	"Pick" : {name: "Lockpick", rarity: 0, shop: true},
 	//"4Lockpick" : {name: "4Lockpick", rarity: 1, shop: true},
 	"3Bola" : {name: "3Bola", consumable: "Bola", quantity: 3, rarity: 0, shop: true},
 	"3Bomb" : {name: "3Bomb", consumable: "Bomb", quantity: 3, rarity: 1, shop: true},

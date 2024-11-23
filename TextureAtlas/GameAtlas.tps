@@ -762,6 +762,8 @@
             <key type="filename">../Game/EffectTiles/Chill.png</key>
             <key type="filename">../Game/EffectTiles/Cracked.png</key>
             <key type="filename">../Game/EffectTiles/CrackedFrozen.png</key>
+            <key type="filename">../Game/EffectTiles/DistractionMote.png</key>
+            <key type="filename">../Game/EffectTiles/DistractionMoteContact.png</key>
             <key type="filename">../Game/EffectTiles/EdgeOrb.png</key>
             <key type="filename">../Game/EffectTiles/EdgeOrbDead.png</key>
             <key type="filename">../Game/EffectTiles/Ember.png</key>
@@ -2307,6 +2309,7 @@
             <key type="filename">../Game/Items/VibeWand.png</key>
             <key type="filename">../Game/Items/WaterRune.png</key>
             <key type="filename">../Game/Lock.png</key>
+            <key type="filename">../Game/Particles/ShockCollarHit.png</key>
             <key type="filename">../Game/ShopBasic/2C4.png</key>
             <key type="filename">../Game/ShopBasic/2Dynamite.png</key>
             <key type="filename">../Game/ShopBasic/3Bola.png</key>
@@ -2390,6 +2393,7 @@
             <key type="filename">../Game/Spells/DesperateStruggle.png</key>
             <key type="filename">../Game/Spells/DisplayStand.png</key>
             <key type="filename">../Game/Spells/DistractionBurst.png</key>
+            <key type="filename">../Game/Spells/DistractionCast.png</key>
             <key type="filename">../Game/Spells/DistractionShield.png</key>
             <key type="filename">../Game/Spells/EarthMote.png</key>
             <key type="filename">../Game/Spells/Earthform.png</key>
@@ -2466,6 +2470,7 @@
             <key type="filename">../Game/Spells/LiquidMetal.png</key>
             <key type="filename">../Game/Spells/LiquidMetalBurst.png</key>
             <key type="filename">../Game/Spells/Lockdown.png</key>
+            <key type="filename">../Game/Spells/MakeEssenceMote.png</key>
             <key type="filename">../Game/Spells/ManaRecharge.png</key>
             <key type="filename">../Game/Spells/NatureSpirit.png</key>
             <key type="filename">../Game/Spells/NegateRune.png</key>
@@ -2473,6 +2478,7 @@
             <key type="filename">../Game/Spells/OrgasmResist.png</key>
             <key type="filename">../Game/Spells/Petsuit.png</key>
             <key type="filename">../Game/Spells/ProblemSolving.png</key>
+            <key type="filename">../Game/Spells/PsychicLink.png</key>
             <key type="filename">../Game/Spells/Quickness.png</key>
             <key type="filename">../Game/Spells/Quickness2.png</key>
             <key type="filename">../Game/Spells/Quickness3.png</key>
@@ -2496,6 +2502,7 @@
             <key type="filename">../Game/Spells/Shatter.png</key>
             <key type="filename">../Game/Spells/Shield.png</key>
             <key type="filename">../Game/Spells/Shock.png</key>
+            <key type="filename">../Game/Spells/ShockCollar.png</key>
             <key type="filename">../Game/Spells/Shroud.png</key>
             <key type="filename">../Game/Spells/Sleet.png</key>
             <key type="filename">../Game/Spells/Slime.png</key>
@@ -2681,6 +2688,7 @@
             <key type="filename">../Game/Aura/NoWP.png</key>
             <key type="filename">../Game/Aura/Null.png</key>
             <key type="filename">../Game/Aura/Plugged.png</key>
+            <key type="filename">../Game/Aura/PsychicLink.png</key>
             <key type="filename">../Game/Aura/Reload.png</key>
             <key type="filename">../Game/Aura/Select.png</key>
             <key type="filename">../Game/Aura/Slimed.png</key>
@@ -2871,6 +2879,7 @@
             <key type="filename">../Game/Buffs/buff/buffScrollLegs.png</key>
             <key type="filename">../Game/Buffs/buff/buffScrollVerbal.png</key>
             <key type="filename">../Game/Buffs/buff/buffShadowSeal.png</key>
+            <key type="filename">../Game/Buffs/buff/buffShockCollarCD.png</key>
             <key type="filename">../Game/Buffs/buff/buffSlimeMimic.png</key>
             <key type="filename">../Game/Buffs/buff/buffSlimed.png</key>
             <key type="filename">../Game/Buffs/buff/buffSlippery.png</key>
@@ -2887,6 +2896,7 @@
             <key type="filename">../Game/Buffs/buff/buffTabletRope.png</key>
             <key type="filename">../Game/Buffs/buff/buffTabletWill.png</key>
             <key type="filename">../Game/Buffs/buff/buffTaunted.png</key>
+            <key type="filename">../Game/Buffs/buff/buffTraineeWP.png</key>
             <key type="filename">../Game/Buffs/buff/buffUnsteady.png</key>
             <key type="filename">../Game/Buffs/buff/buffWaterBubble.png</key>
             <key type="filename">../Game/Buffs/buff/buffd_OrgasmResist.png</key>
@@ -3640,6 +3650,7 @@
             <key type="filename">../Game/Items/Restraint/ClothGag.png</key>
             <key type="filename">../Game/Items/Restraint/ClothGagOver.png</key>
             <key type="filename">../Game/Items/Restraint/CyberLink.png</key>
+            <key type="filename">../Game/Items/Restraint/EssenceNecklace.png</key>
             <key type="filename">../Game/Items/Restraint/Gauntlets.png</key>
             <key type="filename">../Game/Items/Restraint/Handcuffs.png</key>
             <key type="filename">../Game/Items/Restraint/HingedCuffs.png</key>
@@ -3963,6 +3974,21 @@
                 <rect>5,5,10,10</rect>
                 <key>scale9Paddings</key>
                 <rect>5,5,10,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Game/Particles/PinkGlow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

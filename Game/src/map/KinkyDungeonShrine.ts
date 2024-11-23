@@ -114,7 +114,7 @@ function KinkyDungeonGenerateShop(Level: number): any[] {
 					uniqueTags[t] = true;
 				}
 			}
-			ShopItems.push({name: item.name, shoptype: item.shoptype, consumable: item.consumable, quantity: item.quantity, rarity: item.rarity, cost: item.cost});
+			ShopItems.push({name: item.name, countItem: item.countItem, shoptype: item.shoptype, consumable: item.consumable, quantity: item.quantity, rarity: item.rarity, cost: item.cost});
 		}
 
 	}
@@ -455,7 +455,7 @@ function KinkyDungeonDrawShrine() {
 				DrawTextFitKD(TextGet("KinkyDungeonInventoryItem" + l.name), KDModalArea_x + 25, YY + 65 - ii * 50, 200, KinkyDungeonShopIndex == ii ? "white" : KDTextGray3, KDTextGray2, 20, "left", 70);
 				DrawTextFitKD(TextGet("KinkyDungeonCommerceCost").replace("ItemCost", "" + KinkyDungeonItemCost(l)), KDModalArea_x + 300 + 50, YY + 58 - ii * 50, 130, KDMapData.ShopItems[KinkyDungeonShopIndex].name == l.name ? "#ffffff" : KDTextGray3, KDTextGray2, 20, undefined, 70);
 				DrawTextFitKD(TextGet("KinkyDungeonCommerceOwned").replace("AMNT", "" + (
-					KinkyDungeonInventoryGetSafe(l.consumable || l.name) ? (KinkyDungeonInventoryGetSafe(l.consumable || l.name).quantity || 1) + (KinkyDungeonInventoryGetWorn(l.name) ? 1 : 0) : 0
+					KinkyDungeonInventoryGetSafe(l.countItem || l.consumable || l.name) ? (KinkyDungeonInventoryGetSafe(l.consumable || l.name).quantity || 1) + (KinkyDungeonInventoryGetWorn(l.name) ? 1 : 0) : 0
 				)), KDModalArea_x + 300 + 50, YY + 76 - ii * 50, 130, KDMapData.ShopItems[KinkyDungeonShopIndex].name == l.name ? "#ffffff" : KDTextGray3, KDTextGray2, 14, undefined, 70);
 				ii++;
 			}

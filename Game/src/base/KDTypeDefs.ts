@@ -1380,6 +1380,7 @@ interface shopItem {
 	costMod?: any;
 	shoptype: string;
 	consumable?: string;
+	countItem?: number;
 	quantity?: number;
 	name: any;
 }

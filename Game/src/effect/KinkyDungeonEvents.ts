@@ -206,6 +206,51 @@ let KDEventMapInventory: Record<string, Record<string, (e: KinkyDungeonEvent, it
 			}
 		},
 	},
+	"miscast": {
+		"EssenceMote": (e, item, data) => {
+			if (KinkyDungeonFlags.get("essMote")) return;
+			if (data.spell && (!data.spell.manacost || data.spell.noMiscast)) return;
+			if (e.chance && KDRandom() > e.chance) return;
+			let slots: KDPoint[] = [];
+			let x = KDPlayer().x;
+			let y = KDPlayer().y;
+			for (let X = -Math.ceil(e.dist); X <= Math.ceil(e.dist); X++)
+				for (let Y = -Math.ceil(e.dist); Y <= Math.ceil(e.dist); Y++) {
+					let dd = KDistEuclidean(X, Y);
+					if ((X != 0 || Y != 0) && dd <= e.dist) {
+						let loc = (x + X) + "," + (y + Y);
+						if (KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(x + X, y + Y))) {
+							if (KinkyDungeonEffectTilesGet(loc)) {
+								for (let tile of Object.values(KinkyDungeonEffectTilesGet(loc))) {
+									if (tile.tags && tile.tags.includes("mote")) {
+										continue;
+									}
+								}
+							}
+							slots.push({x: x + X, y: y + Y})
+						}
+					}
+				}
+
+			if (slots.length > 0) {
+				let slot = slots[Math.floor(slots.length * KDRandom())];
+				KDCreateEffectTile(slot.x, slot.y, {
+					name: "DistractionMoteContact"
+				}, 0);
+				if (!KDEventData.shockwaves) KDEventData.shockwaves = [];
+				KDEventData.shockwaves.push({
+					x: slot.x,
+					y: slot.y,// - .167,
+					radius: 1.5,
+					sprite: "Particles/PinkGlow.png",
+				});
+				KinkyDungeonSetFlag("essMote", 1);
+				KinkyDungeonSendTextMessage(10, TextGet("KDEssenceNecklaceCreate"), "#e223b3", 2);
+
+				//KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/MagicSlash.ogg");
+			}
+		},
+	},
 	"beforeEnemyLoop": {
 		AntiMagicEnemyDebuff: (e, _item, data) => {
 			if (data.Wornitems.includes(_item.id))
@@ -2710,8 +2755,10 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 	"duringDistractEnemy": {
 		"PsychicLink": (_e, buff, entity, data) => {
 			if (data.enemy != entity) return;
+			if (data.amount <= 0) return;
 			let amount = data.amount;
 			let target = KDLookupID(_e.source, true);
+			if (!target) return;
 			let maxDistractionSRC = KDGetEntityMaxDistraction(entity);
 			let maxDistractionTRG = KDGetEntityMaxDistraction(target);
 			let missingSRC = maxDistractionSRC - (KDGetDistraction(entity) || 0);
@@ -2721,10 +2768,10 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 			let amountToTrg = amount*(1-_e.mult);
 
 			if (amountToSrc > missingSRC) {
-				amountToTrg == amountToSrc - missingSRC;
+				amountToTrg += amountToSrc - missingSRC;
 				amountToSrc = missingSRC;
 			} else if (amountToTrg > missingTRG) {
-				amountToSrc == amountToTrg - missingTRG;
+				amountToSrc += amountToTrg - missingTRG;
 				amountToTrg = missingTRG;
 			}
 			data.amount = amountToSrc;
@@ -2740,7 +2787,9 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 	"duringChangeDistraction": {
 		"PsychicLink": (_e, buff, entity, data) => {
 			let amount = data.Amount;
+			if (amount <= 0) return;
 			let target = KDLookupID(_e.source, true);
+			if (!target) return;
 			let maxDistractionSRC = KDGetEntityMaxDistraction(entity);
 			let maxDistractionTRG = KDGetEntityMaxDistraction(target);
 			let missingSRC = maxDistractionSRC - (KDGetDistraction(entity) || 0);
@@ -2750,10 +2799,10 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 			let amountToTrg = amount*(1-_e.mult);
 
 			if (amountToSrc > missingSRC) {
-				amountToTrg == amountToSrc - missingSRC;
+				amountToTrg += amountToSrc - missingSRC;
 				amountToSrc = missingSRC;
 			} else if (amountToTrg > missingTRG) {
-				amountToSrc == amountToTrg - missingTRG;
+				amountToSrc += amountToTrg - missingTRG;
 				amountToTrg = missingTRG;
 			}
 			data.amount = amountToSrc;
@@ -2763,6 +2812,66 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 				);
 			} else {
 				KDAddDistraction(target, amountToTrg, data.lowerPerc, true);
+			}
+		},
+	},
+	"enemyOrgasm": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			if (data.enemy != entity) return;
+			if (data.cancel) return;
+			data.intensity *= 0.5;
+		},
+	},
+	"afterEnemyOrgasm": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			if (data.enemy != entity) return;
+			if (data.cancel) return;
+			let amount = 5.0 * data.intensity;
+			let target = KDLookupID(_e.source, true);
+			if (!target) return;
+
+			if (target == KDPlayer()) {
+				if (KinkyDungeonFlags.get("PlayerOrgasm")) return;
+				KinkyDungeonSendTextMessage(4, TextGet("KDOrgasmPsychicLinkEnemy"), "ff4477", 4);
+				KDChangeDistraction("PsychicLink", "spell", "distract",
+					amount, false, 0.5, undefined, true
+				);
+				let tb = amount;
+				KinkyDungeonTeaseLevelBypass += tb;
+				KDGameData.OrgasmStage = Math.min((KDGameData.OrgasmStage + Math.ceil(tb)) || tb, KinkyDungeonMaxOrgasmStage);
+			} else {
+				KDAddDistraction(target, amount*3.0, 0.5, true);
+			}
+		},
+	},
+	"tryOrgasm": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			if (!entity.player) return;
+			data.amount *= 0.75;
+			KinkyDungeonSendTextMessage(4, TextGet("KDOrgasmPsychicLinkAttempt"), "ff4477", 4);
+		},
+	},
+	"orgasm": {
+		"PsychicLink": (_e, buff, entity, data) => {
+			if (!entity.player) return;
+			let amount = data.amount;
+			if (amount <= 0) return;
+			let target = KDLookupID(_e.source, true);
+			if (!target) return;
+
+			if (target == KDPlayer()) {
+				if (KinkyDungeonFlags.get("PlayerOrgasm")) return;
+				KinkyDungeonSendTextMessage(4, TextGet("KDOrgasmPsychicLinkEnemy"), "ff4477", 4);
+				KDChangeDistraction("PsychicLink", "spell", "distract",
+					amount, false, 0.5, undefined, true
+				);
+				let tb = amount;
+				KinkyDungeonTeaseLevelBypass += tb;
+				KDGameData.OrgasmStage = Math.min((KDGameData.OrgasmStage + Math.ceil(tb)) || tb, KinkyDungeonMaxOrgasmStage);
+			} else {
+				KDAddDistraction(target, amount*3.0, 0.5, true);
+				if (KDIsDistracted(target))
+					KDEnemyRelease(target);
 			}
 		},
 	},
@@ -3797,6 +3906,7 @@ function KinkyDungeonHandleOutfitEvent(Event: string, e: KinkyDungeonEvent, outf
 let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell: spell, data: any) => void>> = {
 	"miscast": {
 		"EssenceMote": (e, spell, data) => {
+			if (KinkyDungeonFlags.get("essMote"))
 			if (data.spell && (!data.spell.manacost || data.spell.noMiscast)) return;
 			let slots: KDPoint[] = [];
 			let x = KDPlayer().x;
@@ -3809,7 +3919,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 						if (KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(x + X, y + Y))) {
 							if (KinkyDungeonEffectTilesGet(loc)) {
 								for (let tile of Object.values(KinkyDungeonEffectTilesGet(loc))) {
-									if (tile.tags && tile.tags.includes("essencemote")) {
+									if (tile.tags && tile.tags.includes("mote")) {
 										continue;
 									}
 								}
@@ -3831,6 +3941,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 					radius: 1.5,
 					sprite: "Particles/PinkGlow.png",
 				});
+				KinkyDungeonSetFlag("essMote", 1);
 
 				//KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/MagicSlash.ogg");
 			}
@@ -4258,11 +4369,11 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 	"afterMultMana": {
 		//
 	},
-	/*"calcMiscast": {
-		"DistractionCast": (_e, _spell, data) => {
-			if (KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax > 0.99 || KinkyDungeonPlayerBuffs.DistractionCast) data.miscastChance -= 1.0;
+	"calcMiscast": {
+		"ManaBurst": (_e, _spell, data) => {
+			if (KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax > 0.99 || KinkyDungeonPlayerBuffs.ManaBurst) data.miscastChance -= 1.0;
 		},
-	},*/
+	},
 	"duringPlayerDamage": {
 		"ArcaneBarrier": (_e, _spell, _data) => {
 			/*if (data.dmg > 0) {
@@ -4453,13 +4564,13 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 
 			}
 		},
-		/*"DistractionCast": (_e, _spell, data) => {
-			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax*0.99 || KinkyDungeonPlayerBuffs.DistractionCast) {
+		"ManaBurst": (_e, _spell, data) => {
+			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax*0.99 || KinkyDungeonPlayerBuffs.ManaBurst) {
 				let tb = KinkyDungeonGetManaCost(data.spell) * 0.6;
 				KinkyDungeonTeaseLevelBypass += tb;
 				KDGameData.OrgasmStage = Math.min((KDGameData.OrgasmStage + Math.ceil(tb)) || tb, KinkyDungeonMaxOrgasmStage);
 			}
-		},*/
+		},
 		"LightningRod": (e, _spell, data) => {
 			if (data.spell && data.spell.tags && data.spell.manacost > 0 && (data.spell.tags.includes("air") || data.spell.tags.includes("electric"))) {
 				let bb = Object.assign({}, KDConduction);
@@ -4803,12 +4914,15 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {id: spell.name + "Block", type: "Block", power: e.power, duration: 2,});
 			}
 		},
-		/*"DistractionCast": (_e, _spell, _data) => {
+		"ManaBurst": (_e, _spell, _data) => {
 			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax * 0.99)
+				if (!KinkyDungeonPlayerBuffs.ManaBurst) {
+					KinkyDungeonSendTextMessage(7, TextGet("KDManaBurstActivate"), "#ff7744", 5)
+				}
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
-					id: "DistractionCast", type: "sfx", power: 1, duration: 3, sfxApply: "PowerMagic", aura: "#ff8888", aurasprite: "Heart"
+					id: "ManaBurst", type: "sfx", power: 1, duration: 3, buffSprite: "DistractionCast", sfxApply: "PowerMagic", aura: "#ff8888", aurasprite: "Heart"
 				});
-		},*/
+		},
 		"Buff": (e, spell, data) => {
 			if (KDCheckPrereq(null, e.prereq, e, data))
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
@@ -5648,7 +5762,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 							KDEventData.shockwaves.push({
 								x: target.x,
 								y: target.y,
-								radius: 1,
+								radius: 3,
 								sprite: "Particles/ShockCollarHit.png",
 							});
 
@@ -7781,6 +7895,8 @@ let KDEventMapBullet: Record<string, Record<string, (e: KinkyDungeonEvent, b: an
 						noAuraColor: true,
 						events: [
 							{type: "PsychicLink", trigger: "duringDistractEnemy", mult: 0.5, source: b.source || b.bullet.source},
+							{type: "PsychicLink", trigger: "enemyOrgasm", mult: 0.5, source: b.source || b.bullet.source},
+							{type: "PsychicLink", trigger: "afterEnemyOrgasm", mult: 0.5, source: b.source || b.bullet.source},
 						],
 					});
 					KinkyDungeonApplyBuffToEntity(source, {
@@ -7793,6 +7909,8 @@ let KDEventMapBullet: Record<string, Record<string, (e: KinkyDungeonEvent, b: an
 						noAuraColor: true,
 						events: [
 							{type: "PsychicLink", trigger: "duringChangeDistraction", mult: 0.5, source: data.enemy.id},
+							{type: "PsychicLink", trigger: "tryOrgasm", mult: 0.5, source: data.enemy.id},
+							{type: "PsychicLink", trigger: "orgasm", mult: 0.5, source: data.enemy.id},
 						],
 					});
 				}

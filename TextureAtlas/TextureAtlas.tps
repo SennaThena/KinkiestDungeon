@@ -2370,6 +2370,14 @@
             <key type="filename">../Models/Mittens/ZipperRightFree.png</key>
             <key type="filename">../Models/Mittens/ZipperRightFront.png</key>
             <key type="filename">../Models/Mittens/ZipperRightYoked.png</key>
+            <key type="filename">../Models/Necklace/MetalChain.png</key>
+            <key type="filename">../Models/Necklace/MetalDisc.png</key>
+            <key type="filename">../Models/Necklace/RubyChain.png</key>
+            <key type="filename">../Models/Necklace/RubyGem.png</key>
+            <key type="filename">../Models/Necklace/RubyHardware.png</key>
+            <key type="filename">../Models/Necklace/RubyRing.png</key>
+            <key type="filename">../Models/Necklace/SigilChain.png</key>
+            <key type="filename">../Models/Necklace/SigilDisc.png</key>
             <key type="filename">../Models/Ninja/Belt.png</key>
             <key type="filename">../Models/Ninja/BeltLines.png</key>
             <key type="filename">../Models/Ninja/Collar.png</key>
@@ -3786,6 +3794,7 @@
             <key type="filename">../Models/GagFrilly/FrillyHighlights.png</key>
             <key type="filename">../Models/GagFrilly/FrillyPanel.png</key>
             <key type="filename">../Models/GagFrilly/FrillyStraps.png</key>
+            <key type="filename">../Models/GagFrilly/FrillyStrapsOld.png</key>
             <key type="filename">../Models/GagLatex/Harness.png</key>
             <key type="filename">../Models/GagLatex/LatexPlug.png</key>
             <key type="filename">../Models/GagLatex/MuteLogo.png</key>

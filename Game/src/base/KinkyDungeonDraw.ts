@@ -4120,6 +4120,25 @@ let KDEffectTileTooltips: Record<string, {color: string, code: (tile: effectTile
 			});
 		},
 	},
+	'DistractionMoteContact': {
+		color: "#8b53e9",
+		code: (tile, _x, _y, TooltipList) => {
+			TooltipList.push({
+				str: TextGet("KDEffectTileTooltip" + tile.name),
+				fg: "#ff8ed1",
+				bg: "#000000",
+				size: 24,
+				center: true,
+			});
+			TooltipList.push({
+				str: TextGet("KDEffectTileTooltip" + tile.name + "Desc"),
+				fg: "#ffffff",
+				bg: "#000000",
+				size: 16,
+				center: true,
+			});
+		},
+	},
 	'Runes': {
 		color: "#ff5555",
 		code: (tile, _x, _y, TooltipList) => {

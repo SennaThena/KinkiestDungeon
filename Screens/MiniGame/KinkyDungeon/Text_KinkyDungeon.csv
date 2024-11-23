@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.11"
+KDVersionStr,"5.4.13"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -1179,6 +1179,7 @@ LootDusterGag,"You find a special gag with a feather duster."
 LootGasMask,"You find a gas mask suitable for filtering gases."
 LootPearlChest,The pearly chest contains a divine gift! (+ITEMGET)
 KDSmokePuff,Smoke fills the air around you!
+LootEssenceNecklace,"You find a magical necklace that seems to concentrate magic."
 
 
 
@@ -5755,7 +5756,7 @@ KinkyDungeonSpellDescriptionRogueTraps,"Trap-type spells and consumables no long
 
 
 KinkyDungeonSpellDistractionCast,Essence Motes
-KinkyDungeonSpellDescriptionDistractionCast,"When you miscast a spell, you gain an Essence Mote which appears in a random space next to you. You can consume this mote to gain -100% miscast chance decaying over 5 turns."
+KinkyDungeonSpellDescriptionDistractionCast,"When you miscast a spell, you gain an Essence Mote which appears in a random space next to you. You can consume this mote to gain -100% miscast chance decaying over 10 turns. Walking over the mote also consumes it."
 
 KinkyDungeonSpellManaRegen,Inner Power
 KinkyDungeonSpellDescriptionManaRegen,"As a wizard, you are able to draw upon mystical sources of energy that others can't even see. After 16 turns of not casting a spell or attacking, your next spell's mana cost is reduced by 20% of your max mana BEFORE multipliers. Toggled passive spells apply half the cooldown."
@@ -21358,6 +21359,82 @@ m_HeavyMaidKnight_l_HeadbandFrill,HeadbandFrill
 m_HeavyMaidKnight_l_HeadbandRibbon,HeadbandRibbon
 m_HeavyMaidKnight_l_HeadbandRibbonBack,HeadbandRibbonBack
 
+m_RubyNecklace,RubyNecklace
+m_RubyNecklace_l_RubyChain,RubyChain
+m_RubyNecklace_l_RubyRing,RubyRing
+m_RubyNecklace_l_RubyGem,RubyGem
+m_RubyNecklaceRestraint,RubyNecklaceRestraint
+m_RubyNecklaceRestraint_l_RubyChain,RubyChain
+m_RubyNecklaceRestraint_l_RubyRing,RubyRing
+m_RubyNecklaceRestraint_l_RubyGem,RubyGem
+m_SigilNecklace,SigilNecklace
+m_SigilNecklace_l_SigilChain,SigilChain
+m_SigilNecklace_l_SigilDisc,SigilDisc
+m_SigilNecklaceRestraint,SigilNecklaceRestraint
+m_SigilNecklaceRestraint_l_SigilChain,SigilChain
+m_SigilNecklaceRestraint_l_SigilDisc,SigilDisc
+m_MetalNecklace,MetalNecklace
+m_MetalNecklace_l_MetalChain,MetalChain
+m_MetalNecklace_l_MetalDisc,MetalDisc
+m_MetalNecklaceRestraint,MetalNecklaceRestraint
+m_MetalNecklaceRestraint_l_MetalChain,MetalChain
+m_MetalNecklaceRestraint_l_MetalDisc,MetalDisc
+m_DragonNecklace_l_NecklaceCharm,NecklaceCharm
+m_DragonNecklaceRestraint,DragonNecklaceRestraint
+m_DragonNecklaceRestraint_l_Necklace,Necklace
+m_DragonNecklaceRestraint_l_NecklaceCharm,NecklaceCharm
+m_Dragonheart_l_NecklaceCharm,NecklaceCharm
+m_ElfCollar_l_CollarHardware,CollarHardware
+m_Elf_l_CollarHardware,CollarHardware
+m_SteelCollar_l_CollarHardware,CollarHardware
+m_SteelCollarRunes_l_CollarHardware,CollarHardware
+m_FashionSteelCollarRunes_l_CollarHardware,CollarHardware
+m_FashionSteelCollar_l_CollarHardware,CollarHardware
+m_BallGag_l_BallTeeth,BallTeeth
+m_BallGagHarness_l_BallTeeth,BallTeeth
+m_BallGagHarnessSecure_l_BallTeeth,BallTeeth
+m_FashionBallGag_l_BallTeeth,BallTeeth
+m_FashionBallGagHarness_l_BallTeeth,BallTeeth
+m_FashionBallGagHarnessSecure_l_BallTeeth,BallTeeth
+m_CrystalBallGag,CrystalBallGag
+m_CrystalBallGag_l_Ball,Ball
+m_CrystalBallGag_l_Strap,Strap
+m_CrystalBallGagSmooth,CrystalBallGagSmooth
+m_CrystalBallGagSmooth_l_Ball,Ball
+m_CrystalBallGagSmooth_l_Strap,Strap
+m_GagMetalRivetedStrap,GagMetalRivetedStrap
+m_GagMetalRivetedStrap_l_OTN,OTN
+m_GagMetalRivetedStrap_l_OTNRivets,OTNRivets
+m_GagMetalRivetedStrap_l_OTNStrap,OTNStrap
+m_GagMetalRivetedStrap_l_OTNStrapRivets,OTNStrapRivets
+m_FashionGagMetalRivetedStrap,FashionGagMetalRivetedStrap
+m_FashionGagMetalRivetedStrap_l_OTN,OTN
+m_FashionGagMetalRivetedStrap_l_OTNRivets,OTNRivets
+m_FashionGagMetalRivetedStrap_l_OTNStrap,OTNStrap
+m_FashionGagMetalRivetedStrap_l_OTNStrapRivets,OTNStrapRivets
+m_SmoothBallGag_l_BallTeeth,BallTeeth
+m_SmoothBallGagHarness_l_BallTeeth,BallTeeth
+m_SmoothBallGagHarnessSecure_l_BallTeeth,BallTeeth
+m_FashionSmoothBallGag_l_BallTeeth,BallTeeth
+m_CrystalGagNecklace,CrystalGagNecklace
+m_CrystalGagNecklace_l_CrystalGagNecklaceBall,CrystalGagNecklaceBall
+m_CrystalGagNecklace_l_GagNecklace,GagNecklace
+m_FashionCrystalGagNecklace,FashionCrystalGagNecklace
+m_FashionCrystalGagNecklace_l_CrystalGagNecklaceBall,CrystalGagNecklaceBall
+m_FashionCrystalGagNecklace_l_GagNecklace,GagNecklace
+m_Leash_l_LeashCollar,LeashCollar
+m_Leash_l_LeashCollarHardware,LeashCollarHardware
+m_FashionLeash_l_LeashCollar,LeashCollar
+m_FashionLeash_l_LeashCollarHardware,LeashCollarHardware
+m_HeavyMaidKnight_Boots_l_BootShoeLeft,BootShoeLeft
+m_HeavyMaidKnight_Boots_l_BootShoeRight,BootShoeRight
+m_HeavyMaidKnight_SockLeft_l_SockLeft,SockLeft
+m_HeavyMaidKnight_SockLeft_l_FootSockLeftHogtie,FootSockLeftHogtie
+m_HeavyMaidKnight_SockRight_l_SockRight,SockRight
+m_HeavyMaidKnight_SockRight_l_FootSockRightKneel,FootSockRightKneel
+m_HeavyMaidKnight_l_BootShoeLeft,BootShoeLeft
+m_HeavyMaidKnight_l_BootShoeRight,BootShoeRight
+
 
 
 
@@ -21925,6 +22002,8 @@ KDEffectTileTooltipPortals/DarkPortalDesc,"They are trying to take you somewhere
 
 KDEffectTileTooltipDistractionMote,Essence Mote
 KDEffectTileTooltipDistractionMoteDesc,"A trainee can use this to focus."
+KDEffectTileTooltipDistractionMoteContact,Essence Mote
+KDEffectTileTooltipDistractionMoteContactDesc,"Pick this up to gain decaying miscast reduction."
 
 NameDemonEye,The Shadow
 KillDemonEye,"The Shadow is exorcised... for now."
@@ -25951,7 +26030,7 @@ KinkyDungeonSpellTooDistractedMakeEssenceMote,You're too distracted to concentra
 KDDistractionBurstEffect,The burst of desire overwhelms you!
 
 KinkyDungeonSpellPsychicLink,Psychic Link
-KinkyDungeonSpellDescriptionPsychicLink,"Deals 20 Psychic damage, then creates a psychic link between you and a single target for 30 turns, splitting distraction gain between the two of you. Requires that you and the target be able to see each other."
+KinkyDungeonSpellDescriptionPsychicLink,"Deals 20 Psychic damage, then creates a psychic link between you and a single target for 50 turns, splitting distraction gain between the two of you. Requires that you and the target be able to see each other."
 KinkyDungeonSpellTargetPsychicLink,Target a non-blinded enemy.
 KinkyDungeonSpellCastPsychicLink,"You briefly lock eyes with the target, forming a psychic link!"
 KDPsychicLinkBreak,"The psychic link ends between you and the ENMY."
@@ -25964,3 +26043,21 @@ KDShockCollarHit,You zap your leasher!
 
 KinkyDungeonBuffPsychicLink,You are psychically connected!
 KinkyDungeonBuffShockCollarCD,You've used Shock Collar recently and it costs more DP.
+
+
+RestraintEssenceNecklace,Essence Crystal
+RestraintEssenceNecklaceDesc,"When you miscast, the necklace emits a mote that you can walk over to absorb. It reduces miscast chance greatly for a short time."
+RestraintEssenceNecklaceDesc2,"A necklace designed for mages who are novices or easily distracted. It helps recover magical essence lost during miscast."
+KinkyDungeonInventoryItemEssenceNecklace,Potion Absorber
+KinkyDungeonInventoryItemEssenceNecklaceDesc,"When you miscast, the necklace emits a mote that you can walk over to absorb. It reduces miscast chance greatly for a short time."
+KinkyDungeonInventoryItemEssenceNecklaceDesc2,"A necklace designed for mages who are novices or easily distracted. It helps recover magical essence lost during miscast."
+
+KDEssenceMoteContact,"You absorb the mote, granting miscast reduction."
+KDEssenceNecklaceCreate,Your necklace emits a mote as a result of miscasting.
+
+KDManaBurstActivate,"Your distraction reaches a critical point! -100% miscast chance."
+KinkyDungeonSpellManaBurst,"Mana Burst"
+KinkyDungeonSpellDescriptionManaBurst,"While at 100% distraction, you gain -100% miscast chance, but spending too much mana at once may cause you to go over the edge."
+KinkyDungeonBuffManaBurst,"-100% miscast chance, but casting spells can send you over the edge."
+KDOrgasmPsychicLinkAttempt,"The psychic link conducts away some of the intensity..."
+KDOrgasmPsychicLinkEnemy,"Your linked target lets go of herself, transmitting a wave of pleasure to yourself..."

@@ -31,6 +31,10 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.13
+- Added Essence Necklace
+- Made yokes and fiddles more common in the enchanted restraints loot table
+- Added Mana Burst back as an upgrade
 
 5.4.12
 - Replaced Trainee's Mana Burst with Essence Motes (active spell)

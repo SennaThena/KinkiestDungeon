@@ -1484,12 +1484,13 @@ function KDGetEnemyDistractionDamage(enemy: entity, vibe: number): number {
 /**
  * @param enemy
  */
-function KDGetEnemyReleaseDamage(enemy: entity, nokill: boolean = true): any {
+function KDGetEnemyReleaseDamage(enemy: entity, nokill: boolean = true, intensity?: number): any {
 	let data = {
 		enemy: enemy,
-		damage: enemy.Enemy.maxhp * Math.max(0.1, enemy.desire / enemy.Enemy.maxhp),
+		damage: (intensity != undefined ? intensity : 1) * enemy.Enemy.maxhp * Math.max(0.1, enemy.desire / enemy.Enemy.maxhp),
 		type: "charm",
 		nokill: nokill,
+		stunTime: 6 * (intensity != undefined ? intensity : 1)
 	};
 	KinkyDungeonSendEvent("enemyOrgasm", data);
 	return data;
@@ -9225,8 +9226,25 @@ function KDIsDistracted(enemy: entity): boolean {
  * @param Enemy
  */
 function KDEnemyRelease(Enemy: entity): boolean {
-	let damageData = KDGetEnemyReleaseDamage(Enemy);
+	let data = {
+		cancel: false,
+		enemy: Enemy,
+		intensity: 1.0,
+	};
+	KinkyDungeonSendEvent("enemyOrgasm", data);
+	if (data.cancel) return false;
+	let damageData = KDGetEnemyReleaseDamage(Enemy, undefined, data.intensity);
 	KinkyDungeonDamageEnemy(Enemy, damageData, true, true, undefined, undefined, undefined, 0.99, undefined, true, false);
+	if (damageData.stunTime) {
+		KinkyDungeonDamageEnemy(Enemy, {
+			damage: 0,
+			type: "stun",
+			time: Math.ceil(damageData.stunTime),
+		}, true, true, undefined, undefined, undefined,
+		0.99, undefined, true, false);
+
+	}
+
 	if (KinkyDungeonVisionGet(Enemy.x, Enemy.y)) {
 		KinkyDungeonSendTextMessage(1, TextGet("KDEnemyLetGo")
 			.replace("ENMY", TextGet("Name" + Enemy.Enemy.name))
@@ -9236,6 +9254,7 @@ function KDEnemyRelease(Enemy: entity): boolean {
 	Enemy.distraction = 0;
 	Enemy.desire = 0;
 	KDAddThought(Enemy.id, "Embarrassed", 10, 5);
+	KinkyDungeonSendEvent("afterEnemyOrgasm", data);
 	return true;
 }
 

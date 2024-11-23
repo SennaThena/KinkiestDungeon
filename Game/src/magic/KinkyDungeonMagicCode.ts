@@ -1747,6 +1747,9 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 					type: "charm",
 					damage: spell.power * Math.max(0.1, dist),
 				}, true, false, spell);
+				if (KDIsDistracted(en)) {
+					KDEnemyRelease(en);
+				}
 				KinkyDungeonCastSpell(en.x, en.y, KinkyDungeonFindSpell("OrgasmStrike", true), undefined, undefined, undefined, "Player");
 				en.distraction = 0;
 				return true;
@@ -1836,13 +1839,20 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 		if (mote) {
 			if (_miscast) return "Miscast";
 			mote.duration = 0;
-
+			if (!KDEventData.shockwaves) KDEventData.shockwaves = [];
+			KDEventData.shockwaves.push({
+				x: mote.x,
+				y: mote.y,// - .167,
+				radius: 1,
+				sprite: "Particles/PinkGlow.png",
+			});
 			KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/PowerMagic.ogg");
 			KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
-				id: "DistractionCast", type: "MiscastChance", power: -1, duration: 5,
+				id: "DistractionCast", type: "MiscastChance", power: -1, duration: KDEssenceMoteDuration(),
 				aura: "#ff8888", aurasprite: "Heart", buffsprite: true,
-				events: [{type: "EssenceMote", trigger: "tick", mult: -0.2}],
+				events: [{type: "EssenceMote", trigger: "tick", mult: -1/KDEssenceMoteDuration()}],
 			});
+			KDAddEssenceMoteDP();
 			KinkyDungeonSendActionMessage(3, TextGet("KinkyDungeonSpellCast"+spell.name), "#88AAFF", 2 + (spell.channel ? spell.channel - 1 : 0));
 
 			return "Cast";
@@ -2296,4 +2306,11 @@ function KDRescueSlime(en: entity, rescuer: entity) {
 		en.faction = KDGetFaction(rescuer);
 		en.hostile = 0;
 	}
+}
+
+function KDEssenceMoteDuration() {
+	return 10;
+}
+function KDAddEssenceMoteDP() {
+	KDChangeDistraction("EssenceMote", "mote", "mote", 1, false, 0.1);
 }
