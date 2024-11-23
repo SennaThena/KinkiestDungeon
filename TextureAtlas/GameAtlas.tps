@@ -2315,6 +2315,7 @@
             <key type="filename">../Game/ShopBasic/3Bola.png</key>
             <key type="filename">../Game/ShopBasic/3Bomb.png</key>
             <key type="filename">../Game/ShopBasic/3Flash.png</key>
+            <key type="filename">../Game/ShopBasic/3Flashbang.png</key>
             <key type="filename">../Game/ShopBasic/3Smoke.png</key>
             <key type="filename">../Game/ShopBasic/BlueKey.png</key>
             <key type="filename">../Game/ShopBasic/DivineBelt.png</key>
@@ -2866,6 +2867,7 @@
             <key type="filename">../Game/Buffs/buff/buffLatexIntegrationStat.png</key>
             <key type="filename">../Game/Buffs/buff/buffLeatherBurst.png</key>
             <key type="filename">../Game/Buffs/buff/buffLightningRod.png</key>
+            <key type="filename">../Game/Buffs/buff/buffManaBurst.png</key>
             <key type="filename">../Game/Buffs/buff/buffManaRegenSuspend.png</key>
             <key type="filename">../Game/Buffs/buff/buffNoWP.png</key>
             <key type="filename">../Game/Buffs/buff/buffNovicePet.png</key>

@@ -701,8 +701,8 @@ let KDLocks: Record<string, KDLockType> = {
 			return true;
 		},
 		removeKeys: (data) => {
+			KDAddConsumable("RedKey", -1);
 			if (!data?.unlock) {
-				KDAddConsumable("RedKey", -1);
 				KinkyDungeonDropItem({name: data.keytype+"Key"}, KinkyDungeonPlayerEntity, true);
 			}
 		},

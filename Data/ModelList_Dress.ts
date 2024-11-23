@@ -1127,7 +1127,7 @@ AddModel({
 			NoOverride: true,
 			InheritColor: "Crystal",
 		},
-		{ Name: "MageCollarHardware", Layer: "NecklaNecklaceCharmce", Pri: 20,
+		{ Name: "MageCollarHardware", Layer: "NecklaceCharm", Pri: 20,
 			Invariant: true,
 			TieToLayer: "MageCollar",
 			NoOverride: true,

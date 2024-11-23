@@ -4915,13 +4915,15 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 			}
 		},
 		"ManaBurst": (_e, _spell, _data) => {
-			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax * 0.99)
+			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax * 0.99) {
 				if (!KinkyDungeonPlayerBuffs.ManaBurst) {
 					KinkyDungeonSendTextMessage(7, TextGet("KDManaBurstActivate"), "#ff7744", 5)
 				}
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
-					id: "ManaBurst", type: "sfx", power: 1, duration: 3, buffSprite: "DistractionCast", sfxApply: "PowerMagic", aura: "#ff8888", aurasprite: "Heart"
+					id: "ManaBurst", type: "sfx", power: 1, duration: 3, buffSprite: true,
+					sfxApply: "PowerMagic", aura: "#ff8888", aurasprite: "Heart"
 				});
+			}
 		},
 		"Buff": (e, spell, data) => {
 			if (KDCheckPrereq(null, e.prereq, e, data))

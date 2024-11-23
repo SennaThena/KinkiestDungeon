@@ -287,7 +287,7 @@ AddModel({
 			Invariant: true,
 			InheritColor: "BaseMetal",
 		},
-		{ Name: "CollarHardware", Layer: "CollarRing", Pri: 20,
+		{ Name: "CollarHardware", Layer: "CollarRing", Pri: 10.1,
 			Invariant: true,
 			InheritColor: "Hardware",
 		},
