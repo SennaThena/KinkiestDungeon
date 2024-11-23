@@ -1888,6 +1888,8 @@ interface effectTile {
 	skin?: string,
 	/** random = basic effect where it fades in and has a chance to fade out again */
 	fade?: string,
+	yfade?: string,
+	yfadeamount?: number,
 	statuses?: Record<string, number>,
 	/** Spin to the effect tile sprite */
 	spin?: number,

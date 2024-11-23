@@ -1783,6 +1783,7 @@ function KinkyDungeonCalculateMiscastChance() {
 		flags.miscastChance = Math.min(flags.miscastChance * 2, 1);
 	}
 	if (KinkyDungeonStatsChoice.get("Distracted")) flags.miscastChance += KDDistractedAmount;
+	if (KDEntityBuffedStat(KDPlayer(), "MiscastChance")) flags.miscastChance += KDEntityBuffedStat(KDPlayer(), "MiscastChance");
 	KinkyDungeonSendEvent("calcMiscast", flags);
 	if (flags.satisfiedAmount && KDGameData.OrgasmStamina > 0.5) flags.miscastChance = Math.max(0, flags.miscastChance - flags.satisfiedAmount);
 	KinkyDungeonMiscastChance = Math.max(0, flags.miscastChance || 0);

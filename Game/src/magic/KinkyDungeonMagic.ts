@@ -876,16 +876,18 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 		else
 			KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonSpellMiscast"), "#ff8933", 2);
 
-		moveDirection = {x:0, y:0, delta:1};
-		tX = entity.x;
-		tY = entity.y;
 		miscast = true;
 
-		if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/ " + (spell.miscastSfx || "SoftShield") + ".ogg");
-		KinkyDungeonSendEvent("miscast", data);
-		KinkyDungeonSetFlag("miscast", 1);
+		if (!spell.special) {
+			moveDirection = {x:0, y:0, delta:1};
+			tX = entity.x;
+			tY = entity.y;
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/ " + (spell.miscastSfx || "SoftShield") + ".ogg");
+			KinkyDungeonSendEvent("miscast", data);
+			KinkyDungeonSetFlag("miscast", 1);
 
-		return {result: "Miscast", data: data};
+			return {result: "Miscast", data: data};
+		}
 	}
 
 
@@ -1220,8 +1222,15 @@ function KinkyDungeonCastSpell(targetX: number, targetY: number, spell: spell, e
 			}
 			if (!casted)
 				return {result: "Fail", data: data};
-		} else if (spell.type == "special") {
+		} else if (spell.type == "special" || spell.special) {
 			let ret = KinkyDungeonSpellSpecials[spell.special](spell, data, targetX, targetY, tX, tY, entity, enemy, moveDirection, bullet, miscast, faction, cast, selfCast);
+			if (ret == "Miscast") {
+				if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/ " + (spell.miscastSfx || "SoftShield") + ".ogg");
+				KinkyDungeonSendEvent("miscast", data);
+				KinkyDungeonSetFlag("miscast", 1);
+
+				return {result: "Miscast", data: data};
+			}
 			if (ret) {
 				if (!enemy && !bullet && player) {
 					if (data.targetingSpellItem) {

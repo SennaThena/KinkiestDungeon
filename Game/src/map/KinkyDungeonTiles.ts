@@ -549,6 +549,9 @@ function KDApplyAlpha(id: string, alpha: number, fade: string, delta: number) {
 		case "sine3000": {
 			return Math.max(0, Math.min(1, .5 + 0.25 * Math.sin(CommonTime()/3000)));
 		}
+		case "sine1000": {
+			return Math.max(0, Math.min(1, .5 + 0.25 * Math.sin(CommonTime()/1000)));
+		}
 		case "ice": {
 			return Math.max(0, Math.min(1, .25 + 0.25 * Math.sin(CommonTime()/5000)));
 		}
@@ -576,6 +579,7 @@ function KDDrawEffectTiles(_canvasOffsetX: number, _canvasOffsetY: number, CamX:
 					zIndex: -0.1 + 0.01 * tile.priority,
 					alpha: KDApplyAlpha(tileid, kdpixisprites.get(tileid)?.alpha, tile.fade, delta),
 				};
+
 				if (tile.spin) {
 					op['anchorx'] = 0.5;
 					op['anchory'] = 0.5;
@@ -590,14 +594,21 @@ function KDDrawEffectTiles(_canvasOffsetX: number, _canvasOffsetY: number, CamX:
 						op.alpha *= 0.7;
 					}
 				}
+				if (tile.yfade) {
+					if (!TileYFade[tileid]) TileYFade[tileid] = KDRandom();
+					TileYFade[tileid] = KDApplyAlpha(tileid, TileYFade[tileid], tile.yfade, delta);
+				}
 				if (color != undefined) op['tint'] = color;
 				KDDraw(kdeffecttileboard, kdpixisprites, tileid, KinkyDungeonRootDirectory + "EffectTiles/" + sprite + ".png",
-					(tile.x + (tile.xoffset ? tile.xoffset : 0) - CamX)*KinkyDungeonGridSizeDisplay, (tile.y - CamY + (tile.yoffset ? tile.yoffset : 0))*KinkyDungeonGridSizeDisplay,
+					(tile.x + (tile.xoffset ? tile.xoffset : 0) - CamX)*KinkyDungeonGridSizeDisplay,
+					(tile.y - CamY + (tile.yoffset ? tile.yoffset : 0) + (tile.yfadeamount ? tile.yfadeamount*TileYFade[tileid] : 0))*KinkyDungeonGridSizeDisplay,
 					KinkyDungeonGridSizeDisplay, KinkyDungeonGridSizeDisplay, KDAnimQuantize(Math.PI/4 * (tile.spin || 1), tile.spinAngle), op);
 			}
 		}
 	}
 }
+
+let TileYFade: Record<string, number> = {};
 
 /**
  * @param tile

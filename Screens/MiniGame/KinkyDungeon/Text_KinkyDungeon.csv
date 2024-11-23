@@ -513,7 +513,7 @@ KinkyDungeonSpellDescriptionSecondWind1,"Second Wind now regenerates up to 25% o
 KinkyDungeonSpellFirstWind,Mental Defiance
 KinkyDungeonSpellDescriptionFirstWind,"Passive: Losing WP from edging, letting go, or teasing damage stores 'Defiance', capped at the value of your missing DP. Toggle: While below 25% WP, quickly convert 'Defiance' into WP. Exclusive with Mental Fortitude."
 KinkyDungeonSpellFirstWindHigher,Mental Fortitude
-KinkyDungeonSpellDescriptionFirstWindHigher,"Passive: Losing WP from edging, letting go, or teasing damage stores 'Fortitude', capped at the value of your missing DP. Toggle: While above 75% WP but below 100%, quickly convert 'Fortitude' into WP. Exclusive with Mental Defiance."
+KinkyDungeonSpellDescriptionFirstWindHigher,"Passive: Losing WP from edging, letting go, or teasing damage stores 'Defiance', capped at the value of your missing DP. Toggle: While above 75% WP but below 100%, quickly convert 'Defiance' into WP. Exclusive with Mental Defiance."
 
 
 KinkyDungeonStatLockedUp,"Locked Up"
@@ -843,7 +843,10 @@ KinkyDungeonBuffDisenchantSelf,"Your restraints are disenchanted, treating them 
 KinkyDungeonBuffLeatherBurst,"You can launch another leather restraint instantly!"
 KinkyDungeonBuffSagittaAssault,"You can launch another Sagitta instantly!"
 
-KinkyDungeonBuffDistractionCast,Your motivation is powerful enough your spells cannot be stopped!
+KinkyDungeonBuffTraineeWP,You have stored willpower.
+KinkyDungeonBuffDistractionCast,"You have consumed a mote of essence, granting miscast chance reduction."
+KinkyDungeonSpellCastDistractionCast,You recapture an essence mote and concentrate on its essence!
+KinkyDungeonSpellTargetDistractionCast,Choose an essence mote to absorb.
 
 KinkyDungeonBuffStraitjacketBolt,"Locked Down: Struggling power is greatly reduced."
 KinkyDungeonBuffLockdown,"Locked Down: Struggling power is greatly reduced."
@@ -5747,8 +5750,8 @@ KinkyDungeonSpellDescriptionRogueTraps,"Trap-type spells and consumables no long
 
 
 
-KinkyDungeonSpellDistractionCast,Mana Burst
-KinkyDungeonSpellDescriptionDistractionCast,"As a trainee, you have learned the technique of inducing clarity via a trance-like state at 100% distraction. However, this state is precarious, and casting spells may cause you to lose focus..."
+KinkyDungeonSpellDistractionCast,Essence Motes
+KinkyDungeonSpellDescriptionDistractionCast,"When you miscast a spell, you gain an Essence Mote which appears in a random space next to you. You can consume this mote to gain -100% miscast chance decaying over 5 turns."
 
 KinkyDungeonSpellManaRegen,Inner Power
 KinkyDungeonSpellDescriptionManaRegen,"As a wizard, you are able to draw upon mystical sources of energy that others can't even see. After 16 turns of not casting a spell or attacking, your next spell's mana cost is reduced by 20% of your max mana BEFORE multipliers. Toggled passive spells apply half the cooldown."
@@ -21915,6 +21918,9 @@ RestraintMithrilRopeCollarDesc2,"It will occasionally cause mithril ropes to app
 KDEffectTileTooltipPortals/DarkPortal,Dark Portal
 KDEffectTileTooltipPortals/DarkPortalDesc,"They are trying to take you somewhere!"
 
+KDEffectTileTooltipDistractionMote,Essence Mote
+KDEffectTileTooltipDistractionMoteDesc,"A trainee can use this to focus."
+
 NameDemonEye,The Shadow
 KillDemonEye,"The Shadow is exorcised... for now."
 AttackDemonEyeBind,"The Shadow overwhelms you with its power... (+RestraintAdded)"
@@ -22378,7 +22384,7 @@ KDAkashicConflux_No,"You don't have enough Arcane Energy. You need AMNT."
 
 
 KinkyDungeonSpellChaoticOverflow,Chaotic Overflow
-KinkyDungeonSpellDescriptionChaoticOverflow,"Draw upon 25% of your max Willpower to ignore spell components for Duration turns and fully restore your mana. The energy is uncontrollable, so there will be consequences..."
+KinkyDungeonSpellDescriptionChaoticOverflow,"Draw upon 35 WP to ignore spell components for Duration turns and fully restore your mana. The energy is uncontrollable, so there will be consequences..."
 KDChaoticOverflow_Yes,"Chaotic energy flows through you!!!"
 KDChaoticOverflow_NoBind,"You try to call forth the chaotic energy, but it isn't interested in you anymore..."
 KDChaoticOverflow_No,"You don't have enough Willpower. You need at least 25%."
@@ -23501,9 +23507,11 @@ KinkyDungeonBuffDistractionShield,"You have formed a mental barrier..."
 
 
 KinkyDungeonSpellDistractionBurst,Desire Burst
-KinkyDungeonSpellDescriptionDistractionBurst,"Reduce your Desire by up to 30% of max DP, and convert the amount into a powerful explosion dealing (30 + 25% max DP) charm damage to nearby enemies (200% crit multiplier). If you don't have at least 50% Desire, the damage is reduced based on the amount.||(Desire is the heart-shaped meter below your DP bar, and is gained slowly by being distracted)"
-KDDistractionBurst_Yes,"You channel your distraction into a powerful explosion!"
+KinkyDungeonSpellDescriptionDistractionBurst,"Overload Essence motes in an area, costing 10% max DP worth of Desire each. They explode, dealing (10 + 20% max DP) charm damage to enemies hit. If you don't have enough desire, the damage is reduced proportionally.||(Desire is the heart-shaped meter below your DP bar, and is gained slowly by being distracted)"
+KDDistractionBurst_Yes,"You channel your distraction into the mote, overloading it!"
+KDDistractionBurst_YesP,"You channel your distraction into the motes, overloading them!"
 KDDistractionBurst_No,"You don't have enough of a desire to do that."
+KDDistractionBurst_NoMote,"You must target at least one Essence Mote."
 KDDistractionBurst_NoMana,"You have the desire but not the mana!"
 
 
@@ -25926,3 +25934,23 @@ KDTut_WPOnKill2,Defeating enemies recovers some willpower.
 KDTut_WPOnKill,"Temporary enemies and summons don't restore anything, however."
 KDTut_Capture2,"Attacking a helpless enemy captures her and sends her to your Collection."
 KDTut_Capture,"You can access the Collection in the Items screen, 2nd tab."
+
+KinkyDungeonSpellMakeEssenceMote,Conjure Essence Mote
+KinkyDungeonSpellDescriptionMakeEssenceMote,Spend 50 DP to conjure a mote of pure spell essence. The mana cost of this spell is decreased based on your maximum DP.|Can only be cast while you have less than 100% DP.
+KinkyDungeonSpellCastMakeEssenceMote,You channel your distraction into a tangible orb!
+KinkyDungeonSpellFailMakeEssenceMote,You don't have enough distraction!
+KinkyDungeonSpellNoRoomMakeEssenceMote,Choose an open space.
+KinkyDungeonSpellTargetMakeEssenceMote,Choose a tile with no existing mote.
+KinkyDungeonSpellTooDistractedMakeEssenceMote,You're too distracted to concentrate your distraction!
+
+KDDistractionBurstEffect,The burst of desire overwhelms you!
+
+KinkyDungeonSpellPsychicLink,Psychic Link
+KinkyDungeonSpellDescriptionPsychicLink,"Create a psychic link between you and a single target, splitting distraction gain between the two of you. Requires that you and the target be able to see each other."
+KinkyDungeonSpellTargetPsychicLink,Target a non-blinded enemy.
+KinkyDungeonSpellCastPsychicLink,"You briefly lock eyes with the target, forming a psychic link!"
+KDPsychicLinkBreak,"The psychic link ends between you and the ENMY."
+
+KinkyDungeonSpellShockCollar,Shock Collar
+KinkyDungeonSpellDescriptionShockCollar,"Condense your aroused thoughts into stimulating electricity, consuming 40 DP to zap anyone that's currently holding your leash for 40 e-stim damage. 50% chance to stun briefly. Subsequent uses cost 2x the DP."
+KDShockCollarNotLeashed,You must be leashed by someone to use this.

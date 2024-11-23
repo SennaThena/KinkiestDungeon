@@ -3016,6 +3016,12 @@ const KDEventMapBuff: Record<string, Record<string, (e: KinkyDungeonEvent, buff:
 		},
 	},
 	"tick": {
+		"EssenceMote": (_e, _buff, entity, _data) => {
+			if (entity == KDPlayer()) {
+				_buff.power = (_buff.duration) * _e.mult;
+			}
+		},
+
 		"TrainingUnit": (_e, _buff, entity, _data) => {
 			if (!entity.player) {
 				if (!KDMapData.PrisonStateStack.includes("Training")) {
@@ -3730,6 +3736,47 @@ function KinkyDungeonHandleOutfitEvent(Event: string, e: KinkyDungeonEvent, outf
 }
 
 let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell: spell, data: any) => void>> = {
+	"miscast": {
+		"EssenceMote": (e, spell, data) => {
+			if (!spell.manacost || spell.noMiscast) return;
+			let slots: KDPoint[] = [];
+			let x = KDPlayer().x;
+			let y = KDPlayer().y;
+			for (let X = -Math.ceil(spell.aoe); X <= Math.ceil(spell.aoe); X++)
+				for (let Y = -Math.ceil(spell.aoe); Y <= Math.ceil(spell.aoe); Y++) {
+					let dd = KDistEuclidean(X, Y);
+					if ((X != 0 || Y != 0) && dd <= spell.aoe) {
+						let loc = (x + X) + "," + (y + Y);
+						if (KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(x + X, y + Y))) {
+							if (KinkyDungeonEffectTilesGet(loc)) {
+								for (let tile of Object.values(KinkyDungeonEffectTilesGet(loc))) {
+									if (tile.tags && tile.tags.includes("essencemote")) {
+										continue;
+									}
+								}
+							}
+							slots.push({x: x + X, y: y + Y})
+						}
+					}
+				}
+
+			if (slots.length > 0) {
+				let slot = slots[Math.floor(slots.length * KDRandom())];
+				KDCreateEffectTile(slot.x, slot.y, {
+					name: "DistractionMote"
+				}, 0);
+				if (!KDEventData.shockwaves) KDEventData.shockwaves = [];
+				KDEventData.shockwaves.push({
+					x: slot.x,
+					y: slot.y,// - .167,
+					radius: 1.5,
+					sprite: "Particles/PinkGlow.png",
+				});
+
+				//KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/MagicSlash.ogg");
+			}
+		},
+	},
 	"afterChangeCharge": {
 		"Gunslinger": (e, _spell, data) => {
 			if (-data.amountChanged > 0) {
@@ -4152,11 +4199,11 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 	"afterMultMana": {
 		//
 	},
-	"calcMiscast": {
+	/*"calcMiscast": {
 		"DistractionCast": (_e, _spell, data) => {
 			if (KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax > 0.99 || KinkyDungeonPlayerBuffs.DistractionCast) data.miscastChance -= 1.0;
 		},
-	},
+	},*/
 	"duringPlayerDamage": {
 		"ArcaneBarrier": (_e, _spell, _data) => {
 			/*if (data.dmg > 0) {
@@ -4347,13 +4394,13 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 
 			}
 		},
-		"DistractionCast": (_e, _spell, data) => {
+		/*"DistractionCast": (_e, _spell, data) => {
 			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax*0.99 || KinkyDungeonPlayerBuffs.DistractionCast) {
 				let tb = KinkyDungeonGetManaCost(data.spell) * 0.6;
 				KinkyDungeonTeaseLevelBypass += tb;
 				KDGameData.OrgasmStage = Math.min((KDGameData.OrgasmStage + Math.ceil(tb)) || tb, KinkyDungeonMaxOrgasmStage);
 			}
-		},
+		},*/
 		"LightningRod": (e, _spell, data) => {
 			if (data.spell && data.spell.tags && data.spell.manacost > 0 && (data.spell.tags.includes("air") || data.spell.tags.includes("electric"))) {
 				let bb = Object.assign({}, KDConduction);
@@ -4697,12 +4744,12 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {id: spell.name + "Block", type: "Block", power: e.power, duration: 2,});
 			}
 		},
-		"DistractionCast": (_e, _spell, _data) => {
+		/*"DistractionCast": (_e, _spell, _data) => {
 			if (KinkyDungeonStatDistraction > KinkyDungeonStatDistractionMax * 0.99)
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
 					id: "DistractionCast", type: "sfx", power: 1, duration: 3, sfxApply: "PowerMagic", aura: "#ff8888", aurasprite: "Heart"
 				});
-		},
+		},*/
 		"Buff": (e, spell, data) => {
 			if (KDCheckPrereq(null, e.prereq, e, data))
 				KinkyDungeonApplyBuffToEntity(KinkyDungeonPlayerEntity, {
@@ -5441,61 +5488,6 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 				}
 			}
 		},
-
-		"DistractionBurst": (e, spell, data) => {
-			if (data.spell?.name == spell?.name) {
-				KinkyDungeonSpellChoicesToggle[data.index] = false;
-
-				let player = KinkyDungeonPlayerEntity;
-				if (KinkyDungeonStatDistractionLower >= e.power*0.1) {
-					let cost = KinkyDungeonGetManaCost(spell, false, true);
-					if (KinkyDungeonHasMana(cost)) {
-						let frac = 0.3;
-						let amount = Math.min(KinkyDungeonStatDistractionLower, KinkyDungeonStatDistractionMax*frac);
-						let desire = Math.max(0.01, -KDChangeDesire(spell.name, "spell", "cast", -amount, false));
-						if (desire > 0) {
-							let nearby = KDNearbyEnemies(player.x, player.y, e.aoe);
-							for (let enemy of nearby) {
-								if (enemy.hp > 0 && KDHostile(enemy) && !KDHelpless(data.enemy)) {
-									KinkyDungeonDamageEnemy(enemy, {
-										type: e.damage,
-										damage: e.power + e.mult * desire/(frac),
-										time: e.time,
-										crit: e.crit,
-									}, true, false, spell, undefined, player);
-
-									let sp = KinkyDungeonFindSpell("DistractionBurstBullet", true);
-									if (sp) {
-										KinkyDungeonCastSpell(enemy.x, enemy.y, sp, undefined, undefined, undefined);
-									}
-
-								}
-							}
-						}
-						if (!KDEventData.shockwaves) KDEventData.shockwaves = [];
-						KDEventData.shockwaves.push({
-							x: player.x,
-							y: player.y,
-							radius: 3,
-							sprite: "Particles/ShockwaveDesire.png",
-						});
-
-						if (cost > 0)
-							KDChangeMana(spell.name, "spell", "cast", -cost, false, 0, false, true);
-						KDTriggerSpell(spell, data, false, false);
-						KinkyDungeonSendActionMessage(10, TextGet("KDDistractionBurst_Yes"), "#ff44ff", 2);
-						KinkyDungeonAdvanceTime(1);
-
-					} else {
-						KinkyDungeonSendTextMessage(10, TextGet("KDDistractionBurst_NoMana"), "#ff8888", 2, true);
-					}
-				} else {
-					KinkyDungeonSendTextMessage(10, TextGet("KDDistractionBurst_No"), "#ff8888", 2, true);
-				}
-
-			}
-		},
-
 		"DistractionShield": (e, spell, data) => {
 			if (data.spell?.name == spell?.name) {
 				KinkyDungeonSpellChoicesToggle[data.index] = false;
@@ -5579,7 +5571,7 @@ let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell:
 				let player = KinkyDungeonPlayerEntity;
 				let buff = KDEntityGetBuff(player, "ChaoticOverflow");
 				if (!buff) {
-					let amount = KinkyDungeonStatWillMax*e.mult;
+					let amount = e.power;//KinkyDungeonStatWillMax*e.mult;
 					if (KinkyDungeonStatWill >= amount-0.01) {
 						if (KinkyDungeonGetRestraint({tags: ["crystalRestraints", "crystalRestraintsHeavy"]}, KDGetEffLevel() + 10, (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint),
 							true, "Gold", false, false, false) != undefined) {

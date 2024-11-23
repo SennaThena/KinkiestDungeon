@@ -153,6 +153,16 @@ let KDEffectTiles: Record<string, effectTile> = {
 		yoffset: 0.25,
 		tags: ["portal", "demonportal"],
 	},
+	"DistractionMote": {
+		name: "DistractionMote",
+		duration: 12,
+		priority: 120,
+		brightness: 2,
+		lightColor: 0xff8ed1,
+		yfade: "sine1000",
+		yfadeamount: 0.25,
+		tags: ["mote", "distractionmote"],
+	},
 	"Portals/Portal": {
 		name: "Portals/Portal",
 		duration: 40,

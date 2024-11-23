@@ -2978,6 +2978,21 @@ function KDNearbyEnemies(x: number, y: number, dist: number, hostileEnemy?: enti
 
 
 /**
+ *
+ * @param x
+ * @param y
+ * @param dist
+ */
+function KDNearbyEntities(x: number, y: number, dist: number): entity[] {
+	let list: entity[] = [];
+
+	if (KDistEuclidean(x - KDPlayer().x, y - KDPlayer().y) <= dist) list.push(KDPlayer());
+
+	return [...list, ...KDNearbyEnemies(x, y, dist)];
+}
+
+
+/**
  * @param x
  * @param y
  * @param dist

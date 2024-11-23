@@ -120,7 +120,7 @@ let KinkyDungeonLearnableSpells = [
 			"ArcaneBlast", "AkashicConflux", "ArcaneBarrier",
 
 
-			"ChaoticOverflow", "DistractionBurst", "DistractionShield",
+			"MakeEssenceMote", "ChaoticOverflow", "DistractionBurst", "DistractionShield",
 		],
 		[
 			"Gunslinger", "BattleTrance", "CombatManeuver",
@@ -696,7 +696,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 
 		{name: "ChaoticOverflow", tags: ["will", "mana", "utility"], castCondition: "requireCrystallable", classSpecific: "Trainee", prerequisite: "DistractionCast", hideWithout: "DistractionCast", school: "Special", manacost: 0, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
-				{type: "ChaoticOverflow", trigger: "toggleSpell", time: 10, mult: 0.25},
+				{type: "ChaoticOverflow", trigger: "toggleSpell", time: 10, mult: 0.25, power: 0.35},
 			]},
 
 
@@ -705,20 +705,35 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 				{type: "DistractionShield", trigger: "toggleSpell", power: 0.5, mult: 0.1, time: 10}, // power: shield per DP, mult: percentage gained as Desire
 			]},
 
-		{name: "DistractionBurst", tags: ["will", "offense"], prerequisite: "OrgasmMana1", classSpecific: "Trainee", hideWithout: "DistractionCast", school: "Special", manacost: 7, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
-			events: [
-				{type: "DistractionBurst", trigger: "toggleSpell", mult: 0.25, power: 3, aoe: 2.99, crit: 2, damage: "charm"},
-			]},
+		{name: "DistractionBurst", tags: ["will", "offense"], prerequisite: "OrgasmMana1", classSpecific: "Trainee", hideWithout: "DistractionCast", school: "Special", manacost: 7, components: [], defaultOff: true,
+			time: 10, level:1, type:"special", special: "DistractionBurst", onhit:"", delay: 0, range: 4.5, aoe: 2.5,
+			lifetime: 0, power: 1, damage: "charm",
+		},
+
+		{name: "MakeEssenceMote", tags: ["will", "offense"], prerequisite: "DistractionCast",
+			classSpecific: "Trainee", hideWithout: "DistractionCast",
+			school: "Special", manacost: 4, components: [], defaultOff: true,
+			customCost: "scaleWithDP",
+			time: 10, level:1, type:"special", special: "MakeEssenceMote", onhit:"", delay: 0, range: 4.5, aoe: 0.5,
+			lifetime: 0, power: 2.5, damage: "charm",
+		},
+
+
 
 		{name: "ManaRecharge", tags: ["will", "mana", "utility"], prerequisite: "ManaRegen", classSpecific: "Mage", hideWithout: "ManaRegen", school: "Special", manacost: 0, components: [], defaultOff: true, level:1, type:"passive", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
 				{type: "ManaRecharge", trigger: "toggleSpell", power: 8.0, mult: 0.1, damage: "soul", count: 3},
 			]},
 
-		{name: "DistractionCast", tags: ["will", "utility"], school: "Special", manacost: 0, components: [], classSpecific: "Trainee", prerequisite: "Null", hideUnlearnable: true, decreaseCost:true, level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert", events: [
-			{type: "DistractionCast", trigger: "calcMiscast"},
-			{type: "DistractionCast", trigger: "tick"},
-			{type: "DistractionCast", trigger: "playerCast"},
+		{name: "DistractionCast", tags: ["will", "utility"], school: "Special",
+			special: "EssenceMote", mixedPassive: true,
+			manacost: 0, components: [], classSpecific: "Trainee", prerequisite: "Null",
+			noMiscast: true,
+			hideUnlearnable: true, decreaseCost:true, level:1, type:"special", onhit:"", time: 0, delay: 0, range: 2.5, lifetime: 0, aoe: 1.5, power: 0, damage: "inert", events: [
+			//{type: "DistractionCast", trigger: "calcMiscast"},
+			//{type: "DistractionCast", trigger: "tick"},
+			//{type: "DistractionCast", trigger: "playerCast"},
+			{type: "EssenceMote", trigger: "miscast", dist: 1.5},
 		]},
 		{name: "OrgasmMana1", tags: ["will", "utility"], school: "Special", manacost: 0, components: [], classSpecific: "Trainee", prerequisite: "DistractionCast", hideWithout: "DistractionCast", level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			blockedBy: ["EdgeMana1"], events: [
@@ -4032,6 +4047,12 @@ let KDCustomCost: Record<string, (data: any) => void> = {
 	"evasive": (data) => {
 		data.cost = Math.round(10 * KDEvasiveManeuversCost()) + "SP";
 		data.color = "#88ff88";
+	},
+	"scaleWithDP": (data) => {
+		let cost = KinkyDungeonGetManaCost(data.spell, false, false)
+			/ Math.max(1, (KinkyDungeonStatDistractionMax / 10));
+		data.cost = Math.round(10 * cost) + "MP";
+		data.color = "#8888ff";
 	},
 
 	"Enrage": (data) => {
