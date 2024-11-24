@@ -236,6 +236,21 @@ AddModel({
 	])
 });
 
+AddModel({
+	Name: "Fear",
+	Folder: "Expressions",
+	TopLevel: true,
+	Protected: true,
+	//Group: "Blush",
+	Categories: ["Face"],
+	Layers: ToLayerMap([
+		{ Name: "Fear", Layer: "Fear", Pri: 0,
+			Invariant: true,
+			RequirePoses: {FearPose: true},
+		},
+	])
+});
+
 
 
 AddModel({

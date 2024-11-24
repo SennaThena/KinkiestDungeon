@@ -475,6 +475,9 @@ function KinkyDungeonDressPlayer (
 			let Brows2Pose = KDGetPoseOfType(Character, "Brows2");
 			let BlushPose = KDGetPoseOfType(Character, "Blush");
 			let MouthPose = KDGetPoseOfType(Character, "Mouth");
+			let FearPose = KDGetPoseOfType(Character, "Fear");
+
+
 
 			let DefaultBound = "Front"; // Default bondage for arms
 			let DefaultHobbled = "Closed"; // Default bondage for legs
@@ -580,6 +583,7 @@ function KinkyDungeonDressPlayer (
 				if (!KDNPCPoses.get(Character)?.CurrentPoseBrows2 && result.Brows2Pose) Brows2Pose = result.Brows2Pose;
 				if (!KDNPCPoses.get(Character)?.CurrentPoseBlush && result.BlushPose) BlushPose = result.BlushPose;
 				if (!KDNPCPoses.get(Character)?.CurrentPoseMouth && result.MouthPose) MouthPose = result.MouthPose;
+				if (!KDNPCPoses.get(Character)?.CurrentPoseFear && result.FearPose) FearPose = result.FearPose;
 			}
 
 			if (KDCurrentModels.get(Character)) {
@@ -592,6 +596,8 @@ function KinkyDungeonDressPlayer (
 					MouthPose,
 					Eyes2Pose,
 					Brows2Pose,
+					undefined,
+					FearPose
 				);
 				KDUpdateTempPoses(Character);
 
@@ -643,6 +649,12 @@ function KinkyDungeonDressPlayer (
 			}
 		}
 		if (!KDCurrentModels.get(Character)?.Poses?.Eyes && KDModelFace[facestyle]) {
+			for (let face of Object.values(KDModelFace[facestyle])) {
+				KDInventoryWear(Character, face.Item, undefined, undefined, undefined, face.Filters, face.Properties);
+				ReUpdate = true;
+			}
+		}
+		if (!KDCurrentModels.get(Character)?.Poses?.Fear && KDModelFace[facestyle]) {
 			for (let face of Object.values(KDModelFace[facestyle])) {
 				KDInventoryWear(Character, face.Item, undefined, undefined, undefined, face.Filters, face.Properties);
 				ReUpdate = true;

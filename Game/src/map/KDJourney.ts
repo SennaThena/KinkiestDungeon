@@ -47,6 +47,7 @@ let KDJourneySlotTypes : Record<string, (Predecessor: KDJourneySlot, x: number, 
 			RoomType: "",
 			Faction: "",
 			SideRooms: [],
+			HiddenRooms: {},
 		};
 
 		// We make it so basically map mods cant repeat for the same 3 generated tiles in a row
@@ -101,6 +102,7 @@ let KDJourneySlotTypes : Record<string, (Predecessor: KDJourneySlot, x: number, 
 			protected: true,
 			visited: false,
 			SideRooms: [],
+			HiddenRooms: {},
 		};
 	},
 	boss: (Predecessor, x, y, forceCheckpoint) => {
@@ -123,6 +125,7 @@ let KDJourneySlotTypes : Record<string, (Predecessor: KDJourneySlot, x: number, 
 			protected: true,
 			visited: false,
 			SideRooms: [],
+			HiddenRooms: {},
 		};
 	},
 };

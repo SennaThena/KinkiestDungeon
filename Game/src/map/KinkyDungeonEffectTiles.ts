@@ -47,13 +47,13 @@ let KDEffectTiles: Record<string, effectTile> = {
 		name: "Rubble",
 		duration: 9999,
 		priority: 0,
-		tags: ["terrain", "ground", "rock", "seal"],
+		tags: ["terrain", "ground", "rock", "seal", "rubble"],
 	},
 	"RubbleNoMend": {
 		name: "RubbleNoMend",
 		duration: 9999,
 		priority: 0,
-		tags: ["terrain", "ground", "rock"],
+		tags: ["terrain", "ground", "rock", "rubble"],
 	},
 	"Slime": {
 		name: "Slime",

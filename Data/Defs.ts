@@ -48,6 +48,7 @@ let LAYERS_BASE = [
 	"Eyes",
 	"Mouth",
 	"Blush",
+	"Fear",
 	"Head",
 
 
@@ -1875,6 +1876,9 @@ let LayerProperties = {
 		Parent: "Head",
 	},
 	Blush: {
+		Parent: "Head",
+	},
+	Fear: {
 		Parent: "Head",
 	},
 	Brows: {

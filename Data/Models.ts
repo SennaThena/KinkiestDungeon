@@ -1691,7 +1691,7 @@ function KDGetColorableLayers(Model: Model, Properties: boolean): string[] {
 	return ret;
 }
 
-function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose: string | undefined = undefined, EyesPose: string | undefined = undefined, BrowsPose: string | undefined = undefined, BlushPose: string | undefined = undefined, MouthPose: string | undefined = undefined, Eyes2Pose: string | undefined = undefined, Brows2Pose: string | undefined = undefined, ExtraPose: string | undefined = undefined): {[_: string]: boolean} {
+function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose: string | undefined = undefined, EyesPose: string | undefined = undefined, BrowsPose: string | undefined = undefined, BlushPose: string | undefined = undefined, MouthPose: string | undefined = undefined, Eyes2Pose: string | undefined = undefined, Brows2Pose: string | undefined = undefined, ExtraPose: string | undefined = undefined, FearPose: string | undefined = undefined): {[_: string]: boolean} {
 	let poses: {[_: string]: boolean} = {};
 	poses[ArmsPose || "Free"] = true;
 	poses[LegsPose || "Spread"] = true;
@@ -1699,6 +1699,7 @@ function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose:
 	poses[BrowsPose || "BrowsNeutral"] = true;
 	poses[BlushPose || "BlushNone"] = true;
 	poses[MouthPose || "MouthNeutral"] = true;
+	poses[FearPose || "NoFearPose"] = true;
 	poses[(Eyes2Pose || EYE2POSES[EYEPOSES.indexOf(EyesPose)] || "Eyes2Neutral")] = true;
 	poses[(Brows2Pose || BROW2POSES[BROWPOSES.indexOf(BrowsPose)] || "Brows2Neutral")] = true;
 	if (ExtraPose) {
@@ -1710,18 +1711,20 @@ function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose:
 }
 
 
+let PoseCheckArray = {
+	Arms: ARMPOSES,
+	Legs: LEGPOSES,
+	Eyes: EYEPOSES,
+	Eyes2: EYE2POSES,
+	Brows: BROWPOSES,
+	Brows2: BROW2POSES,
+	Blush: BLUSHPOSES,
+	Mouth: MOUTHPOSES,
+	Fear: FEARPOSES,
+}
+
 function KDGetPoseOfType(C: Character, Type: string): string {
-	let checkArray = [];
-	switch (Type) {
-		case "Arms": checkArray = ARMPOSES; break;
-		case "Legs": checkArray = LEGPOSES; break;
-		case "Eyes": checkArray = EYEPOSES; break;
-		case "Eyes2": checkArray = EYE2POSES; break;
-		case "Brows": checkArray = BROWPOSES; break;
-		case "Brows2": checkArray = BROW2POSES; break;
-		case "Blush": checkArray = BLUSHPOSES; break;
-		case "Mouth": checkArray = MOUTHPOSES; break;
-	}
+	let checkArray = PoseCheckArray[Type] || [];
 	if (KDCurrentModels.get(C)?.Poses)
 		for (let p of checkArray) {
 			if (KDCurrentModels.get(C).Poses[p]) {

@@ -179,6 +179,10 @@ function KDDefaultMapData(mapX: number, mapY: number, RoomType: string = "", Map
 		PrisonType: "",
 		data: {},
 
+		LairsToPlace: [],
+		PotentialEntrances: [],
+		UsedEntrances: {},
+
 		Regiments: {},
 
 		RoomType: RoomType,
@@ -587,6 +591,7 @@ function KDGetWorldMapLocation(point: { x: number, y: number }): KDWorldSlot {
 	return KDWorldMap[point.x + ',' + point.y];
 }
 
+
 /**
  * Creates a new world location at the specific area
  * @param x
@@ -602,7 +607,9 @@ function KDCreateWorldLocation(x: number, y: number, jx: number, jy: number, _ma
 		jy: jy,
 		main: "",
 		name: "Tile" + x + ',' + y,
-		color: "#ffffff"
+		color: "#ffffff",
+		outposts: {},
+		lairs: {},
 	};
 }
 
@@ -757,6 +764,10 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
 		x: origx,
 		y: y,
 	};
+
+	KDBuildLairs();
+
+
 	let aware = KDKickEnemies(undefined, ignoreAware, y); // Shuffle enemy locations
 	if (ignoreAware && aware) {
 		//KinkyDungeonLoseJailKeys();
@@ -1234,9 +1245,11 @@ function KinkyDungeonCreateMap (
 		KinkyDungeonPlayerEntity.y = KDMapData.StartPosition.y;
 
 
-		if (!altType || !altType.noWear)
+		if (!altType || !altType.noWear) {
+			KinkyDungeonGenNavMap(KDMapData.StartPosition);
 			KinkyDungeonReplaceDoodads(crackchance, barchance, wallRubblechance, wallhookchance, ceilinghookchance, width, height, altType); // Replace random internal walls with doodads
-		//console.log(KDRandom());
+		}
+			//console.log(KDRandom());
 		if (KDDebug) {
 			console.log(`${performance.now() - startTime} ms for doodad creation`);
 			startTime = performance.now();
@@ -1414,6 +1427,11 @@ function KinkyDungeonCreateMap (
 			}
 
 			if (MapParams.worldGenCode) MapParams.worldGenCode();
+
+
+
+			KDBuildLairs();
+
 
 			if (KDGameData.PrisonerState == 'jail' && seed) {
 				// The above condition is the condition to start in jail
@@ -2348,7 +2366,7 @@ function KinkyDungeonPlaceStairs(_startpos: number, width: number, height: numbe
 							KinkyDungeonTilesSet(pos.x + ',' + pos.y, tile);
 							KinkyDungeonMapSet(pos.x, pos.y, 'H');
 							if (sideRoom.stairCreation(tile, pos.x, pos.y)) {
-								KinkyDungeonSpecialAreas.push({x: KDMapData.EndPosition.x, y: KDMapData.EndPosition.y, radius: 2});
+								KinkyDungeonSpecialAreas.push({x: pos.x, y: pos.y, radius: 2});
 							}
 						} else {
 							let tile = KinkyDungeonTilesGet(pos.x + ',' + pos.y) || {};
@@ -3614,9 +3632,24 @@ function KinkyDungeonReplaceDoodads(Chance: number, barchance: number, wallRubbl
 			if (category?.tags?.includes("noWear")) continue;
 			if (KinkyDungeonMapGet(X, Y) == '1' && KDRandom() < Chance) {
 				KinkyDungeonMapSet(X, Y, '4');
-				// Cracks then expand in a random direction twice
+				// Cracks then expand in a random direction twice,
+				// and place an exit if the initial tile is connected to nav tile
+				let accessible = false;
+				for (let x = X - 1; x <= X + 1; x++) {
+					for (let y = Y - 1; y <= Y + 1; y++) {
+						if (!!KDMapData.RandomPathablePoints[x + ',' + y]) {
+							accessible = true;
+							x = X + 2;
+							y = Y + 2;
+							// To break
+						}
+					}
+				}
+				let toExcavate: KDPoint[] = [{x: X, y: Y}];
+
 				let curXOld = X;
 				let curYOld = Y;
+				let lastPoint: KDPoint = null;
 				for (let a = 0; a < 2; a++) {
 					let curX = curXOld;
 					let curY = curYOld;
@@ -3634,11 +3667,26 @@ function KinkyDungeonReplaceDoodads(Chance: number, barchance: number, wallRubbl
 							// Crakcs propagate
 							|| KinkyDungeonMapGet(curX, curY) == '4') {
 							KinkyDungeonMapSet(curX, curY, '4');
+							lastPoint = {x:curX, y:curY};
+							toExcavate.push(lastPoint);
 						} else {
 							curX -= xd;
 							curY -= yd;
 						}
 					}
+				}
+				if (accessible
+					&& lastPoint?.x > 0
+					&& lastPoint.y > 0
+					&& lastPoint.x < KDMapData.GridWidth - 2
+					&& lastPoint.y < KDMapData.GridHeight - 2) {
+					KDMapData.PotentialEntrances.push({
+						Excavate: toExcavate,
+						PlaceScript: "Cave",
+						Type: "Cave",
+						x: lastPoint.x,
+						y: lastPoint.y,
+					})
 				}
 
 			} else

@@ -2679,6 +2679,10 @@ interface KDWorldSlot {
 	color: string;
 	name: string;
 	main: string;
+	/** Maps owned by a faction */
+	outposts: Record<string, string>,
+	/** Maps owned by an NPC */
+	lairs: Record<string, string>,
 }
 
 /**
@@ -2717,6 +2721,11 @@ interface KDMapDataType {
 	PrisonState: string,
 	PrisonStateStack: string[],
 	PrisonType: string,
+
+	LairsToPlace: string[],
+	PotentialEntrances: LairEntrance[],
+	/** Lair to entrance data */
+	UsedEntrances: Record<string, LairEntrance>,
 
 	Labels: Record<string, KDLabel[]>,
 
@@ -3408,6 +3417,18 @@ interface KDExpressionType {
 	Brows2Pose: string,
 	BlushPose: string,
 	MouthPose: string,
+	FearPose?: string,
+}
+interface KDExpressionPoseType {
+	Arms: string,
+	Legs: string,
+	Eyes: string,
+	Eyes2: string,
+	Brows: string,
+	Brows2: string,
+	Blush: string,
+	Mouth: string,
+	Fear?: string,
 }
 
 type KDExpression = {
@@ -3764,6 +3785,7 @@ type KDJourneySlot = {
 	EscapeMethod: string;
 	Faction: string;
 	SideRooms: string[];
+	HiddenRooms: Record<string, boolean>;
 	Checkpoint: string;
 	Connections: {x: number, y: number}[];
 	/** Prevents from getting culled */

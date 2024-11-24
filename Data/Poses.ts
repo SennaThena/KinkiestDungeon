@@ -36,6 +36,7 @@ let BROWPOSES = BROWTYPES.map((pose) => {return "Brows" + pose;});
 let BROW2POSES = BROWTYPES.map((pose) => {return "Brows2" + pose;});
 let MOUTHPOSES = ["MouthNeutral", "MouthDazed", "MouthDistracted", "MouthEmbarrassed", "MouthFrown", "MouthSmile", "MouthSurprised", "MouthPout"];
 let BLUSHPOSES = ["BlushLow", "BlushMedium", "BlushHigh", "BlushExtreme"];
+let FEARPOSES = ["NoFearPose", "FearPose"];
 /** Standard GlobalDefaultOverrides, this should be for any pose that's meant to use mostly normal assets */
 let STANDARD_DEFAULTS = ["Hogtie"];
 

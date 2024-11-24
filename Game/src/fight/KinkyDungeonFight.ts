@@ -2365,7 +2365,7 @@ function KinkyDungeonBulletHit(b: any, born: number, outOfTime?: boolean, outOfR
 						sum.goToTarget, faction, faction && KDFactionRelation("Player", faction) <= -0.5,
 						sum.minRange, sum.aware, undefined, sum.hideTimer, undefined,
 						KDBulletAoEMod(b), sum.bound ? b.bullet.source : undefined, sum.weakBinding, sum.teleportTime,
-						b.ox, b.oy,
+						b.ox, b.oy, true
 					);
 					created += e.length;
 				}
@@ -2428,7 +2428,8 @@ function KinkyDungeonSummonEnemy (
 	weakBinding?:   boolean,
 	teleportTime?:  number,
 	ox?:            number,
-	oy?:            number
+	oy?:            number,
+	temporary?:     boolean
 ): entity[]
 {
 	let slots = [];
@@ -2458,7 +2459,8 @@ function KinkyDungeonSummonEnemy (
 			) : null;
 
 			if ((!hidden && !pathfind) || path) {
-				let e: entity = {summoned: true, boundTo: boundTo, weakBinding: weakBinding, faction: faction, hostile: hostile ? 100 : undefined, hideTimer: hideTimer, rage: Enemy.summonRage ? 9999 : undefined, Enemy: Enemy,
+				let e: entity = {summoned: true, temporary: temporary,
+					boundTo: boundTo, weakBinding: weakBinding, faction: faction, hostile: hostile ? 100 : undefined, hideTimer: hideTimer, rage: Enemy.summonRage ? 9999 : undefined, Enemy: Enemy,
 					id: KinkyDungeonGetEnemyID(), gx: goToTarget ? KinkyDungeonTargetX : undefined, gy: goToTarget ? KinkyDungeonTargetY : undefined, ambushtrigger: startAware,
 					x:x+slot.x, y:y+slot.y, hp: (Enemy.startinghp) ? Enemy.startinghp : Enemy.maxhp, shield: Enemy.shield, movePoints: 0, attackPoints: 0, lifetime: lifetime, maxlifetime: lifetime, path: path};
 				KDProcessCustomPatron(Enemy, e, 0, false);
