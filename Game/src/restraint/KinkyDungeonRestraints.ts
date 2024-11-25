@@ -4104,6 +4104,11 @@ function KinkyDungeonAddRestraintIfWeaker (
 			KinkyDungeonSetFlag("restrained", 2);
 			KinkyDungeonSetFlag("restrained_recently", 5);
 		}
+		if (restraint.Group == "ItemNeck"
+			&& !KinkyDungeonPlayerTags.get("Collars")
+			&& restraint.shrine.includes("Collars")) {
+			KinkyDungeonSetFlag("collared", 8);
+		}
 
 		ret = KinkyDungeonAddRestraint(restraint, Tightness + Math.round(0.1 * KinkyDungeonDifficulty), Bypass, Lock, Keep, false, !linkableCurrent, events, faction, undefined, undefined, Curse, undefined, securityEnemy, inventoryAs, data);
 		if (preserve_tether && !KDIsPlayerTethered(KinkyDungeonPlayerEntity)) KinkyDungeonAttachTetherToEntity(tether_len, KinkyDungeonLeashingEnemy(), player);

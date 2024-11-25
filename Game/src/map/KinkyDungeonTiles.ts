@@ -365,7 +365,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 						if (data.ShortcutIndex >= 0) {
 							KDGameData.ShortcutIndex = data.ShortcutIndex;
 						} else {
-							KDGameData.ShortcutIndex = -1;
+							KDGameData.ShortcutIndex = KDGameData.RoomType;
 						}
 						if (altRoom?.afterExit) altRoom.afterExit(data); // Handle any special contitions
 						KinkyDungeonSendEvent("AfterAdvance", data);

@@ -677,7 +677,7 @@ function KinkyDungeonGetImmunity(tags, profile, type, resist, mode = 0) {
 			}
 		}
 	}
-	doFunc(KDDamageEquivalencies[type] || type);
+	if (doFunc(KDDamageEquivalencies[type] || type)) return true;
 	let t = KDDamageEquivalencies[type] || type;
 
 	if (KinkyDungeonDamageTypesExtension[t]) {
@@ -685,7 +685,7 @@ function KinkyDungeonGetImmunity(tags, profile, type, resist, mode = 0) {
 			if (KinkyDungeonDamageTypesExtension[t])
 				t = KinkyDungeonDamageTypesExtension[t];
 			else {
-				doFunc(t);
+				if (doFunc(t)) return true;
 				break;
 			}
 		}

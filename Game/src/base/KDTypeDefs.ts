@@ -2683,6 +2683,8 @@ interface KDWorldSlot {
 	outposts: Record<string, string>,
 	/** Maps owned by an NPC */
 	lairs: Record<string, string>,
+	/** Lairs generated in a map that doesnt exist yet */
+	lairsToPlace: Record<string, string[]>,
 }
 
 /**
@@ -2713,6 +2715,7 @@ interface RepopQueueData {
 }
 
 interface KDMapDataType {
+	SpecialAreas: {x: number, y: number, radius: number}[],
 	mapX: number,
 	mapY: number,
 	RepopulateQueue: RepopQueueData[],
@@ -2756,7 +2759,7 @@ interface KDMapDataType {
 	Bullets: any[];
 	StartPosition: {x: number, y: number};
 	EndPosition: {x: number, y: number};
-	ShortcutPositions: {x: number, y: number}[];
+	ShortcutPositions: Record<string, {x: number, y: number}>;
 
 	PatrolPoints: {x: number, y: number}[];
 

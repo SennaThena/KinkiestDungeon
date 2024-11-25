@@ -5,11 +5,15 @@ interface KDLair {
 	RoomType: string,
 	OwnerNPC?: number,
 	OwnerFaction?: string,
-	/** Required entrance type */
-	Entrance?: string,
+	/** Required entrance type for each entry room*/
+	Entrance: Record<string, string>,
+	/** For cases with an entrance that is not main, to a non lair*/
+	EntranceTo: Record<string, string>,
+
 	/** Optional override type */
 	PlaceScriptOverride?: string,
 	Hidden?: boolean,
+	UpStairsFrom?: string,
 }
 let KDPersonalAlt: {[_ : string]: KDLair} = {};
 
@@ -42,33 +46,96 @@ function KDGetOutposts(slot: KDWorldSlot, faction?: number): [string, string][] 
 	return slot?.outposts ? Object.entries(slot.outposts) : [];
 }
 
-function KDAddLair(slot: KDWorldSlot, room: string, alt: string, id: number, hidden: boolean, entrance: string): boolean {
+function KDAddLair(
+	slot: KDWorldSlot,
+	/** Room to place the lair entrance in */
+	room: string,
+	/** altType of the lair */
+	alt: string,
+	id: number,
+	hidden: boolean,
+	/** Entrance of the lair inside room */
+	entrance: string,
+	/** Room that this is from, only relevant if different from room*/
+	fromRoom?: string,
+	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
+	entranceFrom?: string): boolean {
 	let lairid = id + "_" + alt + `,${slot.x},${slot.y}`;
+	let jx = slot.jx || 0;
+	let jy = slot.jy || slot.y;
+	let journeySlot = KDGameData.JourneyMap[jx + ',' + jy];
 	if (!slot.lairs) {
 		slot.lairs = {};
 	}
+	let placed = false;
 	if (!slot.lairs[lairid]) {
 		slot.lairs[lairid] = room;
 		KDPersonalAlt[lairid] = {
 			Name: room,
 			RoomType: alt,
 			OwnerNPC: id,
-			Entrance: entrance,
+			Entrance: {},
+			EntranceTo: {},
 			Hidden: hidden,
+			UpStairsFrom: fromRoom != undefined ? fromRoom : room,
 		};
+		KDPersonalAlt[lairid].Entrance[room] = entrance;
 
+		if (journeySlot) {
+			journeySlot.SideRooms.push(lairid);
+			if (!journeySlot.HiddenRooms) {
+				journeySlot.HiddenRooms = {};
+			}
+			if (hidden)
+				journeySlot.HiddenRooms[lairid] = true;
+		}
 		if (slot.data[room]) {
 			// We have to retroactively place the lair
 			if (!slot.data[room].LairsToPlace) {
 				slot.data[room].LairsToPlace = [];
 			}
 			slot.data[room].LairsToPlace.push(lairid);
+			if (slot.data[room] == KDMapData) {
+				// Build the lair instantly
+				KDBuildLairs();
+			}
+			placed = true;
+		} else {
+			// We have to retroactively place the lair
+			if (!slot.lairsToPlace) {
+				slot.lairsToPlace = {};
+			}
+			if (!slot.lairsToPlace[room]) {
+				slot.lairsToPlace[room] = [];
+			}
+			slot.lairsToPlace[room].push(lairid);
+			placed = true;
 		}
 	}
-	return false;
+	if (KDDoLairOutpostConnections(
+	slot,
+	lairid,
+	room,
+	entrance,
+	entranceFrom || entrance))
+		KDBuildLairs();
+	return placed;
 }
 
-function KDAddOutpost(slot: KDWorldSlot, room: string, alt: string, faction: string, hidden: boolean, entrance: string): boolean {
+function KDAddOutpost(
+	slot: KDWorldSlot,
+	/** Room to place the lair entrance in */
+	room: string,
+	/** altType of the lair */
+	alt: string,
+	faction: string,
+	hidden: boolean,
+	/** Entrance of the lair inside room */
+	entrance: string,
+	/** Room that this is from, only relevant if different from room*/
+	fromRoom?: string,
+	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
+	entranceFrom?: string): boolean {
 	let outpostid = faction + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
@@ -76,14 +143,19 @@ function KDAddOutpost(slot: KDWorldSlot, room: string, alt: string, faction: str
 	if (!slot.outposts) {
 		slot.outposts = {};
 	}
+	let placed = false;
 	if (!slot.outposts[outpostid]) {
 		slot.outposts[outpostid] = room;
 		KDPersonalAlt[outpostid] = {
 			Name: outpostid,
 			RoomType: alt,
 			OwnerFaction: faction,
-			Entrance: entrance,
+			Entrance: {},
+			EntranceTo: {},
+			UpStairsFrom: fromRoom != undefined ? fromRoom : room,
 		};
+		KDPersonalAlt[outpostid].Entrance[room] = entrance;
+
 		if (journeySlot) {
 			journeySlot.SideRooms.push(outpostid);
 			if (!journeySlot.HiddenRooms) {
@@ -102,15 +174,109 @@ function KDAddOutpost(slot: KDWorldSlot, room: string, alt: string, faction: str
 				// Build the lair instantly
 				KDBuildLairs();
 			}
-			return true;
+			placed = true;
+		} else {
+			// We have to retroactively place the lair
+			if (!slot.lairsToPlace) {
+				slot.lairsToPlace = {};
+			}
+			if (!slot.lairsToPlace[room]) {
+				slot.lairsToPlace[room] = [];
+			}
+			slot.lairsToPlace[room].push(outpostid);
+			placed = true;
 		}
 	}
-	return false;
+	if (KDDoLairOutpostConnections(
+	slot,
+	outpostid,
+	room,
+	entrance,
+	entranceFrom || entrance))
+		KDBuildLairs();
+	return placed;
+}
+
+function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: string, entranceType: string, entranceTypeFrom: string): boolean {
+	if (!KDPersonalAlt[id]) return false;
+	let ret = false;
+	if (
+		// Check target room for entrances
+		(
+			!slot.lairsToPlace[roomFrom]?.includes(id)
+			&& !slot.data[roomFrom]?.LairsToPlace?.includes(id)
+			&& !(slot.data[roomFrom]?.UsedEntrances && slot.data[roomFrom]?.UsedEntrances[id])
+		)
+	) {
+		KDPersonalAlt[id].Entrance[roomFrom] = entranceType;
+		if (slot.data[roomFrom]) {
+			if (!slot.data[roomFrom].LairsToPlace) {
+				slot.data[roomFrom].LairsToPlace = [];
+			}
+			if (!slot.data[roomFrom].LairsToPlace.includes(id))
+				slot.data[roomFrom].LairsToPlace.push(id);
+		} else {
+			if (!slot.lairsToPlace) {
+				slot.lairsToPlace = {};
+			}
+			if (!slot.lairsToPlace[roomFrom]) {
+				slot.lairsToPlace[roomFrom] = [];
+			}
+			if (!slot.lairsToPlace[roomFrom].includes(id))
+				slot.lairsToPlace[roomFrom].push(id);
+		}
+		ret = true;
+	}
+
+	// If this lair doesnt have an entrance
+	if (
+		KDPersonalAlt[id].UpStairsFrom != roomFrom
+		// Check target room for entrances
+		&& (
+			!slot.lairsToPlace[id]?.includes(roomFrom)
+			&& !slot.data[id]?.LairsToPlace?.includes(roomFrom)
+			&& !(slot.data[id]?.UsedEntrances && slot.data[id]?.UsedEntrances[roomFrom])
+		)
+	) {
+		if (KDPersonalAlt[roomFrom])
+			KDPersonalAlt[roomFrom].Entrance[id] = entranceTypeFrom;
+		else KDPersonalAlt[id].EntranceTo[roomFrom] = entranceTypeFrom;
+		if (slot.data[id]) {
+			if (!slot.data[id].LairsToPlace) {
+				slot.data[id].LairsToPlace = [];
+			}
+			if (!slot.data[id].LairsToPlace.includes(roomFrom))
+				slot.data[id].LairsToPlace.push(roomFrom);
+		} else {
+			if (!slot.lairsToPlace) {
+				slot.lairsToPlace = {};
+			}
+			if (!slot.lairsToPlace[id]) {
+				slot.lairsToPlace[id] = [];
+			}
+			if (!slot.lairsToPlace[id].includes(roomFrom))
+				slot.lairsToPlace[id].push(roomFrom);
+		}
+
+		ret = true;
+	}
+
+	return ret;
 }
 
 /** Builds lairs for currently loaded map data */
 function KDBuildLairs() {
 	let data = KDMapData;
+
+	// Load up the array if theres any that dont actually exist yet
+	let slot = KDGetWorldMapLocation({x: data.mapX, y: data.mapY});
+	if (slot.lairsToPlace && slot.lairsToPlace[KDMapData.RoomType]?.length > 0) {
+		if (!data.LairsToPlace) {
+			data.LairsToPlace = [];
+		}
+		data.LairsToPlace.push(...slot.lairsToPlace[KDMapData.RoomType]);
+		slot.lairsToPlace[KDMapData.RoomType] = undefined;
+	}
 
 	/** Setup */
 	let lairsToPlace = data.LairsToPlace || [];
@@ -120,13 +286,13 @@ function KDBuildLairs() {
 	/** Iterate */
 	for (let lairName of lairsToPlace) {
 		let lair = KDPersonalAlt[lairName];
-		if (!lair) {
+		if (!lair && !KDPersonalAlt[data.RoomType]) {
 			lairsNotPlaced.push(lairName);
-			continue;
+			return;
 		}
-		let entrance = KDFindEntrance(lair, data);
+		let entrance = lair ? KDFindEntrance(lair, data) : KDFindEntranceTo(KDPersonalAlt[data.RoomType], lairName, data);
 		if (entrance) {
-			if (KDPlaceLairEntrance(lair, data, entrance)) {
+			if (KDPlaceLairEntrance(lair, data, entrance, lairName)) {
 				lairsPlaced.push(lairName);
 				data.UsedEntrances[lairName] = entrance;
 				let ind = data.PotentialEntrances.findIndex((ent) => {
@@ -156,11 +322,36 @@ function KDFindEntrance(lair: KDLair, data: KDMapDataType): LairEntrance {
 	let min = -1000000;
 	let highestEntranceLevel = min;
 	let potentialEntrances = (data.PotentialEntrances || []).filter((entrance) => {
-		return lair.Entrance == entrance.Type;
+		return lair.Entrance[data.RoomType] == entrance.Type;
 	});
 	for (let entrance of potentialEntrances) {
-		let value = !KDLairEntranceFilterScript[lair.Entrance] ? min
-			: KDLairEntranceFilterScript[lair.Entrance](lair, data, entrance);
+		let value = !KDLairEntranceFilterScript[lair.Entrance[data.RoomType]] ? min
+			: KDLairEntranceFilterScript[lair.Entrance[data.RoomType]](lair, data, entrance);
+		if (value > highestEntranceLevel) {
+			highestEntranceLevel = value;
+			highestEntrances = [];
+		}
+		if (value >= highestEntranceLevel) {
+			highestEntrances.push(entrance);
+		}
+	}
+	if (highestEntrances.length > 0) {
+		return highestEntrances[Math.floor(KDRandom() * highestEntrances.length)];
+	}
+	return null;
+}
+
+/** Filters and gets an entrance for the lair based on global lair data and map type */
+function KDFindEntranceTo(lairFrom: KDLair, roomTo: string, data: KDMapDataType): LairEntrance {
+	let highestEntrances: LairEntrance[] = [];
+	let min = -1000000;
+	let highestEntranceLevel = min;
+	let potentialEntrances = (data.PotentialEntrances || []).filter((entrance) => {
+		return lairFrom.EntranceTo[roomTo] == entrance.Type;
+	});
+	for (let entrance of potentialEntrances) {
+		let value = !KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]] ? min
+			: KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]](null, data, entrance, roomTo);
 		if (value > highestEntranceLevel) {
 			highestEntranceLevel = value;
 			highestEntrances = [];
@@ -176,9 +367,9 @@ function KDFindEntrance(lair: KDLair, data: KDMapDataType): LairEntrance {
 }
 
 /** Runs the associated place script for the lair based on global lair data */
-function KDPlaceLairEntrance(lair: KDLair, data: KDMapDataType, entrance: LairEntrance): boolean {
+function KDPlaceLairEntrance(lair: KDLair, data: KDMapDataType, entrance: LairEntrance, roomTo?: string): boolean {
 	if (KDLairEntrancePlaceScript[entrance.PlaceScript]) {
-		return KDLairEntrancePlaceScript[entrance.PlaceScript](lair, data, entrance);
+		return KDLairEntrancePlaceScript[entrance.PlaceScript](lair, data, entrance, roomTo);
 	}
 	return false;
 }

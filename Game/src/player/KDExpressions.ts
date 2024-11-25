@@ -44,6 +44,47 @@ let KDExpressions: Record<string, KDExpression> = {
 			};
 		},
 	},
+	"Collared": {
+		priority: 9,
+		criteria: (C, flags) => {
+			if (flags.get("collared")) {
+				return true;
+			}
+			return false;
+		},
+		expression: (C, flags) => {
+			return {
+				EyesPose: "",
+				Eyes2Pose: "",
+				BrowsPose: "",
+				Brows2Pose: "",
+				BlushPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > -25) ? "BlushHigh" : "",
+				MouthPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 0) ? "MouthSmile" : "",
+				FearPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 25) ? "" : "FearPose",
+			};
+		},
+	},
+	"Defeat": {
+		priority: 20,
+		criteria: (C, flags) => {
+			if (flags.get("defeat")) {
+				return true;
+			}
+			return false;
+		},
+		expression: (C, flags) => {
+			return {
+				EyesPose: "",
+				Eyes2Pose: "",
+				BrowsPose: "",
+				Brows2Pose: "",
+				BlushPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > -25) ? "BlushHigh" : "",
+				MouthPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 0) ? "MouthSmile" : "",
+				FearPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 25) ? "" : "FearPose",
+			};
+		},
+	},
+
 	"RestrainedRecent": {
 		priority: 1.5,
 		criteria: (C, flags) => {

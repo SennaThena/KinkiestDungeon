@@ -376,12 +376,12 @@ function KDEnemyNearTargetExit(entity: entity, mapData: KDMapDataType): boolean 
 }
 
 function KDGetNearestExit(x: number, y: number, mapData: KDMapDataType, backup?: boolean): KDPoint {
-	let possible: KDPoint[] = [mapData.StartPosition, mapData.EndPosition, ...(mapData.ShortcutPositions || [])];
+	let possible: KDPoint[] = [mapData.StartPosition, mapData.EndPosition, ...Object.values(mapData.ShortcutPositions || {})];
 	possible = possible.filter((pos) => {
 		return !!pos && KinkyDungeonStairTiles.includes(KinkyDungeonMapDataGet(mapData, pos.x, pos.y));
 	});
 	if (possible.length == 0) {
-		possible = [mapData.StartPosition, mapData.EndPosition, ...(mapData.ShortcutPositions || [])];
+		possible = [mapData.StartPosition, mapData.EndPosition, ...Object.values(mapData.ShortcutPositions || {})];
 		possible = possible.filter((pos) => {
 			return !!pos;
 		});

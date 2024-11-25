@@ -46,7 +46,7 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 				if (npc.fromType == 1) {
 					point = mapData.EndPosition;
 				} else if (npc.fromType == 2) {
-					if (npc.fromIndex >= 0)
+					if (npc.fromIndex)
 						point = mapData.ShortcutPositions[npc.fromIndex];
 				}
 				if (point) {

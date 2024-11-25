@@ -10,12 +10,12 @@ interface LairEntrance {
 }
 
 /** PlaceScripts for lairs that override the entrance placescript */
-let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, entrance: LairEntrance) => boolean> = {
-	DragonLair: (lair, data, entrance) => {
+let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, entrance: LairEntrance, roomTo?: string) => boolean> = {
+	DragonLair: (lair, data, entrance, roomTo) => {
 		// For now...
-		return KDLairTypePlaceScript["Cave"](lair, data, entrance);
+		return KDLairTypePlaceScript["Cave"](lair, data, entrance, roomTo);
 	},
-	Cave: (lair, data, entrance) => {
+	Cave: (lair, data, entrance, roomTo) => {
 		let point = {x: entrance.x, y: entrance.y};
 		if ((KinkyDungeonGroundTiles + "4r").includes(
 			KinkyDungeonMapGet(point.x, point.y))
@@ -26,34 +26,46 @@ let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, en
 
 			/** EXTREMELY important to add the journeyslot and position!!!! */
 			let slot = KDGetWorldMapLocation({x: data.mapX, y: data.mapY});
+			let faction: string = lair?.OwnerFaction || "";
 			if (slot) {
 				let jx = slot.jx || 0;
 				let jy = slot.jy || slot.y;
 				let journeySlot = KDGameData.JourneyMap[jx + ',' + jy];
 				if (journeySlot) {
-					journeySlot.SideRooms.push(lair.Name);
+					if (!lair) faction = journeySlot.Faction;
+					journeySlot.SideRooms.push(lair ? lair.Name : roomTo);
 					if (!journeySlot.HiddenRooms) {
 						journeySlot.HiddenRooms = {};
 					}
-					if (lair.Hidden)
+					if (lair?.Hidden)
 						journeySlot.HiddenRooms[lair.Name] = true;
 				}
-				tile.ShortcutIndex = data.ShortcutPositions.length;
-				data.ShortcutPositions.push(point);
+				tile.ShortcutIndex = roomTo != undefined ? roomTo : data.ShortcutPositions.length;
+				if (data.ShortcutPositions.includes) {
+					// Convert from previous save
+					let newObj = {};
+					for (let i = 0; i < Object.values(data.ShortcutPositions).length; i++) {
+						newObj[i] = data.ShortcutPositions[i];
+					}
+					data.ShortcutPositions = newObj;
+				}
+				data.ShortcutPositions[tile.ShortcutIndex] = point;
 			} else {
 				return false;
 			}
 
 			tile.MapMod = "None";
-			tile.Faction = lair.OwnerFaction;
+			tile.Faction = faction;
 			tile.EscapeMethod = "None";
-			tile.RoomType = lair.Name;
+			tile.RoomType = lair ? lair.Name : roomTo;
 			KinkyDungeonTilesSet(point.x + ',' + point.y, tile);
 			KinkyDungeonMapSet(point.x, point.y, 'H');
 			KDRemoveAoEEffectTiles(point.x, point.y, ["rubble"], 0.5);
 
 			KinkyDungeonSkinArea({skin: "cry"}, point.x, point.y, 1.5);
-			KinkyDungeonSpecialAreas.push({x: point.x, y: point.y, radius: 2});
+
+			if (!KDMapData.SpecialAreas) KDMapData.SpecialAreas = [];
+			KDMapData.SpecialAreas.push({x: point.x, y: point.y, radius: 2});
 			return true;
 		}
 		return false;
@@ -61,8 +73,8 @@ let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, en
 }
 
 /** Placescripts for lair entrances */
-let KDLairEntrancePlaceScript: Record<string, (lairData: KDLair, data: KDMapDataType, entrance: LairEntrance) => boolean> = {
-	Cave: (lair, data, entrance) => {
+let KDLairEntrancePlaceScript: Record<string, (lairData: KDLair, data: KDMapDataType, entrance: LairEntrance, roomTo?: string) => boolean> = {
+	Cave: (lair, data, entrance, roomTo) => {
 		// Caves specifically must excavate, then they run specific or Cave LairTypePlaceScript
 		// Excavate
 		if (entrance.Excavate?.length > 0) {
@@ -83,11 +95,17 @@ let KDLairEntrancePlaceScript: Record<string, (lairData: KDLair, data: KDMapData
 		}
 
 		// Place script
-		return KDLairTypePlaceScript[lair.PlaceScriptOverride || "Cave"](lair, data, entrance);
+		return KDLairTypePlaceScript[lair?.PlaceScriptOverride || "Cave"](lair, data, entrance, roomTo);
 	},
 }
 
 /** Weighting factor for filterscripts */
-let KDLairEntranceFilterScript: Record<string, (lair: KDLair, data: KDMapDataType, entrance: LairEntrance) => number> = {
+let KDLairEntranceFilterScript: Record<string, (lair: KDLair, data: KDMapDataType, entrance: LairEntrance, roomTo?: string) => number> = {
+	Cave: (lair, data, entrance, roomTo) => {
+		let nearestDist = KinkyDungeonGetClosestSpecialAreaDist(entrance.x, entrance.y);
+		if (nearestDist < 3) return -1000;
 
+		// Place script
+		return 1;
+	},
 }

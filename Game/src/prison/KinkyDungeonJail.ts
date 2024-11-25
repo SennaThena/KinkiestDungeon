@@ -1356,6 +1356,7 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	KDGameData.WarningLevel = 0;
 	KDGameData.AncientEnergyLevel = 0;
 	KDGameData.JailRemoveRestraintsTimer = 0;
+	KinkyDungeonSetFlag("defeat", 25);
 	//MiniGameKinkyDungeonLevel = Math.min(MiniGameKinkyDungeonLevel, Math.max(Math.floor(MiniGameKinkyDungeonLevel/10)*10, MiniGameKinkyDungeonLevel - KinkyDungeonSpawnJailers + KinkyDungeonSpawnJailersMax - 1));
 	KinkyDungeonSendEvent("defeat", {});
 

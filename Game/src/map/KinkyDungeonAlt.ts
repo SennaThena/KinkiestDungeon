@@ -1630,15 +1630,15 @@ function KinkyDungeonCreateTileMaze(_POI: any[], VisitedRooms: any[], width: num
 
 	KDMapData.StartPosition = {x: 1 + (startx) * KDTE_Scale, y: 4 + (starty) * KDTE_Scale};
 	KDMapData.EndPosition = {x: 7 + (endx) * KDTE_Scale, y: 4 + (endy) * KDTE_Scale};
-	KDMapData.ShortcutPositions = [];
+	KDMapData.ShortcutPositions = {};
 
 	// Reverse the order 50% of the time
 	if (KDRandom() < 0.5) {
-		KDMapData.ShortcutPositions.push({x: 4 + (botx) * KDTE_Scale, y: 7 + (boty) * KDTE_Scale});
-		KDMapData.ShortcutPositions.push({x: 4 + (topx) * KDTE_Scale, y: 1 + (topy) * KDTE_Scale});
+		KDMapData.ShortcutPositions['0'] = {x: 4 + (botx) * KDTE_Scale, y: 7 + (boty) * KDTE_Scale};
+		KDMapData.ShortcutPositions['1'] = {x: 4 + (topx) * KDTE_Scale, y: 1 + (topy) * KDTE_Scale};
 	} else {
-		KDMapData.ShortcutPositions.push({x: 4 + (topx) * KDTE_Scale, y: 1 + (topy) * KDTE_Scale});
-		KDMapData.ShortcutPositions.push({x: 4 + (botx) * KDTE_Scale, y: 7 + (boty) * KDTE_Scale});
+		KDMapData.ShortcutPositions['0'] = {x: 4 + (topx) * KDTE_Scale, y: 1 + (topy) * KDTE_Scale};
+		KDMapData.ShortcutPositions['1'] = {x: 4 + (botx) * KDTE_Scale, y: 7 + (boty) * KDTE_Scale};
 	}
 
 
