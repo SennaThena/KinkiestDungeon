@@ -177,7 +177,7 @@ let alts = {
 		width: 15,
 		height: 15,
 		enemyMult: 0.6,
-		alwaysRegen: true, // Always regenerate this room
+		alwaysRegen: false, // Always regenerate this room
 		setpieces: {
 			"GuaranteedCell": 100,
 			"ExtraCell": 20,
@@ -203,6 +203,7 @@ let alts = {
 		nojail: false,
 		nokeys: true,
 		nostairs: false,
+		nostartstairs: true,
 		notraps: false,
 		noRelease: true,
 		releaseOnLowSec: true,
@@ -395,15 +396,7 @@ let alts = {
 		height: 15,
 		nopatrols: false,
 		onExit: (data: any) => {
-			// Return to the normal map
-			data.overrideRoomType = true;
-			let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
-			if (journeySlot) {
-				KDGameData.RoomType = journeySlot.RoomType;
-			} else {
-				KDGameData.RoomType = "";
-			}
-			data.AdvanceAmount = 0;
+			// replaced by altType.noAdvance and altType.alwaysAdvance
 		},
 		afterExit: (_data) => {
 			// Dump the player in a random place on top of a demon portal

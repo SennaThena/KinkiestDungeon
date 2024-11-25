@@ -1425,7 +1425,21 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			else
 				forceFaction = KDGetFactionOriginal(leashEnemy);
 		}
-		KinkyDungeonCreateMap(params, "Jail", "", MiniGameKinkyDungeonLevel, undefined, undefined, forceFaction, undefined, undefined, "");
+
+		let jailroom = "Jail";
+		let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+		let outpost = KDAddOutpost(
+			slot,
+			slot.main || "",
+			jailroom,
+			forceFaction || "Jail",
+			false,
+			"Jail"
+		);
+		let room = outpost != undefined ? outpost : jailroom;
+		KinkyDungeonCreateMap(params, room, "",
+			MiniGameKinkyDungeonLevel, undefined, undefined,
+			forceFaction, undefined, undefined, slot.main || "");
 
 		KinkyDungeonSetFlag("LeashToPrison", 0);
 

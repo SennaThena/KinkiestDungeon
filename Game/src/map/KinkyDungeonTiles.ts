@@ -240,6 +240,24 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 				let location = KDWorldMap[newLocation.x + "," + newLocation.y];
 
 				KDGenMapCallback = () => {
+					if (!altRoom?.noAdvance
+						&& (
+							// By default only the main advances
+							location?.main == (originalRoom || "")
+							|| altRoom?.alwaysAdvance)) {
+						// advance by default
+					} else {
+						// Return to the normal map
+						data.overrideRoomType = true;
+						let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
+						if (journeySlot) {
+							KDGameData.RoomType = journeySlot.RoomType;
+						} else {
+							KDGameData.RoomType = "";
+						}
+						data.AdvanceAmount = 0;
+					}
+
 					if (altRoom?.onExit) altRoom.onExit(data); // Handle any special contitions
 					KinkyDungeonSendEvent("beforeHandleStairs", data);
 

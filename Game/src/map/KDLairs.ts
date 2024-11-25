@@ -59,7 +59,7 @@ function KDAddLair(
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
-	entranceFrom?: string): boolean {
+	entranceFrom?: string): string {
 	let lairid = id + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
@@ -119,7 +119,7 @@ function KDAddLair(
 	entrance,
 	entranceFrom || entrance))
 		KDBuildLairs();
-	return placed;
+	return placed ? lairid : undefined;
 }
 
 function KDAddOutpost(
@@ -135,7 +135,7 @@ function KDAddOutpost(
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
-	entranceFrom?: string): boolean {
+	entranceFrom?: string): string {
 	let outpostid = faction + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
@@ -194,7 +194,7 @@ function KDAddOutpost(
 	entrance,
 	entranceFrom || entrance))
 		KDBuildLairs();
-	return placed;
+	return placed ? outpostid : undefined;
 }
 
 function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: string, entranceType: string, entranceTypeFrom: string): boolean {

@@ -981,6 +981,7 @@ function KinkyDungeonCreateMap (
 			room: KDGameData.RoomType,
 		});
 
+		KDGameData.ShortcutIndex = KDGameData.RoomType;
 		return;
 	}
 
@@ -1250,6 +1251,8 @@ function KinkyDungeonCreateMap (
 			KinkyDungeonGenNavMap(KDMapData.StartPosition);
 			KinkyDungeonReplaceDoodads(crackchance, barchance, wallRubblechance, wallhookchance, ceilinghookchance, width, height, altType); // Replace random internal walls with doodads
 		}
+
+		KinkyDungeonPlaceJailEntrances(width, height, altType);
 			//console.log(KDRandom());
 		if (KDDebug) {
 			console.log(`${performance.now() - startTime} ms for doodad creation`);
@@ -1565,6 +1568,7 @@ function KinkyDungeonCreateMap (
 		room: KDGameData.RoomType,
 	});
 
+	KDGameData.ShortcutIndex = KDGameData.RoomType;
 }
 
 let KDStageBossGenerated = false;
@@ -3745,6 +3749,74 @@ function KinkyDungeonReplaceDoodads(Chance: number, barchance: number, wallRubbl
 			}
 	}
 
+}
+
+
+function KinkyDungeonPlaceJailEntrances(width: number, height: number, altType?: any) {
+	for (let X = 1; X < width-1; X += 1)
+		for (let Y = 1; Y < height-1; Y += 1) {
+
+			if (KinkyDungeonMapGet(X, Y) == '1' && !KDMapData.TilesSkin[X + "," + Y]
+				&& !KinkyDungeonTilesGet(X + "," + Y)?.OL
+				&& !KinkyDungeonTilesGet(X + "," + Y)?.Type) {
+					let allow = "14";
+					let u = allow.includes(KinkyDungeonMapGet(X, Y - 1));
+					let d = allow.includes(KinkyDungeonMapGet(X, Y + 1));
+					let r = allow.includes(KinkyDungeonMapGet(X + 1, Y));
+					let l = allow.includes(KinkyDungeonMapGet(X - 1, Y));
+					let ul = allow.includes(KinkyDungeonMapGet(X - 1, Y - 1));
+					let dl = allow.includes(KinkyDungeonMapGet(X - 1, Y + 1));
+					let ur = allow.includes(KinkyDungeonMapGet(X + 1, Y - 1));
+					let dr = allow.includes(KinkyDungeonMapGet(X + 1, Y + 1));
+
+					let sum = 0;
+					let corn = 0;
+					if (u) sum += 1;
+					if (d) sum += 1;
+					if (l) sum += 1;
+					if (r) sum += 1;
+					if (ul) corn += 1;
+					if (dl) corn += 1;
+					if (ur) corn += 1;
+					if (dr) corn += 1;
+
+					if (sum == 3 && corn == 2) {
+						if (
+							(!u && !ul && !ur)
+							|| (!d && !dl && !dr)
+							|| (!l && !ul && !dl)
+							|| (!r && !ur && !dr)
+						) {
+							let accessible = false;
+							for (let x = X - 1; x <= X + 1; x++) {
+								for (let y = Y - 1; y <= Y + 1; y++) {
+									if (!!KDMapData.RandomPathablePoints[x + ',' + y]) {
+										accessible = true;
+										x = X + 2;
+										y = Y + 2;
+										// To break
+									}
+								}
+							}
+
+							if (accessible
+								&& X > 0
+								&& Y > 0
+								&& X < KDMapData.GridWidth - 2
+								&& Y < KDMapData.GridHeight - 2) {
+								KDMapData.PotentialEntrances.push({
+									Excavate: [],
+									PlaceScript: "Jail",
+									Type: "Jail",
+									x: X,
+									y: Y,
+								})
+							}
+						}
+					}
+
+			}
+		}
 }
 
 function KinkyDungeonPlaceFurniture(barrelChance: number, cageChance: number, width: number, height: number, altType: any) {
