@@ -521,10 +521,14 @@ function KDRemoveAoEEffectTiles(x: number, y: number, tagsToRemove: string[], ra
 			if (AOECondition(x, y, x+X, y+Y, rad, mod) && (!avoidPoint || avoidPoint.x != X + x || avoidPoint.y != Y + y) && (density == undefined || KDRandom() < density)) {
 				let tiles = KDGetEffectTiles(x + X, y + Y);
 				for (let tile of Object.values(tiles)) {
-					for (let tag of tagsToRemove) {
-						if (tile.tags && tile.tags.includes(tag)) {
-							tile.duration = 0;
-							break;
+					if (tagsToRemove.length == 0) {
+						tile.duration = 0;
+					} else {
+						for (let tag of tagsToRemove) {
+							if (tile.tags && tile.tags.includes(tag)) {
+								tile.duration = 0;
+								break;
+							}
 						}
 					}
 				}

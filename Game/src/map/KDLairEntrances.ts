@@ -60,7 +60,7 @@ let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, en
 			tile.RoomType = lair ? lair.Name : roomTo;
 			KinkyDungeonTilesSet(point.x + ',' + point.y, tile);
 			KinkyDungeonMapSet(point.x, point.y, 'H');
-			KDRemoveAoEEffectTiles(point.x, point.y, ["rubble"], 0.5);
+			KDRemoveAoEEffectTiles(point.x, point.y, [], 0.5);
 
 			KinkyDungeonSkinArea({skin: "cry"}, point.x, point.y, 1.5);
 
