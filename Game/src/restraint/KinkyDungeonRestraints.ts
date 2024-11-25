@@ -4106,8 +4106,9 @@ function KinkyDungeonAddRestraintIfWeaker (
 		}
 		if (restraint.Group == "ItemNeck"
 			&& !KinkyDungeonPlayerTags.get("Collars")
-			&& restraint.shrine.includes("Collars")) {
-			KinkyDungeonSetFlag("collared", 8);
+			&& restraint.shrine.includes("Collars")
+			&& KinkyDungeonInDanger()) {
+			KinkyDungeonSetFlag("collared", 5);
 		}
 
 		ret = KinkyDungeonAddRestraint(restraint, Tightness + Math.round(0.1 * KinkyDungeonDifficulty), Bypass, Lock, Keep, false, !linkableCurrent, events, faction, undefined, undefined, Curse, undefined, securityEnemy, inventoryAs, data);
