@@ -102,7 +102,7 @@ KDPrisonTypes.HighSec = {
 					}
 				}
 				if (KDMapData.Labels && KDMapData.Labels.Patrol) {
-					for (let l of KDMapData.Labels.Deploy) {
+					for (let l of KDMapData.Labels.Patrol) {
 
 						let Enemy = KDGetJailEnemy();
 

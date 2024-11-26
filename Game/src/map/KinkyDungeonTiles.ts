@@ -377,7 +377,9 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 							data.faction, newLocation, !altRoomTarget || !altRoomTarget.alwaysRegen, altRoom?.persist ? originalRoom : (KDGetWorldMapLocation(newLocation)?.main || data.JourneyTile?.RoomType || ""),
 							AdvanceAmount > 0
 								? (0)
-								: (toTile == 'S' ? 1 : 0),
+								: (toTile == 'S' ? 1 : (
+									altRoomTarget?.nostartstairs && !altRoomTarget?.startatstartpos ? 1 : 0
+								)),
 							data.escapeMethod);
 
 						if (data.ShortcutIndex >= 0) {

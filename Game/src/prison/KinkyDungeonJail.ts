@@ -698,9 +698,14 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 			} else if (!KinkyDungeonJailGuard().IntentAction || KinkyDungeonJailGuard().IntentAction.startsWith('jail')) {
 				if (!KinkyDungeonFlags.has("notickguardtimer")
 					&& !KinkyDungeonFlags.has("nojailbreak")) {
-					// Return so that they can despawn
-					KinkyDungeonJailGuard().gx = xx;
-					KinkyDungeonJailGuard().gy = yy;
+					if (KinkyDungeonJailGuard()?.temporary) {
+
+						// Return so that they can despawn
+						KinkyDungeonJailGuard().gx = xx;
+						KinkyDungeonJailGuard().gy = yy;
+					} else if (KinkyDungeonJailGuard()) {
+						KinkyDungeonSetEnemyFlag(KinkyDungeonJailGuard(), "wander", 0);
+					}
 				}
 			}
 		}
@@ -1207,7 +1212,7 @@ function KDEnterDemonTransition() {
 	//KDGameData.MapMod = ""; // Reset the map mod
 	KDGameData.CurrentDialog = "";
 	let params = KinkyDungeonMapParams.DemonTransition;
-	KinkyDungeonCreateMap(params, "DemonTransition", "", MiniGameKinkyDungeonLevel, undefined, undefined, undefined, undefined, undefined, "");
+	KinkyDungeonCreateMap(params, "DemonTransition", "", MiniGameKinkyDungeonLevel, undefined, undefined, undefined, undefined, undefined, "", );
 
 	for (let inv of KinkyDungeonAllRestraint()) {
 		if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
@@ -1445,28 +1450,27 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			MiniGameKinkyDungeonLevel, undefined, undefined,
 			forceFaction, undefined, undefined, slot.main || "");
 
-		if (KDGameData.PrisonerState == 'jail') {
-			// The above condition is the condition to start in jail
-			// We move the player to the jail after generating one
-			let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
-			if (nearestJail) {
+		// The above condition is the condition to start in jail
+		// We move the player to the jail after generating one
+		nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+		if (nearestJail) {
 
-				KDMovePlayer(nearestJail.x, nearestJail.y, false);
-				KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
-			}
+			KDMovePlayer(nearestJail.x, nearestJail.y, false);
+			KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
 		}
 
 		KinkyDungeonSetFlag("LeashToPrison", 0);
 
-		nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+		//nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
 
+	} else {
+		KDMovePlayer(nearestJail.x + (nearestJail.direction?.x || 0), nearestJail.y + (nearestJail.direction?.y || 0), false);
 	}
 
 	let outfit = KDOutfit({name: KinkyDungeonCurrentDress});
 	KDFixPlayerClothes(outfit?.palette || KinkyDungeonPlayer.Palette || KDGetMainFaction() || (KDToggles.ForcePalette ? KDDefaultPalette : "Jail"));
 	KinkyDungeonDressPlayer();
 
-	KDMovePlayer(nearestJail.x + (nearestJail.direction?.x || 0), nearestJail.y + (nearestJail.direction?.y || 0), false);
 	if (nearestJail.direction) {
 		KinkyDungeonSetFlag("conveyed", 1);
 	}

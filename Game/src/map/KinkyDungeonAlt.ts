@@ -120,6 +120,7 @@ let alts = {
 		persist: true,
 		prune: true,
 		skiptunnel: true, // Increments the floor counter
+		alwaysAdvance: true,
 
 		keepRebels: true, // NPCs cant run away to collection if they get beaten here
 
@@ -173,11 +174,12 @@ let alts = {
 	},
 	"Jail": {
 		name: "Jail",
+		persist: true,
 		bossroom: false,
 		width: 15,
 		height: 15,
 		enemyMult: 0.6,
-		alwaysRegen: false, // Always regenerate this room
+		//alwaysRegen: false, // Always regenerate this room
 		setpieces: {
 			"GuaranteedCell": 100,
 			"ExtraCell": 20,

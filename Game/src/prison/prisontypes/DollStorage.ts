@@ -177,7 +177,7 @@ KDPrisonTypes.DollStorage = {
 					}
 				}
 				if (KDMapData.Labels && KDMapData.Labels.Patrol) {
-					for (let l of KDMapData.Labels.Deploy) {
+					for (let l of KDMapData.Labels.Patrol) {
 						let tag = "robot";
 						let Enemy = KinkyDungeonGetEnemy([tag], MiniGameKinkyDungeonLevel + 4, 'bel', '0', [tag], undefined, {[tag]: {mult: 4, bonus: 10}}, ["boss", "oldrobot", "miniboss", "elite"]);
 						if (Enemy && !KinkyDungeonEnemyAt(l.x, l.y)) {

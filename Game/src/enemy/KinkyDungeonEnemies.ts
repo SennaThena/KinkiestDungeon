@@ -355,7 +355,7 @@ function KDEnemyHidden(enemy: entity): boolean {
 
 function KDEnemyCanDespawn(id: number, mapData: KDMapDataType): boolean {
 	let en = KDGetGlobalEntity(id)
-	if (en && !KDIsImprisoned(en)) return false;
+	if (en && KDIsImprisoned(en)) return false;
 	if (mapData != KDMapData) return !en || !KDEnemyHasFlag(en, "no_pers_wander"); // TODO make this a bit more complex
 	let entity = KinkyDungeonFindID(id);
 	if (!entity) return true;

@@ -746,15 +746,16 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
 	KDSyncPersistentEntities(y, NewMapData, true);
 	KDUnPackEnemies(NewMapData);
 
-	// Filter non-present enemies
-	KDMapData.Entities = KDMapData.Entities.filter((enemy) => {
-		return (!KDGetNPCLocation(enemy.id) || KDCompareLocation(KDGetNPCLocation(enemy.id), KDGetCurrentLocation()));
-	});
 
 	KDMapData = NewMapData;
 	KDGameData.RoomType = KDMapData.RoomType;
 	KDGameData.MapMod = KDMapData.MapMod;
 	MiniGameKinkyDungeonCheckpoint = KDMapData.Checkpoint || MiniGameKinkyDungeonCheckpoint;
+
+	// Filter non-present enemies
+	KDMapData.Entities = KDMapData.Entities.filter((enemy) => {
+		return (!KDGetNPCLocation(enemy.id) || KDCompareLocation(KDGetNPCLocation(enemy.id), KDGetCurrentLocation()));
+	});
 
 	KDInitTempValues();
 	if (!KDMapData.Traffic || KDMapData.Traffic.length == 0) KDGenerateBaseTraffic();
@@ -799,7 +800,7 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
 function KDPlacePlayerBasedOnDirection(direction: number = 0, sideRoomIndex: string = '-1') {
 	if (sideRoomIndex != '-1' && KDMapData.ShortcutPositions && KDMapData.ShortcutPositions[sideRoomIndex]) {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.ShortcutPositions[sideRoomIndex].x, y:KDMapData.ShortcutPositions[sideRoomIndex].y, player:true};
-	} else if ((direction == 1 || KDGetAltType(MiniGameKinkyDungeonLevel)?.nostartstairs) && KDMapData.EndPosition) {
+	} else if ((direction == 1) && KDMapData.EndPosition) {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.EndPosition.x, y:KDMapData.EndPosition.y, player:true};
 	} else {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.StartPosition.x, y:KDMapData.StartPosition.y, player:true};
