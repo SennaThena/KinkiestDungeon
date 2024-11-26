@@ -3904,6 +3904,13 @@ function KinkyDungeonHandleOutfitEvent(Event: string, e: KinkyDungeonEvent, outf
 }
 
 let KDEventMapSpell: Record<string, Record<string, (e: KinkyDungeonEvent, spell: spell, data: any) => void>> = {
+	"afterCalcMana": {
+		"MakeEssenceMote": (e, spell, data) => {
+			if (data.spell?.name == spell.name) {
+				data.cost *= 1.0 / Math.max(1, (KinkyDungeonStatDistractionMax / 10));
+			}
+		}
+	},
 	"miscast": {
 		"EssenceMote": (e, spell, data) => {
 			if (KinkyDungeonFlags.get("essMote"))

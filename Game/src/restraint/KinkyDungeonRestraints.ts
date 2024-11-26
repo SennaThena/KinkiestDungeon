@@ -745,11 +745,14 @@ function KinkyDungeonGetRestraintsWithShrine(shrine: string, ignoreGold?: boolea
  * @param [forceIgnoreNonBinding] - for "Exclusions Apply" perk
  * @returns {number}
  */
-function KinkyDungeonRemoveRestraintsWithShrine(shrine: string, maxCount?: number, recursive?: boolean, noPlayer?: boolean, ignoreGold?: boolean, ignoreShrine?: boolean, Keep?: boolean, forceIgnoreNonBinding?: boolean): number {
+function KinkyDungeonRemoveRestraintsWithShrine(shrine: string, maxCount?: number, recursive?: boolean, noPlayer?: boolean, ignoreGold?: boolean, ignoreShrine?: boolean, Keep?: boolean, forceIgnoreNonBinding?: boolean, forceFavorite?: boolean): number {
 	let count = 0;
 
 	for (let i = 0; i < (maxCount ? maxCount : 100); i++) {
-		let items: item[] = KinkyDungeonAllRestraint().filter((r) => KinkyDungeonSingleRestraintMatchesShrine(r, shrine, ignoreGold, ignoreShrine, forceIgnoreNonBinding));
+		let items: item[] = KinkyDungeonAllRestraint().filter((r) => {
+			return (forceFavorite || !(KDGameData.ItemPriority[r.inventoryVariant || r.name] > 9))
+				&& KinkyDungeonSingleRestraintMatchesShrine(r, shrine, ignoreGold, ignoreShrine, forceIgnoreNonBinding);
+		});
 		// Get the most powerful item
 		let item = items.length > 0 ? items.reduce((prev, current) => (KinkyDungeonRestraintPower(prev, true) > KinkyDungeonRestraintPower(current, true)) ? prev : current) : null;
 		if (item) {
@@ -771,7 +774,11 @@ function KinkyDungeonRemoveRestraintsWithShrine(shrine: string, maxCount?: numbe
 			items = KinkyDungeonGetRestraintsWithShrine(shrine, ignoreGold, true, ignoreShrine, forceIgnoreNonBinding);
 
 			// Get the most powerful item
-			item = items.length > 0 ? items.reduce((prev, current) => (KinkyDungeonRestraintPower(prev, true) > KinkyDungeonRestraintPower(current, true)) ? prev : current) : null;
+			item = items.length > 0 ? items.reduce((prev, current) => {
+				return ((
+					!(forceFavorite || !(KDGameData.ItemPriority[current.inventoryVariant || current.name] > 9))
+					|| KinkyDungeonRestraintPower(prev, true) > KinkyDungeonRestraintPower(current, true)) ? prev : current)
+			}) : null;
 			if (item) {
 				let groupItem = KinkyDungeonGetRestraintItem(KDRestraint(item).Group);
 				if (groupItem == item) {

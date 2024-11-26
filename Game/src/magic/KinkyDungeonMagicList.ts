@@ -713,7 +713,11 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 		{name: "MakeEssenceMote", tags: ["will", "offense"], prerequisite: "DistractionCast",
 			classSpecific: "Trainee", hideWithout: "DistractionCast",
 			school: "Special", manacost: 4, components: [], defaultOff: true,
-			customCost: "scaleWithDP",
+			//customCost: "scaleWithDP",
+			mixedPassive: true,
+			events: [
+				{trigger: "afterCalcMana", type: "MakeEssenceMote", always: true}
+			],
 			time: 10, level:1, type:"special", special: "MakeEssenceMote", onhit:"", delay: 0, range: 4.5, aoe: 0.5,
 			lifetime: 0, power: 2.5, damage: "charm",
 		},
@@ -4081,8 +4085,7 @@ let KDCustomCost: Record<string, (data: any) => void> = {
 		data.color = "#88ff88";
 	},
 	"scaleWithDP": (data) => {
-		let cost = KinkyDungeonGetManaCost(data.spell, false, false)
-			/ Math.max(1, (KinkyDungeonStatDistractionMax / 10));
+		let cost = KinkyDungeonGetManaCost(data.spell, false, false);
 		data.cost = Math.round(10 * cost) + "MP";
 		data.color = "#8888ff";
 	},

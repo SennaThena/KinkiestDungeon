@@ -1886,8 +1886,7 @@ let KinkyDungeonSpellSpecials: Record<string, KDSpellSpecialCode> = {
 				KDChangeDistraction(spell.name, "spell", "cast", -spell.power, undefined,
 					0
 				);
-				let cost = KinkyDungeonGetManaCost(spell, false, false)
-					/ Math.max(1, (KinkyDungeonStatDistractionMax / 10));
+				let cost = KinkyDungeonGetManaCost(spell, false, false);
 
 				KDCreateEffectTile(_targetX, _targetY, {
 					name: "DistractionMote"

@@ -3405,6 +3405,7 @@ KinkyDungeonDropKnife,"You drop your knife due to your bound hands!"
 KinkyDungeonDropEnchKnife,"You drop the precious knife due to your bound hands!"
 KinkyDungeonDropRedKey,"You drop the key due to your bound hands!"
 KinkyDungeonDropBlueKey,"You drop the magic key due to your bound hands!"
+KinkyDungeonDropKeyCard,"You insert the card the wrong way and the reader ejects it onto the floor!"
 
 KinkyDungeonLogbook,Journal
 KinkyDungeonLogbookN,Journal (N)
@@ -26061,3 +26062,4 @@ KinkyDungeonSpellDescriptionManaBurst,"While at 100% distraction, you gain -100%
 KinkyDungeonBuffManaBurst,"-100% miscast chance, but casting spells can send you over the edge."
 KDOrgasmPsychicLinkAttempt,"The psychic link conducts away some of the intensity..."
 KDOrgasmPsychicLinkEnemy,"Your linked target lets go of herself, transmitting a wave of pleasure to yourself..."
+

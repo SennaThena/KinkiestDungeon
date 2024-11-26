@@ -379,18 +379,18 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 		hotkey: () => {return KDHotkeyToText(KinkyDungeonKeySpell[1]);},
 		hotkeyPress: () => {return KinkyDungeonKeySpell[1];},
 		text: (_player, item) => {
-			return TextGet("KDInventoryAction" + (!(KDGameData.ItemPriority[item.name|| item.name] > 9) ? "Favorite" : "Unfavorite"));
+			return TextGet("KDInventoryAction" + (!(KDGameData.ItemPriority[item.name] > 9) ? "Favorite" : "Unfavorite"));
 		},
 		icon: (_player, item) => {
-			return !(KDGameData.ItemPriority[item.name|| item.name] > 9) ? "InventoryAction/Favorite" : "InventoryAction/Unfavorite";
+			return !(KDGameData.ItemPriority[item.name] > 9) ? "InventoryAction/Favorite" : "InventoryAction/Unfavorite";
 		},
 		valid: (_player, _item) => {
 			return true;
 		},
 		click: (_player, item) => {
 			if (!KDGameData.ItemPriority) KDGameData.ItemPriority = {};
-			if (!(KDGameData.ItemPriority[item.name|| item.name] > 9)) KDGameData.ItemPriority[item.name|| item.name] = 10;
-			else KDGameData.ItemPriority[item.name|| item.name] = 0;
+			if (!(KDGameData.ItemPriority[item.name] > 9)) KDGameData.ItemPriority[item.name] = 10;
+			else KDGameData.ItemPriority[item.name] = 0;
 			KDSortInventory(KinkyDungeonPlayerEntity);
 
 
@@ -782,7 +782,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionSell").replace("VLU", value + "");
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			if (KDWeapon(item)?.unarmed) return false;
 			return item?.type == Weapon || item?.type == LooseRestraint || item?.type == Consumable;
 		},
@@ -854,7 +854,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionSellBulk").replace("VLU", value + "");
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			return item?.type == LooseRestraint || item?.type == Consumable;
 		},
 		show: (_player, item) => {
@@ -928,7 +928,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionSellExcess").replace("VLU", value + "");
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			return item?.type == LooseRestraint || item?.type == Consumable;
 		},
 		show: (_player, item) => {
@@ -994,7 +994,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionRecycle").replace("VLU", value + "");
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			if (KDWeapon(item)?.unarmed) return false;
 			if (KDRestraint(item)?.noRecycle != undefined) return false;
 			return item?.type == Weapon || item?.type == LooseRestraint || item?.type == Consumable;
@@ -1031,7 +1031,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return KDRecycleString(item, item.quantity || 1);
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			return item?.type == LooseRestraint;
 		},
 		show: (_player, item) => {
@@ -1081,7 +1081,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionRecycleExcess").replace("VLU", value + "");
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			return (item?.type == LooseRestraint);
 		},
 		show: (_player, item) => {
@@ -1133,7 +1133,7 @@ let KDInventoryAction: Record<string, KDInventoryActionDef> = {
 			return TextGet("KDInventoryActionDisassemble" + one);
 		},
 		valid: (_player, item) => {
-			if (KDGameData.ItemPriority[item.name|| item.name] > 9) return false;
+			if (KDGameData.ItemPriority[item.name] > 9) return false;
 			if (KDWeapon(item)?.unarmed) return false;
 			return KDRestraint(item)?.disassembleAs != undefined;
 		},
