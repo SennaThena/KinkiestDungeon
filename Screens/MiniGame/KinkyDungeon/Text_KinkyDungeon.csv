@@ -7610,6 +7610,7 @@ KinkyDungeonJailerSubMistake,"Oh! Looks like I've made a mistake..."
 KinkyDungeonJailerRobotMistake,"404 prisoner not found. Releasing tether."
 
 
+KinkyDungeonGuardApproach,A EnemyName approaches you in your cell.
 KinkyDungeonGuardAppear,A EnemyName appears to check on you.
 KinkyDungeonGuardDisappear,The EnemyName leaves and locks the cell behind her.
 

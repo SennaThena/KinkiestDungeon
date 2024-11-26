@@ -799,7 +799,7 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
 function KDPlacePlayerBasedOnDirection(direction: number = 0, sideRoomIndex: string = '-1') {
 	if (sideRoomIndex != '-1' && KDMapData.ShortcutPositions && KDMapData.ShortcutPositions[sideRoomIndex]) {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.ShortcutPositions[sideRoomIndex].x, y:KDMapData.ShortcutPositions[sideRoomIndex].y, player:true};
-	} else if (direction == 1 && KDMapData.EndPosition) {
+	} else if ((direction == 1 || KDGetAltType(MiniGameKinkyDungeonLevel)?.nostartstairs) && KDMapData.EndPosition) {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.EndPosition.x, y:KDMapData.EndPosition.y, player:true};
 	} else {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.StartPosition.x, y:KDMapData.StartPosition.y, player:true};
@@ -1437,16 +1437,7 @@ function KinkyDungeonCreateMap (
 			KDBuildLairs();
 			KDPlacePlayerBasedOnDirection(direction, KDGameData.ShortcutIndex);
 
-			if (KDGameData.PrisonerState == 'jail' && seed) {
-				// The above condition is the condition to start in jail
-				// We move the player to the jail after generating one
-				let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
-				if (nearestJail) {
 
-					KDMovePlayer(nearestJail.x, nearestJail.y, false);
-					KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
-				}
-			}
 
 			if (KDGameData.KinkyDungeonSpawnJailers > 0) KDGameData.KinkyDungeonSpawnJailers -= 1;
 			if (KDGameData.KinkyDungeonSpawnJailers > 3 && KDGameData.KinkyDungeonSpawnJailers < KDGameData.KinkyDungeonSpawnJailersMax - 1) KDGameData.KinkyDungeonSpawnJailers -= 1; // Reduce twice as fast when you are in deep...
@@ -1921,6 +1912,8 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 		let keys = false;
 		let noPlay = false;
 
+		let LabelType = "";
+
 		let filterTags = JSON.parse(JSON.stringify(filterTagsBase));
 
 		if (altRoom && altRoom.factionSpawnsRequired) {
@@ -1978,6 +1971,13 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				forceIndex = spawns[0].forceIndex;
 				faction = spawns[0].faction;
 				spawns.splice(0, 1);
+				if (AI && KDAIType[AI]?.guard
+					&& KDMapData.RandomPathablePoints["" + X + "," + Y]
+				) {
+					LabelType = "Deploy";
+				} else if (KDMapData.RandomPathablePoints["" + X + "," + Y]) {
+					LabelType = "Patrol";
+				}
 			}
 		}
 
@@ -2046,6 +2046,7 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 			if (miniboss) tags.push("miniboss");
 			if (boss) tags.push("boss");
 
+
 			KinkyDungeonAddTags(tags, Floor);
 			for (let t of Tags) {
 				tags.push(t);
@@ -2098,6 +2099,18 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 					if (keys) {
 						e['keys'] = true;
 					}
+				}
+
+
+				if (LabelType) {
+					KDAddLabel({
+						assigned: e.id,
+						name: LabelType,
+						type: LabelType,
+						x: X,
+						y: Y,
+						guard: (KDGetAI(e) && KDAIType[KDGetAI(e)]?.guard) ? true : undefined,
+					});
 				}
 
 				KDAddEntity(e);
@@ -3377,6 +3390,13 @@ function KinkyDungeonPlacePatrols(Count: number, width: number, height: number):
 					&& KinkyDungeonGroundTiles.includes(KinkyDungeonMapGet(X, Y))
 					&& (!KinkyDungeonTilesGet(X + "," + Y) || (!KinkyDungeonTilesGet(X + "," + Y).OL && !KinkyDungeonTilesGet(X + "," + Y).NW))) {
 					KDMapData.PatrolPoints.push({x: X, y: Y});
+					KDAddLabel({
+						assigned: -1,
+						name: "Patrol",
+						type: "Patrol",
+						x: X,
+						y: Y,
+					});
 					break;
 				}
 			}

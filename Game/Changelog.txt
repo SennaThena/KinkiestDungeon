@@ -35,7 +35,6 @@ TODO Add Cuddle play type
 - Highsec prisons are now persistent
 - Shrines dont remove favorited restraints
 
-
 5.4.13
 - Added Essence Necklace
 - Made yokes and fiddles more common in the enchanted restraints loot table

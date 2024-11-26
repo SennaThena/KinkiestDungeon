@@ -255,6 +255,86 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			return false;
 		},
 	},
+	"leashCell": {
+		play: true,
+		nonaggressive: true,
+		// This will make the enemy want to leash you
+		weight: (_enemy, _aiData, _allied, _hostile, _aggressive) => {
+			return 0;
+		},
+		trigger: (enemy, aiData) => {
+			KDResetIntent(enemy, aiData);
+			enemy.IntentAction = 'leashCell';
+			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 140);
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
+			enemy.IntentLeashPoint = nearestfurniture;
+			enemy.playWithPlayer = 22;
+			KDSetPlayCD(enemy, 3);
+
+			KinkyDungeonSetEnemyFlag(enemy, "playstart", 3);
+			KinkyDungeonSetEnemyFlag(enemy, "motivated", 50);
+
+			KDAddThought(enemy.id, "Jail", 5, enemy.playWithPlayer);
+
+			let suff = (KDGetEnemyPlayLine(enemy) ? KDGetEnemyPlayLine(enemy) : "");
+			KinkyDungeonSendDialogue(enemy, TextGet("KinkyDungeonRemindJailPlay" + suff + "Leash").replace("EnemyName", TextGet("Name" + enemy.Enemy.name)), KDGetColor(enemy), 4, 3);
+		},
+		arrive: (enemy, aiData) => {
+			// When the enemy arrives at the leash point we move the player to it
+			enemy.IntentAction = '';
+			enemy.IntentLeashPoint = null;
+			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", -1);
+			enemy.playWithPlayer = 0;
+			enemy.playWithPlayerCD = 80;
+			KDGameData.PrisonerState = 'jail';
+			KDResetAllAggro(KinkyDungeonPlayerEntity);
+			KinkyDungeonSetEnemyFlag(enemy, "playstart", 0);
+			KDResetAllIntents(true);
+			return KDSettlePlayerInFurniture(enemy, aiData, undefined, undefined, ["storage"]);
+		},
+		maintain: (enemy, delta, aiData) => {
+			let player = KDPlayer();
+			let tethered = KDIsPlayerTethered(KinkyDungeonPlayerEntity);
+			if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 1.5 && !tethered && KDPlayerLeashed(KinkyDungeonPlayerEntity)) {
+				KinkyDungeonAttachTetherToEntity(2.5, enemy, player);
+				KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 30);
+				return true;
+			}
+			else if (!tethered) {
+				if (enemy.aware) {
+					enemy.gx = KinkyDungeonPlayerEntity.x;
+					enemy.gy = KinkyDungeonPlayerEntity.y;
+					KinkyDungeonSetEnemyFlag(enemy, "overrideMove", 12);
+					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
+					KDTryToLeash(enemy, player, delta);
+				}
+			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
+				enemy.aware = true;
+
+				if (!enemy.IntentLeashPoint) {
+					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["storage"]);
+					enemy.IntentLeashPoint = nj;
+				} else {
+					enemy.gx = enemy.IntentLeashPoint?.x || KDMapData.StartPosition.y;
+					enemy.gy = enemy.IntentLeashPoint?.y || KDMapData.StartPosition.x;
+					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 12);
+
+					if (KDistChebyshev(enemy.IntentLeashPoint.x - enemy.x, enemy.IntentLeashPoint.y - enemy.y) < 1.5 && !aiData.aggressive) {
+						KDIntentEvents.leashCell.arrive(enemy, aiData);
+					}
+				}
+
+
+
+
+
+			}
+			if (enemy.playWithPlayer < 10) {
+				enemy.playWithPlayer = 10;
+			}
+			return false;
+		},
+	},
 	"Ignore": {
 		nonaggressive: true,
 		// This is the basic leash to jail mechanic

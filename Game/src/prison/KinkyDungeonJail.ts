@@ -600,7 +600,7 @@ function KinkyDungeonPlaceJailKeys() {
 	}
 }
 
-function KinkyDungeonHandleJailSpawns(delta: number): void {
+function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean = false): void {
 	if (KDGameData.JailTurns) KDGameData.JailTurns += delta;
 	else KDGameData.JailTurns = 1;
 	if (KinkyDungeonInJail(KDJailFilters)) KDGameData.JailRemoveRestraintsTimer += delta;
@@ -621,7 +621,11 @@ function KinkyDungeonHandleJailSpawns(delta: number): void {
 	}
 
 	// Start jail event, like spawning a guard, spawning rescues, etc
-	if (KinkyDungeonInJail(KDJailFilters) && KDGameData.PrisonerState == "jail" && (KDGameData.GuardSpawnTimer <= 1 || KDGameData.SleepTurns == 3) && !KinkyDungeonJailGuard() && playerInCell) {
+	if (KinkyDungeonInJail(KDJailFilters)
+		&& KDGameData.PrisonerState == "jail"
+		&& (KDGameData.GuardSpawnTimer <= 1 || KDGameData.SleepTurns == 3)
+		&& ((KDGameData.GuardTimer == 0 && useExistingGuard) || !KinkyDungeonJailGuard())
+		&& playerInCell) {
 		KDGetJailEvent(KinkyDungeonJailGuard(), xx, yy)(KinkyDungeonJailGuard(), xx, yy);
 	} else if (KDGameData.GuardSpawnTimer > 0 && KDGameData.SleepTurns < 1 && !KinkyDungeonAngel()) KDGameData.GuardSpawnTimer -= delta;
 
@@ -655,7 +659,7 @@ function KinkyDungeonHandleJailSpawns(delta: number): void {
 			}
 		} else {
 			// Leave the cell and lock the door
-			// Despawn jailer
+			// Despawn jailer if not using existing
 			if (KinkyDungeonJailGuard()
 				&& KinkyDungeonJailGuard().x == xx
 				&& KinkyDungeonJailGuard().y == yy
@@ -1440,6 +1444,17 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 		KinkyDungeonCreateMap(params, room, "",
 			MiniGameKinkyDungeonLevel, undefined, undefined,
 			forceFaction, undefined, undefined, slot.main || "");
+
+		if (KDGameData.PrisonerState == 'jail') {
+			// The above condition is the condition to start in jail
+			// We move the player to the jail after generating one
+			let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+			if (nearestJail) {
+
+				KDMovePlayer(nearestJail.x, nearestJail.y, false);
+				KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+			}
+		}
 
 		KinkyDungeonSetFlag("LeashToPrison", 0);
 

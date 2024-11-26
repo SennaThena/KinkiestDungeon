@@ -62,6 +62,42 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			KDGameData.GuardSpawnTimer = KDGameData.GuardSpawnTimerMin + Math.floor(KDRandom() * (KDGameData.GuardSpawnTimerMax - KDGameData.GuardSpawnTimerMin));
 		},
 	},
+	"useCurrentGuard": {
+		// Determines the weight
+		weight: (_guard, _xx, _yy) => {
+			return !!_guard ? 70 : 0;
+		},
+		// Occurs when the jail event triggers
+		trigger: (guard, xx, yy) => {
+			// Allow the player to sleep 150 turns after the guard shows up
+			if (KinkyDungeonFlags.get("slept") == -1) {
+				KinkyDungeonSetFlag("slept", 0);
+				KinkyDungeonSetFlag("slept", 150);
+			}
+
+			if (!KinkyDungeonFlags.get("JailIntro")) {
+				KinkyDungeonSetFlag("JailIntro", -1);
+				KDStartDialog("PrisonIntro", guard.Enemy.name, true, "");
+			} else if (KinkyDungeonFlags.get("JailRepeat")) {
+				KinkyDungeonSetFlag("JailRepeat",  0);
+				KDStartDialog("PrisonRepeat", guard.Enemy.name, true, "");
+			}
+
+			if (KinkyDungeonTilesGet((xx-1) + "," + yy) && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
+				KinkyDungeonTilesGet((xx-1) + "," + yy).OGLock = KinkyDungeonTilesGet((xx-1) + "," + yy).Lock;
+				KinkyDungeonTilesGet((xx-1) + "," + yy).Lock = undefined;
+			}
+			KDGameData.JailGuard = guard.id;
+
+
+			guard.CurrentAction = "jailWander";
+
+			//if (KinkyDungeonVisionGet(guard.x, guard.y))
+			KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardApproach").replace("EnemyName", TextGet("Name" + guard.Enemy.name)), "white", 6);
+			KDGameData.GuardTimer = KDGameData.GuardTimerMax;
+			KDGameData.GuardSpawnTimer = KDGameData.GuardSpawnTimerMin + Math.floor(KDRandom() * (KDGameData.GuardSpawnTimerMax - KDGameData.GuardSpawnTimerMin));
+		},
+	},
 	"spawnRescue": {
 		// Determines the weight
 		weight: (_guard, _xx, _yy) => {

@@ -188,6 +188,24 @@ let alts = {
 		bonusTags: {
 			"construct": {bonus: 0, mult: 0},
 		},
+		loadScript: (_firsttime) => {
+			if (_firsttime) {
+				for (let en of KDMapData.Entities) {
+					if (!KDIsImprisoned(en)) {
+						KDAddLabel({
+							assigned: en.id,
+							name: "Deploy",
+							type: "Deploy",
+							x: en.x,
+							y: en.y,
+						});
+					}
+				}
+			}
+			return true;
+		},
+
+		prisonType: "HighSec",
 		factionSpawnsRequired: true,
 		genType: "NarrowMaze",
 		spawns: false,
