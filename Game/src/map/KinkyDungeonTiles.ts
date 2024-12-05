@@ -267,10 +267,12 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 					}
 					MiniGameVictory = false;
 
-					if (altRoom?.alwaysRegen || (altRoom && !(altRoom?.makeMain || altRoom?.persist))) {
+					if (altRoom?.alwaysRegen
+						|| altRoom?.removePartyMembers
+						|| (altRoom && !(altRoom?.makeMain || altRoom?.persist))) {
 						// Clear all enemies and remove them so that we pick up allies
 						for (let en of [...KDMapData.Entities]) {
-							if (!KDIsInParty(en) && !KDCanBringAlly(en))
+							if (!KDIsInParty(en) || !KDCanBringAlly(en))
 								KDRemoveEntity(en, false, true, true);
 						}
 					}

@@ -2594,7 +2594,7 @@ function KinkyDungeonCapture(enemy: entity): boolean {
 		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Capture"), "#ffffff", 10);
 		KinkyDungeonSendTextMessage(10, TextGet("KDTut_Capture2"), "#ffffff", 10);
 	}
-	KDDropStolenItems(enemy);
+	KDDropStolenItems(enemy, KDMapData);
 	KinkyDungeonSetEnemyFlag(enemy, "questtarget", 0);
 	if (KDIsImprisoned(enemy)) KDFreeNPC(enemy);
 	if (KDIsNPCPersistent(enemy.id)) {
@@ -2663,15 +2663,15 @@ function KDGetStolenItems(enemy: entity): string[] {
  * @param enemy
  * @param E
  */
-function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
+function KinkyDungeonEnemyCheckHP(enemy: entity, E: number, mapData: KDMapDataType): boolean {
 	if (enemy.hp <= 0 && !KDIsImprisoned(enemy)) {
 		let noRepHit = false;
 		KinkyDungeonSendEvent("death", {enemy: enemy});
 		if (((KDBoundEffects(enemy) > 3 && enemy.boundLevel > 0) || KDEntityHasFlag(enemy, "cap")) && KDHostile(enemy) && !enemy.Enemy.tags.nocapture && enemy.playerdmg) {
-			KDDropStolenItems(enemy);
+			KDDropStolenItems(enemy, mapData);
 			if (!KinkyDungeonCapture(enemy)) noRepHit = true;
 		} else {
-			KDDropStolenItems(enemy);
+			KDDropStolenItems(enemy, mapData);
 			if (enemy == KinkyDungeonKilledEnemy) {
 
 				if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 10)
@@ -2771,15 +2771,15 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number): boolean {
 		KinkyDungeonSendEvent("kill", {enemy: enemy, capture: KDBoundEffects(enemy) > 3 && enemy.boundLevel > 0 && KDHostile(enemy) && !enemy.Enemy.tags.nocapture});
 
 		if (!enemy.droppedItems)
-			KDDropItems(enemy);
+			KDDropItems(enemy, mapData);
 
 
 		KDRemoveEntity(enemy, true, true, false, E);
 		return true;
 	} else if (KDHelpless(enemy) && !KDIsImprisoned(enemy)) {
-		KDDropStolenItems(enemy);
+		KDDropStolenItems(enemy, mapData);
 		if (!enemy.droppedItems)
-			KDDropItems(enemy);
+			KDDropItems(enemy, mapData);
 	}
 	return false;
 }
@@ -2811,7 +2811,7 @@ function KDCheckDespawn(enemy: entity, E: number, mapData: KDMapDataType): boole
 /**
  * @param enemy
  */
-function KDDropItems(enemy: entity) {
+function KDDropItems(enemy: entity, mapData: KDMapDataType) {
 	if (!enemy.noDrop && (enemy.playerdmg || !enemy.summoned) && !enemy.droppedItems) {
 		KinkyDungeonItemDrop(enemy.x, enemy.y, enemy.Enemy.dropTable, enemy.summoned);
 		enemy.droppedItems = true;
@@ -2820,13 +2820,13 @@ function KDDropItems(enemy: entity) {
 			for (let i of KDShops[enemy.data.shop].itemsdrop) {
 				if (!enemy.tempitems || !enemy.tempitems.includes(i)) {
 					dropped = {x:enemy.x, y:enemy.y, name: i};
-					KDMapData.GroundItems.push(dropped);
+					mapData.GroundItems.push(dropped);
 				}
 			}
 		}
 		if (KDEnemyHasFlag(enemy, "Shop")) {
 			dropped = {x:enemy.x, y:enemy.y, name: "Gold", amount: 100};
-			KDMapData.GroundItems.push(dropped);
+			mapData.GroundItems.push(dropped);
 		}
 	}
 }
@@ -3795,7 +3795,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 			if (enemy.Enemy.tags.nonvulnerable && enemy.vulnerable) enemy.vulnerable = 0;
 			if (!(KDGameData.KinkyDungeonPenance && KinkyDungeonAngel()) || enemy == KinkyDungeonAngel()) {
 				// Delete the enemy
-				if (KinkyDungeonEnemyCheckHP(enemy, E)) { E -= 1; continue;}
+				if (KinkyDungeonEnemyCheckHP(enemy, E, KDMapData)) { E -= 1; continue;}
 
 				let player = (!KinkyDungeonAngel()) ? KinkyDungeonNearestPlayer(enemy, false, true, enemy.Enemy.visionRadius ? (KDEnemyVisionRadius(enemy) + ((enemy.lifetime > 0 && enemy.Enemy.visionSummoned) ? enemy.Enemy.visionSummoned : 0)) : 0, AIData) : KinkyDungeonPlayerEntity;
 				if (player) {
@@ -3971,7 +3971,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 				KDUpdatePersistentNPC(enemy.id, KDGameData.Collection[enemy.id + ""] != undefined);
 
 				// Delete the enemy
-				if (KinkyDungeonEnemyCheckHP(enemy, E))
+				if (KinkyDungeonEnemyCheckHP(enemy, E, KDMapData))
 				{ E -= 1;}
 				else if (KDGetFaction(enemy) != "Player") {
 					if (enemy.aware && (enemy.lifetime == undefined || enemy.lifetime > 9000) && !enemy.Enemy.tags.temporary && !enemy.Enemy.tags.peaceful) {
@@ -8804,12 +8804,16 @@ function KDRemoveEntity(enemy: entity, kill?: boolean, capture?: boolean, noEven
 				}
 			}
 		}
-		if (KDGameData.SpawnedPartyPrisoners && KDGameData.SpawnedPartyPrisoners[enemy.id + ""]) {
+
+		if (KDGameData.SpawnedPartyPrisoners && KDGameData.SpawnedPartyPrisoners[enemy.id + ""]
+		) {
 			KDAddToCapturedParty(enemy);
 		} else {
 			KDRemoveFromParty(data.enemy, data.capture && KDGetFaction(data.enemy) == "Player");
 		}
 	}
+
+
 	if (KDIsNPCPersistent(enemy.id) && KDGetPersistentNPC(enemy.id)) {
 		KDGetPersistentNPC(enemy.id).jailed = undefined;
 		KDGetPersistentNPC(enemy.id).spawned = undefined;

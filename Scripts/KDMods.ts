@@ -15,7 +15,7 @@ let KDModCompat = {
 	"KinkyDungeonChangeDesire(": "KDChangeDesire('','','',",
 	"KinkyDungeonChangeCharge(": "KDChangeCharge('','','',",
 	"KinkyDungeonChangeWill(": "KDChangeWill('','','',",
-	"KinkyDungeonChangeStamina(": "KDChangeStamina('','','',",
+	"KinkyDungeonChangeStamina": "KDChangeStamina'','','',",
 	"KinkyDungeonChangeMana(": "KDChangeMana('','','',",
 	"KDChangeBalance(": "KDChangeBalanceSrc('','','',",
 	"KinkyDungeonChangeDistraction(": "KDChangeDistraction('','','',",

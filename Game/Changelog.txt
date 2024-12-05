@@ -34,6 +34,8 @@ TODO Add Cuddle play type
 5.4.14
 - Highsec prisons are now persistent
 - Shrines dont remove favorited restraints
+- Crystal shockwaves from heirophant allies should no longer hit the player
+- Fixed issues where party members didnt get properly spawned on the map to rescue
 
 5.4.13
 - Added Essence Necklace

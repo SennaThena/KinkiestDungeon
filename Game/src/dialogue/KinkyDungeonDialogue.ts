@@ -753,6 +753,32 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 		leadsToStage: "", dontTouchText: true,
 	};
 
+	dialog.options.JoinParty = {playertext: name + "JoinParty", response: "Default",
+		prerequisiteFunction: (_gagged, _player) => {
+			if (KDGameData.Party?.length >= KDGameData.MaxParty) return false;
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				return KDAllied(enemy)
+					&& !KDIsInParty(enemy)
+					&& !KDEnemyHasFlag(enemy, "shop")
+					&& !enemy.Enemy.tags?.peaceful
+					&& !enemy.maxlifetime
+					&& KDCapturable(enemy)
+					&& !enemy.Enemy.allied;
+				// No shopkeepers, noncombatants, or summons...
+			}
+			return false;
+		},
+		clickFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				KinkyDungeonSetEnemyFlag(enemy, "NoFollow", 0);
+				KDAddToParty(enemy);
+			}
+			return false;
+		},
+		leadsToStage: "", dontTouchText: true,
+	};
 
 	dialog.options.Flirt = {playertext: name + "Flirt", response: "Default",
 		clickFunction: (_gagged, _player) => {
@@ -1340,32 +1366,7 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 			},
 		}
 	};
-	dialog.options.JoinParty = {playertext: name + "JoinParty", response: "Default",
-		prerequisiteFunction: (_gagged, _player) => {
-			if (KDGameData.Party?.length >= KDGameData.MaxParty) return false;
-			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
-			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
-				return KDAllied(enemy)
-					&& !KDIsInParty(enemy)
-					&& !KDEnemyHasFlag(enemy, "shop")
-					&& !enemy.Enemy.tags?.peaceful
-					&& !enemy.maxlifetime
-					&& KDCapturable(enemy)
-					&& !enemy.Enemy.allied;
-				// No shopkeepers, noncombatants, or summons...
-			}
-			return false;
-		},
-		clickFunction: (_gagged, _player) => {
-			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
-			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
-				KinkyDungeonSetEnemyFlag(enemy, "NoFollow", 0);
-				KDAddToParty(enemy);
-			}
-			return false;
-		},
-		leadsToStage: "", dontTouchText: true,
-	};
+
 	dialog.options.RemoveParty = {playertext: name + "RemoveParty", response: "Default",
 		prerequisiteFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
@@ -2705,6 +2706,12 @@ function KDGetPlayerUntieBindAmt(enemy: entity): number {
 	let baseAmnt = Math.max(10, (enemy.boundLevel || 0) * 0.1);
 	if (!enemy.boundLevel || baseAmnt > enemy.boundLevel) baseAmnt = enemy.boundLevel;
 	let minimumBondage = KDGetExpectedBondageAmountTotal(enemy.id, enemy, false, true);
+	if (enemy.specialBoundLevel)
+		for (let sbt of Object.entries(enemy.specialBoundLevel)) {
+			if (KDSpecialBondage[sbt[0]]?.helpImmune) {
+				minimumBondage += sbt[1];
+			}
+	}
 	baseAmnt -= minimumBondage;
 	return Math.max(baseAmnt, 0);
 }

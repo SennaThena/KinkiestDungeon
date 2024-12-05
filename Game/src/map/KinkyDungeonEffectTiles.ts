@@ -74,14 +74,14 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 80,
 		priority: -2,
 		affinities: ["Sticky", "Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LiquidMetal": {
 		name: "LiquidMetal",
 		duration: 300,
 		priority: -2,
 		affinities: ["Slippery"],
-		tags: ["slippery", "metal", "conductive", "conductcold", "liquidmetal", "terrain"],
+		tags: ["slippery", "metal", "conductive", "conductcold", "liquidmetal", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LatexThin": {
 		name: "LatexThin",
@@ -89,7 +89,7 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 30,
 		priority: -2.01,
 		affinities: ["Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LatexBlue": {
 		name: "LatexBlue",
@@ -97,7 +97,7 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 80,
 		priority: -2.01,
 		affinities: ["Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LatexThinBlue": {
 		name: "LatexThinBlue",
@@ -105,7 +105,7 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 30,
 		priority: -2.01,
 		affinities: ["Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LatexGreen": {
 		name: "LatexBlue",
@@ -113,7 +113,7 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 80,
 		priority: -2.01,
 		affinities: ["Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"LatexThinGreen": {
 		name: "LatexThinGreen",
@@ -121,7 +121,7 @@ let KDEffectTiles: Record<string, effectTile> = {
 		duration: 30,
 		priority: -2.01,
 		affinities: ["Latex"],
-		tags: ["latex", "insulator", "terrain"],
+		tags: ["latex", "insulator", "terrain", "dangerous", "nodangerslime"],
 	},
 	"Ropes": {
 		name: "Ropes",

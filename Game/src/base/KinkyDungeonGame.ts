@@ -5566,7 +5566,7 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 	KinkyDungeonUpdateTileEffects(delta);
 	for (let E = 0; E < KDMapData.Entities.length; E++) {
 		let enemy = KDMapData.Entities[E];
-		if (KinkyDungeonEnemyCheckHP(enemy, E)) { E -= 1; continue;}
+		if (KinkyDungeonEnemyCheckHP(enemy, E, KDMapData)) { E -= 1; continue;}
 		if (KDCheckDespawn(enemy, E, KDMapData)) { E -= 1; continue;}
 	}
 

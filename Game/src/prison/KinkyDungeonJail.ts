@@ -703,8 +703,6 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 						// Return so that they can despawn
 						KinkyDungeonJailGuard().gx = xx;
 						KinkyDungeonJailGuard().gy = yy;
-					} else if (KinkyDungeonJailGuard()) {
-						KinkyDungeonSetEnemyFlag(KinkyDungeonJailGuard(), "wander", 0);
 					}
 				}
 			}
@@ -1565,31 +1563,34 @@ function KDKickEnemies(nearestJail: any, ignoreAware: boolean, Level: number, no
 	let mapMod = KDMapData.MapMod ? KDMapMods[KDMapData.MapMod] : null;
 	let altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Level);
 
-	let canCull = !noCull && (altType?.alwaysRegen || (altType && !(altType?.makeMain || altType?.persist)));
+	let canCull = !noCull && (altType?.alwaysRegen
+		|| altType?.removePartyMembers
+		|| (altType && !(altType?.makeMain || altType?.persist)));
 	let atLeastOneAware = false;
 	let enemies = [];
 	let already = new Map();
-	for (let e of  KDMapData.Entities) {
-		if (!e.Enemy?.tags.temporary && !KDIsImmobile(e) && e.spawnX && e.spawnY
-			&& (!e.homeCoord || KDCompareLocation(e.homeCoord, KDGetCurrentLocation()))) {
-			if (e.aware && KDHostile(e) && KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, KDistEuclidean(e.x - KinkyDungeonPlayerEntity.x, e.y - KinkyDungeonPlayerEntity.y),
-				10, true, false)) {
-				atLeastOneAware = true;
-			} else e.aware = false;
-			if (!e.leash && (!ignoreAware || !e.aware))
-				if (!nearestJail || (e.x == nearestJail.x && e.y == nearestJail.y) || (!e.Enemy.tags?.prisoner && !e.Enemy.tags?.peaceful && !KDEnemyHasFlag(e, "imprisoned"))) {
-					if (!nearestJail || KDistChebyshev(e.x - nearestJail.x, e.y - nearestJail.y) <= 4 || (e.aware || e.vp > 0.01 || e.aggro > 0)) {
-						e.x = e.spawnX;
-						e.y = e.spawnY;
-						e.path = undefined;
-						e.gx = e.x;
-						e.gy = e.y;
-						already.set(e, true);
-						KDUpdateEnemyCache = true;
+	if (!altType?.removePartyMembers)
+		for (let e of  KDMapData.Entities) {
+			if (!e.Enemy?.tags.temporary && !KDIsImmobile(e) && e.spawnX && e.spawnY
+				&& (!e.homeCoord || KDCompareLocation(e.homeCoord, KDGetCurrentLocation()))) {
+				if (e.aware && KDHostile(e) && KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, KDistEuclidean(e.x - KinkyDungeonPlayerEntity.x, e.y - KinkyDungeonPlayerEntity.y),
+					10, true, false)) {
+					atLeastOneAware = true;
+				} else e.aware = false;
+				if (!e.leash && (!ignoreAware || !e.aware))
+					if (!nearestJail || (e.x == nearestJail.x && e.y == nearestJail.y) || (!e.Enemy.tags?.prisoner && !e.Enemy.tags?.peaceful && !KDEnemyHasFlag(e, "imprisoned"))) {
+						if (!nearestJail || KDistChebyshev(e.x - nearestJail.x, e.y - nearestJail.y) <= 4 || (e.aware || e.vp > 0.01 || e.aggro > 0)) {
+							e.x = e.spawnX;
+							e.y = e.spawnY;
+							e.path = undefined;
+							e.gx = e.x;
+							e.gy = e.y;
+							already.set(e, true);
+							KDUpdateEnemyCache = true;
+						}
 					}
-				}
+			}
 		}
-	}
 	for (let e of KDMapData.Entities) {
 		if (!e.Enemy.tags.temporary) {
 			if (e.aware && !KDIsImmobile(e) && KDHostile(e) && KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, KDistEuclidean(e.x - KinkyDungeonPlayerEntity.x, e.y - KinkyDungeonPlayerEntity.y),
@@ -1622,19 +1623,24 @@ function KDKickEnemies(nearestJail: any, ignoreAware: boolean, Level: number, no
 			}
 			KDExpireFlags(e);
 			KDResetIntent(e, {});
-			if (e.boundLevel && !KDIsImprisoned(e)) {
-				if (canCull && KDHelpless(e)) {
-					KDRemoveEntity(e, false, true, true);
+			if (altType?.removePartyMembers) {
+				KDRemoveEntity(e, false, true, true);
+			} else {
+				if (e.boundLevel && !KDIsImprisoned(e)) {
+					if (canCull && KDHelpless(e)) {
+						KDRemoveEntity(e, false, true, true);
+					} else {
+						enemies.push(e);
+					}
+					if (KDGetFaction(e) != "Player"
+						&& KDFactionRelation(KDGetFaction(e), KDMapData.MapFaction) > 0.5) {
+						KDRunNPCEscapeTick(e.id, 12 + Math.floor(24 * KDRandom()));
+					}
 				} else {
 					enemies.push(e);
 				}
-				if (KDGetFaction(e) != "Player"
-					&& KDFactionRelation(KDGetFaction(e), KDMapData.MapFaction) > 0.5) {
-					KDRunNPCEscapeTick(e.id, 12 + Math.floor(24 * KDRandom()));
-				}
-			} else {
-				enemies.push(e);
 			}
+
 		}
 	}
 	KDMapData.Entities = enemies;

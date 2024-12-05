@@ -2066,6 +2066,8 @@ interface spell {
 	allySpell?: boolean;
 	/** This spell wont friendly fire the player */
 	noFF?: boolean;
+	/** This spell wont affect the player if belonging to an allied entity */
+	noHitAlliedPlayer?: boolean,
 	/** Spell overrides the faction */
 	faction?: string;
 	/** Whether the spell defaults to the Enemy faction */
@@ -3196,6 +3198,8 @@ type KDMapTile = {
 }
 
 interface KDBondage {
+	/** You cant help people out of this type */
+	helpImmune?: boolean,
 	color: string,
 	/** Multiplier for enemy bondage */
 	enemyBondageMult: number,

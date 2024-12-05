@@ -942,16 +942,23 @@ function SetpieceSpawnPrisoner(x: number, y: number, persistentOnly?: boolean, l
 			"willAnger", "willRage"], MiniGameKinkyDungeonLevel * 2, (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), KinkyDungeonMapGet(x, y), ["imprisonable"]);
 		if (Enemy) {
 			let e = DialogueCreateEnemy(x, y, Enemy.name);
-			e.faction = "Prisoner";
-			e.boundLevel = e.hp * 11;
-			e.specialdialogue = "PrisonerJail";
-			e.items = [];
+			if (
 			KDImprisonEnemy(e, noJam, undefined, rest ? {
 				name: rest.name,
 				lock: lock,
 				id: KinkyDungeonGetItemID(),
 				faction: KDGetMainFaction() || "Jail",
-			} : undefined);
+			} : undefined)) {
+				e.faction = "Prisoner";
+				e.boundLevel = e.hp * 11;
+				e.specialdialogue = "PrisonerJail";
+				e.items = [];
+			} else {
+				// Just spawn them with no items
+				e.playerdmg = undefined;
+				if (e.hp <= 0.5) e.hp = 0.51;
+				e.items = [];
+			}
 		}
 	}
 
@@ -1141,7 +1148,9 @@ function KDAddPipes(pipechance: number, pipelatexchance: number, thinlatexchance
  * @param [dialogue]
  * @param [restraint]
  */
-function KDImprisonEnemy(e: entity, noJam: boolean, dialogue: string = "PrisonerJail", restraint?: NPCRestraint): void {
+function KDImprisonEnemy(e: entity, noJam: boolean, dialogue: string = "PrisonerJail",
+	restraint?: NPCRestraint): boolean {
+	if (!e || !KDCapturable(e)) return false;
 	if (noJam)
 		KinkyDungeonSetEnemyFlag(e, "nojam", -1);
 	e.specialdialogue = dialogue;
@@ -1155,4 +1164,5 @@ function KDImprisonEnemy(e: entity, noJam: boolean, dialogue: string = "Prisoner
 	e.playerdmg = undefined;
 	if (e.hp <= 0.5) e.hp = 0.51;
 	KDSetToExpectedBondage(e, 1);
+	return true;
 }

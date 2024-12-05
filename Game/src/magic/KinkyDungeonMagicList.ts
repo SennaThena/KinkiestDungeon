@@ -3172,7 +3172,9 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 
 	},
 
-	{enemySpell: true, name: "CrystalShock", hideWarnings: true, color: "#ff5277", minRange: 0, bulletSpin: 0.25, landsfx: "MagicSlash", manacost: 4, components: ["Arms"], level:1, type:"inert", onhit:"aoe", power: 3.5, time: 1, delay: 1, range: 4, size: 1, aoe: 0.75, lifetime: 1, damage: "souldrain", playerEffect: {name: "CrystalBind", time: 1}},
+	{enemySpell: true, name: "CrystalShock", hideWarnings: true, color: "#ff5277", minRange: 0,
+		noHitAlliedPlayer: true,
+		bulletSpin: 0.25, landsfx: "MagicSlash", manacost: 4, components: ["Arms"], level:1, type:"inert", onhit:"aoe", power: 3.5, time: 1, delay: 1, range: 4, size: 1, aoe: 0.75, lifetime: 1, damage: "souldrain", playerEffect: {name: "CrystalBind", time: 1}},
 
 	{enemySpell: true, name: "CrystalShockBolt", color: "#ff5277", sfx: "FireSpell", manacost: 3, specialCD: 6, components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, onhit:"", power: 4, delay: 0, range: 8, damage: "soul",
 		size: 3,
@@ -3780,6 +3782,7 @@ let KDSpecialBondage: Record<string, KDBondage> = {
 		powerStruggleBoost: 0.5,
 		healthStruggleBoost: 0.8,
 		enemyBondageMult: 1.0,
+		helpImmune: true,
 	},
 	"Latex": {
 		priority: -8,

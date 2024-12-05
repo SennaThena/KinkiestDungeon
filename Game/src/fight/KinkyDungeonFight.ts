@@ -1264,7 +1264,7 @@ function KinkyDungeonDamageEnemy(Enemy: entity, Damage: damageInfo, Ranged: bool
 				}
 
 		if (!forceKill && (KDBoundEffects(Enemy) > 3 || KDIsInParty(Enemy) || Damage.nokill) && (Enemy.hp <= 0 || (KDBoundEffects(Enemy) > 3 && Enemy.hp <= Enemy.Enemy.maxhp * 0.1))) {
-			if (!(Enemy.boundLevel > 0) && KDIsInParty(Enemy)) {
+			if (!(Enemy.boundLevel > 0) && KDIsInParty(Enemy) && KDCanBind(Enemy)) {
 				KDTieUpEnemy(Enemy, 2*Enemy.Enemy.maxhp, "Null");
 			}
 			if ((predata.faction == "Player" || KinkyDungeonVisionGet(Enemy.x, Enemy.y) > 0) && Enemy.hp > 0.001) {
@@ -1795,9 +1795,10 @@ function KinkyDungeonUpdateBullets(delta: number, Allied?: boolean): void {
 				KinkyDungeonUpdateSingleBulletVisual(b, end);
 
 				let show =
-					(KDFactionRelation("Player", b.bullet.faction) < 0.5
-						|| (b.bullet.spell && b.bullet.spell.playerEffect)
-						|| b.bullet.playerEffect
+					(!KDFactionFavorable("Player", b.bullet.faction)
+						|| (((b.bullet.spell && b.bullet.spell.playerEffect)
+							|| b.bullet.playerEffect)
+							&& !b.bullet.spell?.noHitAlliedPlayer)
 						|| (b.bullet.spell && b.bullet.spell.alwaysWarn))
 					&& !(b.bullet.spell && b.bullet.spell.hideWarnings)
 					&& ((b.bullet.spell && b.bullet.spell.alwaysWarn)
@@ -2616,6 +2617,9 @@ function KinkyDungeonBulletsCheckCollision(bullet: any, AoE: boolean, force: boo
 function KDBulletAoECanHitEntity(bullet: any, enemy: entity): boolean {
 	if (enemy.player) {
 		return (bullet.bullet.spell && (bullet.bullet.spell.playerEffect || bullet.bullet.playerEffect)
+			&& (!bullet.bullet.spell?.noHitAlliedPlayer
+				|| !bullet.bullet.faction
+				|| !KDFactionFavorable(bullet.bullet.faction, "Player"))
 			&& AOECondition(bullet.x, bullet.y, KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, bullet.bullet.aoe || 0.5, KDBulletAoEMod(bullet)))
 			&& (!bullet.bullet.spell || !bullet.bullet.spell.noUniqueHits || !KDUniqueBulletHits.get(KDBulletID(bullet, KinkyDungeonPlayerEntity)));
 	} else {

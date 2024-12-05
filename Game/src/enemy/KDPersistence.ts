@@ -480,11 +480,12 @@ function KDGetPersistentNPC(id: number, entity?: entity, force: boolean = true, 
 			KDPersistentNPCs[enemy.id] = entry;
 			if (addToParty)
 				addMember = enemy;
+			KDUpdatePersistentNPC(id);
 		}
 	}
-	KDUpdatePersistentNPC(id);
 	if (addToParty && addMember) {
 		KDStoreEnemyPartyMember(addMember, addToParty, location);
+		KDUpdatePersistentNPC(id);
 	}
 	return KDPersistentNPCs[id];
 }

@@ -123,6 +123,7 @@ let alts = {
 		alwaysAdvance: true,
 
 		keepRebels: true, // NPCs cant run away to collection if they get beaten here
+		removePartyMembers: true, // Removes party members when you leave
 
 		requireJourneyTarget: true, // Requires a journey target to exit
 
@@ -802,6 +803,7 @@ let alts = {
 		nostartstairs: true,
 		skin: "shrine", useDefaultMusic: true,
 		lightParams: "ore",
+		removePartyMembers: true, // Removes party members when you leave
 
 		keepRebels: true, // NPCs cant run away to collection if they get beaten here
 
