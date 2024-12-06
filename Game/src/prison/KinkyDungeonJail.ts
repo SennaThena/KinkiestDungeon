@@ -1425,15 +1425,9 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	if (PutInJail) {
 		//KDGameData.RoomType = "Jail"; // We do a tunnel every other room
 		//KDGameData.MapMod = ""; // Reset the map mod
-		let forceFaction = undefined;
-		if (leashEnemy && (KDFactionProperties[KDGetFaction(leashEnemy)] || KDFactionProperties[KDGetFactionOriginal(leashEnemy)])) {
-			if (KDFactionProperties[KDGetFaction(leashEnemy)])
-				forceFaction = KDGetFaction(leashEnemy);
-			else
-				forceFaction = KDGetFactionOriginal(leashEnemy);
-		}
+		let forceFaction = KDGetLeashFaction(leashEnemy);
+		let jailroom = KDGetLeashJailRoom(leashEnemy);
 
-		let jailroom = "Jail";
 		let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
 		let outpost = KDAddOutpost(
 			slot,
@@ -1441,12 +1435,12 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			jailroom,
 			forceFaction || "Jail",
 			false,
-			"Jail"
+			"Jail",
 		);
 		let room = outpost != undefined ? outpost : jailroom;
 		KinkyDungeonCreateMap(params, room, "",
 			MiniGameKinkyDungeonLevel, undefined, undefined,
-			forceFaction, undefined, undefined, slot.main || "");
+			forceFaction, undefined, true, slot.main || "");
 
 		// The above condition is the condition to start in jail
 		// We move the player to the jail after generating one
@@ -2026,3 +2020,31 @@ function KDGetHiSecDialogue(enemy: entity): string {
 	}
 	return "JailerHiSec";
 }
+
+
+function KDGetLeashFaction(leashEnemy: entity): string {
+	let forceFaction = undefined;
+	if (leashEnemy && (KDFactionProperties[KDGetFaction(leashEnemy)] || KDFactionProperties[KDGetFactionOriginal(leashEnemy)])) {
+		if (KDFactionProperties[KDGetFaction(leashEnemy)])
+			forceFaction = KDGetFaction(leashEnemy);
+		else
+			forceFaction = KDGetFactionOriginal(leashEnemy);
+	}
+	if (!forceFaction) forceFaction = KDGetMainFaction();
+	return forceFaction;
+}
+
+function KDGetLeashJailRoom(leashEnemy: entity): string {
+	let jailRoom = undefined;
+	if (leashEnemy
+		&& (KDFactionProperties[KDGetFaction(leashEnemy)]
+		|| KDFactionProperties[KDGetFactionOriginal(leashEnemy)])) {
+		if (KDFactionProperties[KDGetFaction(leashEnemy)])
+			jailRoom = KDFactionProperties[KDGetFaction(leashEnemy)].jailRoom;
+		else
+			jailRoom = KDFactionProperties[KDGetFactionOriginal(leashEnemy)].jailRoom
+	}
+	if (!jailRoom) jailRoom = "Jail";
+	return jailRoom;
+}
+

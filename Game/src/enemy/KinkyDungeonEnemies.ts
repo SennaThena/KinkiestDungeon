@@ -375,6 +375,56 @@ function KDEnemyNearTargetExit(entity: entity, mapData: KDMapDataType): boolean 
 	return nearestPoint && KDistChebyshev(gx - nearestPoint.x, gy - nearestPoint.y) < 1.5;
 }
 
+
+function KDGetShortcutPosition(target: string, x: number, y: number, mapData: KDMapDataType) {
+	// Like the below, but filters out any that arent the target
+	let possible: KDPoint[] = [mapData.StartPosition, mapData.EndPosition, ...Object.values(mapData.ShortcutPositions || {})];
+	possible = possible.filter((pos) => {
+		return (!!pos) && (
+				(!target ) ?
+				(
+					!(altRoom?.nostartstairs && !altRoom?.startatstartpos) ?
+					(KinkyDungeonMapDataGet(mapData, pos.x, pos.y) == 'S')
+					: (KinkyDungeonMapDataGet(mapData, pos.x, pos.y) == 's')
+				)
+				:
+				(KinkyDungeonTilesGet(pos.x + ',' + pos.y)?.RoomType == target)
+			)
+			&& KinkyDungeonStairTiles.includes(KinkyDungeonMapDataGet(mapData, pos.x, pos.y));
+	});
+
+	let altRoom = KDGetAltType(mapData.mapY, mapData.MapMod, mapData.RoomType);
+
+	if (possible.length == 0) {
+		possible = [mapData.StartPosition, mapData.EndPosition, ...Object.values(mapData.ShortcutPositions || {})];
+		possible = possible.filter((pos) => {
+			return (!!pos) && (
+				(!target ) ?
+				(
+					!(altRoom?.nostartstairs && !altRoom?.startatstartpos) ?
+					(KinkyDungeonMapDataGet(mapData, pos.x, pos.y) == 'S')
+					: (KinkyDungeonMapDataGet(mapData, pos.x, pos.y) == 's')
+				)
+				:
+				(KinkyDungeonTilesGet(pos.x + ',' + pos.y)?.RoomType == target)
+			);
+		});
+	}
+
+	if (possible.length > 0) {
+		let cand = null;
+		let canddist = 10000000;
+		for (let p of possible) {
+			let dist = KDistChebyshev(p.x - x, p.y - y);
+			if (!canddist || dist < canddist) {
+				canddist = dist;
+				cand = p;
+			}
+		}
+		return cand;
+	}
+}
+
 function KDGetNearestExit(x: number, y: number, mapData: KDMapDataType, backup?: boolean): KDPoint {
 	let possible: KDPoint[] = [mapData.StartPosition, mapData.EndPosition, ...Object.values(mapData.ShortcutPositions || {})];
 	possible = possible.filter((pos) => {
@@ -5814,7 +5864,8 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 							}
 							else if (enemy.Enemy.tags.leashing && AIData.nearestJail && leashPos == AIData.nearestJail && Math.abs(enemy.x - leashPos.x) <= 1 && Math.abs(enemy.y - leashPos.y) <= 1) {
 								AIData.defeat = true;
-								if (leashPos && leashPos.x == KDMapData.StartPosition.x && leashPos.y == KDMapData.StartPosition.y) {
+								if (leashPos &&
+									KinkyDungeonStairTiles.includes(KinkyDungeonMapGet(leashPos.x, leashPos.y))) {
 									KinkyDungeonSetFlag("LeashToPrison", 1);
 								}
 								KDGameData.KinkyDungeonLeashedPlayer = 3 + ap * 2;
@@ -7889,7 +7940,32 @@ function KDAssignLeashPoint(enemy: entity) {
 		|| KinkyDungeonFlags.has("LeashToPrison")
 		|| (
 			KDSelfishLeash(enemy)
-		)) AIData.nearestJail = Object.assign({type: "jail", radius: 1}, KDMapData.StartPosition);
+		)) {
+
+			let forceFaction = KDGetLeashFaction(enemy);
+			let jailroom = KDGetLeashJailRoom(enemy);
+
+			let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+			let outpost = KDAddOutpost(
+				slot,
+				slot.main || "",
+				jailroom,
+				forceFaction || "Jail",
+				false,
+				"Jail",
+				undefined,
+				undefined,
+				true
+			);
+
+
+			let pos = KDGetShortcutPosition(outpost || jailroom, enemy.x, enemy.y, KDMapData);
+
+			let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+			if (!pos) pos = (altRoom?.nostartstairs && !altRoom?.startatstartpos) ? KDMapData.StartPosition : KDMapData.EndPosition;
+
+			AIData.nearestJail = {type: "jail", radius: 1, x: pos.x, y: pos.y};
+		}
 }
 
 /**

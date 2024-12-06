@@ -1731,7 +1731,7 @@ KinkyDungeonChargerPlaceCrystal,Place live crystal
 KinkyDungeonChargerRemoveCrystal,Take the crystal
 KinkyDungeonChargerPlace,You place the crystal into the receptacle and it lights up!
 KinkyDungeonChargerRemove,You take the crystal from the receptacle and all goes dark.
-KinkyDungeonChargerNoRemove,You try to take the crystal but the cage around it is secured with a purple lock.
+KinkyDungeonChargerNoRemove,You try to take the crystal but the cage around it is secured with a magic purple lock.
 KinkyDungeonChargerCharge,Place spent crystal
 KinkyDungeonChargerChargeSuccess,VALUE gold vanishes from your satchel as the receptacle explodes and your crystal is recharged!
 KinkyDungeonChargerChargeFailure,Nothing seems to happen
@@ -3392,7 +3392,7 @@ KinkyDivine2Lock,"Divine Lock"
 KinkyCrystalLock,"Crystal Lock"
 KinkyWhiteLock,"Simple Lock"
 KinkyBlueLock,"Runic Lock"
-KinkyPurpleLock,"Purple Lock"
+KinkyPurpleLock,"Magic Lock"
 KinkyCyberLock,"Cyber Lock"
 KinkyCyber2Lock,"Integrated Cyber Lock"
 KinkyCyber3Lock,"Advanced Cyber Lock"
@@ -7722,7 +7722,7 @@ KinkyDungeonPunishPlayerEstim,Your RestraintName stimulates you to hinder your e
 KinkyDungeonPunishPlayerEstimHarsh,Your RestraintName stimulates you and beeps loudly!
 
 KinkyDungeonGoldLockRemove,A golden lock fades into a blue lock on one of your restraints!
-KinkyDungeonPurpleLockRemove,Your command word is heard and the purple lock(s) click and fall off!
+KinkyDungeonPurpleLockRemove,Your command word is heard and the magic lock(s) click and fall off!
 KinkyDungeonPurpleLockRemoveCharger,Your command word is heard and the charger unlocks!
 
 KDGameData.ConfirmAttack,Are you sure you want to attack?

@@ -59,7 +59,8 @@ function KDAddLair(
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
-	entranceFrom?: string): string {
+	entranceFrom?: string,
+	alwaysGet?: boolean): string {
 	let lairid = id + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
@@ -68,7 +69,7 @@ function KDAddLair(
 		slot.lairs = {};
 	}
 	let placed = false;
-	if (!slot.lairs[lairid]) {
+	if (slot.lairs[lairid] == undefined) {
 		slot.lairs[lairid] = room;
 		KDPersonalAlt[lairid] = {
 			Name: room,
@@ -119,7 +120,7 @@ function KDAddLair(
 	entrance,
 	entranceFrom || entrance))
 		KDBuildLairs();
-	return placed ? lairid : undefined;
+	return (placed || alwaysGet) ? lairid : undefined;
 }
 
 function KDAddOutpost(
@@ -135,7 +136,8 @@ function KDAddOutpost(
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
-	entranceFrom?: string): string {
+	entranceFrom?: string,
+	alwaysGet: boolean = true): string {
 	let outpostid = faction + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
@@ -144,7 +146,7 @@ function KDAddOutpost(
 		slot.outposts = {};
 	}
 	let placed = false;
-	if (!slot.outposts[outpostid]) {
+	if (slot.outposts[outpostid] == undefined) {
 		slot.outposts[outpostid] = room;
 		KDPersonalAlt[outpostid] = {
 			Name: outpostid,
@@ -194,7 +196,7 @@ function KDAddOutpost(
 	entrance,
 	entranceFrom || entrance))
 		KDBuildLairs();
-	return placed ? outpostid : undefined;
+	return (placed || alwaysGet) ? outpostid : undefined;
 }
 
 function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: string, entranceType: string, entranceTypeFrom: string): boolean {
@@ -270,16 +272,19 @@ function KDBuildLairs() {
 
 	// Load up the array if theres any that dont actually exist yet
 	let slot = KDGetWorldMapLocation({x: data.mapX, y: data.mapY});
-	if (!slot.lairsToPlace) {
-		slot.lairsToPlace = {};
-	}
-	if (slot.lairsToPlace && slot.lairsToPlace[KDMapData.RoomType]?.length > 0) {
-		if (!data.LairsToPlace) {
-			data.LairsToPlace = [];
+	if (slot) {
+		if (!slot.lairsToPlace) {
+			slot.lairsToPlace = {};
 		}
-		data.LairsToPlace.push(...slot.lairsToPlace[KDMapData.RoomType]);
-		slot.lairsToPlace[KDMapData.RoomType] = undefined;
+		if (slot.lairsToPlace && slot.lairsToPlace[KDMapData.RoomType]?.length > 0) {
+			if (!data.LairsToPlace) {
+				data.LairsToPlace = [];
+			}
+			data.LairsToPlace.push(...slot.lairsToPlace[KDMapData.RoomType]);
+			slot.lairsToPlace[KDMapData.RoomType] = undefined;
+		}
 	}
+
 
 	/** Setup */
 	let lairsToPlace = data.LairsToPlace || [];

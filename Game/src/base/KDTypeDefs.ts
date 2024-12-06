@@ -3732,6 +3732,8 @@ interface KDCollectionEntry {
 }
 
 interface KDFactionProps {
+	/** Name of the room type this faction jails you in. Default is Jail */
+	jailRoom?: string,
 	nameList?: string[],
 	/** Negative - will join their allies on sight against you
 	 * Neutral - will only join if they see you attacking their ally or their ally is otherwise neutral with you
