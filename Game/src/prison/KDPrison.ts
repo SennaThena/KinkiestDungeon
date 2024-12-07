@@ -35,7 +35,7 @@ function KDGetNearestFactionGuard(x: number, y: number): entity {
 /**
  * @param player
  */
-function KDPrisonCommonGuard(player: entity, _call: boolean = false): entity {
+function KDPrisonCommonGuard(player: entity, _call: boolean = false, suppressCall: boolean = true): entity {
 	// Suppress standard guard call behavior
 	KinkyDungeonSetFlag("SuppressGuardCall", 10);
 	let guard = KDGetNearestFactionGuard(player.x, player.y);

@@ -1453,11 +1453,32 @@ function KDEnemyHasHelp(enemy: entity): boolean {
 			&& KDBoundEffects(en) < 4
 			&& !KDEnemyHasFlag(en, "imprisoned")
 			&& !KinkyDungeonIsDisabled(en)
+			&& !(en.disarm > 0)
 			&& KDFactionRelation(KDGetFaction(enemy), KDGetFaction(en))
 				>= Math.max(0.1, KDFactionRelation("Player", KDGetFaction(en)));
 	}) || (
 		KDAllied(enemy)
 		&& !!KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y)));
+}
+
+function KDGetHelpers(enemy: entity): entity[] {
+	let list: entity[] = [];
+	if ((
+		KDAllied(enemy)
+		&& !!KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y)))
+		list.push(KDPlayer());
+	list.push(...KDNearbyEnemies(enemy.x, enemy.y, 1.5).filter((en) => {
+		return en != enemy
+			&& en.Enemy.bound
+			&& !KDHelpless(en)
+			&& KDBoundEffects(en) < 4
+			&& !KDEnemyHasFlag(en, "imprisoned")
+			&& !KinkyDungeonIsDisabled(en)
+			&& !(en.disarm > 0)
+			&& KDFactionRelation(KDGetFaction(enemy), KDGetFaction(en))
+				>= Math.max(0.1, KDFactionRelation("Player", KDGetFaction(en)))
+	}));
+	return list;
 }
 
 /**
@@ -1488,14 +1509,17 @@ function KDGetEnemyStruggleMod(enemy: entity, force: boolean, defaultSpeed: bool
 	}
 
 	if (hasHelp == undefined) {
-		hasHelp = KDEnemyHasHelp(enemy);;
+		hasHelp = KDEnemyHasHelp(enemy);
 	}
 	if (!defaultSpeed && enemy.hp > 0.51 && hasHelp) {
-		mult += KDAllied(enemy)
-			&& KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y)
-			&& !KinkyDungeonIsHandsBound(true, true)
-			? 1.0
-			: 0.15;
+		let helpers = KDGetHelpers(enemy);
+		for (let helper of helpers) {
+			if (helper.player && !KinkyDungeonIsHandsBound(true, true)) {
+				mult += 1.0
+			}
+			else mult += 0.01 * Math.max(1, 1 + KDEnemyRank(helper)) / (1 + KDBoundEffects(helper));
+		}
+
 	}
 	if (!defaultSpeed && enemy.boundLevel >= enemy.Enemy.maxhp) mult *= 1.0 + (enemy.boundLevel/enemy.Enemy.maxhp - 1) * 0.5;
 	if (!defaultSpeed && enemy.hp > 0.52) mult *= 0.5 + enemy.hp / enemy.Enemy.maxhp;
@@ -3064,7 +3088,7 @@ function KDNearbyTiles(x: number, y: number, dist: number): {x: number, y: numbe
  * @param y
  * @param dist
  */
-function KDNearbyMapTiles(x: number, y: number, dist: number): {x: number, y: number, tile: any}[] {
+function KDNearbyMapTiles(x: number, y: number, dist: number): {x: number, y: number, tile: string}[] {
 	let list = [];
 	for (let X = Math.floor(x - dist); X < Math.ceil(x + dist); X++)
 		for (let Y = Math.floor(y - dist); Y < Math.ceil(y + dist); Y++)
@@ -3522,7 +3546,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 				let xx = nearestJail.x;
 				let yy = nearestJail.y;
 				let jaildoor = KDGetJailDoor(xx, yy).tile;
-				if (jaildoor && jaildoor.Type == "Door" && KDShouldUnLock(xx, yy, jaildoor)) {
+				if (jaildoor?.Lock && jaildoor.Type == "Door" && KDShouldUnLock(xx, yy, jaildoor)) {
 					jaildoor.OGLock = jaildoor.Lock;
 					jaildoor.Lock = undefined;
 				}
@@ -3640,7 +3664,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 				if (enemy.slow <= 0)
 					KinkyDungeonSendEvent("enemyStatusEnd", {enemy: enemy, status: "slow"});
 			}
-			if (!(enemy.stun > 0 || enemy.freeze > 0 || enemy.teleporting > 0) && (!KDHelpless(enemy))) {
+			if (!(enemy.stun > 0 || enemy.freeze > 0 || enemy.teleporting > 0) && (!KDHelpless(enemy) || KDEnemyHasHelp(enemy))) {
 				KDEnemyStruggleTurn(enemy, delta, KDNPCStruggleThreshMult(enemy), false, false);
 			}
 			let vibe = KDEntityMaxBuffedStat(enemy, "Vibration");
@@ -5926,7 +5950,7 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 											}
 											if (KinkyDungeonMapGet(enemy.x, enemy.y) == 'D')  {
 												KinkyDungeonMapSet(enemy.x, enemy.y, 'd');
-												if (KinkyDungeonTilesGet(enemy.x + ',' +enemy.y)
+												if (KinkyDungeonTilesGet(enemy.x + ',' +enemy.y)?.Lock
 													&& KinkyDungeonTilesGet(enemy.x + ',' +enemy.y).Type == "Door"
 													&& KDShouldUnLock(enemy.x, +enemy.y, KinkyDungeonTilesGet(enemy.x + ',' +enemy.y))) {
 													KinkyDungeonTilesGet(enemy.x + ',' +enemy.y).OGLock = KinkyDungeonTilesGet(enemy.x + ',' +enemy.y).Lock;
@@ -6722,7 +6746,7 @@ function KinkyDungeonEnemyTryMove (
 
 		if (KinkyDungeonMapGet(x, y) == 'D' && enemy.Enemy && enemy.Enemy.tags.opendoors) {
 			KinkyDungeonMapSet(x, y, 'd');
-			if (KinkyDungeonTilesGet(x + ',' +y)
+			if (KinkyDungeonTilesGet(x + ',' +y)?.Lock
 				&& KinkyDungeonTilesGet(x + ',' +y).Type == "Door"
 				&& KDShouldUnLock(x, y, KinkyDungeonTilesGet(x + ',' +y))) {
 				KinkyDungeonTilesGet(x + ',' +y).OGLock = KinkyDungeonTilesGet(x + ',' +y).Lock;

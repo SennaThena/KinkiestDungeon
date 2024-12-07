@@ -1405,7 +1405,7 @@ function KDPrisonerRescue(name: string, faction: string, enemytypes: string[]): 
 			KinkyDungeonInterruptSleep();
 			let door = KDGetJailDoor(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
 			if (door) {
-				if (door.tile) {
+				if (door.tile?.Lock) {
 					door.tile.OGLock = door.tile.Lock;
 					door.tile.Lock = undefined;
 					KDUpdateDoorNavMap();

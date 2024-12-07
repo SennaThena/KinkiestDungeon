@@ -152,9 +152,9 @@ function KDGetRandomEscapeMethod() {
  * @param x
  * @param y
  */
-function KDEffectTileTags(x: number, y: number): Record<string, boolean> {
+function KDEffectTileTags(x: number, y: number, mapData?: KDMapDataType): Record<string, boolean> {
 	let ret: Record<string, boolean> = {};
-	let tiles = KDGetEffectTiles(x, y);
+	let tiles = KDGetEffectTiles(x, y, mapData);
 	if (tiles) {
 		for (let t of Object.values(tiles)) {
 			if (t.tags) {
@@ -451,9 +451,11 @@ function KDHasEffectTile(x: number, y: number): boolean {
  * @param x
  * @param y
  */
-function KDGetEffectTiles(x: number, y: number): Record<string, effectTile> {
+function KDGetEffectTiles(x: number, y: number, mapData?: KDMapDataType): Record<string, effectTile> {
 	let str = x + "," + y;
-	return KinkyDungeonEffectTilesGet(str) ? KinkyDungeonEffectTilesGet(str) : {};
+
+	if (!mapData) mapData = KDMapData;
+	return KinkyDungeonEffectTilesGet(str, mapData) ? KinkyDungeonEffectTilesGet(str, mapData) : {};
 }
 
 function KDGetSpecificEffectTile(x: number, y: number, tile?: string) {
@@ -1024,3 +1026,48 @@ function KDShouldUnLock(x: number, y: number, tile: KDTileType): boolean {
 	return true;
 }
 
+
+
+let KDDangerousTiles = "V[]";
+
+function KDIsTileDangerous(entity: entity, x: number, y: number, mapData: KDMapDataType): boolean {
+	let tile = KinkyDungeonMapDataGet(mapData, x, y);
+	if (KDDangerousTiles.includes(tile)) return true;
+	let tags = KDEffectTileTags(x, y, mapData);
+
+	if (tags.dangerous) return true;
+	if (entity) {
+		if (tags.slimedanger && !KDSlimeWalker(entity)) return true;
+		if (tags.soapdanger && !KDSoapWalker(entity)) return true;
+	}
+
+	for (let pd of Object.values(KDPotentialDangers)) {
+		if (pd(entity, x, y, mapData, tags)) return true;
+	}
+
+	return false;
+}
+
+let KDPotentialDangers: Record<string, (entity: entity, x: number, y: number, mapData: KDMapDataType, tags: Record<string, boolean>) => boolean> = {
+	firedanger: (entity, x, y, mapData, tags) => {
+		return tags.firedanger && !KinkyDungeonGetImmunity(entity.Enemy?.tags, entity.Enemy?.Resistance?.profile, "fire", "immune", 1)
+	},
+	icedanger: (entity, x, y, mapData, tags) => {
+		return tags.icedanger && !KinkyDungeonGetImmunity(entity.Enemy?.tags, entity.Enemy?.Resistance?.profile, "ice", "immune", 1)
+	},
+	chaindanger: (entity, x, y, mapData, tags) => {
+		return tags.chaindanger && !KinkyDungeonGetImmunity(entity.Enemy?.tags, entity.Enemy?.Resistance?.profile, "chain", "immune", 1)
+	},
+	gluedanger: (entity, x, y, mapData, tags) => {
+		return tags.gluedanger && !KinkyDungeonGetImmunity(entity.Enemy?.tags, entity.Enemy?.Resistance?.profile, "glue", "immune", 1)
+	},
+	gasdanger: (entity, x, y, mapData, tags) => {
+		return tags.gasdanger && !KinkyDungeonGetImmunity(entity.Enemy?.tags, entity.Enemy?.Resistance?.profile, "poisongas", "immune", 1)
+	},
+	bullet: (entity, x, y, mapData, tags) => {
+		return false; // TODO
+	},
+	rune: (entity, x, y, mapData, tags) => {
+		return false; // TODO
+	},
+}

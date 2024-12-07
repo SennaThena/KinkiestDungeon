@@ -290,7 +290,8 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			KDResetAllAggro(KinkyDungeonPlayerEntity);
 			KinkyDungeonSetEnemyFlag(enemy, "playstart", 0);
 			KDResetAllIntents(true);
-			return KDSettlePlayerInFurniture(enemy, aiData, undefined, undefined, ["storage"]);
+			KDGameData.KinkyDungeonPrisonExtraGhostRep -= 1;
+			return KDPutInJail(KinkyDungeonPlayerEntity, enemy, null);;
 		},
 		maintain: (enemy, delta, aiData) => {
 			let player = KDPlayer();
@@ -312,7 +313,7 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 				enemy.aware = true;
 
 				if (!enemy.IntentLeashPoint) {
-					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["storage"]);
+					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
 					enemy.IntentLeashPoint = nj;
 				} else {
 					enemy.gx = enemy.IntentLeashPoint?.x || KDMapData.StartPosition.y;
@@ -323,11 +324,6 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 						KDIntentEvents.leashCell.arrive(enemy, aiData);
 					}
 				}
-
-
-
-
-
 			}
 			if (enemy.playWithPlayer < 10) {
 				enemy.playWithPlayer = 10;

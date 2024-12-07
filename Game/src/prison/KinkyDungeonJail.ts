@@ -686,9 +686,7 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 						}
 						if (KDGameData.PrisonerState == 'jail' && KinkyDungeonVisionGet(g.x, g.y))
 							KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardDisappear").replace("EnemyName", TextGet("Name" + g.Enemy.name)), "#ff5277", 6);
-						if (KinkyDungeonPlayerInCell(true))
-							KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
-						KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
+
 					}
 				} else {
 					// She is no longer the guard
@@ -831,7 +829,7 @@ function KinkyDungeonTooMuchRestraint() {
  * @param enemy
  * @param point
  */
-function KDPutInJail(player: entity, enemy: entity, point: { x: number, y: number }): void {
+function KDPutInJail(player: entity, enemy: entity, point: { x: number, y: number }): boolean {
 	let entity = enemy ? enemy : player;
 	let nearestJail = KinkyDungeonNearestJailPoint(entity.x, entity.y);
 	let jailRadius = (nearestJail && nearestJail.radius) ? nearestJail.radius : 1.5;
@@ -842,12 +840,20 @@ function KDPutInJail(player: entity, enemy: entity, point: { x: number, y: numbe
 		if (!point) point = KinkyDungeonNearestJailPoint((enemy || player).x, (enemy || player).y, ["jail"]);
 		if (point) {
 			KDBreakTether(player);
-			if (player.player)
+			if (player.player) {
 				KDMovePlayer(point.x, point.y, false);
-			else
+				if (KinkyDungeonPlayerInCell(true))
+					KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+				KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
+				return true;
+			} else {
 				KDMoveEntity(player, point.x, point.y, false);
+				return true;
+			}
 		}
+		return false;
 	}
+	return false;
 }
 
 /**

@@ -31,6 +31,13 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.15
+- Enemies helping each other fixed
+- Enemies will now pull each other off of latex pools and other dangerous terrain
+- Enemies will now transfer from cage to cell in highsec jail
+- Fixed jail doors not getting locked properly (or more accurately, lock info being lost forever)
+-
+
 5.4.14
 - Highsec prisons are now persistent
 - Shrines dont remove favorited restraints

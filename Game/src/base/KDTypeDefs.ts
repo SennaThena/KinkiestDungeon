@@ -3684,7 +3684,9 @@ interface KDCommanderOrder {
 	weight: (enemy: entity, data: KDCommanderOrderData) => number;
 	apply: (enemy: entity, data: KDCommanderOrderData) => void;
 	maintain: (enemy: entity, data: KDCommanderOrderData) => boolean;
-	update: (enemy: entity, data: KDCommanderOrderData) => void;
+
+	/** Return true to cancel */
+	update: (enemy: entity, data: KDCommanderOrderData) => boolean | void;
 	remove: (enemy: entity, data: KDCommanderOrderData) => void;
 
 	global_before: (data: KDCommanderOrderData) => void;

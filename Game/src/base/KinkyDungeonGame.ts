@@ -248,8 +248,9 @@ function KinkyDungeonEffectTilesSet(location: string, value: Record<string, effe
 /**
  * @param location
  */
-function KinkyDungeonEffectTilesGet(location: string): Record<string, effectTile> {
-	return KDMapData.EffectTiles[location];
+function KinkyDungeonEffectTilesGet(location: string, mapData?: KDMapDataType): Record<string, effectTile> {
+	if (!mapData) mapData = KDMapData;
+	return mapData.EffectTiles[location];
 }
 
 

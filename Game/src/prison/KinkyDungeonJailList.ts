@@ -49,7 +49,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				KDStartDialog("PrisonRepeat", guard.Enemy.name, true, "");
 			}
 
-			if (KinkyDungeonTilesGet((xx-1) + "," + yy) && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
+			if (KinkyDungeonTilesGet((xx-1) + "," + yy)?.Lock && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
 				KinkyDungeonTilesGet((xx-1) + "," + yy).OGLock = KinkyDungeonTilesGet((xx-1) + "," + yy).Lock;
 				KinkyDungeonTilesGet((xx-1) + "," + yy).Lock = undefined;
 			}
@@ -83,7 +83,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				KDStartDialog("PrisonRepeat", guard.Enemy.name, true, "");
 			}
 
-			if (KinkyDungeonTilesGet((xx-1) + "," + yy) && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
+			if (KinkyDungeonTilesGet((xx-1) + "," + yy)?.Lock && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
 				KinkyDungeonTilesGet((xx-1) + "," + yy).OGLock = KinkyDungeonTilesGet((xx-1) + "," + yy).Lock;
 				KinkyDungeonTilesGet((xx-1) + "," + yy).Lock = undefined;
 			}
