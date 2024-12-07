@@ -317,56 +317,10 @@ KDPrisonTypes.DollStorage = {
 					if (KDistChebyshev(guard.x - player.x, guard.y - player.y) < 1.5) {
 						if (KDPrisonIsInFurniture(player)) {
 							// Remove one per turn
-							let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
-							if (uniformCheck.groupsToStrip.length == 0) {
-								return KDPopSubstate(player);
-							}
-							// if we have a future crate we use its own features
-							if (KinkyDungeonPlayerTags.get("FutureDress"))
-								KinkyDungeonSetFlag("futureDressRemove", 2);
-							else {
-								let succeedAny = false;
-								for (let grp of uniformCheck.groupsToStrip) {
-									if (succeedAny) break;
-									let rr = KinkyDungeonGetRestraintItem(grp);
-									if (rr) {
-										let restraintStack = KDDynamicLinkList(rr, true);
-										if (restraintStack.length > 0) {
-											let succeed = false;
-											for (let r of restraintStack) {
-												if (!uniformCheck.itemsToKeep[KDRestraint(r)?.name] && KinkyDungeonRestraintPower(r, true) < KDCYBERPOWER) {
-													succeed = KinkyDungeonRemoveRestraintSpecific(r, false, false, false).length > 0;
-													if (succeed) {
-														let msg = TextGet("KinkyDungeonRemoveRestraints")
-															.replace("EnemyName", TextGet("Name" + guard.Enemy.name));
-														//let msg = TextGet("Attack" + guard.Enemy.name + "RemoveRestraints");
-														if (r) msg = msg.replace("OldRestraintName", KDGetItemName(r));
-														KinkyDungeonSendTextMessage(5, msg, "yellow", 1);
-														break;
-													}
-												}
-											}
+							let lockType = "Cyber";
+							return KDDoUniformRemove(player, guard, ["cyborg"], lockType, KDCYBERPOWER);
 
-											// If we only fail...
-											if (!succeed) {
-												// nothing yet
-											} else {
-												succeedAny = true;
-												break;
-											}
-										}
-									}
-								}
 
-								// If we REALLY only fail...
-								if (!succeedAny) {
-									KinkyDungeonSetFlag("failStrip", 100);
-									return KDPopSubstate(player);
-								}
-							}
-
-							// Stay in the current state
-							return KDCurrentPrisonState(player);
 						}
 					} else {
 						// Stay in the current state
@@ -392,37 +346,9 @@ KDPrisonTypes.DollStorage = {
 						guard.gy = player.y;
 						KinkyDungeonSetEnemyFlag(guard, "overrideMove", 2);
 						if (KDistChebyshev(guard.x - player.x, guard.y - player.y) < 1.5) {
-							// Add one per turn
-							let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
-							if (uniformCheck.itemsToApply.length == 0) {
-								return KDPopSubstate(player);
-							}
-							// if we have a future crate we use its own features
-							if (KinkyDungeonPlayerTags.get("FutureDress"))
-								KinkyDungeonSetFlag("futureDressAdd", 2);
-							else {
-								let restraint = uniformCheck.itemsToApply[0];
-								if (restraint) {
-									if (KinkyDungeonAddRestraintIfWeaker(
-										KinkyDungeonGetRestraintByName(restraint.item),
-										2, KinkyDungeonStatsChoice.has("MagicHands") ? true : undefined,
-										"Cyber", false, false, undefined, KDGetMainFaction(),
-										KinkyDungeonStatsChoice.has("TightRestraints") ? true : undefined,
-										undefined, KinkyDungeonJailGuard(),
-										false, undefined, undefined, undefined,
-										restraint.variant ? KDApplyVariants[restraint.variant] : undefined,
-									)) {
-										let msg = TextGet("KinkyDungeonAddRestraints")
-											.replace("EnemyName", TextGet("Name" + guard.Enemy.name));
-										//let msg = TextGet("Attack" + guard.Enemy.name + "RemoveRestraints");
-										msg = msg.replace("NewRestraintName", KDGetItemNameString(restraint.item));
-										KinkyDungeonSendTextMessage(9, msg, "yellow", 1);
-									}
-								}
-							}
 
-							// Stay in the current state
-							return KDCurrentPrisonState(player);
+							let lockType = "Cyber";
+							return KDDoUniformApply(player, guard, ["cyborg"], lockType, KDCYBERPOWER);
 						}
 					} else {
 						// Stay in the current state

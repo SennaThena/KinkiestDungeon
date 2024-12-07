@@ -1,6 +1,7 @@
 'use strict';
 
 let KDCYBERPOWER = 19;
+let KDJAILPOWER = 12;
 let KDPRISONGROUPS = [
 	[
 		"ItemHead",

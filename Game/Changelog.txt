@@ -36,7 +36,9 @@ TODO Add Cuddle play type
 - Enemies will now pull each other off of latex pools and other dangerous terrain
 - Enemies will now transfer from cage to cell in highsec jail
 - Fixed jail doors not getting locked properly (or more accurately, lock info being lost forever)
--
+- HighSecJail now puts you in a cage to set your uniform
+- Fixed bug where enemies wouldnt spawn in high sec jail when the enemies arent aware of you
+
 
 5.4.14
 - Highsec prisons are now persistent

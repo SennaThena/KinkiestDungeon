@@ -472,7 +472,9 @@ function KinkyDungeonGenerateSetpiece (
 			case "ExtraCell": {
 				KinkyDungeonCreateRectangle(cornerX, cornerY, radius, radius, true, false, 1, true, true);
 				KinkyDungeonMapSet(cornerX+3, cornerY+1, 'D');
-				KinkyDungeonTilesSet("" + (cornerX+3) + "," + (cornerY+1), {Type: "Door", NoTrap: true, Jail: true, ReLock: true, OL: true});
+				KinkyDungeonTilesSet("" + (cornerX+3) + "," + (cornerY+1), {Type: "Door", NoTrap: true, Jail: true,
+					Lock: "Red",
+					ReLock: true, OL: true});
 
 
 				let t = [];
@@ -658,35 +660,36 @@ function KinkyDungeonGenerateSetpiece (
 						});
 				}
 
-				let l = KinkyDungeonMapGet(cornerX+1, cornerY+2) == 'D' ? "Red" : undefined;
-				KinkyDungeonMapSet(cornerX+1, cornerY+2, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+1) + "," + (cornerY + 2), {Type: "Door", NoTrap: true, OL: true, Lock: l});
-				if (l && KDRandom() < 0.5)
+				let closed = KinkyDungeonMapGet(cornerX+1, cornerY+2) == 'D';
+				let l = "Red";
+				KinkyDungeonMapSet(cornerX+1, cornerY+2, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+1) + "," + (cornerY + 2), {Type: "Door", NoTrap: true, OL: true, ReLock: true, Lock: closed ? l : undefined, OGLock: closed ? undefined : l});
+				if (closed && KDRandom() < 0.5)
 					spawnPoints.push({x:cornerX + 2, y:cornerY + 1, required: ["human"], AI: "guard"});
-				else if (l && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
+				else if (closed && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
 					SetpieceSpawnPrisoner(cornerX+2, cornerY+1);
 				}
 
-				l = KinkyDungeonMapGet(cornerX+5, cornerY+2) == 'D' ? "Red" : undefined;
-				KinkyDungeonMapSet(cornerX+5, cornerY+2, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+5) + "," + (cornerY + 2), {Type: "Door", NoTrap: true, OL: true, Lock: l});
-				if (l && KDRandom() < 0.5)
+				closed = KinkyDungeonMapGet(cornerX+5, cornerY+2) == 'D';
+				KinkyDungeonMapSet(cornerX+5, cornerY+2, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+5) + "," + (cornerY + 2), {Type: "Door", NoTrap: true, OL: true, ReLock: true, Lock: closed ? l : undefined, OGLock: closed ? undefined : l});
+				if (closed && KDRandom() < 0.5)
 					spawnPoints.push({x:cornerX + 4, y:cornerY + 1, required: ["human"], AI: "guard"});
-				else if (l && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
+				else if (closed && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
 					SetpieceSpawnPrisoner(cornerX+4, cornerY+1);
 				}
 
-				l = KinkyDungeonMapGet(cornerX+1, cornerY+4) == 'D' ? "Red" : undefined;
-				KinkyDungeonMapSet(cornerX+1, cornerY+4, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+1) + "," + (cornerY + 4), {Type: "Door", NoTrap: true, OL: true, Lock: l});
-				if (l && KDRandom() < 0.5)
+				closed = KinkyDungeonMapGet(cornerX+1, cornerY+4) == 'D';
+				KinkyDungeonMapSet(cornerX+1, cornerY+4, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+1) + "," + (cornerY + 4), {Type: "Door", NoTrap: true, OL: true, ReLock: true, Lock: closed ? l : undefined, OGLock: closed ? undefined : l});
+				if (closed && KDRandom() < 0.5)
 					spawnPoints.push({x:cornerX + 2, y:cornerY + 5, required: ["human"], AI: "guard"});
-				else if (l && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
+				else if (closed && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
 					SetpieceSpawnPrisoner(cornerX+2, cornerY+5);
 				}
 
-				l = KinkyDungeonMapGet(cornerX+5, cornerY+4) == 'D' ? "Red" : undefined;
-				KinkyDungeonMapSet(cornerX+5, cornerY+4, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+5) + "," + (cornerY + 4), {Type: "Door", NoTrap: true, OL: true, Lock: l});
-				if (l && KDRandom() < 0.5)
+				closed = KinkyDungeonMapGet(cornerX+5, cornerY+4) == 'D';
+				KinkyDungeonMapSet(cornerX+5, cornerY+4, KDRandom() < 0.75 ? 'D' : 'd'); KinkyDungeonTilesSet("" + (cornerX+5) + "," + (cornerY + 4), {Type: "Door", NoTrap: true, OL: true, ReLock: true, Lock: closed ? l : undefined, OGLock: closed ? undefined : l});
+				if (closed && KDRandom() < 0.5)
 					spawnPoints.push({x:cornerX + 4, y:cornerY + 5, required: ["human"], AI: "guard"});
-				else if (l && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
+				else if (closed && KDRandom() < 0.6 + (KDGameData.RoomType == "Jail" ? 0.35 : 0)) {
 					SetpieceSpawnPrisoner(cornerX+4, cornerY+5);
 				}
 

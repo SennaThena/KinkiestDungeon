@@ -76,7 +76,177 @@ let KDDefaultMaxFlags = {
 	robotspawn: 3,
 };
 
-let alts = {
+interface AltType {
+	name: string,
+	/** Room title for display */
+	Title?: string,
+	bossroom?: boolean,
+	width: number,
+	height: number,
+	genType: string,
+	skiptunnel?: boolean,
+	spawns: boolean,
+	chests: boolean,
+	shrines: boolean,
+	orbs?: number,
+	setpieces: Record<string, number>,
+	chargers: boolean,
+	notorches?: boolean,
+	heart: boolean,
+	specialtiles: boolean,
+	shortcut: boolean,
+	enemies: boolean,
+	nojail: boolean,
+	nolore?: boolean,
+	nokeys: boolean,
+	nostairs?: boolean,
+	notraps?: boolean,
+	/** You're not supposed to be here */
+	restricted?: boolean,
+	/** Forces the tileset */
+	forceCheckpoint?: string,
+	/** You cant backtrack until you meet the escape condition */
+	noLeave?: boolean,
+	/** Jail never releases player in sub mode */
+	noRelease?: boolean,
+	/** If noRelease is true, will always release player instantly if security is low instead of waiting*/
+	releaseOnLowSec?: boolean,
+	noClutter?: boolean,
+	noShrineTypes?: string[],
+	/** Ticks flags with a floor component. Reserved for perk room generally */
+	tickFlags?: boolean,
+	noMusic?: boolean,
+	/** ???, probably deprecated */
+	keepMainPath?: boolean,
+	/** Uses music from this tileset */
+	musicParams?: string,
+	/** Room is persistent */
+	persist?: boolean,
+	/** Room is NOT persistent and never so */
+	alwaysRegen?: boolean,
+	/** Remove when pruning world map */
+	prune?: boolean,
+	/** Dont lose items */
+	keepItems?: boolean,
+	/** Unused */
+	constantX?: boolean,
+	/** Type of Prison state machine */
+	prisonType?: string,
+	/** Faction that owns the Jail*/
+	jailType?: string,
+	/** Faction that guards the Jail*/
+	guardType?: string,
+	/** Visual skin */
+	skin?: string,
+	/** Does not use the skin music */
+	useDefaultMusic?: boolean,
+	/** Increased number of enemies */
+	enemyMult?: number,
+	/** Use different gen params for map gen */
+	useGenParams?: string,
+	/** Use different gen params for map gen */
+	lightParams?: string,
+	/** Use different gen params for map gen */
+	bonusTags?: Record<string, {bonus: number, mult: number}>,
+	/** Always increases level by 1 */
+	alwaysAdvance?: boolean,
+	/** Dont advance when going to this floor. Not very useful atm */
+	noAdvance?: boolean,
+	/** Rebels go back to collection. Unused I think*/
+	keepRebels?: boolean,
+	/** Defeated NPCs go directly to collection*/
+	keepPrisoners?: boolean,
+	/** Do not run the 'wear' algorithm. Note: No caves will be possible!!! */
+	noWear?: boolean,
+
+	nopatrols?: boolean,
+	/** Dont remove items from floor */
+	private?: boolean,
+
+	/** Even if there are no start stairs (nostartstairs) you still get placed at the start position when you enter the room (e.g. if you have a custom tile instead of stairs)*/
+	startatstartpos?: boolean,
+	/** Does not create the starting stairs. Still defines a start position */
+	nostartstairs?: boolean,
+	/** Does not generate brickwork */
+	nobrick?: boolean,
+	/** Dont generate the boringness matrix */
+	noboring?: boolean,
+
+	/** generate torches */
+	torches?: boolean,
+
+	/** Unlike other alttypes, this one does get bigger with labyrinthine halls, etc */
+	sizeBonus?: boolean,
+	/** Which tileset to get lore notes from */
+	loreCheckpoint?: string,
+
+	/** Ambient brightness override */
+	brightness?: number,
+	/** Automatically place extra doors according to door placement algorithm */
+	placeDoors?: boolean,
+	/** places no setpieces */
+	noSetpiece?: boolean,
+	/** This is considered a "main" room, e.g. quests will generate, elemental hunters will follow, etc. **/
+	makeMain?: boolean,
+
+	/** Attempting to exit brings up journey target screen */
+	requireJourneyTarget?: boolean,
+
+	/** Dont make quests even if this is a main. */
+	noQuests?: boolean,
+
+	/** Confusingly, this signals that the room is not safe for NPCs to remain in even if persistent, so all NPCs (including persistent and non allies) will be removed upon leaving */
+	removePartyMembers?: boolean,
+
+	/** Custom escape */
+	escapeMethod?: string,
+	/** REQUIRES that spawned npcs be the main faction */
+	factionSpawnsRequired?: boolean,
+	/** Replaces torches of the map with a custom type */
+	torchreplace?: {
+		sprite: string,
+		unlitsprite: string,
+		brightness: number,
+	},
+	/** Doesnt generate random bits of furniture */
+	noFurniture?: string,
+	/** Doesnt turn tables to food */
+	noFood?: string,
+	/** Archaic code */
+	doorPlaceMode?: number,
+	/** Doesnt spawn prisoners in cages on load */
+	noPersistentPrisoners?: boolean,
+	/** Doesnt spawn persistent NPCs on load */
+	noPersistentSpawn?: boolean,
+	/** NPCs do not restock gear here */
+	norestock?: boolean,
+
+
+
+	events?: KinkyDungeonEvent[],
+
+	data?: any,
+	/** Condition to approve the map */
+	genCriteria?: (iteration: number) => boolean,
+	/** Condition to unlock the elevator */
+	elevatorCondition?: (x: number, y: number) => boolean,
+	/** runs when you exit */
+	onExit?: (data: any) => void,
+	/** runs every frame*/
+	drawscript?:  (_delta, CamX: number, CamY: number, CamX_offsetVis: number, CamY_offsetVis: number) => void,
+	/** runs AFTER you exit and the new map has been created */
+	afterExit?: (data: any) => void,
+	/** runs when the map is loaded or created. Return true to repopulate the map, or false to not.*/
+	loadscript?: (firsttime: boolean) => boolean,
+	/** runs every turn.*/
+	updatescript?: (delta: number) => void,
+
+
+
+
+}
+
+let alts: Record<string, AltType> = {
 	"Tunnel": {
 		name: "Tunnel",
 		bossroom: false,
@@ -191,7 +361,7 @@ let alts = {
 		bonusTags: {
 			"construct": {bonus: 0, mult: 0},
 		},
-		loadScript: (_firsttime) => {
+		loadscript: (_firsttime) => {
 			if (_firsttime) {
 				for (let en of KDMapData.Entities) {
 					if (!KDIsImprisoned(en)) {
@@ -207,7 +377,12 @@ let alts = {
 			}
 			return true;
 		},
-
+		genCriteria: (iteration) => {
+			if (KinkyDungeonNearestJailPoint(1, 1, ["furniture"], undefined, undefined, true)) {
+				return KDCheckMainPath();
+			}
+			return false;
+		},
 		prisonType: "HighSec",
 		factionSpawnsRequired: true,
 		genType: "NarrowMaze",
@@ -916,7 +1091,7 @@ let KDJourneyListSkin = {
 };
 if (param_test) KDJourneyList.push("Test");
 
-function KinkyDungeonAltFloor(Type: string) {
+function KinkyDungeonAltFloor(Type: string): AltType {
 	if (KDPersonalAlt[Type])
 		return alts[KDPersonalAlt[Type].RoomType];
 	return alts[Type];

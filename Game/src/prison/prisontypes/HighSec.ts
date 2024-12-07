@@ -135,6 +135,7 @@ KDPrisonTypes.HighSec = {
 				KDPrisonCommonGuard(player, undefined, false);
 
 
+				KinkyDungeonHandleJailSpawns(delta, true);
 
 
 				let lostTrack = KDLostJailTrackCell(player);
@@ -142,28 +143,29 @@ KDPrisonTypes.HighSec = {
 					return KDSetPrisonState(player, "Jail");
 				}
 
+
 				if (KDPrisonIsInFurniture(player)) {
-					let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
+					let lockType = "Red";
+					let uniformCheck = KDPrisonGetGroups(player, undefined, lockType, KDJAILPOWER);
 					if (uniformCheck.itemsToApply.length > 0) {
 						return KDGoToSubState(player, "Uniform");
 					}
 
 					// Stay in the current state, but increment the storage timer, return to jail state if too much
 					KinkyDungeonFlags.set("PrisonStorageTimer", (KinkyDungeonFlags.get("PrisonStorageTimer") || 0) + delta * 2);
-					if (KinkyDungeonFlags.get("PrisonStorageTimer") > 300) {
-						// Go to jail state for training
-						KinkyDungeonSetFlag("PrisonCyberTrainingFlag", 10);
-						return KDSetPrisonState(player, "Jail");
+					if (!(KinkyDungeonFlags.get("PrisonStorageTimer") > 50)) {
+						// Stay a little while
+						return KDCurrentPrisonState(player);
+						//return KDSetPrisonState(player, "Jail");
 					}
-					return KDCurrentPrisonState(player);
 				}
 
-				KinkyDungeonHandleJailSpawns(delta, true);
 
 
 
 				if (KDPrisonTick(player)) {
-					let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
+					let lockType = "Red";
+					let uniformCheck = KDPrisonGetGroups(player, undefined, lockType, KDJAILPOWER);
 					if ((uniformCheck.groupsToStrip.length > 0 && !KinkyDungeonFlags.get("failStrip")) || uniformCheck.itemsToApply.length > 0) {
 						return "Uniform";
 					}
@@ -187,7 +189,8 @@ KDPrisonTypes.HighSec = {
 				KDPrisonCommonGuard(player);
 
 				if (KDPrisonIsInFurniture(player)) {
-					let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
+					let lockType = "Red";
+					let uniformCheck = KDPrisonGetGroups(player, undefined, lockType, KDJAILPOWER);
 					if (uniformCheck.groupsToStrip.length > 0 && !KinkyDungeonFlags.get("failStrip")) {
 						// Create a queue
 						KDGoToSubState(player, "UniformApply");
@@ -200,7 +203,7 @@ KDPrisonTypes.HighSec = {
 					return KDPopSubstate(player);
 				}
 				// Otherwise go to travel state
-				return KDGoToSubState(player, "FurnitureTravel");
+				return KDGoToSubState(player, "UniformTravel");
 			},
 		},
 		UniformRemoveExtra: {name: "UniformRemoveExtra",
@@ -218,56 +221,9 @@ KDPrisonTypes.HighSec = {
 					if (KDistChebyshev(guard.x - player.x, guard.y - player.y) < 1.5) {
 						if (KDPrisonIsInFurniture(player)) {
 							// Remove one per turn
-							let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
-							if (uniformCheck.groupsToStrip.length == 0) {
-								return KDPopSubstate(player);
-							}
-							// if we have a future crate we use its own features
-							if (KinkyDungeonPlayerTags.get("FutureDress"))
-								KinkyDungeonSetFlag("futureDressRemove", 2);
-							else {
-								let succeedAny = false;
-								for (let grp of uniformCheck.groupsToStrip) {
-									if (succeedAny) break;
-									let rr = KinkyDungeonGetRestraintItem(grp);
-									if (rr) {
-										let restraintStack = KDDynamicLinkList(rr, true);
-										if (restraintStack.length > 0) {
-											let succeed = false;
-											for (let r of restraintStack) {
-												if (!uniformCheck.itemsToKeep[KDRestraint(r)?.name] && KinkyDungeonRestraintPower(r, true) < KDCYBERPOWER) {
-													succeed = KinkyDungeonRemoveRestraintSpecific(r, false, false, false).length > 0;
-													if (succeed) {
-														let msg = TextGet("KinkyDungeonRemoveRestraints")
-															.replace("EnemyName", TextGet("Name" + guard.Enemy.name));
-														//let msg = TextGet("Attack" + guard.Enemy.name + "RemoveRestraints");
-														if (r) msg = msg.replace("OldRestraintName", KDGetItemName(r));
-														KinkyDungeonSendTextMessage(5, msg, "yellow", 1);
-														break;
-													}
-												}
-											}
+							let lockType = "Red";
+							return KDDoUniformRemove(player, guard, undefined, lockType, KDJAILPOWER);
 
-											// If we only fail...
-											if (!succeed) {
-												// nothing yet
-											} else {
-												succeedAny = true;
-												break;
-											}
-										}
-									}
-								}
-
-								// If we REALLY only fail...
-								if (!succeedAny) {
-									KinkyDungeonSetFlag("failStrip", 100);
-									return KDPopSubstate(player);
-								}
-							}
-
-							// Stay in the current state
-							return KDCurrentPrisonState(player);
 						}
 					} else {
 						// Stay in the current state
@@ -276,7 +232,7 @@ KDPrisonTypes.HighSec = {
 				}
 
 				// Otherwise go to travel state
-				return KDGoToSubState(player, "FurnitureTravel");
+				return KDGoToSubState(player, "UniformTravel");
 			},
 		},
 		UniformApply: {name: "UniformApply",
@@ -293,37 +249,8 @@ KDPrisonTypes.HighSec = {
 						guard.gy = player.y;
 						KinkyDungeonSetEnemyFlag(guard, "overrideMove", 2);
 						if (KDistChebyshev(guard.x - player.x, guard.y - player.y) < 1.5) {
-							// Add one per turn
-							let uniformCheck = KDPrisonGetGroups(player, ["cyborg"], "Cyber", KDCYBERPOWER);
-							if (uniformCheck.itemsToApply.length == 0) {
-								return KDPopSubstate(player);
-							}
-							// if we have a future crate we use its own features
-							if (KinkyDungeonPlayerTags.get("FutureDress"))
-								KinkyDungeonSetFlag("futureDressAdd", 2);
-							else {
-								let restraint = uniformCheck.itemsToApply[0];
-								if (restraint) {
-									if (KinkyDungeonAddRestraintIfWeaker(
-										KinkyDungeonGetRestraintByName(restraint.item),
-										2, KinkyDungeonStatsChoice.has("MagicHands") ? true : undefined,
-										"Cyber", false, false, undefined, KDGetMainFaction(),
-										KinkyDungeonStatsChoice.has("TightRestraints") ? true : undefined,
-										undefined, KinkyDungeonJailGuard(),
-										false, undefined, undefined, undefined,
-										restraint.variant ? KDApplyVariants[restraint.variant] : undefined,
-									)) {
-										let msg = TextGet("KinkyDungeonAddRestraints")
-											.replace("EnemyName", TextGet("Name" + guard.Enemy.name));
-										//let msg = TextGet("Attack" + guard.Enemy.name + "RemoveRestraints");
-										msg = msg.replace("NewRestraintName", KDGetItemNameString(restraint.item));
-										KinkyDungeonSendTextMessage(9, msg, "yellow", 1);
-									}
-								}
-							}
-
-							// Stay in the current state
-							return KDCurrentPrisonState(player);
+							let lockType = "Red";
+							return KDDoUniformApply(player, guard, undefined, lockType, KDJAILPOWER);
 						}
 					} else {
 						// Stay in the current state
@@ -331,10 +258,10 @@ KDPrisonTypes.HighSec = {
 					}
 				}
 				// Otherwise go to travel state
-				return KDGoToSubState(player, "FurnitureTravel");
+				return KDGoToSubState(player, "UniformTravel");
 			},
 		},
-		FurnitureTravel: {name: "FurnitureTravel",
+		UniformTravel: {name: "UniformTravel",
 			init: (params) => {
 				return "";
 			},

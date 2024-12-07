@@ -907,7 +907,7 @@ function KinkyDungeonCreateMap (
 	let allies = KinkyDungeonGetAllies();
 	let mapMod = KDMapData.MapMod ? KDMapMods[KDMapData.MapMod] : null;
 	let altRoom = KDMapData.RoomType;
-	let altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
+	let altType: AltType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
 
 
 	// Strip non-persistent items
@@ -1411,10 +1411,7 @@ function KinkyDungeonCreateMap (
 
 
 		if (KDTileToTest || ((KinkyDungeonNearestJailPoint(1, 1) || (altType && altType.nojail)) && (!altType || KDStageBossGenerated || !bossRules)
-			&& KinkyDungeonFindPath(KDMapData.StartPosition.x, KDMapData.StartPosition.y, KDMapData.EndPosition.x, KDMapData.EndPosition.y,
-				false, false, false, KinkyDungeonMovableTilesSmartEnemy,
-				false, false, false, undefined, false,
-				undefined, false, true)?.length > 0)) iterations = maxIter;
+			&& ((!altType?.genCriteria && KDCheckMainPath()) || altType.genCriteria(iterations)))) iterations = maxIter;
 		else console.log("This map failed to generate! Please screenshot and send your save code to Ada on deviantart or discord!");
 
 		if (iterations == maxIter) {
@@ -6366,4 +6363,11 @@ function KDTPToSummit(id: number) {
 			room: "Summit",
 		})
 	}
+}
+
+function KDCheckMainPath() {
+	return KinkyDungeonFindPath(KDMapData.StartPosition.x, KDMapData.StartPosition.y, KDMapData.EndPosition.x, KDMapData.EndPosition.y,
+		false, false, false, KinkyDungeonMovableTilesSmartEnemy,
+		false, false, false, undefined, false,
+		undefined, false, true)?.length > 0;
 }
