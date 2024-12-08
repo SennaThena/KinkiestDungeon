@@ -378,7 +378,7 @@ let alts: Record<string, AltType> = {
 			return true;
 		},
 		genCriteria: (iteration) => {
-			if (KinkyDungeonNearestJailPoint(1, 1, ["furniture"], undefined, undefined, true)) {
+			if (KinkyDungeonNearestJailPoint(10, 10, ["furniture"])) {
 				return KDCheckMainPath();
 			}
 			return false;
@@ -975,6 +975,7 @@ let alts: Record<string, AltType> = {
 		prune: true,
 		width: 12,
 		height: 8,
+		brightness: 5,
 		nostartstairs: true,
 		skin: "shrine", useDefaultMusic: true,
 		lightParams: "ore",
@@ -1061,6 +1062,7 @@ let alts: Record<string, AltType> = {
 		height: 7,
 		setpieces: {
 		},
+		brightness: 5,
 		genType: "Tutorial",
 		spawns: false,
 		chests: false,
@@ -2549,7 +2551,7 @@ function KinkyDungeonCreateJourneyFloor(_POI: any, VisitedRooms: any[], width: n
 	}, 0);
 
 	// Tutorial end stairs
-	KinkyDungeonMapSet(VisitedRooms[0].x*2 + 3, VisitedRooms[0].y*2 - 2, 's');
+	KinkyDungeonMapSet(VisitedRooms[0].x*2 + 3, VisitedRooms[0].y*2 - 2, 'H');
 	KinkyDungeonMapSet(VisitedRooms[0].x*2 + 3, VisitedRooms[0].y*2 - 1, 'G');
 	KinkyDungeonTilesSet("" + (VisitedRooms[0].x*2 + 3) + "," + (VisitedRooms[0].y*2 - 2), {RoomType: "Tutorial", Journey: undefined, Skin: "TabletSpent"});
 	KDCreateEffectTile(VisitedRooms[0].x*2 + 3, VisitedRooms[0].y*2 - 2, {

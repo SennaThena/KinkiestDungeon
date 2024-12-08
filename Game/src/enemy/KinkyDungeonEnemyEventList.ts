@@ -258,6 +258,7 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 	"leashCell": {
 		play: true,
 		nonaggressive: true,
+		noMassReset: true,
 		// This will make the enemy want to leash you
 		weight: (_enemy, _aiData, _allied, _hostile, _aggressive) => {
 			return 0;
@@ -1221,26 +1222,31 @@ function KDSettlePlayerInFurniture(enemy: entity, _aiData: KDAIData, tags?: stri
  * @param player
  * @param delta
  */
-function KDTryToLeash(enemy: entity, player: entity, delta: number) {
+function KDTryToLeash(enemy: entity, player: entity, delta: number, instant?: boolean) {
 	if (delta > 0 && KDistChebyshev(enemy.x - player.x, enemy.y - player.y) < 1.5) {
-		let newRestraint = KinkyDungeonGetRestraintByName(KDPlayerLeashable(player) ? "BasicLeash" : "BasicCollar");
-		if (newRestraint) {
-			// Attach a leash or collar
-			if (!KDEnemyHasFlag(enemy, "applyItem")) {
-				KinkyDungeonSetEnemyFlag(enemy, "applyItem", 1 + delta);
-				KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonJailerStartAdding")
-					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
-					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
-				"yellow", 2, true);
-			} else {
-				KinkyDungeonAddRestraintIfWeaker(newRestraint, 0, true);
-				KinkyDungeonSetEnemyFlag(enemy, "applyItem", 0);
-				KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonAddRestraints")
-					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
-					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
-				"yellow", 2, true);
-			}
+		KDAttachLeashOrCollar(enemy, player, delta, instant);
+	}
+}
 
+
+function KDAttachLeashOrCollar(enemy: entity, player: entity, delta: number = 0, instant?: boolean) {
+	let newRestraint = KinkyDungeonGetRestraintByName(KDPlayerLeashable(player) ? "BasicLeash" : "BasicCollar");
+	if (newRestraint) {
+		// Attach a leash or collar
+		if (!instant && !KDEnemyHasFlag(enemy, "applyItem")) {
+			KinkyDungeonSetEnemyFlag(enemy, "applyItem", 1 + delta);
+			KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonJailerStartAdding")
+				.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
+				.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
+			"yellow", 2, true);
+		} else {
+			KinkyDungeonAddRestraintIfWeaker(newRestraint, 0, true);
+			KinkyDungeonSetEnemyFlag(enemy, "applyItem", 0);
+			KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonAddRestraints")
+				.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
+				.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
+			"yellow", 2, true);
 		}
+
 	}
 }

@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.4.15"
+KDVersionStr,"5.4.16"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -12572,12 +12572,14 @@ rGenericAllyStopFollowingMe,"(Confirm? You will have to find the SPEAKER again.)
 rGenericAllyStopFollowingMe_Leave,"(You decide you still need the help)"
 rGenericAllyStopFollowingMe_Fail,"(The SPEAKER refuses to follow your orders)"
 
-dGenericAllyUntie,"(Remove BINDAMNT binding from her)"
+
+dGenericAllyUntie,"(Remove BINDAMNT binding from her) UNTIETURNS"
 rGenericAllyUntie,"(You remove BINDANTPREV binding from the SPEAKER, excluding actual bindings)|(Use the 'Truss em Up' skill to remove bindings)"
 dGenericAllyFood,"(Give her a restoration item)"
 rGenericAllyFood,"(The SPEAKER appreciates the thought!)"
-
-
+KDMustHaveHP,Must have HP to untie.
+KDXTurns,(AMNT turns)
+KDXTurn,(AMNT turn)
 
 dGenericAllyFollowMe,"(Follow me)"
 dGenericAllyFollowMe_Confirm,"(Follow me)"
@@ -13334,6 +13336,7 @@ dFurniture_Use,(Lock yourself inside)
 dFurniture_Enemy,(Try to lock NME into the furniture) (PRCNT% Chance)
 rFurnitureEnemy,"(You close the furniture around your unfortunate victim!)"
 KDFurnEnemyDisabled,"Stun or disable her first."
+KDFurnNotClear,"Area isn't clear."
 dFurniture_EnemyHelpless,(Secure NME into the furniture)
 rFurnitureEnemyHelpless,"(You lock her into the furniture so that she stays in place)"
 

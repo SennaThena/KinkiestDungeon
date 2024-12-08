@@ -509,6 +509,10 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
 				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
 			}
+			let delta = KinkyDungeonFlags.get("recentlyUntied") ? 3 : 1;
+			KDGameData.CurrentDialogMsgData.UNTIETURNS = TextGet(delta != 1 ? "KDXTurns" : "KDXTurn").replace("AMNT",
+				"" + delta
+			);
 			return false;
 		},
 		options: {},
@@ -704,6 +708,14 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 	};
 
 	dialog.options.Untie = {playertext: name + "Untie", response: "Default",
+		/*greyoutFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				return enemy.hp > 0.52;
+			}
+			return false;
+		},
+		greyoutTooltip: "KDMustHaveHP",*/
 		prerequisiteFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
 			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
@@ -724,6 +736,19 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 
 				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
 				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
+
+				let delta = KinkyDungeonFlags.get("recentlyUntied") ? 3 : 1;
+				KDGameData.CurrentDialogMsgData.UNTIETURNS = TextGet(delta != 1 ? "KDXTurns" : "KDXTurn").replace("AMNT",
+					"" + delta
+				);
+
+				KinkyDungeonSetFlag("recentlyUntied", 40);
+
+				KDGameData.SlowMoveTurns = Math.max(KDGameData.SlowMoveTurns || 0, delta);
+				if (KinkyDungeonInDanger()) {
+					KDGameData.CurrentDialog = "";
+					KDGameData.CurrentDialogStage = "";
+				}
 			}
 			return false;
 		},

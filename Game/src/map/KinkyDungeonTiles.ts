@@ -240,23 +240,26 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 				let location = KDWorldMap[newLocation.x + "," + newLocation.y];
 
 				KDGenMapCallback = () => {
-					if (!altRoom?.noAdvance
-						&& (
-							// By default only the main advances
-							location?.main == (originalRoom || "")
-							|| altRoom?.alwaysAdvance)) {
-						// advance by default
-					} else {
-						// Return to the normal map
-						data.overrideRoomType = true;
-						let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
-						if (journeySlot) {
-							KDGameData.RoomType = journeySlot.RoomType;
+					if (data.toTile == 's') {
+						if (!altRoom?.noAdvance
+							&& (
+								// By default only the main advances
+								location?.main == (originalRoom || "")
+								|| altRoom?.alwaysAdvance)) {
+							// advance by default
 						} else {
-							KDGameData.RoomType = "";
+							// Return to the normal map
+							data.overrideRoomType = true;
+							let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
+							if (journeySlot) {
+								KDGameData.RoomType = journeySlot.RoomType;
+							} else {
+								KDGameData.RoomType = "";
+							}
+							data.AdvanceAmount = 0;
 						}
-						data.AdvanceAmount = 0;
 					}
+
 
 					if (altRoom?.onExit) altRoom.onExit(data); // Handle any special contitions
 					KinkyDungeonSendEvent("beforeHandleStairs", data);
@@ -736,11 +739,12 @@ function KDEffectTileInteractions(x: number, y: number, b: any, d: number): void
  * @param [ignoreBlocked] - Ignore if the target is blocked--important if swapping
  * @param [forceHitBullets] - Forces the target to hit stationary bullets if in the way
  */
-function KDMoveEntity(enemy: entity, x: number, y: number, willing: boolean, dash?: boolean, forceHitBullets?: boolean, ignoreBlocked?: boolean, noEvent?: boolean) {
+function KDMoveEntity(enemy: entity, x: number, y: number, willing: boolean, dash?: boolean, forceHitBullets?: boolean, ignoreBlocked?: boolean, noEvent?: boolean, mapData?: KDMapDataType) {
+	if (!mapData) mapData = KDMapData;
 	if (noEvent) {
 		enemy.x = x;
 		enemy.y = y;
-		if (enemy.x != enemy.lastx || enemy.y != enemy.lasty) KDUpdateEnemyCache = true;
+		if (mapData == KDMapData && (enemy.x != enemy.lastx || enemy.y != enemy.lasty)) KDUpdateEnemyCache = true;
 		enemy.lastx = enemy.x;
 		enemy.lasty = enemy.y;
 		return false;
@@ -748,28 +752,33 @@ function KDMoveEntity(enemy: entity, x: number, y: number, willing: boolean, das
 	enemy.lastx = enemy.x;
 	enemy.lasty = enemy.y;
 	let cancel = {cancelmove: false, returnvalue: false};
-	for (let newTile of Object.values(KDGetEffectTiles(x, y))) {
-		if (newTile.duration > 0 && KDEffectTileMoveOnFunctions[newTile.name]) {
-			cancel = KDEffectTileMoveOnFunctions[newTile.name](enemy, newTile, willing, {x: x - enemy.x, y: y - enemy.y}, dash);
+	if (mapData == KDMapData)
+		for (let newTile of Object.values(KDGetEffectTiles(x, y))) {
+			if (newTile.duration > 0 && KDEffectTileMoveOnFunctions[newTile.name]) {
+				cancel = KDEffectTileMoveOnFunctions[newTile.name](enemy, newTile, willing, {x: x - enemy.x, y: y - enemy.y}, dash);
+			}
 		}
-	}
-	if (!ignoreBlocked && KinkyDungeonEntityAt(x, y)) cancel.cancelmove = true;
+	if (!ignoreBlocked && KinkyDungeonEntityAt(x, y, undefined, undefined, undefined, undefined,
+		mapData)) cancel.cancelmove = true;
 	if (!cancel.cancelmove) {
 		enemy.x = x;
 		enemy.y = y;
 
-		KinkyDungeonSendEvent("enemyMove", {
-			cancelmove: cancel.cancelmove,
-			returnvalue: cancel.returnvalue,
-			willing: willing,
-			sprint: dash,
-			lastX: enemy.lastx,
-			lastY: enemy.lasty,
-			moveX: x,
-			moveY: y,
-			enemy: enemy,
-		});
-		KDCheckCollideableBullets(enemy, forceHitBullets);
+		if (mapData == KDMapData) {
+			KinkyDungeonSendEvent("enemyMove", {
+				cancelmove: cancel.cancelmove,
+				returnvalue: cancel.returnvalue,
+				willing: willing,
+				sprint: dash,
+				lastX: enemy.lastx,
+				lastY: enemy.lasty,
+				moveX: x,
+				moveY: y,
+				enemy: enemy,
+			});
+			KDCheckCollideableBullets(enemy, forceHitBullets);
+		}
+
 		enemy.fx = undefined;
 		enemy.fy = undefined;
 		if (enemy.x != enemy.lastx || enemy.y != enemy.lasty) KDUpdateEnemyCache = true;
@@ -945,7 +954,8 @@ function KDConveyor(_delta: number, X: number, Y: number, unwilling?: boolean) {
 				KinkyDungeonSendTextMessage(4, TextGet("KDConveyorPush"), "#ffff44", 2);
 			}
 		} else if (!KDIsImmobile(entity) && !KDIsFlying(entity) && !entity.Enemy.tags.ignoreconveyor && !entity.Enemy.ethereal
-			&& !(entity.Enemy.tags.unstoppable || (entity.Enemy.tags.unflinching && !KinkyDungeonIsDisabled(entity)))) {
+			&& !((entity.Enemy.tags.unstoppable && (!KinkyDungeonIsDisabled(entity) || !KinkyDungeonIsSlowed(entity)))
+			 || (entity.Enemy.tags.unflinching && !KinkyDungeonIsDisabled(entity)))) {
 			if (!KDEnemyHasFlag(entity, "conveyed") && (!tile.Sfty || KinkyDungeonIsDisabled(entity) || unwilling || KDEnemyHasFlag(entity, "conveyed_rec") || KDEnemyHasFlag(entity, "stagger"))) {
 				KinkyDungeonSetEnemyFlag(entity, "conveyed", 2);
 				KinkyDungeonSetEnemyFlag(entity, "conveyed_rec", 4);

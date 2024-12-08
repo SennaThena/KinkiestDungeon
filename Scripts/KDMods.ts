@@ -488,6 +488,8 @@ async function KDExecuteMods() {
 	KinkyDungeonRefreshRestraintsCache();
 	KinkyDungeonRefreshEnemiesCache();
 	KDAwaitingModLoad = false;
+
+	KinkyDungeonSendEvent("afterLoadMods", {});
 }
 
 function KDDrawModConfigs() {

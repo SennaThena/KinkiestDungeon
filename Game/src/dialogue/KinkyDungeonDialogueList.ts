@@ -1100,6 +1100,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 					return !KinkyDungeonEntityAt(KDGameData.InteractTargetX, KDGameData.InteractTargetY)
 						|| KinkyDungeonEntityAt(KDGameData.InteractTargetX, KDGameData.InteractTargetY) == en;
 				},
+				greyoutTooltip: "KDFurnNotClear",
 				prerequisiteFunction: (_gagged, _player) => {
 
 

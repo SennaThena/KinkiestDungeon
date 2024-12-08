@@ -1338,20 +1338,29 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	KDCustomDefeat = "";
 	KDCustomDefeatEnemy = null;
 	KinkyDungeonInterruptSleep();
+
+	let leasher = KinkyDungeonLeashingEnemy();
+	let oldLeash: KDLeashData = null;
+	if (leasher && KDPlayer().leash) {
+		oldLeash = KDPlayer().leash;
+	}
+
 	KDBreakAllLeashedTo(KinkyDungeonPlayerEntity);
 
 	if (KinkyDungeonTempWait)
 		KDDisableAutoWait();
 
-	KDDefeatedPlayerTick();
 	KDBreakTether(KinkyDungeonPlayerEntity);
 	KDGameData.CurrentDialog = "";
 	KDGameData.CurrentDialogStage = "";
 	KDGameData.KinkyDungeonLeashedPlayer = 0;
-	if (KinkyDungeonFlags.get("JailIntro"))
-		KinkyDungeonSetFlag("JailRepeat", -1);
-	KinkyDungeonBlindLevel = 3;
-	KinkyDungeonStatBlind = 3;
+	if (!PutInJail) {
+		KDDefeatedPlayerTick();
+		if (KinkyDungeonFlags.get("JailIntro"))
+			KinkyDungeonSetFlag("JailRepeat", -1);
+		KinkyDungeonBlindLevel = 3;
+		KinkyDungeonStatBlind = 3;
+	}
 	KinkyDungeonUpdateLightGrid = true;
 	if (!KDGameData.TimesJailed) KDGameData.TimesJailed = 1;
 	else KDGameData.TimesJailed += 1;
@@ -1369,18 +1378,21 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	KDGameData.WarningLevel = 0;
 	KDGameData.AncientEnergyLevel = 0;
 	KDGameData.JailRemoveRestraintsTimer = 0;
-	KinkyDungeonSetFlag("defeat", 25);
-	//MiniGameKinkyDungeonLevel = Math.min(MiniGameKinkyDungeonLevel, Math.max(Math.floor(MiniGameKinkyDungeonLevel/10)*10, MiniGameKinkyDungeonLevel - KinkyDungeonSpawnJailers + KinkyDungeonSpawnJailersMax - 1));
-	KinkyDungeonSendEvent("defeat", {});
+	if (!PutInJail) {
+		KinkyDungeonSetFlag("defeat", 25);
+		//MiniGameKinkyDungeonLevel = Math.min(MiniGameKinkyDungeonLevel, Math.max(Math.floor(MiniGameKinkyDungeonLevel/10)*10, MiniGameKinkyDungeonLevel - KinkyDungeonSpawnJailers + KinkyDungeonSpawnJailersMax - 1));
+		KinkyDungeonSendEvent("defeat", {});
 
-	if (KinkyDungeonStatsChoice.get("LivingCollars"))
-		KDApplyLivingCollars();
+		if (KinkyDungeonStatsChoice.get("LivingCollars"))
+			KDApplyLivingCollars();
 
-	for (let inv of KinkyDungeonAllRestraint()) {
-		if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
-			KinkyDungeonRemoveRestraint(KDRestraint(inv).Group, false);
+		for (let inv of KinkyDungeonAllRestraint()) {
+			if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
+				KinkyDungeonRemoveRestraint(KDRestraint(inv).Group, false);
+			}
 		}
 	}
+
 	KDGameData.KinkyDungeonPrisonReduction = 0;
 	//let firstTime = KDGameData.KinkyDungeonSpawnJailersMax == 0;
 	KDResetGuardSpawnTimer();
@@ -1399,26 +1411,30 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	}
 	let params = KinkyDungeonMapParams[(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint)];
 	KDGameData.KinkyDungeonSpawnJailers = KDGameData.KinkyDungeonSpawnJailersMax;
-	let defeat_outfit = params.defeat_outfit;
-	// Handle special cases
-	let collar = KinkyDungeonGetRestraintItem("ItemNeck");
-	if (collar && KDRestraint(collar) && KinkyDungeonPlayerTags.get("Collars")) {
-		if (KDRestraint(collar).name == "DragonCollar") defeat_outfit = "Dragon";
-		if (KDRestraint(collar).name == "MaidCollar") defeat_outfit = "Maid";
-		if (KDRestraint(collar).name == "ExpCollar") defeat_outfit = "BlueSuitPrison";
-		if (KDRestraint(collar).name == "WolfCollar") defeat_outfit = "Wolfgirl";
-		if (KDRestraint(collar).name == "MithrilCollar") defeat_outfit = "Elven";
-		if (KDRestraint(collar).name == "ObsidianCollar") defeat_outfit = "Obsidian";
+
+	if (!PutInJail) {
+		let defeat_outfit = params.defeat_outfit;
+		// Handle special cases
+		let collar = KinkyDungeonGetRestraintItem("ItemNeck");
+		if (collar && KDRestraint(collar) && KinkyDungeonPlayerTags.get("Collars")) {
+			if (KDRestraint(collar).name == "DragonCollar") defeat_outfit = "Dragon";
+			if (KDRestraint(collar).name == "MaidCollar") defeat_outfit = "Maid";
+			if (KDRestraint(collar).name == "ExpCollar") defeat_outfit = "BlueSuitPrison";
+			if (KDRestraint(collar).name == "WolfCollar") defeat_outfit = "Wolfgirl";
+			if (KDRestraint(collar).name == "MithrilCollar") defeat_outfit = "Elven";
+			if (KDRestraint(collar).name == "ObsidianCollar") defeat_outfit = "Obsidian";
+		}
+		if (KDGetMainFaction() && KDFactionProperties[KDGetMainFaction()]?.jailOutfit) defeat_outfit = KDFactionProperties[KDGetMainFaction()]?.jailOutfit;
+		if (KinkyDungeonStatsChoice.has("KeepOutfit")) defeat_outfit = "Default";
+
+		KinkyDungeonSetDress(defeat_outfit, "JailUniform");
+		KinkyDungeonStripInventory(true);
+
+		if (defeat_outfit != params.defeat_outfit) {
+			if (!KinkyDungeonInventoryGet(defeat_outfit)) KinkyDungeonInventoryAdd({name: defeat_outfit, type: Outfit, id: KinkyDungeonGetItemID()});
+		} else if (!KinkyDungeonInventoryGet("JailUniform")) KinkyDungeonInventoryAdd({name: "JailUniform", type: Outfit, id: KinkyDungeonGetItemID()});
+
 	}
-	if (KDGetMainFaction() && KDFactionProperties[KDGetMainFaction()]?.jailOutfit) defeat_outfit = KDFactionProperties[KDGetMainFaction()]?.jailOutfit;
-	if (KinkyDungeonStatsChoice.has("KeepOutfit")) defeat_outfit = "Default";
-
-	KinkyDungeonSetDress(defeat_outfit, "JailUniform");
-	KinkyDungeonStripInventory(true);
-
-	if (defeat_outfit != params.defeat_outfit) {
-		if (!KinkyDungeonInventoryGet(defeat_outfit)) KinkyDungeonInventoryAdd({name: defeat_outfit, type: Outfit, id: KinkyDungeonGetItemID()});
-	} else if (!KinkyDungeonInventoryGet("JailUniform")) KinkyDungeonInventoryAdd({name: "JailUniform", type: Outfit, id: KinkyDungeonGetItemID()});
 
 	//KinkyDungeonChangeRep("Ghost", 1 + Math.round(KinkyDungeonSpawnJailers/2));
 	//KinkyDungeonChangeRep("Prisoner", securityBoost); // Each time you get caught, security increases...
@@ -1444,17 +1460,84 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			"Jail",
 		);
 		let room = outpost != undefined ? outpost : jailroom;
+
+
+		if (leasher) {
+			if (!leasher.homeCoord) {
+				leasher.homeCoord = KDGetCurrentLocation();
+			}
+		}
+
+		let currentMapData = KDMapData;
+
 		KinkyDungeonCreateMap(params, room, "",
 			MiniGameKinkyDungeonLevel, undefined, undefined,
 			forceFaction, undefined, true, slot.main || "");
 
 		// The above condition is the condition to start in jail
 		// We move the player to the jail after generating one
-		nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+		/*nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
 		if (nearestJail) {
 
 			KDMovePlayer(nearestJail.x, nearestJail.y, false);
 			KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+		}*/
+		let entrance = KDGetNearestExitTo(currentMapData.RoomType, currentMapData.mapX, currentMapData.mapY,
+			1, 1, KDMapData, true
+		);
+
+		KDMovePlayer(entrance.x, entrance.y, false);
+
+		if (leasher) {
+			KDDespawnEnemy(leasher, undefined, currentMapData, KDMapData.RoomType);
+			KDPlayer().leash = oldLeash;
+		} else {
+			// Grab the nearest guard and attach leash
+			KDPrisonCommonGuard(KDPlayer());
+			if (KinkyDungeonJailGuard()) {
+				let pp = KinkyDungeonGetNearbyPoint(
+					KDPlayer().x, KDPlayer().y, true
+				);
+				if (pp) {
+					// Move guard nearby and leash
+					KDMoveEntity(KinkyDungeonJailGuard(), pp.x, pp.y, true, false, false, false, true);
+
+					leasher = KinkyDungeonJailGuard();
+				}
+			}
+		}
+
+		if (leasher) {
+			KDGameData.JailGuard = leasher.id;
+			KDAttachLeashOrCollar(KinkyDungeonJailGuard(), KDPlayer(), 1, true);
+			if (!KDPlayer().leash)
+				KinkyDungeonAttachTetherToEntity(
+					2.5, KinkyDungeonJailGuard(), KDPlayer()
+				);
+			else {
+				KDPlayer().leash.x = leasher.x;
+				KDPlayer().leash.y = leasher.y;
+			}
+			let guard = KinkyDungeonJailGuard();
+			guard.aware = true;
+			guard.gx = guard.x;
+			guard.gy = guard.y;
+			let action = "leashCell";
+			if (guard.IntentAction != action) {
+				KDIntentEvents[action].trigger(guard, {});
+			}
+		}
+
+
+		let en = KinkyDungeonEntityAt(entrance.x, entrance.y);
+		if (en) {
+			let pp = KinkyDungeonGetNearbyPoint(
+				en.x, en.y, true
+			);
+			if (pp) {
+				KDMoveEntity(en, pp.x, pp.y, true, false,
+					false, false, true);
+			}
 		}
 
 		KinkyDungeonSetFlag("LeashToPrison", 0);
@@ -1500,7 +1583,7 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			}
 		}
 
-	KDKickEnemies(nearestJail, false, MiniGameKinkyDungeonLevel);
+	KDKickEnemies(nearestJail, PutInJail, MiniGameKinkyDungeonLevel);
 	KDResetAllAggro();
 
 	KDRepairRubble(true);
@@ -1596,8 +1679,8 @@ function KDKickEnemies(nearestJail: any, ignoreAware: boolean, Level: number, no
 			if (e.aware && !KDIsImmobile(e) && KDHostile(e) && KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, KDistEuclidean(e.x - KinkyDungeonPlayerEntity.x, e.y - KinkyDungeonPlayerEntity.y),
 				10, true, false)) {
 				atLeastOneAware = true;
-			} else e.aware = false;
-			if (!ignoreAware || !e.aware)
+			} else if (e.id != KDGameData.JailGuard && e.id != KDGameData.KinkyDungeonLeashingEnemy) e.aware = false;
+			if (!ignoreAware || !e.aware) {
 				if (!nearestJail || (e.x == nearestJail.x && e.y == nearestJail.y) || (!e.Enemy.tags.prisoner && !e.Enemy.tags.peaceful && !KDEnemyHasFlag(e, "imprisoned"))) {
 					if (!e.leash && !KDIsImmobile(e))
 						if (!already.get(e) && (!nearestJail || KDistChebyshev(e.x - nearestJail.x, e.y - nearestJail.y) <= 4 || (e.aware || e.vp > 0.01 || e.aggro > 0))) {
@@ -1616,13 +1699,14 @@ function KDKickEnemies(nearestJail: any, ignoreAware: boolean, Level: number, no
 						KDSetToExpectedBondage(e, -1);
 					}
 				}
-			if (e.hostile < 9000) e.hostile = 0;
-			if (e.playWithPlayer > 0) {
-				e.playWithPlayer = 0;
-				e.playWithPlayerCD = 10;
+				if (e.hostile < 9000) e.hostile = 0;
+				if (e.playWithPlayer > 0) {
+					e.playWithPlayer = 0;
+					e.playWithPlayerCD = 10;
+				}
+				KDExpireFlags(e);
+				KDResetIntent(e, {});
 			}
-			KDExpireFlags(e);
-			KDResetIntent(e, {});
 			if (altType?.removePartyMembers) {
 				KDRemoveEntity(e, false, true, true);
 			} else {

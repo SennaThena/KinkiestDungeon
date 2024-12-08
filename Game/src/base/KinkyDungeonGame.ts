@@ -749,6 +749,7 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
 
 
 	KDMapData = NewMapData;
+	KDWorldMap[x + ',' + y].data[room] = KDMapData;
 	KDGameData.RoomType = KDMapData.RoomType;
 	KDGameData.MapMod = KDMapData.MapMod;
 	MiniGameKinkyDungeonCheckpoint = KDMapData.Checkpoint || MiniGameKinkyDungeonCheckpoint;

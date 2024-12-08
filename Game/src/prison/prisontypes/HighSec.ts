@@ -164,12 +164,16 @@ KDPrisonTypes.HighSec = {
 
 
 				if (KDPrisonTick(player)) {
-					let lockType = "Red";
-					let uniformCheck = KDPrisonGetGroups(player, undefined, lockType, KDJAILPOWER);
-					if ((uniformCheck.groupsToStrip.length > 0 && !KinkyDungeonFlags.get("failStrip")) || uniformCheck.itemsToApply.length > 0) {
-						return "Uniform";
+					if (KDIsPlayerTethered(KDPlayer())) {
+						return "Jail";
 					}
-
+					if (!KinkyDungeonPlayerInCell()) {
+						let lockType = "Red";
+						let uniformCheck = KDPrisonGetGroups(player, undefined, lockType, KDJAILPOWER);
+						if ((uniformCheck.groupsToStrip.length > 0 && !KinkyDungeonFlags.get("failStrip")) || uniformCheck.itemsToApply.length > 0) {
+							return "Uniform";
+						}
+					}
 					return "Cell";
 				}
 				return "Jail";
@@ -356,7 +360,6 @@ KDPrisonTypes.HighSec = {
 						if (guard.IntentAction != action) {
 							KDIntentEvents[action].trigger(guard, {});
 						}
-
 						if (lostTrack) {
 							// Any qualifying factors means they know where you should be
 							guard.gx = player.x;
@@ -370,6 +373,7 @@ KDPrisonTypes.HighSec = {
 							KinkyDungeonSetEnemyFlag(guard, "focusLeash", 2);
 						}
 						KinkyDungeonSetEnemyFlag(guard, "notouchie", 2);
+
 					} else {
 						// forbidden state
 						return KDPopSubstate(player);

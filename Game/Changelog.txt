@@ -31,6 +31,13 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.17
+- More immersive experience being brought to jail
+
+5.4.16
+- Bugfixes due to issues in 5.4.15
+- Unstoppable foes can now be moved on conveyors if disabled. Unflinching can if slowed.
+
 5.4.15
 - Enemies helping each other fixed
 - Enemies will now pull each other off of latex pools and other dangerous terrain
