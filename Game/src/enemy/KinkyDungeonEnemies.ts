@@ -1478,10 +1478,17 @@ function KinkyDungeonBarTo (
 function KDCanSeeEnemy(enemy: entity, playerDist?: number): boolean {
 	if (enemy.player) return true; // Player!!!
 	if (playerDist == undefined) playerDist = KDistChebyshev(KinkyDungeonPlayerEntity.x - enemy.x, KinkyDungeonPlayerEntity.y - enemy.y);
-	return (((enemy.revealed && !enemy.Enemy.noReveal) || !enemy.Enemy.stealth || KDHelpless(enemy) || KDAllied(enemy) || KinkyDungeonSeeAll || playerDist <= enemy.Enemy.stealth + 0.1)
+	return (
+		((enemy.revealed && (!enemy.Enemy.noReveal || (KDGameData.RevealedTiles && KDGameData.RevealedTiles[enemy.x + ',' + enemy.y] > 0)))
+			|| !enemy.Enemy.stealth
+			|| KDHelpless(enemy)
+			|| KDAllied(enemy)
+			|| KinkyDungeonSeeAll
+			|| playerDist <= enemy.Enemy.stealth + 0.1)
 		&& !KDEnemyHidden(enemy)
 		&& !(KinkyDungeonGetBuffedStat(enemy.buffs, "Sneak") > 0 && playerDist > 1.5)
-		&& (playerDist <= KDMaxEnemyViewDist(enemy) || (KDGameData.RevealedTiles && KDGameData.RevealedTiles[enemy.x + ',' + enemy.y] > 0)));
+		&& (playerDist <= KDMaxEnemyViewDist(enemy)
+			|| (KDGameData.RevealedTiles && KDGameData.RevealedTiles[enemy.x + ',' + enemy.y] > 0)));
 }
 
 function KDMaxEnemyViewDist(enemy: entity) {

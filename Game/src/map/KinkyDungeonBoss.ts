@@ -110,7 +110,7 @@ let bosses: Record<string, AltTypeBoss> = {
 	},
 };
 
-function KinkyDungeonBossFloor(Floor: number): AltType {
+function KinkyDungeonBossFloor(Floor: number): AltTypeBoss {
 	if (Floor == 4) return bosses.Fuuka;
 	if (Floor == 8) return bosses.TheWarden;
 	//if (Floor == 12) return bosses.SilverWitch;

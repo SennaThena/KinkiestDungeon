@@ -33,6 +33,8 @@ TODO Add Cuddle play type
 
 5.4.17
 - More immersive experience being brought to jail
+- Capture option from menu now places in highsec jail if being dragged there
+- Enemies leashing the player to highsec jail should directly leash to highsec instead of always stopping by furniture
 
 5.4.16
 - Bugfixes due to issues in 5.4.15

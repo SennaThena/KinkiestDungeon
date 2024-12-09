@@ -99,6 +99,7 @@ interface AltType {
 	nojail: boolean,
 	nolore?: boolean,
 	nokeys: boolean,
+	faction?: string,
 	nostairs?: boolean,
 	notraps?: boolean,
 	/** You're not supposed to be here */

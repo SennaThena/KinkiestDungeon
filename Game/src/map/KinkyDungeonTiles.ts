@@ -249,13 +249,16 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 							// advance by default
 						} else {
 							// Return to the normal map
-							data.overrideRoomType = true;
-							let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
-							if (journeySlot) {
-								KDGameData.RoomType = journeySlot.RoomType;
-							} else {
-								KDGameData.RoomType = "";
+							if (!tile?.RoomType) {
+								data.overrideRoomType = true;
+								let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
+								if (journeySlot) {
+									KDGameData.RoomType = journeySlot.RoomType;
+								} else {
+									KDGameData.RoomType = "";
+								}
 							}
+
 							data.AdvanceAmount = 0;
 						}
 					}

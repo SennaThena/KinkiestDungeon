@@ -6144,7 +6144,7 @@ let KDKeyCheckers = {
  * @param [MapMod]
  * @param [RoomType]
  */
-function KDGetAltType(Floor: number, MapMod?: string, RoomType?: string): any {
+function KDGetAltType(Floor: number, MapMod?: string, RoomType?: string): AltType {
 	let mapMod = null;
 	if (MapMod ? MapMod : KDGameData.MapMod) {
 		mapMod = KDMapMods[MapMod ? MapMod : KDGameData.MapMod];

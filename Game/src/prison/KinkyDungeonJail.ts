@@ -1339,6 +1339,16 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	KDCustomDefeatEnemy = null;
 	KinkyDungeonInterruptSleep();
 
+
+	let forceFaction = KDGetLeashFaction(leashEnemy);
+	let jailroom = KDGetLeashJailRoom(leashEnemy);
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+
+	if (PutInJail && jailroom == KDMapData.RoomType && forceFaction == KDMapData.MapFaction) {
+		PutInJail = false;
+		// Cancel if we are already in the target room!
+	}
+
 	let leasher = KinkyDungeonLeashingEnemy();
 	let oldLeash: KDLeashData = null;
 	if (leasher && KDPlayer().leash) {
@@ -1447,10 +1457,6 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	if (PutInJail) {
 		//KDGameData.RoomType = "Jail"; // We do a tunnel every other room
 		//KDGameData.MapMod = ""; // Reset the map mod
-		let forceFaction = KDGetLeashFaction(leashEnemy);
-		let jailroom = KDGetLeashJailRoom(leashEnemy);
-
-		let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
 		let outpost = KDAddOutpost(
 			slot,
 			slot.main || "",
@@ -1486,10 +1492,35 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			1, 1, KDMapData, true
 		);
 
+		let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+		if (!entrance || (altRoom.nostartstairs && entrance.x == KDMapData.StartPosition.x
+			&& entrance.y == KDMapData.StartPosition.y)
+		) {
+			entrance = KDMapData.EndPosition;
+		}
+
 		KDMovePlayer(entrance.x, entrance.y, false);
 
 		if (leasher) {
+			if (!leasher.homeCoord) leasher.homeCoord = {
+				mapX: currentMapData.mapX,
+				mapY: currentMapData.mapY,
+				room: currentMapData.RoomType,
+			};
 			KDDespawnEnemy(leasher, undefined, currentMapData, KDMapData.RoomType);
+			let nextExit = KDGetNearestExitTo(
+				currentMapData.RoomType, currentMapData.mapX, currentMapData.mapY,
+				leasher.x,
+				leasher.y,
+				KDMapData, true
+			);
+			if (nextExit) {
+				leasher.despawnX = nextExit.x;
+				leasher.despawnY = nextExit.y;
+			} else {
+				leasher.despawnX = KDMapData.EndPosition.x;
+				leasher.despawnY = KDMapData.EndPosition.y;
+			}
 			KDPlayer().leash = oldLeash;
 		} else {
 			// Grab the nearest guard and attach leash
