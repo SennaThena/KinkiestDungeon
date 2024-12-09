@@ -5581,14 +5581,7 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 
 
 	if (KDCustomDefeat) {
-		let CD = KDCustomDefeat;
-		let CDE = KDCustomDefeatEnemy;
-		KDCustomDefeat = "";
-		KDCustomDefeatEnemy = null;
-		if (CD && KDCustomDefeats[CD]) KDCustomDefeats[CD](CDE);
-		else if (!KinkyDungeonFlags.get("CustomDefeat"))
-			KinkyDungeonDefeat(KinkyDungeonFlags.has("LeashToPrison"), CDE);
-
+		KDRunDefeatForEnemy();
 	}
 
 	if (pauseTime) {

@@ -699,7 +699,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			"Submit": {
 				playertext: "Default", response: "Default",
 				clickFunction: (_gagged, _player) => {
-					KinkyDungeonDefeat(true);
+					KinkyDungeonDefeat(true, KDGetSpeaker());
 					return true;
 				},
 				exitDialogue: true,

@@ -202,6 +202,9 @@ function KDAddOutpost(
 function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: string, entranceType: string, entranceTypeFrom: string): boolean {
 	if (!KDPersonalAlt[id]) return false;
 	let ret = false;
+	if (!slot.lairsToPlace) {
+		slot.lairsToPlace = {};
+	}
 	if (
 		// Check target room for entrances
 		(
@@ -218,9 +221,6 @@ function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: str
 			if (!slot.data[roomFrom].LairsToPlace.includes(id))
 				slot.data[roomFrom].LairsToPlace.push(id);
 		} else {
-			if (!slot.lairsToPlace) {
-				slot.lairsToPlace = {};
-			}
 			if (!slot.lairsToPlace[roomFrom]) {
 				slot.lairsToPlace[roomFrom] = [];
 			}
@@ -250,9 +250,6 @@ function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: str
 			if (!slot.data[id].LairsToPlace.includes(roomFrom))
 				slot.data[id].LairsToPlace.push(roomFrom);
 		} else {
-			if (!slot.lairsToPlace) {
-				slot.lairsToPlace = {};
-			}
 			if (!slot.lairsToPlace[id]) {
 				slot.lairsToPlace[id] = [];
 			}

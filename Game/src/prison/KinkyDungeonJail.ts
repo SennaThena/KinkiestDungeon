@@ -1493,7 +1493,7 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 		);
 
 		let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
-		if (!entrance || (altRoom.nostartstairs && entrance.x == KDMapData.StartPosition.x
+		if (!entrance || (altRoom?.nostartstairs && entrance.x == KDMapData.StartPosition.x
 			&& entrance.y == KDMapData.StartPosition.y)
 		) {
 			entrance = KDMapData.EndPosition;
@@ -1950,23 +1950,33 @@ let KDCustomDefeats: Record<string, (enemy: entity) => void> = {
 
 
 	WolfgirlHunters: (enemy) => {
-		KinkyDungeonDefeat(true, enemy);
+		if (KDRunRegularJailDefeatAttempt(enemy)) {
+			KinkyDungeonDefeat(true, enemy);
+		}
 		KDCustomDefeatUniforms.WolfgirlHunters();
 	},
 	MaidSweeper: (enemy) => {
-		KinkyDungeonDefeat(true, enemy);
+		if (KDRunRegularJailDefeatAttempt(enemy)) {
+			KinkyDungeonDefeat(true, enemy);
+		}
 		KDCustomDefeatUniforms.MaidSweeper();
 	},
 	DollShoppe: (enemy) => {
-		KinkyDungeonDefeat(true, enemy);
+		if (KDRunRegularJailDefeatAttempt(enemy)) {
+			KinkyDungeonDefeat(true, enemy);
+		}
 		KDCustomDefeatUniforms.DollShoppe();
 	},
 	CyberDoll: (enemy) => {
-		KinkyDungeonDefeat(true, enemy);
+		if (KDRunRegularJailDefeatAttempt(enemy)) {
+			KinkyDungeonDefeat(true, enemy);
+		}
 		KDCustomDefeatUniforms.CyberDoll();
 	},
 	ElementalSlave: (enemy) => {
-		KinkyDungeonDefeat(true, enemy);
+		if (KDRunRegularJailDefeatAttempt(enemy)) {
+			KinkyDungeonDefeat(true, enemy);
+		}
 		KDCustomDefeatUniforms.ElementalSlave();
 	},
 	DollStorage: (enemy) => {
@@ -2169,3 +2179,23 @@ function KDGetLeashJailRoom(leashEnemy: entity): string {
 	return jailRoom;
 }
 
+
+function KDHasEntranceToJailRoom(jailRoom: string, map: WorldCoord, allowMainInstead: boolean): boolean {
+	let slot = KDGetWorldMapLocation(KDCoordToPoint(map));
+	if (!slot) return false;
+	if (allowMainInstead) {
+		// We assume highsec will appear in main
+		if (map.room == slot.main) {
+			return true;
+		}
+	}
+	let entrances = KDGetEntrancesInRoom(map, true, true, true, true);
+	if (entrances[jailRoom]) return true;
+	return false;
+}
+function KDGetEntranceToJailRoom(jailRoom: string, map: WorldCoord,): KDPoint {
+	let slot = KDGetWorldMapLocation(KDCoordToPoint(map));
+	if (!slot) return null;
+	let entrances = KDGetEntrancePoints(map, true, true, true);
+	return entrances[jailRoom];
+}

@@ -10087,6 +10087,7 @@ let KDEventMapGeneric: Record<string, Record<string, (e: string, data: any) => v
 	},
 	"beforeStairCancelFilter": {
 		"PerkRoom": (_e, data) => {
+			if (data.force) return;
 			if (!data.cancelfilter && data.altRoom?.requireJourneyTarget) data.cancelfilter = "JourneyChoice";
 		},
 	},

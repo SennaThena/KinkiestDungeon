@@ -455,7 +455,17 @@ function KDGetNearestExit(x: number, y: number, mapData: KDMapDataType, backup?:
 
 
 function KDGetNearestExitTo(roomTo: string, mapX: number, mapY: number, x: number, y: number, mapData: KDMapDataType, backup?: boolean): KDPoint {
-	let possible: KDPoint[] = [...Object.values(mapData.ShortcutPositions || {})];
+	let spOrig = Object.entries(mapData.ShortcutPositions || {});
+	let sp: KDPoint[] = [];
+	let mapSlot = KDGetWorldMapLocation(KDCoordToPoint(mapData));
+	let journeyslot = KDGameData.JourneyMap[(mapSlot.jx != undefined ? mapSlot.jx : 0) + ',' + (mapSlot.jy != undefined ? mapSlot.jy : y)];
+	for (let pos of spOrig) {
+		if (pos[0] == roomTo || (journeyslot?.SideRooms && journeyslot?.SideRooms[pos[0]] == roomTo)) {
+			sp.push(pos[1]);
+		}
+	}
+
+	let possible: KDPoint[] = [...sp];
 	if (mapY > mapData.mapY) {
 		possible.unshift(mapData.EndPosition);
 	} else if (mapY < mapData.mapY) {
@@ -469,7 +479,7 @@ function KDGetNearestExitTo(roomTo: string, mapX: number, mapY: number, x: numbe
 		return !!pos && KinkyDungeonStairTiles.includes(KinkyDungeonMapDataGet(mapData, pos.x, pos.y));
 	});
 	if (possible.length == 0) {
-		possible = [...Object.values(mapData.ShortcutPositions || {})];
+		possible = [...sp];
 
 		if (mapY > mapData.mapY) {
 			possible.unshift(mapData.EndPosition);
@@ -4260,14 +4270,135 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 	}
 
 	if (defeat) {
-		let CD = KDCustomDefeat;
-		let CDE = KDCustomDefeatEnemy;
-		KDCustomDefeat = "";
-		KDCustomDefeatEnemy = null;
-		if (CD && KDCustomDefeats[CD]) KDCustomDefeats[CD](CDE);
-		else if (!KinkyDungeonFlags.get("CustomDefeat"))
-			KinkyDungeonDefeat(KinkyDungeonFlags.has("LeashToPrison"), CDE);
+		KDRunDefeatForEnemy();
 	}
+}
+
+function KDRunDefeatForEnemy() {
+	let CD = KDCustomDefeat;
+	let CDE = KDCustomDefeatEnemy;
+	KDCustomDefeat = "";
+	KDCustomDefeatEnemy = null;
+	if (CD && KDCustomDefeats[CD]) KDCustomDefeats[CD](CDE);
+	else if (!KinkyDungeonFlags.get("CustomDefeat")) {
+		if (KDRunRegularJailDefeatAttempt(CDE)) {
+			KinkyDungeonDefeat(KinkyDungeonFlags.has("LeashToPrison"), CDE);
+		}
+	}
+}
+
+/** @returns {boolean} - TRUE if defeat is success */
+function KDRunRegularJailDefeatAttempt(CDE: entity, allowMain: boolean = true, runBackup: boolean = true): boolean {
+	let forceFaction = KDGetLeashFaction(CDE);
+	let jailroom = KDGetLeashJailRoom(CDE);
+
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let outpost = KDAddOutpost(
+		slot,
+		slot.main || "",
+		jailroom,
+		forceFaction || "Jail",
+		false,
+		"Jail",
+		undefined,
+		undefined,
+		true
+	);
+	if (KDHasEntranceToJailRoom(outpost || jailroom, KDGetCurrentLocation(), allowMain)) {
+		return true;
+	}
+
+	if (!runBackup) return false;
+	// We failed, so we teleport to the next room over
+	let exit = KDGetNearestExit(CDE.x, CDE.y, KDMapData, true);
+
+	let oldLeash = KDPlayer().leash;
+
+
+	if (!CDE.homeCoord) {
+		CDE.homeCoord = KDGetCurrentLocation();
+	}
+
+	let currentMapData = KDMapData;
+
+
+
+	KDGoThruTile(exit.x, exit.y, true, true, false);
+
+
+	// The above condition is the condition to start in jail
+	// We move the player to the jail after generating one
+	/*nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+	if (nearestJail) {
+
+		KDMovePlayer(nearestJail.x, nearestJail.y, false);
+		KDLockNearbyJailDoors(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
+	}*/
+	let entrance = KDGetNearestExitTo(currentMapData.RoomType, currentMapData.mapX, currentMapData.mapY,
+		1, 1, KDMapData, true
+	);
+
+	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+	if (!entrance || (altRoom?.nostartstairs && entrance.x == KDMapData.StartPosition.x
+		&& entrance.y == KDMapData.StartPosition.y)
+	) {
+		entrance = KDMapData.EndPosition;
+	}
+
+	KDMovePlayer(entrance.x, entrance.y, false);
+
+	KDDespawnEnemy(CDE, undefined, currentMapData, KDMapData.RoomType);
+	let nextExit = KDGetNearestExitTo(
+		currentMapData.RoomType, currentMapData.mapX, currentMapData.mapY,
+		CDE.x,
+		CDE.y,
+		KDMapData, true
+	);
+	if (nextExit) {
+		CDE.despawnX = nextExit.x;
+		CDE.despawnY = nextExit.y;
+	} else {
+		CDE.despawnX = KDMapData.EndPosition.x;
+		CDE.despawnY = KDMapData.EndPosition.y;
+	}
+	KDPlayer().leash = oldLeash;
+
+	if (CDE) {
+		KDGameData.JailGuard = CDE.id;
+		KDAttachLeashOrCollar(KinkyDungeonJailGuard(), KDPlayer(), 1, true);
+		if (!KDPlayer().leash)
+			KinkyDungeonAttachTetherToEntity(
+				2.5, KinkyDungeonJailGuard(), KDPlayer()
+			);
+		else {
+			KDPlayer().leash.x = CDE.x;
+			KDPlayer().leash.y = CDE.y;
+		}
+		let guard = KinkyDungeonJailGuard();
+		guard.aware = true;
+		guard.gx = guard.x;
+		guard.gy = guard.y;
+		KDAssignLeashPoint(CDE);
+		if (!CDE.IntentLeashPoint) {
+			CDE.gx = AIData.nearestJail.x;
+			CDE.gy = AIData.nearestJail.y;
+		}
+	}
+
+	let en = KinkyDungeonEntityAt(entrance.x, entrance.y);
+	if (en) {
+		let pp = KinkyDungeonGetNearbyPoint(
+			en.x, en.y, true
+		);
+		if (pp) {
+			KDMoveEntity(en, pp.x, pp.y, true, false,
+				false, false, true);
+		}
+	}
+
+
+
+	return false;
 }
 
 let KDCustomDefeat: string = "";
@@ -8036,7 +8167,7 @@ function KDRunBondageResist (
  * Assigns the point an enemy leashes the player to
  * @param enemy
  */
-function KDAssignLeashPoint(enemy: entity) {
+function KDAssignLeashPoint(enemy: entity): KDJailPoint {
 	AIData.nearestJail = KinkyDungeonNearestJailPoint(enemy.x, enemy.y);
 
 	if (!AIData.nearestJail
@@ -8069,6 +8200,8 @@ function KDAssignLeashPoint(enemy: entity) {
 
 			AIData.nearestJail = {type: "jail", radius: 1, x: pos.x, y: pos.y};
 		}
+
+	return AIData.nearestJail;
 }
 
 /**
