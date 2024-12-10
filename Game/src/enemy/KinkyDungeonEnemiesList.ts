@@ -4348,7 +4348,7 @@ let KinkyDungeonEnemies: enemy[] = [
 	},
 	{name: "AnimStraitjacket", faction: "KinkyConstruct", clusterWith: "construct",
 		tags: KDMapInit(["leatherTrap", "ignoreharmless", "construct", "nosignal", "poisonresist", "soulimmune", "melee", "jacketSpell", "minor", "chainresist", "doortrap", "flying",
-			"backup_harness", "harnessSpell",
+			"backup_harness", "harnessSpell", "transportJacket"
 		]),
 		ignorechance: 0.75, followRange: 1, AI: "hunt",  ignoreflag: ["FA_Jacket"], failAttackflag: ["FA_Jacket"], squeeze: true, ignoreStaminaForBinds: true,
 		Attack: {
