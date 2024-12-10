@@ -713,3 +713,82 @@ function KDNPCCanWander(id: number): boolean {
 
 	return npc && (!npc.collect && !(KDGameData.Collection[id] && npc.room == "Summit")) && !KDIsInCapturedPartyID(id)
 }
+
+function KDGetSideroomWanderTags(slot: KDWorldSlot): Record<string, Record<string, number>> {
+	let rooms: Record<string, Record<string, number>> = {};
+
+	let journeySlot = KDGameData.JourneyMap[(slot.jx != undefined ? slot.jx : 0) + ','
+		+ (slot.jy != undefined ? slot.jy : slot.y)];
+
+	if (journeySlot) {
+		for (let room of journeySlot.SideRooms) {
+			if (KDSideRooms[room]?.wandertags) {
+				// Only if theres a wander tag
+				rooms[KDSideRooms[room]?.altRoom || ""] = Object.assign({}, KDSideRooms[room].wandertags);
+			} else
+				rooms[KDSideRooms[room]?.altRoom || ""] = {};
+		}
+	}
+
+	return rooms;
+}
+
+
+function KDGetLairWanderTags(roomFilter: string, slot: KDWorldSlot): Record<string, Record<string, number>> {
+	let results: Record<string, Record<string, number>> = {};
+
+	if (slot.outposts) {
+		for (let outpost of Object.entries(slot.outposts)) {
+			if (roomFilter == undefined || outpost[1] == roomFilter) {
+				let tags: Record<string, number> = {};
+
+				let alt = KDPersonalAlt[outpost[0]];
+				if (alt) {
+					if (alt.OwnerFaction)
+						tags["faction_" + alt.OwnerFaction] = 1;
+
+					if (alt.OwnerNPC)
+						tags["owner_" + alt.OwnerNPC] = 1;
+
+					if (alt.RoomType)
+						tags["type_" + alt.RoomType] = 1;
+				}
+
+				if (KinkyDungeonAltFloor(outpost[0])?.wanderTags) {
+					Object.assign(tags, KinkyDungeonAltFloor(outpost[0])?.wanderTags);
+				}
+
+				results[outpost[0]] = tags;
+			}
+		}
+	}
+
+	return results;
+}
+
+function KDGetWeightedAvgWithTags(tags: Record<string, number>, rooms: Record<string, Record<string, number>>): Record<string, number> {
+	let results: Record<string, number> = {};
+
+	for (let room of Object.entries(rooms)) {
+		let weight = 0;
+		for (let tag of Object.entries(tags)) {
+			let tagMult = tag[1] * (room[1][tag[0]] || 0);
+			weight += tagMult;
+		}
+		results[room[0]] = weight;
+	}
+
+	return results;
+}
+
+function KDGetPersistentWanderWeightsForRoom(AITags: Record<string, number>, coord: WorldCoord): Record<string, number> {
+	let results: Record<string, number> = {};
+	let slot = KDGetWorldMapLocation(KDCoordToPoint(coord));
+
+	if (!slot) return results; // Null
+
+	let sideRooms = KDGetWeightedAvgWithTags(AITags, KDGetSideroomWanderTags(slot));
+	let lairs = KDGetWeightedAvgWithTags(AITags, KDGetLairWanderTags(coord.room, slot));
+
+	return Object.assign(sideRooms, lairs);
+}

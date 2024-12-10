@@ -2818,6 +2818,10 @@ type KDSideRoom = {
 	escapeMethod?: string,
 	/** Returns whether it succeeded */
 	stairCreation: (tile: any, x: number, y: number) => boolean,
+	/** Wander tags.
+	 * Higher means the tag weight on the wanderAI is multiplied
+	 */
+	wandertags: Record<string, number>,
 }
 
 

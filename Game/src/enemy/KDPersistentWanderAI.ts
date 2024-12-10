@@ -35,7 +35,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 
 			if (currentWorldPosition.mapY < KDGameData.HighestLevelCurrent
 				&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
-				// 50% chance to go to a side room or go to normal
+				// 50% chance to stay or go to main
 				if (currentWorldPosition.room != worldSlot.main) {
 					targetPosition.room = worldSlot.main || "";
 
@@ -101,10 +101,33 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
 				// 50% chance to go to a side room or go to normal
 				if (currentWorldPosition.room == (worldSlot.main || "")) {
-					let selectedRoom = journeySlot?.SideRooms[Math.floor(KDRandom()*journeySlot?.SideRooms.length)];
-					if (KDSideRooms[selectedRoom]) {
-						targetPosition.room = KDSideRooms[selectedRoom].altRoom;
+					let NPC = KDGetPersistentNPC(id);
+					let AITags = {
+						generic: 1.0,
+					};
+					AITags["owner_" + id] = 1;
+					if (NPC?.partyLeader) {
+						AITags["owner_" + id] = 0.5;
+					}
+					if (NPC?.entity) {
+						AITags["faction_" + KDGetFaction(NPC.entity)] = 1;
+					}
+
+					let result = KDGetByWeight(KDGetPersistentWanderWeightsForRoom(
+						AITags, currentWorldPosition
+					))
+
+					if (result) {
+						targetPosition.room = result;
 						fromType = 0;
+					} else {
+						targetPosition.room = worldSlot.main || "";
+						fromType = 2;
+						fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+							return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+						}) || 0;
+
+						if (fromIndex == -1) fromType = 0;
 					}
 				} else {
 					targetPosition.room = worldSlot.main || "";

@@ -176,6 +176,9 @@ interface AltType {
 	/** generate torches */
 	torches?: boolean,
 
+	/** Wander tags for persistent NPC */
+	wanderTags?: Record<string, number>,
+
 	/** Unlike other alttypes, this one does get bigger with labyrinthine halls, etc */
 	sizeBonus?: boolean,
 	/** Which tileset to get lore notes from */

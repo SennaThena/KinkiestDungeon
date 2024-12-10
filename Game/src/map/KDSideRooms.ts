@@ -25,6 +25,9 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 			}, 0);
 			return true;
 		},
+		wandertags: {
+			void: 10,
+		},
 	},
 	"BanditFort": {
 		name: "BanditFort",
@@ -47,6 +50,11 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 			KinkyDungeonSkinArea({skin: "shoppe"}, x, y, 1.5);
 			return true;
 		},
+		wandertags: {
+			bandit: 10,
+			bounty: 1,
+			criminal: 5,
+		},
 	},
 	"Caldera": {
 		name: "Caldera",
@@ -64,6 +72,11 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 		stairCreation: (_tile, x, y) => {
 			KinkyDungeonSkinArea({skin: "cst"}, x, y, 1.5);
 			return true;
+		},
+		wandertags: {
+			nature: 10,
+			treasure: 1,
+			generic: 1,
 		},
 	},
 	"ElevatorRoom": {
@@ -83,6 +96,10 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 			KinkyDungeonSkinArea({skin: "bel"}, x, y, 1.5);
 			return true;
 		},
+		wandertags: {
+			treasure: 1,
+			danger: 5,
+		},
 	},
 	"ElevatorEgyptian": {
 		name: "ElevatorEgyptian",
@@ -100,6 +117,9 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 		stairCreation: (_tile, x, y) => {
 			KinkyDungeonSkinArea({skin: "tmb"}, x, y, 1.5);
 			return true;
+		},
+		wandertags: {
+			danger: 1,
 		},
 	},
 	"ElevatorEgyptian2": {
@@ -119,6 +139,8 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 			KinkyDungeonSkinArea({skin: "tmb"}, x, y, 1.5);
 			return true;
 		},
+		wandertags: {
+		},
 	},
 	"GoldVault": {
 		name: "GoldVault",
@@ -135,6 +157,11 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 		stairCreation: (_tile, x, y) => {
 			KinkyDungeonSkinArea({skin: "vault"}, x, y, 1.5);
 			return true;
+		},
+		wandertags: {
+			danger: 5,
+			treasure: 5,
+			tech: 1,
 		},
 	},
 };

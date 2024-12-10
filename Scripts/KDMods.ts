@@ -15,7 +15,7 @@ let KDModCompat = {
 	"KinkyDungeonChangeDesire(": "KDChangeDesire('','','',",
 	"KinkyDungeonChangeCharge(": "KDChangeCharge('','','',",
 	"KinkyDungeonChangeWill(": "KDChangeWill('','','',",
-	"KinkyDungeonChangeStamina": "KDChangeStamina'','','',",
+	"KinkyDungeonChangeStamina(": "KDChangeStamina('','','',",
 	"KinkyDungeonChangeMana(": "KDChangeMana('','','',",
 	"KDChangeBalance(": "KDChangeBalanceSrc('','','',",
 	"KinkyDungeonChangeDistraction(": "KDChangeDistraction('','','',",
@@ -418,11 +418,10 @@ async function KDExecuteMods() {
 								//@ts-ignore
 								let res = event.target.result;
 								if (KDToggles.ModCompat) {
-									for (let compat of Object.entries(KDModCompat)) {
-										res = event.target.result.replace(compat[0],
-											compat[1]
-										);
-									}
+                                    for (let compat of Object.entries(KDModCompat)) {
+                                        console.log(`Replacing ${compat[0]} with ${compat[1]}`); // Debugging
+                                        res = res.replace(new RegExp(compat[0], 'g'), compat[1]);
+                                    }
 								}
 								let evaluated = await eval(res);
 								resolve(evaluated);
