@@ -265,7 +265,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			//{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 1, Weight: 10},
 		],
 
-		factionList: ["Bandit", "Apprentice", "Bountyhunter", "Elemental", "Dragon", "Maidforce"],
+		factionList: ["Bandit", "Witch"],
 
 		"min_width" : 5,
 		"max_width" : 8,
@@ -380,7 +380,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 7,
 
-		factionList: ["AncientRobot", "Bandit", "Apprentice", "Bountyhunter", "Bast", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Bandit", "Apprentice", "Bountyhunter", "Dragon"],
 
 		enemyTags: ["skeleton", "metal", "rope", "leather", "explosiveBarrel"],
 		"defeat_outfit": "Dungeon",
@@ -557,7 +557,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 7,
 
-		factionList: ["AncientRobot", "Nevermere", "Bandit", "Bountyhunter", "Elf", "Bast", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Bandit", "Elf", "Bast", "Elemental", "Dragon", "Alchemist"],
 
 		enemyTags: ["plant", "jungle", "slime", "earth", "explosiveBarrel"],
 		"defeat_outfit": "LatexPrisoner",
@@ -678,7 +678,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 6,
 
-		factionList: ["Apprentice", "Bandit", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Apprentice", "Elemental", "Witch", "AncientRobot"],
 
 		enemyTags: ["skeleton", "temple", "ghost", "soul", "magical"],
 
@@ -803,7 +803,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 8,
 
-		factionList: ["Bast", "Bandit", "AncientRobot", "Elemental", "Dragon"],
+		factionList: ["Bast", "Bandit", "Elemental"],
 
 		enemyTags: ["mummy", "ghost"],
 		"defeat_outfit": "Bast",
@@ -912,7 +912,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"max_height" : 7,
 		deadend: 0.1,
 
-		factionList: ["Elf", "Bandit", "Apprentice", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Elf", "Dressmaker", "Apprentice", "Elemental", "Witch", "Maidforce", "Alchemist"],
 
 		enemyTags: ["book", "witch", "dressmaker", "magical"],
 		"defeat_outfit": "Prisoner",
@@ -1024,7 +1024,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 4,
 		"max_height" : 8,
 
-		factionList: ["Nevermere", "Elf", "Bandit", "Apprentice", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Nevermere", "Elf", "Bandit", "Bountyhunter", "Elemental", "Dragon"],
 
 		enemyTags: ["mushroom", "slimeBonus", "crystalline", "earth", "slime", "shadow", "explosiveBarrel"],
 		"defeat_outfit": "Prisoner",
@@ -1091,7 +1091,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			"AREA8-ORRERY.ogg": 30,
 		},
 
-		factionList: ["Apprentice", "Elf", "Bandit", "Dressmaker", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Witch", "Elemental", "AncientRobot"],
 
 		tagModifiers: {
 			"jungle": 0,
@@ -1467,7 +1467,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			//KDAddPipes(0.2, 0.35, 0.7, 0.2);
 		},
 
-		factionList: ["AncientRobot", "Alchemist"],
+		factionList: ["AncientRobot"],
 
 		enemyTags: ["robot", "guardian", "tech", "metal", "electric", "earth", "explosiveBarrel"],
 		"defeat_outfit": "DollSuit",
@@ -1589,7 +1589,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			KDAddPipes(0.2, 0.35, 0.7, 0.2);
 		},
 
-		factionList: ["Nevermere", "AncientRobot", "Bandit", "Dressmaker", "Bountyhunter", "Maidforce", "Alchemist"],
+		factionList: ["Nevermere", "AncientRobot", "Maidforce", "Alchemist"],
 
 		enemyTags: ["dollsmith", "dollrare", "oldrobot", "oldrobotturret", "tech", "metal", "electric", "fire", "explosiveBarrel"],
 		"defeat_outfit": "DollSuit",
@@ -1920,7 +1920,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"max_height" : 7,
 		deadend: .15,
 
-		factionList: ["Elf", "Bast", "Dragon"],
+		factionList: ["Elf", "Bast", "Alchemist", "Apprentice"],
 
 		enemyTags: ["nature", "elf", "bast", "bubble", "water", "aqua"],
 		"defeat_outfit": "Prisoner",

@@ -64,7 +64,12 @@ let KDJourneySlotTypes : Record<string, (Predecessor: KDJourneySlot, x: number, 
 			slot.EscapeMethod = KDMapMods[MapMod]?.escapeMethod;
 		slot.MapMod = MapMod;
 		slot.RoomType = KDMapMods[MapMod]?.roomType || "";
-		slot.Faction = KDMapMods[MapMod]?.faction || "";
+		slot.Faction = KDMapMods[MapMod]?.faction
+			|| KinkyDungeonAltFloor(KDMapMods[MapMod]?.roomType)?.faction
+			|| CommonRandomItemFromList(
+				undefined,
+				KinkyDungeonMapParams[KinkyDungeonMapIndex[checkpoint]]?.factionList)
+				|| "";
 
 		if (y > 1) {
 			let sideTop = KDGetSideRoom(slot, true, slot.SideRooms);
@@ -289,7 +294,7 @@ function KDRenderJourneyMap(X: number, Y: number, Width: number = 5, Height: num
 				spriteSize * 0.7
 			);
 		}
-		KDDraw(kdcanvas, kdpixisprites, "navmap" + slot.x + ',' + slot.y,
+		KDDraw(kdcanvas, kdpixisprites, "navmap_" + slot.x + ',' + slot.y,
 			KinkyDungeonRootDirectory + sprite + '.png',
 			xOffset + ScaleX*(slot.x - X) - spriteSize/2,
 			yOffset + ScaleY*(slot.y - Y) - spriteSize/2,
@@ -297,6 +302,19 @@ function KDRenderJourneyMap(X: number, Y: number, Width: number = 5, Height: num
 				tint: string2hex(slot.color)
 			}
 		);
+
+		if (slot.MapMod) {
+			let sprite = "UI/MapMod/" + slot.MapMod;
+			KDDraw(kdcanvas, kdpixisprites, "navmapmod_" + slot.x + ',' + slot.y,
+				KinkyDungeonRootDirectory + sprite + '.png',
+				xOffset + ScaleX*(slot.x - X) - spriteSize/2,
+				yOffset + ScaleY*(slot.y - Y) - spriteSize/2,
+				spriteSize, spriteSize, undefined, {
+					//tint: string2hex(slot.color),
+					zIndex: 1,
+				}
+			);
+		}
 
 		if (MouseIn(
 			xOffset + ScaleX*(slot.x - X) - spriteSize/2,
@@ -432,13 +450,36 @@ function KDRenderJourneyMap(X: number, Y: number, Width: number = 5, Height: num
 		II+= subspacePercent;
 		if (selectedJourney.SideRooms && selectedJourney.SideRooms.length > 0) {
 			DrawTextFitKD(TextGet("KDNavMap_SideRooms"), x + 220, y + off + spacing*II++, 500, "#ffffff", KDTextGray05, fontsize);
-			for (let sr of selectedJourney.SideRooms)
-				DrawTextFitKD(TextGet("KDSideRoom_" + (sr || "")), x + 220, y + off + spacing*II++, 500, "#ffffff", KDTextGray05, fontsize2);
+			for (let sr of selectedJourney.SideRooms) {
+				let str = TextGet("KDSideRoom_" + (sr || ""));
+				if (KDPersonalAlt[sr]) {
+					str = KDGetLairName(sr);
+
+				}
+				DrawTextFitKD(str, x + 220, y + off + spacing*II++, 500, "#ffffff", KDTextGray05, fontsize2);
+
+			}
 			II+= subspacePercent;
 		}
 
 	}
 
+}
+
+function KDGetLairName(lair: string) {
+	let str = "";
+	if (KDPersonalAlt[lair].OwnerNPC) {
+		str = TextGet("KDLairName")
+			.replace("PTRN", KDGetPersistentNPC(KDPersonalAlt[lair].OwnerNPC)?.Name)
+			.replace("RMTPE", TextGet("KDRoomType_" + KDPersonalAlt[lair].RoomType));
+	} else if (KDPersonalAlt[lair].OwnerFaction) {
+		str = TextGet("KDOutpostName")
+			.replace("FCTN", TextGet("KinkyDungeonFaction" + KDPersonalAlt[lair].OwnerFaction))
+			.replace("RMTPE", TextGet("KDRoomType_" + KDPersonalAlt[lair].RoomType));
+	} else {
+		str = TextGet("KDRoomType_" + KDPersonalAlt[lair].RoomType);
+	}
+	return str;
 }
 
 function KDInitJourneyMap(Level = 0) {

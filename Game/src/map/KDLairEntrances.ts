@@ -128,7 +128,8 @@ function KDMakeShortcutStairs(lair: KDLair, point: KDPoint, data: KDMapDataType,
 		let journeySlot = KDGameData.JourneyMap[jx + ',' + jy];
 		if (journeySlot) {
 			if (!lair) faction = journeySlot.Faction;
-			journeySlot.SideRooms.push(lair ? lair.Name : roomTo);
+			if (!journeySlot.SideRooms.includes(lair ? lair.Name : roomTo))
+				journeySlot.SideRooms.push(lair ? lair.Name : roomTo);
 			if (!journeySlot.HiddenRooms) {
 				journeySlot.HiddenRooms = {};
 			}

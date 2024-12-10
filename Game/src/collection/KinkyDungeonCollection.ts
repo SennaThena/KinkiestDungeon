@@ -585,7 +585,9 @@ function KDDrawSelectedCollectionMember(value: KDCollectionEntry, x: number, y: 
 			let dungeon = npcLoc.room || KDGameData.JourneyMap[npcLoc.mapX + ',' + npcLoc.mapY]?.Checkpoint || 'grv';
 			str = TextGet((KinkyDungeonFindID(value.id) && KDCompareLocation(currLoc, npcLoc)) ? "KDLastNPCLocationSame" : "KDLastNPCLocation")
 				.replace("FLR", npcLoc.mapY + "")
-				.replace("LOC", TextGet("DungeonName" + dungeon));
+				.replace("LOC", KDPersonalAlt[npcLoc.room]
+					? KDGetLairName(npcLoc.room)
+					: TextGet("DungeonName" + dungeon));
 			DrawTextFitKD(str, x + 20, y + 500 + 20*II++, 500, "#ffffff", KDTextGray05, 18, "left");
 		}
 		if (KDDrawNPCBars(value, x + 0, y + 730, 440) > 0)

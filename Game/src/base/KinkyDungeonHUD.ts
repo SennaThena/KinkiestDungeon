@@ -273,7 +273,10 @@ function KinkyDungeonDrawInterface(_showControls: boolean) {
 	let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
 	let dungeonName = altType?.Title ? altType.Title : (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint);
 	DrawTextFitKD(
-		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME", TextGet("DungeonName" + dungeonName))
+		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME",
+			KDPersonalAlt[KDGameData.RoomType] ?
+			KDGetLairName(KDGameData.RoomType)
+			: TextGet("DungeonName" + dungeonName))
 		+ (KinkyDungeonNewGame ? TextGet("KDNGPlus").replace("XXX", "" + KinkyDungeonNewGame) : ""),
 		1870, 15, 250, "#ffffff", "#333333", 18, "center");
 

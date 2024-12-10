@@ -4399,7 +4399,10 @@ function KDDrawLoadMenu() {
 		// New Game Text
 		DrawTextFitKD(TextGet("KDSlotLocFormat")
 			.replace("FLR", "" + loadedSaveforPreview.level)
-			.replace("DGN", TextGet("DungeonName" + loadedSaveforPreview.checkpoint))
+			.replace("DGN", (loadedSaveforPreview.KDPersonalAlt
+				&& loadedSaveforPreview.KDPersonalAlt[loadedSaveforPreview.KDGameData.RoomType]) ?
+				KDGetLairName(loadedSaveforPreview.KDGameData.RoomType)
+				: TextGet("DungeonName" + loadedSaveforPreview.checkpoint))
 			+ ((loadedSaveforPreview.npp > 0) ? TextGet("KDSlotLocNG")
 				.replace("AMNT", "" + loadedSaveforPreview.npp) : ""), CombarXX + 1100, YYstart + 40, 450, "#ffffff", undefined, 40);
 

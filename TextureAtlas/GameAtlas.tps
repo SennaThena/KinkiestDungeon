@@ -2609,6 +2609,15 @@
             <key type="filename">../Game/UI/Facility/Warden.png</key>
             <key type="filename">../Game/UI/ItemAura.png</key>
             <key type="filename">../Game/UI/ItemAuraBG.png</key>
+            <key type="filename">../Game/UI/MapMod/Bandit.png</key>
+            <key type="filename">../Game/UI/MapMod/Dragon.png</key>
+            <key type="filename">../Game/UI/MapMod/Mold.png</key>
+            <key type="filename">../Game/UI/MapMod/None.png</key>
+            <key type="filename">../Game/UI/MapMod/Plant.png</key>
+            <key type="filename">../Game/UI/MapMod/Robot.png</key>
+            <key type="filename">../Game/UI/MapMod/Slime.png</key>
+            <key type="filename">../Game/UI/MapMod/Witch.png</key>
+            <key type="filename">../Game/UI/MapMod/Wolf.png</key>
             <key type="filename">../Game/UI/NavMap/basic.png</key>
             <key type="filename">../Game/UI/NavMap/boss.png</key>
             <key type="filename">../Game/UI/NavMap/shop.png</key>
@@ -4061,6 +4070,7 @@
             <key type="filename">../Game/Poses/EyesNeutral.png</key>
             <key type="filename">../Game/Poses/EyesSly.png</key>
             <key type="filename">../Game/Poses/EyesSurprised.png</key>
+            <key type="filename">../Game/Poses/FearPose.png</key>
             <key type="filename">../Game/Poses/Free.png</key>
             <key type="filename">../Game/Poses/Front.png</key>
             <key type="filename">../Game/Poses/Hogtie.png</key>
@@ -4074,6 +4084,7 @@
             <key type="filename">../Game/Poses/MouthPout.png</key>
             <key type="filename">../Game/Poses/MouthSmile.png</key>
             <key type="filename">../Game/Poses/MouthSurprised.png</key>
+            <key type="filename">../Game/Poses/NoFearPose.png</key>
             <key type="filename">../Game/Poses/Spread.png</key>
             <key type="filename">../Game/Poses/Up.png</key>
             <key type="filename">../Game/Poses/Wristtie.png</key>

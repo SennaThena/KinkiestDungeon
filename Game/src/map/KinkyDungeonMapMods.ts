@@ -4,7 +4,7 @@ let KDMapMods: Record<string, MapMod> = {
 	"None": {
 		name: "None",
 		roomType: "",
-		weight: 300,
+		weight: 800,
 		filter: (_slot) => {
 			return 1.0;
 		},

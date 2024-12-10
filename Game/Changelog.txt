@@ -33,6 +33,7 @@ TODO Add Cuddle play type
 
 5.4.18
 - Changed persistent NPC wandering to support different NPC AI wandering types with different priorities/interests
+- Early elevator halls may have dragon girls instead of dragons
 
 5.4.17
 - More immersive experience being brought to jail

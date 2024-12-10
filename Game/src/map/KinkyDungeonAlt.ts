@@ -8,6 +8,7 @@ let KDJourneyMapMod = {
 let KDDragonList = [
 	{
 		enemy: "DragonQueenCrystal",
+		minfloor: 7,
 		obstacles: {
 			ChaoticCrystal: 1.0,
 			ChaoticCrystalActive: 0.25,
@@ -18,6 +19,7 @@ let KDDragonList = [
 	},
 	{
 		enemy: "DragonQueenPoison",
+		minfloor: 6,
 		obstacles: {
 			BarricadeVine: 1.0,
 			GiantMushroom: 0.25,
@@ -26,15 +28,48 @@ let KDDragonList = [
 	},
 	{
 		enemy: "DragonQueenIce",
+		minfloor: 5,
 		obstacles: {
 			BarricadeIce: 1.0,
 		},
 	},
 	{
 		enemy: "DragonQueenShadow",
+		minfloor: 8,
 		obstacles: {
 			ShadowHand: 0.1,
 			BarricadeShadow: 1.0,
+			BarricadeShadowMetal: 0.25,
+		},
+	},
+	{
+		enemy: "DragonGirlCrystal",
+		maxfloor: 5,
+		obstacles: {
+			ChaoticCrystal: 1.0,
+			ChaoticCrystalActive: 0.25,
+		},
+	},
+	{
+		enemy: "DragonGirlPoison",
+		maxfloor: 6,
+		obstacles: {
+			BarricadeVine: 0.5,
+			GiantMushroom: 0.5,
+		},
+	},
+	{
+		enemy: "DragonGirlIce",
+		maxfloor: 7,
+		obstacles: {
+			BarricadeIce: 0.75,
+		},
+	},
+	{
+		enemy: "DragonGirlShadow",
+		maxfloor: 8,
+		obstacles: {
+			BarricadeShadow: 0.75,
 			BarricadeShadowMetal: 0.25,
 		},
 	},
@@ -2730,7 +2765,10 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 	KD_PasteTile(KDMapTilesList.ElevatorRoom, KDMapData.StartPosition.x - 7 - 3, KDMapData.StartPosition.y - 7 * 4, data);
 	KDGenerateBaseTraffic(KDMapData.GridWidth, KDMapData.GridHeight);
 
-	let def = KDDragonList[Math.floor(KDRandom() * KDDragonList.length)];
+	let dlist = KDDragonList.filter((dragon) => {
+		return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
+	});
+	let def = dlist[Math.floor(KDRandom() * KDDragonList.length)];
 	let obstacles: Record<string, number> = {}
 	if (def) {
 		DialogueCreateEnemy(15,2 + 7 + 2,def.enemy);
