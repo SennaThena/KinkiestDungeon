@@ -775,13 +775,13 @@ function KDGetWeightedAvgWithTags(tags: Record<string, number>, rooms: Record<st
 			let tagMult = tag[1] * (room[1][tag[0]] || 0);
 			weight += tagMult;
 		}
-		results[room[0]] = weight;
+		results[room[0]] = Math.max(0, weight);
 	}
 
 	return results;
 }
 
-function KDGetPersistentWanderWeightsForRoom(AITags: Record<string, number>, coord: WorldCoord): Record<string, number> {
+function KDGetPersistentWanderWeightsForRoom(AITags: Record<string, number>, coord: WorldCoord, includeMain: boolean = true): Record<string, number> {
 	let results: Record<string, number> = {};
 	let slot = KDGetWorldMapLocation(KDCoordToPoint(coord));
 
@@ -789,6 +789,10 @@ function KDGetPersistentWanderWeightsForRoom(AITags: Record<string, number>, coo
 
 	let sideRooms = KDGetWeightedAvgWithTags(AITags, KDGetSideroomWanderTags(slot));
 	let lairs = KDGetWeightedAvgWithTags(AITags, KDGetLairWanderTags(coord.room, slot));
+	if (includeMain) {
+		let main = slot.main || "";
+		sideRooms[main] = (AITags.generic || 0) + (AITags.main || 0);
+	}
 
 	return Object.assign(sideRooms, lairs);
 }

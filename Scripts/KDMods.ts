@@ -419,9 +419,10 @@ async function KDExecuteMods() {
 								let res = event.target.result;
 								if (KDToggles.ModCompat) {
                                     for (let compat of Object.entries(KDModCompat)) {
-                                        console.log(`Replacing ${compat[0]} with ${compat[1]}`); // Debugging
-                                        res = res.replace(new RegExp(compat[0], 'g'), compat[1]);
-                                    }
+										console.log(`Replacing ${compat[0]} with ${compat[1]}`); // Debugging
+										const escapedKey = compat[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+										res = res.replace(new RegExp(escapedKey, 'g'), compat[1]);
+									  }
 								}
 								let evaluated = await eval(res);
 								resolve(evaluated);

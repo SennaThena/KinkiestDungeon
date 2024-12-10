@@ -31,6 +31,9 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.18
+- Changed persistent NPC wandering to support different NPC AI wandering types with different priorities/interests
+
 5.4.17
 - More immersive experience being brought to jail
 - Capture option from menu now places in highsec jail if being dragged there
