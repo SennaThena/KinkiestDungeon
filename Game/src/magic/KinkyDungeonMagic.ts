@@ -34,6 +34,7 @@ let KinkyDungeonConsumableChoices: string[] = [];
 
 let KinkyDungeonSpellChoicesToggle = [true, true];
 let KinkyDungeonSpellChoiceCount = 50;
+let KinkyDungeonSpellChoiceRenderRows = 7;
 let KinkyDungeonSpellChoiceCountPerPage = 10;
 let KDSpellPage = 0;
 

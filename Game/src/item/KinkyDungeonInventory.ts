@@ -3543,7 +3543,7 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 				});
 		}
 		let icon = 0;
-		let maxSmallIcons = allowOverflow ? 7 : 3;
+		let maxSmallIcons = allowOverflow ? KinkyDungeonSpellChoiceRenderRows : 3;
 		// Draw icons for the other pages, if applicable
 		for (let page = 1; page < maxSmallIcons && page <= Math.floor((KinkyDungeonSpellChoiceCount - 1) / KinkyDungeonSpellChoiceCountPerPage); page += 1) {
 			let pg = KDSpellPage + page;

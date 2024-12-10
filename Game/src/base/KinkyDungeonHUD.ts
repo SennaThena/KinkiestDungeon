@@ -394,6 +394,7 @@ function KDDrawSpellChoices() {
 		}, true, hotBarX + 713, HotbarStart, 72, 72, `${KDSpellPage + 1}`, "#ffffff",
 		KinkyDungeonRootDirectory + "UI/Cycle.png", undefined, undefined, true, undefined, 28, undefined, {
 			hotkey: KDHotkeyToText(KinkyDungeonKeySpellPage[0]),
+			hotkeyPress: KinkyDungeonKeySpellPage[0],
 			scaleImage: true,
 			centered: true,
 			centerText: true,
