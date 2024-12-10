@@ -428,20 +428,32 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 		overrideIgnore: true,
 		// This is the basic leash to jail mechanic
 		weight: (enemy, _aiData, _allied, hostile, _aggressive) => {
+			//if (KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison) return 0;
 			return (hostile
 				&& (enemy.Enemy.tags.jailer || enemy.Enemy.tags.jail || enemy.Enemy.tags.leashing)
 				&& (KinkyDungeonFlags.has("Released"))
 				&& !KDEnemyHasFlag(enemy, "dontChase")) ?
-				((KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["dropoff"]) && !KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"])) ? 0 : 100)
+				((KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["dropoff"])
+					&& !KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"])) ? 0 : 100)
 			: 0;
 		},
 		trigger: (enemy, _aiData) => {
 			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 30);
 			enemy.playWithPlayer = 0;
 			enemy.IntentAction = 'CaptureJail';
+
+
 			let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
-			enemy.IntentLeashPoint = nj ? nj : Object.assign({type: "jail", radius: 1}, KDMapData.StartPosition);
-			if (!nj) KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+			let pos = KDMapData.StartPosition;
+			if (!nj || KinkyDungeonFlags.get("LeashToPrison")) {
+				nj = null;
+				if (KDGenHighSecCondition(!nj, enemy)) {
+					pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
+				}
+				KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+			}
+			enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, pos);
+
 		},
 		maintain: (enemy, delta, aiData) => {
 			let player = KDPlayer();
@@ -463,9 +475,14 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 
 				if (!enemy.IntentLeashPoint) {
 					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
-					enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, KDMapData.StartPosition);
-					if (!nj)
+					let pos = KDMapData.StartPosition;
+					if (!nj || KinkyDungeonFlags.get("LeashToPrison")) {
+						if (KDGenHighSecCondition(!nj, enemy)) {
+							pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
+						}
 						KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+					}
+					enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, pos);
 				}
 
 				enemy.gx = enemy.IntentLeashPoint?.x || KDMapData.StartPosition.y;

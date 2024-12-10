@@ -195,6 +195,12 @@ interface AltType {
 	/** Do not run the 'wear' algorithm. Note: No caves will be possible!!! */
 	noWear?: boolean,
 
+	/** Allows highsec in here */
+	placeJailEntrances?: boolean,
+
+	/** Creates the jail entrances but doesnt let them be used unless this is a destination */
+	allowJailEntrances?: boolean,
+
 	nopatrols?: boolean,
 	/** Dont remove items from floor */
 	private?: boolean,
@@ -392,6 +398,8 @@ let alts: Record<string, AltType> = {
 		width: 15,
 		height: 15,
 		enemyMult: 0.6,
+
+		allowJailEntrances: true,
 		//alwaysRegen: false, // Always regenerate this room
 		setpieces: {
 			"GuaranteedCell": 100,
@@ -702,6 +710,7 @@ let alts: Record<string, AltType> = {
 		data: {
 			BanditFort: true,
 		},
+		placeJailEntrances: true,
 		genType: "Maze",
 		skin: "shoppe",
 		musicParams: "bandit",

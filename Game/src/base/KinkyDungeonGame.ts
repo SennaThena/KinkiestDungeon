@@ -1037,7 +1037,7 @@ function KinkyDungeonCreateMap (
 			mapMod = KDMapMods[KDGameData.MapMod];
 		}
 
-
+		let slot = KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()));
 		altRoom = KDGameData.RoomType;
 		altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
 
@@ -1255,13 +1255,15 @@ function KinkyDungeonCreateMap (
 			KinkyDungeonReplaceDoodads(crackchance, barchance, wallRubblechance, wallhookchance, ceilinghookchance, width, height, altType); // Replace random internal walls with doodads
 		}
 
-		KinkyDungeonPlaceJailEntrances(width, height, altType);
+		if (!altType || altType.allowJailEntrances || altType.placeJailEntrances || slot?.main == KDGameData.RoomType)
+			KinkyDungeonPlaceJailEntrances(width, height, altType);
 			//console.log(KDRandom());
 		if (KDDebug) {
 			console.log(`${performance.now() - startTime} ms for doodad creation`);
 			startTime = performance.now();
 		}
-		KinkyDungeonPlaceStairs(KDMapData.StartPosition.y, width, height, altType && altType.nostairs, altType && altType.nostartstairs,
+		KinkyDungeonPlaceStairs(KDMapData.StartPosition.y, width, height,
+			altType && altType.nostairs, altType && altType.nostartstairs,
 			KDPersonalAlt[KDGameData.RoomType] ? KDPersonalAlt[KDGameData.RoomType].UpStairsFrom : origMapType); // Place the start and end locations
 
 		KDPlacePlayerBasedOnDirection(direction);

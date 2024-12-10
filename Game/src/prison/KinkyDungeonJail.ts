@@ -1457,13 +1457,23 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	if (PutInJail) {
 		//KDGameData.RoomType = "Jail"; // We do a tunnel every other room
 		//KDGameData.MapMod = ""; // Reset the map mod
+
+		let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+		let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+		let fromHere = true;
+		if (((slot.main || "") == KDGameData.RoomType) && (altRoom && altRoom.placeJailEntrances))
+			fromHere = false;
 		let outpost = KDAddOutpost(
 			slot,
-			slot.main || "",
+			fromHere ? KDGameData.RoomType : slot.main || "",
 			jailroom,
 			forceFaction || "Jail",
 			false,
 			"Jail",
+			fromHere ? slot.main || "" : undefined,
+			fromHere ? "Jail" : undefined,
+			fromHere ? "Jail" : undefined,
+			true
 		);
 		let room = outpost != undefined ? outpost : jailroom;
 
@@ -1492,7 +1502,6 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			1, 1, KDMapData, true
 		);
 
-		let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
 		if (!entrance || (altRoom?.nostartstairs && entrance.x == KDMapData.StartPosition.x
 			&& entrance.y == KDMapData.StartPosition.y)
 		) {

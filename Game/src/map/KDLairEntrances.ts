@@ -95,6 +95,22 @@ let KDLairEntrancePlaceScript: Record<string, (lairData: KDLair, data: KDMapData
 	},
 }
 
+function KDGenHighSecCondition(force: boolean, enemy: entity) {
+	if (((force || KinkyDungeonFlags.has("LeashToPrison"))
+			&& !(KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison))
+		|| (
+			KDSelfishLeash(enemy)
+		)) {
+
+		let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
+		let slot = KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()));
+		return (!altType || altType.placeJailEntrances || slot?.main == KDGameData.RoomType);
+	}
+	return false;
+}
+
+
+
 /** Weighting factor for filterscripts */
 let KDLairEntranceFilterScript: Record<string, (lair: KDLair, data: KDMapDataType, entrance: LairEntrance, roomTo?: string) => number> = {
 	Cave: (lair, data, entrance, roomTo) => {

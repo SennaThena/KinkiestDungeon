@@ -58,6 +58,8 @@ function KDAddLair(
 	entrance: string,
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
+	/** Entrance of the room in the fromRoom, not the room*/
+	fromRoomEntrance?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
 	entranceFrom?: string,
 	alwaysGet?: boolean): string {
@@ -113,13 +115,23 @@ function KDAddLair(
 			placed = true;
 		}
 	}
+	let gen = false;
+	if (fromRoom != undefined && KDDoLairOutpostConnections(
+	slot,
+	lairid,
+	fromRoom,
+	entranceFrom,
+	entranceFrom))
+		gen = true;
 	if (KDDoLairOutpostConnections(
 	slot,
 	lairid,
 	room,
 	entrance,
-	entranceFrom || entrance))
-		KDBuildLairs();
+	entranceFrom))
+		gen = true;
+
+	if (gen) KDBuildLairs();
 	return (placed || alwaysGet) ? lairid : undefined;
 }
 
@@ -135,6 +147,8 @@ function KDAddOutpost(
 	entrance: string,
 	/** Room that this is from, only relevant if different from room*/
 	fromRoom?: string,
+	/** Entrance of the room in the fromRoom, not the room*/
+	fromRoomEntrance?: string,
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
 	entranceFrom?: string,
 	alwaysGet: boolean = true): string {
@@ -189,17 +203,33 @@ function KDAddOutpost(
 			placed = true;
 		}
 	}
+	let gen = false
+
+	if (fromRoom != undefined && KDDoLairOutpostConnections(
+		slot,
+		outpostid,
+		fromRoom,
+		fromRoomEntrance,
+		entranceFrom))
+			gen = true;
+
 	if (KDDoLairOutpostConnections(
 	slot,
 	outpostid,
 	room,
 	entrance,
-	entranceFrom || entrance))
-		KDBuildLairs();
+	entranceFrom))
+		gen = true;
+
+
+	if (gen) KDBuildLairs();
 	return (placed || alwaysGet) ? outpostid : undefined;
 }
 
-function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string, roomFrom: string, entranceType: string, entranceTypeFrom: string): boolean {
+function KDDoLairOutpostConnections(slot: KDWorldSlot, id: string,
+	roomFrom: string,
+	entranceType: string,
+	entranceTypeFrom: string): boolean {
 	if (!KDPersonalAlt[id]) return false;
 	let ret = false;
 	if (!slot.lairsToPlace) {

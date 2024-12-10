@@ -4293,15 +4293,24 @@ function KDRunRegularJailDefeatAttempt(CDE: entity, allowMain: boolean = true, r
 	let jailroom = KDGetLeashJailRoom(CDE);
 
 	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
+	let fromHere = false;
+	if (!((slot.main || "") == KDGameData.RoomType)
+		&& (!altType || altType.placeJailEntrances || slot?.main == KDGameData.RoomType)
+		&& !KDSelfishLeash(CDE))
+		fromHere = true;
+
+
 	let outpost = KDAddOutpost(
 		slot,
-		slot.main || "",
+		fromHere ? KDGameData.RoomType : slot.main || "",
 		jailroom,
 		forceFaction || "Jail",
 		false,
 		"Jail",
-		undefined,
-		undefined,
+		fromHere ? slot.main || "" : undefined,
+		fromHere ? "Jail" : undefined,
+		fromHere ? "Jail" : undefined,
 		true
 	);
 	if (KDHasEntranceToJailRoom(outpost || jailroom, KDGetCurrentLocation(), allowMain)) {
@@ -5917,7 +5926,8 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 
 							if (AIData.leashed) {
 
-								let leashToExit = AIData.leashing && !KinkyDungeonHasWill(0.1) && AIData.playerDist < 1.5;
+								let leashToExit = AIData.leashing && !KinkyDungeonHasWill(0.1)
+									&& AIData.playerDist < 1.5;
 								if (!enemy.IntentLeashPoint) {
 									KDAssignLeashPoint(enemy);
 								}
@@ -8168,41 +8178,41 @@ function KDRunBondageResist (
  * @param enemy
  */
 function KDAssignLeashPoint(enemy: entity): KDJailPoint {
-	AIData.nearestJail = KinkyDungeonNearestJailPoint(enemy.x, enemy.y);
-
-	if (!AIData.nearestJail
-		|| (KinkyDungeonFlags.has("LeashToPrison")
-			&& !(KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison))
-		|| (
-			KDSelfishLeash(enemy)
-		)) {
-
-			let forceFaction = KDGetLeashFaction(enemy);
-			let jailroom = KDGetLeashJailRoom(enemy);
-
-			let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
-			let outpost = KDAddOutpost(
-				slot,
-				slot.main || "",
-				jailroom,
-				forceFaction || "Jail",
-				false,
-				"Jail",
-				undefined,
-				undefined,
-				true
-			);
-
-
-			let pos = KDGetShortcutPosition(outpost || jailroom, enemy.x, enemy.y, KDMapData);
-
-			let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
-			if (!pos) pos = (altRoom?.nostartstairs && !altRoom?.startatstartpos) ? KDMapData.StartPosition : KDMapData.EndPosition;
-
+	let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y);
+	if (!nj || KDGenHighSecCondition(false, enemy)) {
+			let pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
 			AIData.nearestJail = {type: "jail", radius: 1, x: pos.x, y: pos.y};
 		}
 
 	return AIData.nearestJail;
+}
+
+function KDGetHighSecLoc(enemy: entity, fromHere?: boolean): KDPoint {
+	let forceFaction = KDGetLeashFaction(enemy);
+	let jailroom = KDGetLeashJailRoom(enemy);
+
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+	if (((slot.main || "") == KDGameData.RoomType) && (altRoom && altRoom.placeJailEntrances))
+		fromHere = false;
+	let outpost = KDAddOutpost(
+		slot,
+		fromHere ? KDGameData.RoomType : slot.main || "",
+		jailroom,
+		forceFaction || "Jail",
+		false,
+		"Jail",
+		fromHere ? slot.main || "" : undefined,
+		fromHere ? "Jail" : undefined,
+		fromHere ? "Jail" : undefined,
+		true
+	);
+
+
+	let pos = KDGetShortcutPosition(outpost || jailroom, enemy.x, enemy.y, KDMapData);
+
+	if (!pos) pos = (altRoom?.nostartstairs && !altRoom?.startatstartpos) ? KDMapData.StartPosition : KDMapData.EndPosition;
+	return pos;
 }
 
 /**
