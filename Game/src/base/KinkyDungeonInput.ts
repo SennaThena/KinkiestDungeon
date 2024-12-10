@@ -636,7 +636,8 @@ function KDProcessInput(type: string, data: any): string {
 		}
 		case "defeat":
 			KDDelayedActionPrune(["Action", "World"]);
-			KinkyDungeonDefeat(KinkyDungeonFlags.has("LeashToPrison"), KinkyDungeonLeashingEnemy());
+			KinkyDungeonDefeat(!(KinkyDungeonAltFloor(KDGameData.RoomType)?.prisonType)
+				&& KinkyDungeonFlags.has("LeashToPrison"), KinkyDungeonLeashingEnemy());
 			KinkyDungeonChangeRep("Ghost", 4);
 			break;
 		case "lose":
