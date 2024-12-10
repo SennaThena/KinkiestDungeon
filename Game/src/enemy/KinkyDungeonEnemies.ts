@@ -8171,7 +8171,8 @@ function KDAssignLeashPoint(enemy: entity): KDJailPoint {
 	AIData.nearestJail = KinkyDungeonNearestJailPoint(enemy.x, enemy.y);
 
 	if (!AIData.nearestJail
-		|| KinkyDungeonFlags.has("LeashToPrison")
+		|| (KinkyDungeonFlags.has("LeashToPrison")
+			&& !(KinkyDungeonAltFloor(KDGameData.RoomType)?.prisonType))
 		|| (
 			KDSelfishLeash(enemy)
 		)) {
