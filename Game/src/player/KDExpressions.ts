@@ -2,6 +2,16 @@
 let KDCustomExp : Record<number, KDExpressionType>= {
 };
 
+let KDExpressionPoses = [
+	"EyesPose",
+	"Eyes2Pose",
+	"BrowsPose",
+	"Brows2Pose",
+	"BlushPose",
+	"MouthPose",
+	"FearPose",
+];
+
 let KDExpressions: Record<string, KDExpression> = {
 	"Custom": {
 		priority: 10000,
@@ -22,6 +32,7 @@ let KDExpressions: Record<string, KDExpression> = {
 				Brows2Pose: "",
 				BlushPose: "",
 				MouthPose: "",
+				FearPose: "",
 			};
 		},
 	},
@@ -818,6 +829,7 @@ let KDExpressions: Record<string, KDExpression> = {
 				Brows2Pose: "Brows2Neutral",
 				BlushPose: "BlushNone",
 				MouthPose: "MouthNeutral",
+				FearPose: "NoFearPose",
 			};
 		},
 	},
