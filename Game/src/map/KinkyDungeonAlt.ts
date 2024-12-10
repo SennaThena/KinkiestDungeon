@@ -199,6 +199,9 @@ interface AltType {
 	/** Dont remove items from floor */
 	private?: boolean,
 
+	/** Prevents jailers from taking you out of jail in order to put you into jail */
+	isPrison?: boolean,
+
 	/** Even if there are no start stairs (nostartstairs) you still get placed at the start position when you enter the room (e.g. if you have a custom tile instead of stairs)*/
 	startatstartpos?: boolean,
 	/** Does not create the starting stairs. Still defines a start position */
@@ -423,6 +426,7 @@ let alts: Record<string, AltType> = {
 			return false;
 		},
 		prisonType: "HighSec",
+		isPrison: true,
 		factionSpawnsRequired: true,
 		genType: "NarrowMaze",
 		spawns: false,
@@ -489,6 +493,7 @@ let alts: Record<string, AltType> = {
 		nopatrols: true,
 		alwaysRegen: true, // Always regenerate this room
 		prisonType: "DollStorage",
+		isPrison: true,
 		setpieces: {
 		},
 		data: {

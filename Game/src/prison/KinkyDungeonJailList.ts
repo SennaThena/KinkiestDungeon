@@ -179,7 +179,7 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 		assign: (guard, _xx, _yy) => {
 			KinkyDungeonInterruptSleep();
 			if (KDGetEffSecurityLevel() >= KDSecurityLevelHiSec
-				&& !(KinkyDungeonAltFloor(KDGameData.RoomType)?.prisonType)
+				&& !(KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison)
 				&& (!(KDMapData.JailFaction?.length > 0)
 				|| KDFactionRelation("Player", KDMapData.JailFaction[0]) < 0.4)) {
 				let dd = KDGetHiSecDialogue(guard);
