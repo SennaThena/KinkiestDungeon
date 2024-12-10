@@ -1373,15 +1373,16 @@ function KDDrawGenericNPCRestrainingUI(cats: RestraintGenericType[], x: number, 
 
 				x + XX + 32, y + YY, 72, 72, "",
 				"#ffffff", img,
-				undefined, false, !selected,
-				npc ?
+				undefined, false,
+				((quantity || 0) < item.count) || !selected,
+				((quantity || 0) < item.count) ? "#b74539" : (npc ?
 				(KDCanApplyBondage(npc, KDPlayer(),
 						rst?.quickBindCondition ?
 						(t, p) => (KDQuickBindConditions[rst?.quickBindCondition](
 							t, p,
 							rst,
 							null)) : undefined) ? "#63ab3f" : "#f0b541")
-				: KDButtonColor,
+				: KDButtonColor),
 				undefined, true,
 				{
 					scaleImage: true,

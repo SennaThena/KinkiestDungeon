@@ -3307,6 +3307,7 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 	}, true, hotBarX + 713, HotbarStart, 72, 72, `${KDSpellPage + 1}`, "#ffffff",
 	KinkyDungeonRootDirectory + "UI/Cycle.png", undefined, undefined, true, undefined, 28, undefined, {
 		hotkey: KDHotkeyToText(KinkyDungeonKeySpellPage[0]),
+		hotkeyPress: KinkyDungeonKeySpellPage[0],
 		scaleImage: true,
 		centered: true,
 		centerText: true,
@@ -3439,7 +3440,8 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 
 			if (MouseIn(buttonDim.x, buttonDim.y, buttonDim.w, buttonDim.h)) {
 				DrawTextFitKD(TextGet("KinkyDungeonSpell"+ spell.name),
-					600, buttonDim.y - 140, 300, "#ffffff", "#333333", undefined, "center");
+				buttonDim.x, buttonDim.y - 140, 300, "#ffffff", "#333333", undefined, "center",
+				200);
 			}
 			// Render number
 			//DrawTextFitKD((i+1) + "", buttonDim.x + 10, buttonDim.y + 13, 25, "#ffffff", KDTextGray0, 18, undefined, 101);
@@ -3490,7 +3492,8 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 				if (MouseIn(buttonDim.x, buttonDim.y, buttonDim.w, buttonDim.h)) {
 					DrawTextFitKD(TextGet((arm ? "Restraint" : ("KinkyDungeonInventoryItem")) + name),
 						buttonDim.x, buttonDim.y - 140, 300,
-						"#ffffff", "#333333", undefined, "center");
+						"#ffffff", "#333333", undefined, "center",
+						200);
 				}
 				// Render number
 				//DrawTextFitKD((i+1) + "", buttonDim.x + 10, buttonDim.y + 13, 25, "#ffffff", KDTextGray0, 18, undefined, 101);

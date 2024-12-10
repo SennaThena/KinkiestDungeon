@@ -1535,7 +1535,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		},
 		escapeChance: {"Struggle": -0.275, "Cut": 0.1, "Remove": 0.1, "Pick": 0.15},
 		limitChance: {"Struggle": 0.12, "Cut": 0.16, "Remove": 0.15, "Unlock": 0.75},
-		maxwill: 0.1, enemyTags: {"latexRestraintsHeavy" : -1}, playerTags: {"LatexStraitjacketWorn": 20, "posLatex": -1, "latexRage": 4}, minLevel: 12, allFloors: true, shrine: ["Latex", "Straitjackets", "TransportJackets","Block_ItemHands"]},
+		maxwill: 0.1, enemyTags: {"latexRestraintsHeavy" : -1, transportJacket: 1}, playerTags: {"LatexStraitjacketWorn": 20, "posLatex": -1, "latexRage": 4}, minLevel: 12, allFloors: true, shrine: ["Latex", "Straitjackets", "TransportJackets","Block_ItemHands"]},
 
 
 	{inventory: true, name: "LatexArmbinder", inaccessible: true, factionColor: [[0]], Asset: "SeamlessLatexArmbinder", strictness: 0.1,
@@ -2272,7 +2272,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		unlimited: true,
 		limitChance: {"Struggle": 0.12, "Cut": 0.1, "Remove": 0.15, "Unlock": 0.75},
 		escapeChance: {"Struggle": -0.175, "Cut": 0.1, "Remove": 0.1, "Pick": 0.15},
-		enemyTags: {"nurseRestraints": 1}, playerTagsMult: {"ItemArmsEmpty": 0.02}, playerTags: {"AsylumJacketWorn": 20}, minLevel: 0, maxwill: 0.1, allFloors: true, shrine: ["Straitjackets", "Block_ItemHands", "TransportJackets", "Leather"]},
+		enemyTags: {"nurseRestraints": 1, "transportJacket": 1}, playerTagsMult: {"ItemArmsEmpty": 0.02}, playerTags: {"AsylumJacketWorn": 20}, minLevel: 0, maxwill: 0.1, allFloors: true, shrine: ["Straitjackets", "Block_ItemHands", "TransportJackets", "Leather"]},
 
 	{renderWhenLinked: [...KDLegbinderRender], inventory: true, name: "AsylumLegbinder", debris: "Belts", inaccessible: true, Asset: "LegBinder", LinkableBy: [...KDLegbinderLink], Color: "Default", Group: "ItemLegs", blockfeet: true,
 		Model: "Legbinder",
@@ -2818,7 +2818,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		unlimited: true,
 		limitChance: {"Unlock": 0.1},
 		escapeChance: {"Struggle": -0.5, "Cut": 0, "Remove": 0, "Pick": 0},
-		enemyTags: {"highsecRestraints": 100, "leatherRestraintsHeavy": 1}, playerTagsMult: {"ItemArmsEmpty": 0.02}, playerTags: {"HighsecStraitjacketWorn": 20}, minLevel: 12, maxwill: 0.1, allFloors: true, shrine: ["Straitjackets", "Block_ItemHands", "TransportJackets", "Leather"]},
+		enemyTags: {"highsecRestraints": 100, "leatherRestraintsHeavy": 1, transportJacket: 1}, playerTagsMult: {"ItemArmsEmpty": 0.02}, playerTags: {"HighsecStraitjacketWorn": 20}, minLevel: 12, maxwill: 0.1, allFloors: true, shrine: ["Straitjackets", "Block_ItemHands", "TransportJackets", "Leather"]},
 
 
 	{inventory: true, name: "HighsecShackles", debris: "Chains", Asset: "SteelAnkleCuffs", Type: "Chained", LinkableBy: [...KDBindable, ...KDDevices], Group: "ItemFeet", hobble: 1, Color: ["Default", "Default"], power: 6, weight: 2,
@@ -4290,7 +4290,7 @@ const KinkyDungeonRestraints: restraint[] = [
 		limitChance: {"Struggle": 0.08, "Cut": 0.02, "Remove": 0.05, "Unlock": 0.5}, // Hard to escape the arms box by struggling
 		escapeChance: {"Struggle": -0.375, "Cut": -0.1, "Remove": -0.15, "Pick": 0.10},
 
-		maxwill: 0.1, enemyTags: {"maidRestraintsHeavy":1, "noMaidJacket":-5},  playerTags: {"MaidJacketWorn":10},
+		maxwill: 0.1, enemyTags: {"maidRestraintsHeavy":1, "noMaidJacket":-5, transportJacket: 1},  playerTags: {"MaidJacketWorn":10},
 		minLevel: 12, allFloors: true, shrine: ["Latex", "Straitjackets", "Block_ItemHands", "Illusion", "TransportJackets"]},
 
 	{inventory: true, name: "MaidDress", debris: "Fabric", inaccessible: true, Type: "Strap", Asset: "LeatherArmbinder", strictness: 0.25, Color: ['#191919'],
