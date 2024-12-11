@@ -4560,7 +4560,10 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 			AIData.chaseRadius = AIData.blindSight;
 		}
 	}
-	AIData.ignoreLocks = enemy.Enemy.keys || enemy.keys || enemy == KinkyDungeonLeashingEnemy() || enemy == KinkyDungeonJailGuard() || (KDEnemyHasFlag(enemy, "keys"));
+	AIData.ignoreLocks = enemy.Enemy.keys || enemy.keys
+		|| enemy == KinkyDungeonLeashingEnemy()
+		|| enemy == KinkyDungeonJailGuard() || (KDEnemyHasFlag(enemy, "keys"));
+	if (KinkyDungeonJailGuard()) KinkyDungeonSetEnemyFlag(enemy, "keys", 100);
 	AIData.harmless = (KinkyDungeonPlayerDamage.damage <= enemy.Enemy.armor || !KinkyDungeonHasWill(0.1))
 		&& !KinkyDungeonFlags.has("PlayerCombat")
 		&& !KinkyDungeonCanTalk()
@@ -4579,10 +4582,12 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 
 
 	AIData.leashing = enemy.Enemy.tags.leashing && (KDFactionRelation(KDGetFaction(enemy), "Jail")) > -0.5;
-	AIData.highdistraction = KDIsDistracted(enemy);
+	AIData.highdistraction = KDIsDistracted(enemy)
+		&& (enemy.id != KinkyDungeonJailGuard()?.id || !!KinkyDungeonFlags.get("PlayerCombat"))
+		&& (!KDEntityHasFlag(enemy, "overrideMove"));
 	AIData.distracted = AIData.highdistraction
 		&& KDLoosePersonalities.includes(enemy.personality)
-		&& AIData.playerDist > 2.5 && KDRandom() < (KDGetFaction(enemy) == "Player" ? 0.1 : 0.4);
+		&& AIData.playerDist > 2.5 && KDRandom() < (KDGetFaction(enemy) == "Player" ? 0.1 : 0.2);
 	// Check if the enemy ignores the player
 	if (player.player && (enemy.aware || enemy.vp > 0) && !KDAllied(enemy) && !KDEnemyHasFlag(enemy, "noignore")) {
 		if (AIData.playerDist < 1.5 && KinkyDungeonAllRestraint().some((r) => {return KDRestraint(r).ignoreNear;})) AIData.ignore = true;
@@ -5486,7 +5491,9 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 							if (AIData.moved) {
 								dir = enemy.movePoints >= 1 ? KDGetDir(enemy, {x: enemy.gx, y: enemy.gy}, KinkyDungeonGetDirection)
 									: KDGetDir(enemy, {x: enemy.gx, y: enemy.gy});
-								if (KinkyDungeonEnemyCanMove(enemy, dir, AIData.MovableTiles, AIData.AvoidTiles, AIData.ignoreLocks, T)) {
+								if (KinkyDungeonEnemyCanMove(enemy, dir,
+									AIData.MovableTiles, AIData.AvoidTiles,
+									AIData.ignoreLocks, T)) {
 									if (!KinkyDungeonEnemyTryMove(enemy, dir, 0, enemy.x + dir.x, enemy.y + dir.y, enemy.action && KDEnemyAction[enemy.action]?.sprint)) {
 										// Use up spare move points
 										enemy.fx = enemy.x + dir.x;

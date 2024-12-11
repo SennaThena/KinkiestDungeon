@@ -50,7 +50,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			}
 
 			if (KinkyDungeonPlayerInCell(true))
-				KinkyDungeonChangeRep("Ghost", 0.1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+				KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
 			KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
 
 			if (KinkyDungeonTilesGet((xx-1) + "," + yy)?.Lock && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
@@ -96,7 +96,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardApproach").replace("EnemyName", TextGet("Name" + guard.Enemy.name)), "white", 6);
 
 				if (KinkyDungeonPlayerInCell(true))
-					KinkyDungeonChangeRep("Ghost", 0.1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+					KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
 				KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
 
 
