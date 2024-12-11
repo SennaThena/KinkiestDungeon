@@ -1273,6 +1273,7 @@
             <key type="filename">../Game/Enemies/WardenMage.png</key>
             <key type="filename">../Game/Enemies/Water.png</key>
             <key type="filename">../Game/Enemies/WaterMote.png</key>
+            <key type="filename">../Game/Enemies/WitchApprentice.png</key>
             <key type="filename">../Game/Enemies/WitchAqua.png</key>
             <key type="filename">../Game/Enemies/WitchChain.png</key>
             <key type="filename">../Game/Enemies/WitchEarth.png</key>
@@ -1479,6 +1480,7 @@
             <key type="filename">../Game/EnemiesBound/WardenFighter.png</key>
             <key type="filename">../Game/EnemiesBound/WardenMage.png</key>
             <key type="filename">../Game/EnemiesBound/Witch.png</key>
+            <key type="filename">../Game/EnemiesBound/WitchApprentice.png</key>
             <key type="filename">../Game/EnemiesBound/WitchChain.png</key>
             <key type="filename">../Game/EnemiesBound/WitchEarth.png</key>
             <key type="filename">../Game/EnemiesBound/WitchFlame.png</key>
@@ -1619,6 +1621,8 @@
             <key type="filename">../Game/FloorGeneric/Scrap.png</key>
             <key type="filename">../Game/FloorGeneric/Signal/AutoLock.png</key>
             <key type="filename">../Game/FloorGeneric/Signal/Button.png</key>
+            <key type="filename">../Game/FloorGeneric/SpiralStairsDown.png</key>
+            <key type="filename">../Game/FloorGeneric/SpiralStairsUp.png</key>
             <key type="filename">../Game/FloorGeneric/Spores.png</key>
             <key type="filename">../Game/FloorGeneric/StairsDown.png</key>
             <key type="filename">../Game/FloorGeneric/StairsUp.png</key>
