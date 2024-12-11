@@ -1451,6 +1451,8 @@
             <key type="filename">../Models/Elf/SkirtCrotchStrap.png</key>
             <key type="filename">../Models/Elf/SkirtKneel.png</key>
             <key type="filename">../Models/Elf/SkirtKneelCrotchStrap.png</key>
+            <key type="filename">../Models/Expressions/Fear.png</key>
+            <key type="filename">../Models/Expressions/Tears_Light.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesAngry.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesBase.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesClosed.png</key>
@@ -3866,6 +3868,7 @@
             <key type="filename">../Models/Gasmask/Nose.png</key>
             <key type="filename">../Models/Gasmask/Plugs.png</key>
             <key type="filename">../Models/Gasmask/Valves.png</key>
+            <key type="filename">../Models/Kigu/MouthSmile.png</key>
             <key type="filename">../Models/ShadowHands/Eyes.png</key>
             <key type="filename">../Models/ShadowHands/Mouth.png</key>
             <struct type="IndividualSpriteSettings">
