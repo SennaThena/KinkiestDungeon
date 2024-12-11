@@ -580,13 +580,23 @@ const KDOverlays: KDSprites = {
 		return "Signal/AutoLock";
 	},
 	"H": (_x, _y, _Fog, _noReplace) => {
-		return "StairsDown";
+		let l = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x - 1, _y));
+		let r = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x + 1, _y));
+		let u = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y - 1));
+		let d = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y + 1));
+		return (u && !d && l && r) ? "StairsDown" : "SpiralStairsDown";
 	},
 	"s": (_x, _y, _Fog, _noReplace) => {
-		return "StairsDown";
+		let l = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x - 1, _y));
+		let r = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x + 1, _y));
+		let u = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y - 1));
+		let d = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y + 1));
+		return ((u || l || r) && !d) ? "StairsDown" : "SpiralStairsDown";
 	},
 	"S": (_x, _y, _Fog, _noReplace) => {
-		return "StairsUp";
+		let u = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y - 1));
+		let d = KinkyDungeonWallTiles.includes(KinkyDungeonMapGet(_x, _y + 1));
+		return (u) ? "StairsUp" : "SpiralStairsUp";
 	},
 	"-": (_x, _y, _Fog, _noReplace) => {
 		return "ChargerSpent";

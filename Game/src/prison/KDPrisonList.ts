@@ -156,7 +156,7 @@ function KDLostJailTrackCell(player) {
 function KDGetJailEnemy() {
 	// Jail tag
 	let jt = KDMapData.JailFaction?.length > 0
-	? KinkyDungeonFactionTag[
+	? KinkyDungeonFactionJailTag[
 		KDMapData.JailFaction[Math.floor(KDRandom() * KDMapData.JailFaction.length)]
 	] : "jailer";
 	let Enemy = KinkyDungeonGetEnemy(["jailGuard", jt],
@@ -165,6 +165,10 @@ function KDGetJailEnemy() {
 		'0', [jt, "jailer"], undefined, undefined,
 		["gagged"]);
 	if (!Enemy) {
+		jt = KDMapData.JailFaction?.length > 0
+		? KinkyDungeonFactionTag[
+			KDMapData.JailFaction[Math.floor(KDRandom() * KDMapData.JailFaction.length)]
+		] : "jailer";
 		Enemy = KinkyDungeonGetEnemy(["jailGuard", jt],
 			KDGetEffLevel(),
 			(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint),

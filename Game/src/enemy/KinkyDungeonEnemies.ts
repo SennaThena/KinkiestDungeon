@@ -1664,7 +1664,7 @@ let KDBarAdvanceRateMin = 1.0/1000;
  * @param enemy
  */
 function KDGetMaxShield(enemy: entity): number {
-	return enemy?.Enemy?.shield + KDEntityBuffedStat(enemy, "MaxShield");
+	return (enemy?.Enemy?.shield || 0) + KDEntityBuffedStat(enemy, "MaxShield");
 }
 
 /**
@@ -3782,16 +3782,29 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 				}
 			}
 
-			if (KDGetMaxShield(enemy) > 0 && KDGetShieldRegen(enemy) > 0) {
-				if (!enemy.shield) enemy.shield = 0;
-				let maxshield = KDGetMaxShield(enemy) - Math.max(KDEntityBuffedStat(enemy, "ShieldNoRegen"));
-				if (enemy.shield < maxshield) enemy.shield = Math.max(enemy.shield, Math.min(enemy.shield + delta * KDGetShieldRegen(enemy), maxshield));
-				// Regen shield
+			let maxshieldBase = KDGetMaxShield(enemy);
+			let shieldDrain = maxshieldBase > 0 ? 0 : 1;
+			if (maxshieldBase > 0) {
+				if (KDGetShieldRegen(enemy) > 0) {
+					if (!enemy.shield) enemy.shield = 0;
+					let maxshield = KDGetMaxShield(enemy) - Math.max(KDEntityBuffedStat(enemy, "ShieldNoRegen"));
+					if (enemy.shield < maxshield) enemy.shield = Math.max(enemy.shield, Math.min(enemy.shield + delta * KDGetShieldRegen(enemy), maxshield));
+					// Regen shield
+					shieldDrain = 0;
+				}
 			}
 
-			if (enemy.shield && KDEntityBuffedStat(enemy, "ShieldDrain") > 0) {
-				if (enemy.shield>0) enemy.shield = Math.max(0, enemy.shield - delta * (KDEntityBuffedStat(enemy, "ShieldDrain") - Math.max(0, KDGetShieldRegen(enemy))));
+			if (enemy.shield && (KDEntityBuffedStat(enemy, "ShieldDrain") + shieldDrain) > 0) {
+				if (enemy.shield > 0) {
+					let val = ((KDEntityBuffedStat(enemy, "ShieldDrain") + shieldDrain)
+						- Math.max(0, KDGetShieldRegen(enemy)));
+					if (val > 0)
+						enemy.shield = Math.max(0,
+							enemy.shield
+							- delta * val);
+				}
 			}
+
 
 			let bindLevel = KDBoundEffects(enemy);
 			let statusBonus = 1;
@@ -6556,10 +6569,10 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 								break;
 							}
 						} else spell = null;
-					} else {
+					} else if (!spell.noSelfBuff) {
 						spelltarget = enemy;
 						if (spell.castCondition && (!KDCastConditions[spell.castCondition] && !KDCastConditions[spell.castCondition](enemy, enemy, spell))) spell = null;
-					}
+					} else spell = null;
 				} else if (spell?.castCondition && (KDCastConditions[spell.castCondition] && !KDCastConditions[spell.castCondition](enemy, player, spell))) spell = null;
 				let minSpellRange = (spell && spell.minRange != undefined) ? spell.minRange : ((spell && (spell.selfcast || (enemy.Enemy.selfCast && enemy.Enemy.selfCast[spell.name]) || spell.buff || (spell.range && KDGetSpellRange(spell) < 1.6))) ? 0 : 1.5);
 				if (spell && spell.heal && spelltarget.hp >= spelltarget.Enemy.maxhp) spell = null;

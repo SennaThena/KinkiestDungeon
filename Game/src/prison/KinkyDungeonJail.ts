@@ -623,7 +623,7 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 	// Start jail event, like spawning a guard, spawning rescues, etc
 	if (KinkyDungeonInJail(KDJailFilters)
 		&& KDGameData.PrisonerState == "jail"
-		&& (KDGameData.GuardSpawnTimer <= 1 || KDGameData.SleepTurns == 3)
+		&& (KDGameData.GuardSpawnTimer <= 1)
 		&& ((KDGameData.GuardTimer == 0 && useExistingGuard) || !KinkyDungeonJailGuard())
 		&& playerInCell) {
 		KDGetJailEvent(KinkyDungeonJailGuard(), xx, yy)(KinkyDungeonJailGuard(), xx, yy);
@@ -631,7 +631,9 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 
 	// Assign and handle the current jail action if there is a guard
 	if (KinkyDungeonJailGuard() && KDGameData.GuardTimer > 0 && KDGameData.GuardTimerMax - KDGameData.GuardTimer > 6 && KDGameData.PrisonerState == 'jail') {
-		if (KDGuardActions[KinkyDungeonJailGuard().CurrentAction] && KDGuardActions[KinkyDungeonJailGuard().CurrentAction].assignable && KDGuardActions[KinkyDungeonJailGuard().CurrentAction].assignable(KinkyDungeonJailGuard(), xx, yy)) {
+		if (KDGuardActions[KinkyDungeonJailGuard().CurrentAction]
+			&& KDGuardActions[KinkyDungeonJailGuard().CurrentAction].assignable
+			&& KDGuardActions[KinkyDungeonJailGuard().CurrentAction].assignable(KinkyDungeonJailGuard(), xx, yy)) {
 			KDAssignGuardAction(KinkyDungeonJailGuard(), xx, yy);
 		}
 	}
@@ -646,8 +648,10 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 			KinkyDungeonJailGuard().CurrentAction = "jailWander";
 		}
 
-		KinkyDungeonJailGuard().gxx = KDGameData.PrisonerState == 'jail' && KDGameData.GuardTimer > 0 ? KinkyDungeonJailGuard().gx : xx;
-		KinkyDungeonJailGuard().gyy = KDGameData.PrisonerState == 'jail' && KDGameData.GuardTimer > 0 ? KinkyDungeonJailGuard().gy : yy;
+		if (KinkyDungeonJailGuard().temporary) {
+			KinkyDungeonJailGuard().gxx = KDGameData.PrisonerState == 'jail' && KDGameData.GuardTimer > 0 ? KinkyDungeonJailGuard().gx : xx;
+			KinkyDungeonJailGuard().gyy = KDGameData.PrisonerState == 'jail' && KDGameData.GuardTimer > 0 ? KinkyDungeonJailGuard().gy : yy;
+		}
 		if (KDGameData.GuardTimer > 0 && KinkyDungeonJailGuard()) {
 			// Decrease timer when not on a tour
 			if (!KinkyDungeonFlags.has("notickguardtimer") && !KinkyDungeonAngel()) {
@@ -661,8 +665,8 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 			// Leave the cell and lock the door
 			// Despawn jailer if not using existing
 			if (KinkyDungeonJailGuard()
-				&& KinkyDungeonJailGuard().x == xx
-				&& KinkyDungeonJailGuard().y == yy
+				&& ((KinkyDungeonJailGuard().x == xx
+				&& KinkyDungeonJailGuard().y == yy) || !KinkyDungeonJailGuard().temporary)
 				&& (!KinkyDungeonJailGuard().IntentAction || KinkyDungeonJailGuard().IntentAction.startsWith('jail'))
 				&& KDGameData.PrisonerState
 				&& !KinkyDungeonJailGuard().hostile
@@ -670,6 +674,7 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 				&& !KinkyDungeonFlags.has("nojailbreak")) {
 
 				let g = KinkyDungeonJailGuard();
+				g.CurrentAction = undefined;
 
 				if (g.temporary) {
 					console.log("Despawned guard");
@@ -749,10 +754,10 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 
 		KDGameData.JailGuard = 0;
 		KDGameData.GuardSpawnTimer = 0;
-		KDGameData.GuardSpawnTimerMax = 80;
-		KDGameData.GuardSpawnTimerMin = 50;
+		KDGameData.GuardSpawnTimerMax = 200;
+		KDGameData.GuardSpawnTimerMin = 100;
 		KDGameData.GuardTimer = 0;
-		KDGameData.GuardTimerMax = 24;
+		KDGameData.GuardTimerMax = 60;
 	}
 }
 

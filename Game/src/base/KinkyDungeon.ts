@@ -760,10 +760,10 @@ let KDGameDataBase: KDGameDataBase = {
 
 	JailGuard: 0,
 	GuardTimer: 0,
-	GuardTimerMax: 35,
+	GuardTimerMax: 60,
 	GuardSpawnTimer: 0,
-	GuardSpawnTimerMax: 80,
-	GuardSpawnTimerMin: 50,
+	GuardSpawnTimerMax: 200,
+	GuardSpawnTimerMin: 100,
 	KinkyDungeonMaxPrisonReduction: 10,
 	KinkyDungeonPrisonReduction: 0,
 	KinkyDungeonPrisonExtraGhostRep: 0,

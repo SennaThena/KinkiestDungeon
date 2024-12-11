@@ -1962,6 +1962,8 @@ interface spell {
 	commandword?: boolean,
 	/** The spell is used to buff allies */
 	buffallies?: boolean,
+	/** Dont buff self with it */
+	noSelfBuff?: boolean,
 	/** caster will also target themselves */
 	selfbuff?: boolean,
 	/** Type of binding applied to the power */

@@ -2737,6 +2737,12 @@ AttackApprentice2Bind,"The apprentice summons a restraint onto you! (+RestraintA
 AttackApprentice2Lock,"The apprentice nervously takes out a lock and makes you wear it! (DamageTaken)"
 AttackApprentice2,"The apprentice tickles you playfully! (DamageTaken)"
 
+NameWitchApprentice,Witch's Apprentice
+KillWitchApprentice,"The witch's apprentice confidently admits defeat."
+AttackWitchApprenticeBind,"The witch's apprentice conjures magic bindings on you! (+RestraintAdded)"
+AttackWitchApprenticeLock,"The witch's apprentice smiles and summons a lock onto you! (DamageTaken)"
+AttackWitchApprentice,"The witch's apprentice smiles as she squeezes your chest! (DamageTaken)"
+
 NameApprenticeSlime,Latex Apprentice
 KillApprenticeSlime,"The apprentice runs off and cries in a corner."
 AttackApprenticeSlimeBind,"The apprentice attaches a sticky restraint! (+RestraintAdded)"
@@ -6765,6 +6771,8 @@ KinkyDungeonSpellCastNevermereBoost,"The EnemyName activates the vibrators of ne
 KinkyDungeonSpellCastDollBoost,"The EnemyName activates the vibrators of nearby dolls, greatly motivating them!"
 KinkyDungeonSpellCastEarthfield,The EnemyName creates a zone of increased defense!
 KinkyDungeonSpellCastParasolBuff,"EnemyName uses a charm to buff an enemy's Magic Armor and Evasion!"
+KinkyDungeonSpellCastShieldTheWitch,"EnemyName supports a witch with a magical shield!"
+KinkyDungeonSpellShieldTheWitch,Shield the Witch!
 KinkyDungeonSpellCastZombieBuff,"EnemyName uses a glowing talisman to buff an undead's physical armor and speed!"
 KinkyDungeonSpellCastEarthrune,You create a zone of increased defense!
 KinkyDungeonSpellCastWaterRune,You create a protective zone!
@@ -25678,6 +25686,7 @@ KinkyDungeonSpellZombieBuff,Undead Frenzy
 KinkyDungeonSpellEnemyCM1,Command Word
 KinkyDungeonSpellRopeAttack,Rope Ambush
 KinkyDungeonSpellParasolBuff,Defensive Charm
+KinkyDungeonSpellShieldTheWitch,Shield the Witch
 KinkyDungeonSpellEnemyFlashBomb,Flashbang
 KinkyDungeonSpellMinigunWindup,Tracer Rounds
 KinkyDungeonSpellGhostAttack,The Spookening

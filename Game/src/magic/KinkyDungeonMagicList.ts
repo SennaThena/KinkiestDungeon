@@ -3423,11 +3423,35 @@ let KinkyDungeonSpellListEnemies: spell[] = [
 		onhit:"", time:5, power: 0, range: 5.5, aoe: 5.5, size: 1, damage: ""},
 
 	{enemySpell: true, buff: true, name: "ParasolBuff", minRange: 0, sfx: "MagicSlash", school: "Elements", manacost: 4, components: ["Arms"], mustTarget: true, level:3, type:"buff",
+		noSelfBuff: true,
+		buffallies: true,
 		buffs: [
 			{id: "ParasolBuff", type: "Armor", duration: 5, power: 1.0, player: false, enemies: true, tags: ["defense", "armor"]},
 			{id: "ParasolBuff2", type: "Evasion", duration: 5, power: 0.33, player: false, enemies: true, tags: ["defense", "evasion"]},
 			{id: "ParasolBuff3", type: "SpellResist", duration: 5, power: 2.5, player: false, enemies: true, tags: ["defense", "spellresist"]},
 		], onhit:"", time:5, power: 0, range: 6, size: 1, damage: ""},
+
+	{enemySpell: true, buff: true, name: "ShieldTheWitch",
+		castCondition: "ShieldTheWitch",
+		buffallies: true,
+		noSelfBuff: true,
+		minRange: 0, sfx: "MagicSlash", school: "Elements", manacost: 4, components: ["Arms"], mustTarget: true, level:3, type:"buff",
+		buffs: [
+			{
+				id: "ShieldTheWitch",
+				aura: "#bd80f4", aurasprite: "EnergyShield",
+				type: "MaxShield",
+				duration: 6, power: 8,
+				player: false, enemies: true, tags: ["defense", "shield"]
+			},
+			{
+				id: "ShieldTheWitch2",
+				type: "ShieldRegen",
+				duration: 2, power: 4,
+				player: false, enemies: true, tags: ["defense", "shield"]
+			},
+		], onhit:"", time:5, power: 0, range: 4.5, size: 1, damage: ""},
+
 	{enemySpell: true, commandword: true, buff: true, buffallies: true, castCondition: "commandword", name: "EnemyCM1", minRange: 0, sfx: "MagicSlash", school: "Elements", manacost: 4, components: ["Arms"], mustTarget: true, level:3, type:"special", special: "Enemy_CM1",
 		onhit:"", time:5, power: 0, range: 6, size: 1, damage: "", noCastMsg: true},
 	{enemySpell: true, commandword: true, buff: true, buffallies: true, selfbuff: true, castCondition: "commandword", name: "EnemyCM_self", minRange: 0, sfx: "MagicSlash", school: "Elements", manacost: 4, components: ["Arms"], mustTarget: true, level:3, type:"special", special: "Enemy_CM1",
@@ -3908,6 +3932,11 @@ let KDCastConditions: Record<string, (enemy: entity, target: entity, spell?: spe
 		}
 		return true;
 	},
+	"ShieldTheWitch": (_enemy, target) => {
+		return target?.Enemy?.tags?.witch;
+	},
+
+
 	"notImmobile": (_enemy, _target) => {
 		if (KinkyDungeonSlowLevel < 10) return true;
 		return false;

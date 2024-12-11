@@ -11,7 +11,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			// Allow the player to sleep 150 turns after the guard shows up
 			if (KinkyDungeonFlags.get("slept") == -1) {
 				KinkyDungeonSetFlag("slept", 0);
-				KinkyDungeonSetFlag("slept", 150);
+				KinkyDungeonSetFlag("slept", 50);
 			}
 			let mainFaction = KDGetMainFaction();
 			// Jail tag
@@ -72,7 +72,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			// Allow the player to sleep 150 turns after the guard shows up
 			if (KinkyDungeonFlags.get("slept") == -1) {
 				KinkyDungeonSetFlag("slept", 0);
-				KinkyDungeonSetFlag("slept", 150);
+				KinkyDungeonSetFlag("slept", 50);
 			}
 
 			if (!KinkyDungeonFlags.get("JailIntro")) {
@@ -163,11 +163,12 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 				guard.gx = xx - 2;
 				if (KDRandom() < 0.5) {
 					guard.gx = xx;
-					guard.gy = yy + Math.round(KDRandom() * KinkyDungeonJailLeashY * 2 - KinkyDungeonJailLeashY);
+					guard.gy = yy + Math.round(KDRandom() * 2 - 1);
 				} else
 					guard.gy = KinkyDungeonPlayerEntity.y;
 			}
 			KDGameData.GuardApplyTime = 0;
+			KinkyDungeonSetEnemyFlag(guard, "overrideMove", 10);
 			KinkyDungeonSetEnemyFlag(guard, "wander", 10);
 		},
 	},

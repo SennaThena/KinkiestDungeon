@@ -132,9 +132,25 @@ KDPrisonTypes.HighSec = {
 			},
 			update: (delta) => {
 				let player = KinkyDungeonPlayerEntity;
-				KDPrisonCommonGuard(player, undefined, false);
+				let TheChosenOne = false;
+				if (!KinkyDungeonJailGuard()) TheChosenOne = true;
+				if (!(KDGameData.GuardTimer > 0) && KDGameData.GuardSpawnTimer <= 1)
+					KDPrisonCommonGuard(player, undefined, false);
 
+				if (TheChosenOne && KinkyDungeonJailGuard()) {
+					let nearestJail = KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, ["jail"]);
 
+					if (nearestJail) {
+
+						let xx = nearestJail.x + KinkyDungeonJailLeashX;
+						let yy = nearestJail.y;
+						KDJailEvents.useCurrentGuard.trigger(
+							KinkyDungeonJailGuard(),
+							xx, yy
+						);
+					}
+
+				}
 				KinkyDungeonHandleJailSpawns(delta, true);
 
 

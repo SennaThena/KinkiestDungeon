@@ -31,6 +31,10 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.19
+- Fixed prison wandering behavior from guards in highsec
+- New enemy: Witch's Apprentice
+
 5.4.18
 - Changed persistent NPC wandering to support different NPC AI wandering types with different priorities/interests
 - Early elevator halls may have dragon girls instead of dragons

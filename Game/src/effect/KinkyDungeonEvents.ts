@@ -9567,11 +9567,16 @@ let KDEventMapEnemy: Record<string, Record<string, (e: KinkyDungeonEvent, enemy:
 						if (en.hp > 0.52 && KDMatchTags(["nevermere", "wolfgirl", "alchemist", "dressmaker", "bountyhunter"], en)) {
 							if ((en.Enemy.shield || 0) < e.power) {
 								KinkyDungeonApplyBuffToEntity(en, {
-									id: "WolfDroneShield", aura: "#00ffff", aurasprite: "EnergyShield", type: "MaxShield", duration: 3, power: e.power - (en.Enemy.shield || 0), player: false, enemies: true, tags: ["defense", "shield"]
+									id: "WolfDroneShield",
+									aura: "#00ffff", aurasprite: "EnergyShield",
+									type: "MaxShield",
+									duration: 3, power: e.power - (en.Enemy.shield || 0),
+									player: false, enemies: true, tags: ["defense", "shield"]
 								});
 							}
 							KinkyDungeonApplyBuffToEntity(en, {
-								id: "WolfDroneShieldRegen", type: "ShieldRegen", duration: 3, power: e.power * e.mult, player: false, enemies: true, tags: ["defense", "shield"]
+								id: "WolfDroneShieldRegen", type: "ShieldRegen", duration: 3,
+								power: e.power * e.mult, player: false, enemies: true, tags: ["defense", "shield"]
 							});
 						}
 					}

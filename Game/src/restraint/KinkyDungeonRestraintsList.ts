@@ -3013,6 +3013,15 @@ const KinkyDungeonRestraints: restraint[] = [
 		sfxGroup: "Leather",
 		harness: true,
 		restriction: 2,
+		Filters: {
+			Straps: {"gamma":1,"saturation":1,"contrast":1,"brightness":3,"red":0.33,"green":0.33, "blue":0.33,"alpha":1},
+		},
+		factionFilters: {
+			Straps: {
+				color: "DarkNeutral",
+				override: false,
+			}
+		},
 		LinkableBy: [...KDHarnessLink], OverridePriority: 26, Color: "#222222", Group: "ItemTorso", power: 2, weight: 2,
 		escapeChance: {"Struggle": -0.15, "Cut": 0.3, "Remove": 0.8, "Pick": 0.4}, enemyTags: {"trap":100, "leatherRestraints":6, "harnessSpell": 10},
 		enemyTagsMult: {"backup_harness": 0.05},
@@ -3022,10 +3031,11 @@ const KinkyDungeonRestraints: restraint[] = [
 		sfxGroup: "Leather",
 		harness: true,
 		factionFilters: {
-			Straps: {color: "LightNeutral", override: true},
+			Straps: {color: "Catsuit", override: false},
 		},
 		restriction: 2,
 		Filters: {
+			Straps: {"gamma":1,"saturation":1,"contrast":1.5,"brightness":3,"red":0.33,"green":0.33, "blue":0.33,"alpha":1},
 			Hardware: {"gamma":0.11666666666666667,"saturation":1,"contrast":1.6166666666666665,"brightness":2.45,"red":1,"green":1,"blue":1,"alpha":1},
 		},
 		LinkableBy: [...KDHarnessLink], OverridePriority: 26, Color: "#222222", Group: "ItemTorso", power: 2, weight: 2,
@@ -4155,14 +4165,41 @@ const KinkyDungeonRestraints: restraint[] = [
 	{renderWhenLinked: [...KDBeltsRender], inventory: true, name: "SturdyLeatherBeltsArms", debris: "Belts", accessible: true, Asset: "SturdyLeatherBelts", LinkableBy: [...KDBeltsBind], Type: "Three", Color: "Default", Group: "ItemArms", bindarms: true, power: 2.5, weight: 0,
 		Model: "BeltsArmsAll",
 		addTag: ["HandsBehind"],
+		Filters: {
+			Belt: {"gamma":1,"saturation":1,"contrast":1,"brightness":3,"red":0.33,"green":0.33, "blue":0.33,"alpha":1},
+		},
+		factionFilters: {
+			Belt: {
+				color: "DarkNeutral",
+				override: false,
+			}
+		},
 		escapeChance: {"Struggle": -0.1, "Cut": 0.5, "Remove": 0.22},
 		maxwill: 0.9, enemyTags: {"leatherRestraints":6, "beltRestraints": 10, "noBelt": -100}, playerTags: {"ItemArmsFull":-2}, minLevel: 0, allFloors: true, shrine: ["Leather", "Belts", "ArmBind", "HogtieUpper"]},
 	{renderWhenLinked: [...KDBeltsRender], inventory: true, name: "SturdyLeatherBeltsFeet", debris: "Belts", accessible: true, Asset: "SturdyLeatherBelts", LinkableBy: [...KDBeltsBind], Type: "Three", Color: "Default", Group: "ItemFeet", blockfeet: true, addTag: ["FeetLinked"] ,power: 2, weight: 0,
 		Model: "BeltsFeetAll",
+		Filters: {
+			Belt: {"gamma":1,"saturation":1,"contrast":1,"brightness":3,"red":0.33,"green":0.33, "blue":0.33,"alpha":1},
+		},
+		factionFilters: {
+			Belt: {
+				color: "DarkNeutral",
+				override: false,
+			}
+		},
 		escapeChance: {"Struggle": -0.1, "Cut": 0.5, "Remove": 0.5},
 		maxwill: 1.0, enemyTags: {"leatherRestraints":6, "beltRestraints": 10, "noBelt": -100}, playerTagsMissingMult: {"ItemLegsFull": 0.05}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["Leather", "Belts", "LegBind"]},
 	{LinkableBy: [...KDBeltsBind], renderWhenLinked: [...KDBeltsRender], accessible: true, inventory: true, name: "SturdyLeatherBeltsLegs", debris: "Belts", Asset: "SturdyLeatherBelts", Type: "Two", Color: "Default", Group: "ItemLegs", hobble: 1, addTag: ["FeetLinked"], power: 2, weight: 0,
 		Model: "BeltsLegsAll",
+		Filters: {
+			Belt: {"gamma":1,"saturation":1,"contrast":1,"brightness":3,"red":0.33,"green":0.33, "blue":0.33,"alpha":1},
+		},
+		factionFilters: {
+			Belt: {
+				color: "DarkNeutral",
+				override: false,
+			}
+		},
 		escapeChance: {"Struggle": -0.1, "Cut": 0.5, "Remove": 0.5},
 		maxwill: 0.8, enemyTags: {"leatherRestraints":6, "beltRestraints": 10, "noBelt": -100}, playerTags: {"ItemFeetFull":-2}, minLevel: 0, allFloors: true, shrine: ["Leather", "Belts", "LegBind", "HogtieLower"]},
 
@@ -4171,12 +4208,14 @@ const KinkyDungeonRestraints: restraint[] = [
 		Model: "BeltsArmsAll",
 		addTag: ["HandsBehind"],
 		magic: true, DefaultLock: "Purple",
+
 		factionFilters: {
 			Belt: {
-				color: "Highlight", override: true,
+				color: "Highlight", override: false,
 			}
 		},
-		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":1,"red":1.9607843137254901,"green":1.0196078431372548,"blue":2.411764705882353,"alpha":1}},
+		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":2.966666666666667,"red":0.7000000000000001,"green":0.44999999999999996,"blue":0.9666666666666667,"alpha":1}},
+
 		escapeChance: {"Struggle": -0.12, "Cut": 0.5, "Remove": 0.22},
 		maxwill: 0.9, enemyTags: {"leatherRestraintsMagic":6, "beltRestraintsMagic": 10}, playerTags: {"ItemArmsFull":-2}, minLevel: 0, allFloors: true, shrine: ["MagicBelts", "Belts", "Leather", "ArmBind", "HogtieUpper"]},
 	{renderWhenLinked: [...KDBeltsRender], inventory: true, name: "MagicBeltFeet", debris: "Belts", accessible: true, Asset: "SturdyLeatherBelts", LinkableBy: [...KDBeltsBind], Type: "Three", Color: "Default", Group: "ItemFeet", blockfeet: true, addTag: ["FeetLinked"] ,power: 5, weight: 0,
@@ -4184,20 +4223,22 @@ const KinkyDungeonRestraints: restraint[] = [
 		magic: true, DefaultLock: "Purple",
 		factionFilters: {
 			Belt: {
-				color: "Highlight", override: true,
+				color: "Highlight", override: false,
 			}
 		},
-		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":1,"red":1.9607843137254901,"green":1.0196078431372548,"blue":2.411764705882353,"alpha":1}},
+		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":2.966666666666667,"red":0.7000000000000001,"green":0.44999999999999996,"blue":0.9666666666666667,"alpha":1}},
+
 		escapeChance: {"Struggle": -0.12, "Cut": 0.5, "Remove": 0.5},
 		maxwill: 1.0, enemyTags: {"leatherRestraintsMagic":6, "beltRestraintsMagic": 10}, playerTagsMissingMult: {"ItemLegsFull": 0.05}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["MagicBelts", "Belts", "Leather", "LegBind", "HogtieLower"]},
 	{LinkableBy: [...KDBeltsBind], renderWhenLinked: [...KDBeltsRender], accessible: true, inventory: true, name: "MagicBeltLegs", debris: "Belts", Asset: "SturdyLeatherBelts", Type: "Two", Color: "Default", Group: "ItemLegs", hobble: 1, addTag: ["FeetLinked"], power: 5, weight: 0,
 		Model: "BeltsLegsAll",
 		factionFilters: {
 			Belt: {
-				color: "Highlight", override: true,
+				color: "Highlight", override: false,
 			}
 		},
-		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":1,"red":1.9607843137254901,"green":1.0196078431372548,"blue":2.411764705882353,"alpha":1}},
+		Filters: {"Belt":{"gamma":1,"saturation":0,"contrast":0.85,"brightness":2.966666666666667,"red":0.7000000000000001,"green":0.44999999999999996,"blue":0.9666666666666667,"alpha":1}},
+
 		magic: true, DefaultLock: "Purple",
 		escapeChance: {"Struggle": -0.12, "Cut": 0.5, "Remove": 0.5},
 		maxwill: 0.8, enemyTags: {"leatherRestraintsMagic":6, "beltRestraintsMagic": 10}, playerTags: {"ItemFeetFull":-2}, minLevel: 0, allFloors: true, shrine: ["MagicBelts", "Belts", "Leather", "LegBind"]},
