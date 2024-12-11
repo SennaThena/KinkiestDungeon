@@ -2043,7 +2043,7 @@ let KDCustomDefeatUniforms = {
 				KinkyDungeonAddRestraintIfWeaker(r, 0, true, r.Group == "ItemNeck" ? "Blue" : "Purple", undefined, undefined, undefined, "Jail", true);
 		}
 		if (!KinkyDungeonStatsChoice.get("NoKigu"))
-			KinkyDungeonAddRestraintIfWeaker(KinkyDungeonGetRestraintByName("KiguMask"), 0, true, "Purple");
+			KinkyDungeonAddRestraintIfWeaker(KinkyDungeonGetRestraintByName(KDRandom() ? "KiguMask" : "KiguMaskSmile"), 0, true, "Purple");
 	},
 
 	CyberDoll: () => {

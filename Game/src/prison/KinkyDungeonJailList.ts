@@ -710,7 +710,7 @@ let KDJailOutfits: Record<string, {overridelowerpriority: boolean, priority: num
 			{Name: "LatexOTNGagHeavy", Level: 60},
 			{Name: "LatexCorset", Level: 65},
 			{Name: "LatexLegbinder", Level: 80},
-			{Name: "KiguMask", Level: 100, Condition: "NoKigu"},
+			{Name: "KiguMaskSmile", Level: 100, Condition: "NoKigu"},
 			{Name: "ExpCollar", Level: 120},
 			{Name: "LatexTransportJacket", Level: 120, Condition: "LessJackets", Priority: "MoreJackets"},
 		],
@@ -879,7 +879,7 @@ let KDJailOutfits: Record<string, {overridelowerpriority: boolean, priority: num
 			{Name: "DressCorset", Level: 60},
 			{Name: "DressMuzzle", Level: 60},
 			{Name: "MagicBelt", Level: 80},
-			{Name: "KiguMask", Level: 100, Condition: "NoKigu"},
+			{Name: "KiguMaskSmile", Level: 100, Condition: "NoKigu"},
 		],
 	},
 };

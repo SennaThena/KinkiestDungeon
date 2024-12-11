@@ -382,6 +382,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 				prereq: () => {return true;},
 			},
 			KDAutoGenRestraintBlueprint("KiguMask", "Latex", ""),
+			KDAutoGenRestraintBlueprint("KiguMaskSmile", "Latex", ""),
 			KDAutoGenRestraintBlueprint("LatexStraitjacket", "Latex", ""),
 			KDAutoGenRestraintBlueprint("LatexTransportJacket", "Latex", ""),
 			KDAutoGenRestraintBlueprint("LatexArmbinder", "Latex", ""),

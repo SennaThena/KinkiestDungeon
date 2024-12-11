@@ -4729,9 +4729,12 @@ RestraintMaidMuzzleDesc,"A muzzle with a long, mouth-filling plug that muffles s
 RestraintMaidMuzzleDesc2,"Reinforced and secured with a disc lock to ensure unruly maids don't skip their duty."
 
 RestraintKiguMask,Suspicious Mask
-LootChestKiguMask,"You a padded metal blindfold, glowing magnificently, along with a strange crystal next to it."
 RestraintKiguMaskDesc2,"A well-fitted mask, covering your entire head neatly and locking in place."
 RestraintKiguMaskDesc,"It has eyeholes for you to somewhat see out of, but blocks access to the face."
+
+RestraintKiguMaskSmile,Happy Face
+RestraintKiguMaskSmileDesc2,"Just put on a happy face and enjoy it."
+RestraintKiguMaskSmileDesc,"It has eyeholes for you to somewhat see out of, but blocks access to the face."
 
 RestraintLeatherHood,Sensory Hood
 RestraintLeatherHoodDesc2,"A well-fitted hood that covers your head and muffles sounds."
@@ -21448,6 +21451,24 @@ m_HeavyMaidKnight_SockRight_l_FootSockRightKneel,FootSockRightKneel
 m_HeavyMaidKnight_l_BootShoeLeft,BootShoeLeft
 m_HeavyMaidKnight_l_BootShoeRight,BootShoeRight
 
+m_Fear,Fear
+m_Fear_l_Fear,Fear
+m_RubyNecklace_l_RubyHardware,RubyHardware
+m_RubyNecklaceRestraint_l_RubyHardware,RubyHardware
+m_KiguMaskSmile,KiguMaskSmile
+m_KiguMaskSmile_l_Mask,Mask
+m_KiguMaskSmile_l_Eyes,Eyes
+m_KiguMaskSmile_l_Eyes2,Eyes2
+m_KiguMaskSmile_l_Lock,Lock
+m_KiguMaskSmile_l_EyesWhites,EyesWhites
+m_KiguMaskSmile_l_MouthSmile,MouthSmile
+m_FashionKiguMaskSmile,FashionKiguMaskSmile
+m_FashionKiguMaskSmile_l_Mask,Mask
+m_FashionKiguMaskSmile_l_Eyes,Eyes
+m_FashionKiguMaskSmile_l_Eyes2,Eyes2
+m_FashionKiguMaskSmile_l_Lock,Lock
+m_FashionKiguMaskSmile_l_EyesWhites,EyesWhites
+m_FashionKiguMaskSmile_l_MouthSmile,MouthSmile
 
 
 
