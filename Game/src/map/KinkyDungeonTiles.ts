@@ -391,8 +391,16 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					toTile: toTile,
 				});
 				KDGameData.HeartTaken = false;
+
 				KinkyDungeonCreateMap(KinkyDungeonMapParams[altRoomTarget?.useGenParams ? altRoomTarget.useGenParams : (KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY]?.Checkpoint || 'grv')], KDGameData.RoomType, KDGameData.MapMod, MiniGameKinkyDungeonLevel, undefined, undefined,
-					data.faction, newLocation, !altRoomTarget || !altRoomTarget.alwaysRegen, altRoom?.persist ? originalRoom : (KDGetWorldMapLocation(newLocation)?.main || data.JourneyTile?.RoomType || ""),
+					data.faction, newLocation,
+					!altRoomTarget || !altRoomTarget.alwaysRegen,
+					// If this is a sideroom, its actually the main that is the upstairs
+					(data.JourneyTile?.SideRooms?.includes(KDGameData.RoomType)) ?
+						KDGetWorldMapLocation(newLocation)?.main || ""
+						: (altRoom?.persist ?
+						originalRoom :
+						(KDGetWorldMapLocation(newLocation)?.main || data.JourneyTile?.RoomType || "")),
 					AdvanceAmount > 0
 						? (0)
 						: (toTile == 'S' ? 1 : (
@@ -403,7 +411,16 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 				if (data.ShortcutIndex >= 0) {
 					KDGameData.ShortcutIndex = data.ShortcutIndex;
 				} else {
-					KDGameData.ShortcutIndex = KDGameData.RoomType;
+					if (data.JourneyTile?.SideRooms?.some( (sr) => {
+						return KDSideRooms[sr]?.altRoom == KDGameData.RoomType;
+					})) {
+						// Bandaid to patch the stupid shortcuts system I made
+						KDGameData.ShortcutIndex = "" + data.JourneyTile?.SideRooms?.findIndex( (sr) => {
+							return KDSideRooms[sr]?.altRoom == KDGameData.RoomType;
+						});
+					} else {
+						KDGameData.ShortcutIndex = KDGameData.RoomType;
+					}
 				}
 				if (altRoom?.afterExit) altRoom.afterExit(data); // Handle any special contitions
 				KinkyDungeonSendEvent("AfterAdvance", data);

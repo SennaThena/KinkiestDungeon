@@ -620,7 +620,7 @@ interface floorParams {
 	/** List of factions allowed to be primary or secondary here */
 	factionList?: string[];
 	/** This code is run after a worldgen */
-	worldGenCode?: () => void;
+	worldGenCode?: (coord: WorldCoord) => void;
 	tagModifiers?: Record<string, number>;
 	globalTags?: Record<string, boolean>;
 	shadowColor?: number,
@@ -2822,6 +2822,8 @@ type KDSideRoom = {
 	 * Higher means the tag weight on the wanderAI is multiplied
 	 */
 	wandertags: Record<string, number>,
+	/** Runs AFTER the main's worldGenScript  */
+	worldGenScript?: (coord: WorldCoord) => void,
 }
 
 

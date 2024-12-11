@@ -55,6 +55,21 @@ let KDSideRooms: Record<string, KDSideRoom> = {
 			bounty: 1,
 			criminal: 5,
 		},
+		worldGenScript: (coord) => {
+			// Generate the bandit highsec prison and its entrances
+			KDAddOutpost(
+				KDGetWorldMapLocation(KDCoordToPoint(coord)),
+				"BanditFort",
+				"Jail",
+				"Bandit",
+				false,
+				"Jail",
+				KDGetWorldMapLocation(KDCoordToPoint(coord))?.main || "",
+				"Jail",
+				"Jail"
+			);
+
+		},
 	},
 	"Caldera": {
 		name: "Caldera",

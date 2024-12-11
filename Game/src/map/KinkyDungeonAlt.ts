@@ -168,6 +168,8 @@ interface AltType {
 	constantX?: boolean,
 	/** Type of Prison state machine */
 	prisonType?: string,
+	/** Runs AFTER the worldgenscript */
+	worldGenScript?: (coord: WorldCoord) => void,
 	/** Faction that owns the Jail*/
 	jailType?: string,
 	/** Faction that guards the Jail*/

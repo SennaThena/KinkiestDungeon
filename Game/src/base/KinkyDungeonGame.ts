@@ -1432,8 +1432,16 @@ function KinkyDungeonCreateMap (
 				startTime = performance.now();
 			}
 
-			if (MapParams.worldGenCode) MapParams.worldGenCode();
-
+			if (MapParams.worldGenCode) MapParams.worldGenCode(KDGetCurrentLocation());
+			if (altType?.worldGenScript) altType?.worldGenScript(KDGetCurrentLocation());
+			if (KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()))?.main == KDGameData.RoomType) {
+				// Run the sideroom WorldGenScripts
+				let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
+				let sideRooms = journeySlot?.SideRooms || [];
+				for (let sr of sideRooms) {
+					if (KDSideRooms[sr]?.worldGenScript) KDSideRooms[sr].worldGenScript(KDGetCurrentLocation());
+				}
+			}
 
 
 			KDBuildLairs();
