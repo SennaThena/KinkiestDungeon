@@ -6289,6 +6289,15 @@ function KDPruneWorld() {
 }
 
 
+function KDEnemyTurnToFace(enemy: entity, x: number, y: number) {
+	enemy.fx = x;
+	enemy.fy = y;
+	if (enemy.fx > enemy.x)
+		enemy.flip = true;
+	else if (enemy.fx < enemy.x)
+		enemy.flip = false;
+}
+
 function KDTurnToFace(dx: number, dy: number) {
 	KinkyDungeonPlayerEntity.facing_x = Math.min(1, Math.abs(dx)) * Math.sign(dx);
 	KinkyDungeonPlayerEntity.facing_y = Math.min(1, Math.abs(dy)) * Math.sign(dy);

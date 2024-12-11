@@ -49,6 +49,10 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				KDStartDialog("PrisonRepeat", guard.Enemy.name, true, "");
 			}
 
+			if (KinkyDungeonPlayerInCell(true))
+				KinkyDungeonChangeRep("Ghost", 0.1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+			KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
+
 			if (KinkyDungeonTilesGet((xx-1) + "," + yy)?.Lock && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
 				KinkyDungeonTilesGet((xx-1) + "," + yy).OGLock = KinkyDungeonTilesGet((xx-1) + "," + yy).Lock;
 				KinkyDungeonTilesGet((xx-1) + "," + yy).Lock = undefined;
@@ -90,6 +94,11 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				}
 
 				KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardApproach").replace("EnemyName", TextGet("Name" + guard.Enemy.name)), "white", 6);
+
+				if (KinkyDungeonPlayerInCell(true))
+					KinkyDungeonChangeRep("Ghost", 0.1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+				KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
+
 
 			}
 
@@ -164,7 +173,7 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 		},
 		handle: (guard, xx, yy) => {
 			// Random meandering about the cell, sometimes stopping near the player
-			if (KDRandom() < 0.2) {
+			if (KDRandom() < 0.2 && guard.idle) {
 				guard.gx = xx - 2;
 				if (KDRandom() < 0.5) {
 					guard.gx = xx;
@@ -222,7 +231,8 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 			guard.CurrentAction = "jailTease";
 		},
 		handle: (guard, xx, yy, _delta) => {
-			let playerHasVibrator = Array.from(KinkyDungeonAllRestraint()).some(i => KDRestraint(i).allowRemote);
+			let playerHasVibrator = !KDGameData.CurrentVibration &&
+				Array.from(KinkyDungeonAllRestraint()).some(i => KDRestraint(i).allowRemote);
 			guard.gx = xx - 2;
 			guard.gy = yy;
 			if (playerHasVibrator) {
@@ -231,6 +241,7 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 			} else {
 				let touchesPlayer = KinkyDungeonCheckLOS(KinkyDungeonJailGuard(), KinkyDungeonPlayerEntity, KDistChebyshev(guard.x - KinkyDungeonPlayerEntity.x, guard.y - KinkyDungeonPlayerEntity.y), 1.5, false, false);
 				if (touchesPlayer) {
+					KDEnemyTurnToFace(guard, KDPlayer().x, KDPlayer().y);
 					KDGameData.GuardTimer = Math.max(KDGameData.GuardTimer - 5, 0);
 					let dmg = KinkyDungeonDealDamage({damage: guard.Enemy.power * 1, type: guard.Enemy.dmgType}, undefined, undefined, true);
 					if (dmg && dmg.string)
@@ -239,6 +250,7 @@ let KDGuardActions: Record<string, guardActionEntry> = {
 					guard.gx = KinkyDungeonPlayerEntity.x;
 					guard.gy = KinkyDungeonPlayerEntity.y;
 				}
+
 			}
 			if (KDRandom() < 0.02 || (KinkyDungeonStatStamina < 10 && KDRandom() < 0.1))
 				guard.CurrentAction = "jailWander";

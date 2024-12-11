@@ -942,7 +942,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 						cancelDamage: entity.boundLevel > entity.Enemy.maxhp + KDLatexBind,
 						enemy: entity,
 						dmg: 0,
-						bind: KDLatexBind*KDGetEnvironmentalDmg(),
+						bind: KDLatexBind*KDGetEnvironmentalDmg()* (entity == KinkyDungeonLeashingEnemy() ? 0.1 : 1),
 						type: "glue",
 					};
 					KinkyDungeonSendEvent("tickLatex", latexData);
@@ -950,7 +950,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 						KinkyDungeonDamageEnemy(entity, {
 							type: "glue",
 							damage: 0,
-							bind: KDLatexBind*KDGetEnvironmentalDmg(),
+							bind: KDLatexBind*KDGetEnvironmentalDmg()* (entity == KinkyDungeonLeashingEnemy() ? 0.1 : 1),
 							flags: ["DoT"]
 						}, false, true, undefined, undefined, undefined, "Rage");
 						if (entity.boundLevel >= entity.Enemy.maxhp) {

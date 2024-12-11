@@ -25343,6 +25343,7 @@ KDCollectionTabStatusOption_Guest,Guests
 KDCollectionAssign,"Assign to "
 KDCollectionRemove,"Remove from "
 KDCollectionCant,"Can't assign to "
+KDCollectionCantParty,"Remove from party to assign "
 KDImprison,Imprison
 
 KDNPCOpinion,"Opinion: "

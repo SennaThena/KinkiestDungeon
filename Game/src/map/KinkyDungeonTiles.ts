@@ -264,7 +264,7 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					) {
 						data.overrideRoomType = true;
 						KDGameData.RoomType = "PerkRoom";
-					}
+					} else data.AdvanceAmount = 1;
 					//data.AdvanceAmount = 0;
 				} else {
 					// Return to the normal map
@@ -1019,6 +1019,8 @@ function KDAdvanceLevel(data: any, closeConnections: boolean = true, query: bool
 			KDGameData.JourneyY = KDGameData.JourneyTarget.y;
 			KDGameData.JourneyTarget = null;
 		} else {
+			// TODO When adding open world feature, have this track better...
+			KDGameData.JourneyX = KDGetWorldMapLocation({x: KDCurrentWorldSlot.x, y: MiniGameKinkyDungeonLevel})?.jx || 0;
 			KDGameData.JourneyY = MiniGameKinkyDungeonLevel;
 		}
 		if (currentSlot && closeConnections) {

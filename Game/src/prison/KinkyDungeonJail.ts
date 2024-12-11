@@ -759,10 +759,10 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 
 		KDGameData.JailGuard = 0;
 		KDGameData.GuardSpawnTimer = 0;
-		KDGameData.GuardSpawnTimerMax = 200;
-		KDGameData.GuardSpawnTimerMin = 100;
+		KDGameData.GuardSpawnTimerMax = 125;
+		KDGameData.GuardSpawnTimerMin = 75;
 		KDGameData.GuardTimer = 0;
-		KDGameData.GuardTimerMax = 60;
+		KDGameData.GuardTimerMax = 55;
 	}
 }
 
