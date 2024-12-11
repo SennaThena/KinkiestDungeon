@@ -648,6 +648,7 @@ interface KDGameDataBase {
 	QuickLoadouts:			Record<string, string[]>,
 	PersistentNPCCache:			Record<string, number[]>,
 	NamesGenerated:			Record<string, number>,
+	Guilt: number,
 
 };
 
@@ -757,6 +758,8 @@ let KDGameDataBase: KDGameDataBase = {
 	KinkyDungeonSpawnJailersMax: 5,
 	KinkyDungeonLeashedPlayer: 0,
 	KinkyDungeonLeashingEnemy: 0,
+
+	Guilt: 0,
 
 	JailGuard: 0,
 	GuardTimer: 0,

@@ -5025,6 +5025,9 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 					KinkyDungeonAggro(Enemy, undefined, KinkyDungeonPlayerEntity);
 				Enemy.hp = 0;
 				KinkyDungeonKilledEnemy = Enemy;
+
+				KDGameData.Guilt = Math.max(0, (KDGameData.Guilt || 0) + KDEnemyRank(Enemy))
+
 				KinkyDungeonSendEvent("capture", {enemy: Enemy, attacker: KinkyDungeonPlayerEntity, skip: skip});
 				if (!KDIDHasFlag(Enemy.id, "capOpPen")) {
 					KDSetIDFlag(Enemy.id, "capOpPen", -1);

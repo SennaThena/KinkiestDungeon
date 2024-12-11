@@ -865,6 +865,9 @@ function KDApplyItem(C: Character, inv: item, tags: any, customFaction: string =
 						filters[f[0]].blue = KDGetFactionFilters(faction)[f[1].color].blue;
 						filters[f[0]].green = KDGetFactionFilters(faction)[f[1].color].green;
 					}
+					if (f[1].desaturate) {
+						filters[f[0]].saturation = 0;
+					}
 				}
 			}
 		}

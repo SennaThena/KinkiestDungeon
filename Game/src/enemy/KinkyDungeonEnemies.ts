@@ -2831,6 +2831,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number, mapData: KDMapDataTy
 					KinkyDungeonChangeRep("Ghost", -1);
 
 
+
 				if (enemy.rep)
 					for (let rep of Object.keys(enemy.rep))
 						KinkyDungeonChangeRep(rep, enemy.rep[rep]);
@@ -2868,6 +2869,7 @@ function KinkyDungeonEnemyCheckHP(enemy: entity, E: number, mapData: KDMapDataTy
 
 				if (amount && !noRepHit && !enemy.Enemy.Reputation?.noRepLoss) {
 
+					KDGameData.Guilt = Math.max(0, (KDGameData.Guilt || 0) + KDEnemyRank(enemy)**2)
 
 					KinkyDungeonChangeFactionRep(faction, -amount);
 
@@ -8200,10 +8202,9 @@ function KDRunBondageResist (
 function KDAssignLeashPoint(enemy: entity): KDJailPoint {
 	let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y);
 	if (!nj || KDGenHighSecCondition(false, enemy)) {
-			let pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
-			AIData.nearestJail = {type: "jail", radius: 1, x: pos.x, y: pos.y};
-		}
-
+		let pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
+		AIData.nearestJail = {type: "jail", radius: 1, x: pos.x, y: pos.y};
+	} else AIData.nearestJail = nj;
 	return AIData.nearestJail;
 }
 
@@ -9519,6 +9520,7 @@ function KDRescueRepGain(en: entity) {
 	let faction = KDGetFaction(en);
 	if (!en.summoned && !en.maxlifetime && !KinkyDungeonHiddenFactions.has(faction)) {
 		if (!KDIDHasFlag(en.id, "rescuedRep")) {
+			KDGameData.Guilt = Math.max(0, (KDGameData.Guilt || 0) - KDEnemyRank(en)**2)
 			KinkyDungeonChangeFactionRep(faction,
 				(KDFactionRelation("Player", faction) > 0.25 ? 0.5 : 1)
 				* (KinkyDungeonFlags.get("rescuedFloor" + faction) ? 0.01 : 0.05));

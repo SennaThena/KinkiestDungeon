@@ -1564,6 +1564,8 @@ const KinkyDungeonRestraints: restraint[] = [
 		},
 		factionFilters: {
 			Binder: {color: "DarkNeutral", override: true},
+			Straps: {color: "LightNeutral", override: true},
+			BinderStraps: {color: "LightNeutral", override: true},
 		},
 		escapeChance: {"Struggle": 0.15, "Cut": 0.15, "Remove": 0.1, "Pick": 0.35},
 		limitChance: {"Struggle": 0.2, "Cut": 0.14, "Remove": 0.45, "Unlock": 0.2},
@@ -1579,6 +1581,8 @@ const KinkyDungeonRestraints: restraint[] = [
 		},
 		factionFilters: {
 			Binder: {color: "DarkNeutral", override: true},
+			BinderStraps: {color: "LightNeutral", override: true},
+			Straps: {color: "LightNeutral", override: true},
 		},
 		playerTagsMult: {
 			"ItemArmsEmpty": 0.05,
@@ -1609,7 +1613,7 @@ const KinkyDungeonRestraints: restraint[] = [
 			Shoe: {"gamma":0.75,"saturation":1,"contrast":0.7333333333333334,"brightness":0.6166666666666667,"red":1,"green":2.0833333333333335,"blue":2.8499999999999996,"alpha":1},
 		},
 		factionFilters: {
-			Shoe: {color: "DarkNeutral", override: false},
+			Shoe: {color: "LightNeutral", override: false, desaturate: true},
 		},
 		heelpower: 0.5,
 		enemyTags: {"latexRestraints" : 8, "latexBoots" : 3, "jailRestraints": 1, "latexheelSpell": 10, "latexUniform": 12}, playerTags: {"posLatex": -1, "latexAnger": 2, "latexRage": 2}, minLevel: 0, allFloors: true, shrine: ["Heels", "Latex", "Boots"]},
@@ -2144,6 +2148,11 @@ const KinkyDungeonRestraints: restraint[] = [
 			"Straps":{"gamma":1,"saturation":0.08333333333333333,"contrast":0.7333333333333334,"brightness":1.25,"red":1.25,"green":0.6666666666666666,"blue":2.0833333333333335,"alpha":1},
 			"BinderStraps":{"gamma":1,"saturation":1,"contrast":0.6666666666666666,"brightness":2.5166666666666666,"red":1,"green":1,"blue":1,"alpha":1},
 			"Binder":{"gamma":1,"saturation":0.08333333333333333,"contrast":1,"brightness":0.43333333333333335,"red":1.25,"green":0.6666666666666666,"blue":2.0833333333333335,"alpha":1},
+		},
+		factionFilters: {
+			Binder: {color: "Highlight", override: true,},
+			BinderStraps: {color: "DarkNeutral", override: true,},
+			Straps: {color: "DarkNeutral", override: true,},
 		},
 
 		events: [
@@ -3613,10 +3622,12 @@ const KinkyDungeonRestraints: restraint[] = [
 	{inventory: true, name: "ClothGag", LinkableBy: [...KDBallGagLink], debris: "Fabric", renderWhenLinked: [...KDBallGagLink], Asset: "ClothGag", gag: 0.35, Type: "Knotted", Color: "#959595", Group: "ItemMouth", AssetGroup: "ItemMouth2", power: 0.1, weight: 2, escapeChance: {"Struggle": 0.5, "Cut": 1.0, "Remove": 0.8},
 		Model: "ClothCleave",
 		sfxGroup: "Ropes",
+		removePrison: true,
 		maxwill: 0.75, enemyTags: {"clothRestraints":8, "ropeAuxiliary": 3}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["ClothGag", "Rope", "BallGags", "Gags"]},
 	{inventory: true, name: "ClothGag2", LinkableBy: [...KDBallGagLink], debris: "Fabric", renderWhenLinked: [...KDBallGagLink], Asset: "ClothGag", gag: 0.45, Type: "Knotted", Color: "#959595", Group: "ItemMouth", AssetGroup: "ItemMouth2", power: 0.1, weight: 2, escapeChance: {"Struggle": 0.5, "Cut": 1.0, "Remove": 0.8},
 		Model: "ClothCleaveThick",
 		sfxGroup: "Ropes",
+		removePrison: true,
 		maxwill: 0.6, enemyTags: {"clothRestraints":6, "ropeAuxiliary": 2}, playerTags: {}, minLevel: 2, allFloors: true, shrine: ["ClothGag", "Rope", "BallGags", "Gags"]},
 	{inventory: true, name: "ClothGag3", LinkableBy: [...KDBallGagLink], debris: "Fabric", renderWhenLinked: [...KDBallGagLink], Asset: "ClothGag", gag: 0.65, Type: "Knotted", Color: "#959595", Group: "ItemMouth", AssetGroup: "ItemMouth2", power: 0.1, weight: 2, escapeChance: {"Struggle": 0.5, "Cut": 1.0, "Remove": 0.8},
 		Model: "ClothKnot",
@@ -3625,9 +3636,11 @@ const KinkyDungeonRestraints: restraint[] = [
 	{inventory: true, name: "ClothGagOver", LinkableBy: [...KDFlatGagLink], renderWhenLinked: [...KDFlatGagLink], Asset: "ClothGag", gag: 0.35, Type: "OTN", Color: "#959595", Group: "ItemMouth", AssetGroup: "ItemMouth3", power: 0.1, weight: 2, escapeChance: {"Struggle": 0.5, "Cut": 1.0, "Remove": 0.8},
 		Model: "ClothOTN",
 		sfxGroup: "Ropes",
+		removePrison: true,
 		maxwill: 0.75, enemyTags: {"clothRestraints":4, "ropeAuxiliary": 1}, debris: "Fabric", playerTags: {"ItemMouthEmpty": -4, "ItemMouth2Empty": -4}, minLevel: 0, allFloors: true, shrine: ["ClothGag", "FlatGags", "Rope", "Gags"]},
 	{inventory: true, name: "ClothBlindfold", Asset: "ClothBlindfold", debris: "Fabric", Color: "#959595", LinkableBy: [...KDTapeLink], renderWhenLinked: [...KDTapeRender], Group: "ItemHead", power: 0.1, weight: 2, escapeChance: {"Struggle": 0.5, "Cut": 1.0, "Remove": 0.8},
 		Model: "ClothBlindfold",
+		removePrison: true,
 		sfxGroup: "Ropes",
 		affinity: {Struggle: ["Sticky", "Hook"], Remove: ["Hook"],},
 		maxwill: 0.85, blindfold: 2, enemyTags: {"clothRestraints":8, "ropeAuxiliary": 1}, playerTags: {}, minLevel: 0, allFloors: true, shrine: ["ClothBlindfold", "Rope", "Blindfolds"]},

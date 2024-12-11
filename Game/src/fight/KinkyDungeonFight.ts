@@ -447,7 +447,7 @@ function KinkyDungeonAggro(Enemy: entity, Spell: spell, Attacker: entity, Factio
 		&& (!Spell || !Spell.noAggro)
 		&& (!Faction || Faction == "Player")
 		&& !(Enemy.rage > 0)
-		&& (!Attacker || Attacker.player || Attacker.Enemy.allied)) {
+		&& (Attacker?.player || (!Attacker && (Spell || Faction == "Player")))) {
 		if (Enemy.playWithPlayer && (KDCanDom(Enemy) || !KDHostile(Enemy))) {
 			KDAddThought(Enemy.id, "Embarrassed", 5, 1);
 			Enemy.distraction = (Enemy.distraction || 0) + Enemy.Enemy.maxhp * 0.1;

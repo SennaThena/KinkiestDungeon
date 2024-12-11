@@ -219,7 +219,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 					"Brat": {gag: true, playertext: "Default", response: "Default",
 						clickFunction: (_gagged, _player) => {
 							KinkyDungeonChangeRep("Ghost", -10);
-							KinkyDungeonChangeRep("Prisoner", 10);
+							KinkyDungeonChangeRep("Prisoner", 3);
 							return false;
 						},
 						options: {"Continue" : {playertext: "Continue", leadsToStage: "Rules"}}},
@@ -237,7 +237,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 					"Brat": {gag: true, playertext: "Default", response: "Default",
 						clickFunction: (_gagged, _player) => {
 							KinkyDungeonChangeRep("Ghost", -10);
-							KinkyDungeonChangeRep("Prisoner", 10);
+							KinkyDungeonChangeRep("Prisoner", 3);
 							return false;
 						},
 						options: {"Continue" : {playertext: "Continue", exitDialogue: true}}},

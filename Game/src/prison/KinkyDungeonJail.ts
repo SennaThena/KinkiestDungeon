@@ -299,6 +299,9 @@ function KinkyDungeonAggroAction(action: string, data: {enemy?: entity, x?: numb
 let KDLocalChaseTypes: string[] = ["Refusal", "Attack", "Spell", "SpellItem", "Shrine", "Orb", "Chest"];
 let KDSevereTypes: string[] = ["Attack"];
 
+let KDMaxGuiltPerAggro = 20;
+let KDGuiltMult = 0.1;
+
 /**
  * @param enemy
  * @param Type
@@ -310,10 +313,18 @@ function KinkyDungeonStartChase(enemy: entity, Type: string, faction?: string, f
 	if (KDGetFaction(enemy) == "player") return;
 	if ((!enemy && !KDLocalChaseTypes.includes(Type))) {
 		if (KDGameData.PrisonerState == 'jail' || KDGameData.PrisonerState == 'parole') {
-			KinkyDungeonChangeRep("Ghost", -10);
-			if (KinkyDungeonFlags.has("PlayerCombat") || (KinkyDungeonPlayerDamage && !isUnarmed(KinkyDungeonPlayerDamage)))
-				KinkyDungeonChangeRep("Prisoner", 20);
-			else KinkyDungeonChangeRep("Prisoner", 5);
+
+			let GuiltAmount = Math.max(0,
+				Math.min(KDGameData.Guilt || 0, KDMaxGuiltPerAggro));
+			let repMult = 0.25;
+			if (KinkyDungeonFlags.has("PlayerCombat")
+				|| (KinkyDungeonPlayerDamage && !isUnarmed(KinkyDungeonPlayerDamage)))
+				repMult = 1;
+			GuiltAmount *= repMult;
+
+			KinkyDungeonChangeRep("Ghost", -10 * repMult - GuiltAmount*KDGuiltMult);
+
+			KDGameData.Guilt = Math.max(0, (KDGameData.Guilt || 0) - GuiltAmount);
 			KDGameData.PrisonerState = "chase";
 			KinkyDungeonInterruptSleep();
 		}
@@ -1228,11 +1239,7 @@ function KDEnterDemonTransition() {
 	let params = KinkyDungeonMapParams.DemonTransition;
 	KinkyDungeonCreateMap(params, "DemonTransition", "", MiniGameKinkyDungeonLevel, undefined, undefined, undefined, undefined, undefined, "", );
 
-	for (let inv of KinkyDungeonAllRestraint()) {
-		if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
-			KinkyDungeonRemoveRestraint(KDRestraint(inv).Group, false);
-		}
-	}
+	KDRemovePrisonRestraints();
 
 	KinkyDungeonDressPlayer();
 	if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Evil.ogg");
@@ -1258,11 +1265,7 @@ function KDEnterDollTerminal(willing: boolean, cancelDialogue: boolean = true, f
 	KDGameData.DollRoomCount = 0;
 	KinkyDungeonCreateMap(params, "DollStorage", "", MiniGameKinkyDungeonLevel, undefined, undefined, faction, undefined, undefined, "");
 
-	for (let inv of KinkyDungeonAllRestraint()) {
-		if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
-			KinkyDungeonRemoveRestraint(KDRestraint(inv).Group, false);
-		}
-	}
+	KDRemovePrisonRestraints();
 
 	if (forceOutfit && !willing) {
 		let defeat_outfit = "CyberDoll";
@@ -1344,6 +1347,18 @@ function KDApplyLivingCollars() {
 	}
 }
 
+/** Removes restraints with removePrison tags */
+function KDRemovePrisonRestraints() {
+	for (let inv of KinkyDungeonAllRestraintDynamic()) {
+		if ((KDRestraint(inv.item).removePrison || KDRestraint(inv.item).forceRemovePrison)
+			&& (!KinkyDungeonStatsChoice.get("KinkyPrison")
+			|| KDRestraint(inv.item).forceRemovePrison
+			|| KDRestraint(inv.item).removeOnLeash || KDRestraint(inv.item).freeze || KDRestraint(inv.item).immobile)) {
+			KinkyDungeonRemoveRestraintSpecific(inv.item, false);
+		}
+	}
+}
+
 function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 	KDCustomDefeat = "";
 	KDCustomDefeatEnemy = null;
@@ -1406,11 +1421,7 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 		if (KinkyDungeonStatsChoice.get("LivingCollars"))
 			KDApplyLivingCollars();
 
-		for (let inv of KinkyDungeonAllRestraint()) {
-			if ((KDRestraint(inv).removePrison || KDRestraint(inv).forceRemovePrison) && (!KinkyDungeonStatsChoice.get("KinkyPrison") || KDRestraint(inv).forceRemovePrison || KDRestraint(inv).removeOnLeash || KDRestraint(inv).freeze || KDRestraint(inv).immobile)) {
-				KinkyDungeonRemoveRestraint(KDRestraint(inv).Group, false);
-			}
-		}
+		KDRemovePrisonRestraints();
 	}
 
 	KDGameData.KinkyDungeonPrisonReduction = 0;

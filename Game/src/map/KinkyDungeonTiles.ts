@@ -313,7 +313,7 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					if (MiniGameKinkyDungeonLevel > 1) {
 						KDAdvanceTraining();
 						// Reduce security level when entering a new area
-						KinkyDungeonChangeRep("Prisoner", -4);
+						KinkyDungeonChangeRep("Prisoner", -5);
 
 						if (KinkyDungeonStatsChoice.get("Trespasser")) {
 							KinkyDungeonChangeRep("Rope", -1);
