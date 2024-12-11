@@ -377,7 +377,7 @@ function KinkyDungeonNewGamePlus(): void {
 	KDPersistentNPCs = newPersistent;
 
 	KinkyDungeonSetCheckPoint("grv", true);
-	KDGameData.HighestLevelCurrent = 1;
+	KDGameData.HighestLevelCurrent = 0;
 	KinkyDungeonCreateMap(KinkyDungeonMapParams.grv, "ShopStart", "", 1);
 	KinkyDungeonNewGame += 1;
 
@@ -800,8 +800,17 @@ function KDLoadMapFromWorld(x: number, y: number, room: string, direction: numbe
  * @param [sideRoomIndex]
  */
 function KDPlacePlayerBasedOnDirection(direction: number = 0, sideRoomIndex: string = '-1') {
-	if (sideRoomIndex != '-1' && KDMapData.ShortcutPositions && KDMapData.ShortcutPositions[sideRoomIndex]) {
-		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.ShortcutPositions[sideRoomIndex].x, y:KDMapData.ShortcutPositions[sideRoomIndex].y, player:true};
+	let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
+	let sp = KDMapData.ShortcutPositions[sideRoomIndex]
+		|| ((journeySlot?.SideRooms && journeySlot.SideRooms[sideRoomIndex]
+			&& KDSideRooms[journeySlot.SideRooms[sideRoomIndex]]
+		) ? KDMapData.ShortcutPositions[KDSideRooms[journeySlot.SideRooms[sideRoomIndex]].altRoom] : undefined);
+	if (sideRoomIndex != '-1' && KDMapData.ShortcutPositions && (
+		sp
+	)) {
+
+		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x:
+			sp.x, y:sp.y, player:true};
 	} else if ((direction == 1) && KDMapData.EndPosition) {
 		KinkyDungeonPlayerEntity = {MemberNumber:DefaultPlayer.MemberNumber, id: -1, x: KDMapData.EndPosition.x, y:KDMapData.EndPosition.y, player:true};
 	} else {
@@ -952,8 +961,9 @@ function KinkyDungeonCreateMap (
 
 	if (!worldLocation) worldLocation = {x: KDCurrentWorldSlot.x, y: KDCurrentWorldSlot.y};
 	if (!KDWorldMap[(constantX ? 0 : worldLocation.x) + "," + worldLocation.y]) {
+		let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
 		KDCreateWorldLocation(constantX ? 0 : worldLocation.x, worldLocation.y,
-			KDGameData.JourneyX, KDGameData.JourneyY, altType?.makeMain ? altRoom : "");
+			KDGameData.JourneyX, KDGameData.JourneyY, altType?.makeMain ? altRoom : (journeySlot?.RoomType || ""));
 		if (altType?.makeMain || !altType) {
 			KDPruneWorld();
 		}

@@ -2725,7 +2725,7 @@ AttackWitchMagnetBind,"The witch's restraints fly out and attach themselves to y
 AttackWitchMagnetLock,"The witch dangles a lock in front of you before putting it on! (DamageTaken)"
 AttackWitchMagnet,"The witch's lightning causes your body to tingle! (DamageTaken)"
 
-NameApprentice,Witch's Apprentice
+NameApprentice,Mage's Apprentice
 KillApprentice,"The apprentice runs off and cries in a corner."
 AttackApprenticeBind,"The apprentice animates restraints to wrap around you! (+RestraintAdded)"
 AttackApprenticeLock,"The apprentice nervously takes out a lock and makes you wear it! (DamageTaken)"

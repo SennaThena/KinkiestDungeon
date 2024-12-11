@@ -33,7 +33,7 @@ let KDJourneySlotTypes : Record<string, (Predecessor: KDJourneySlot, x: number, 
 			}
 		}*/
 
-		let slot = {
+		let slot: KDJourneySlot = {
 			type: 'basic',
 			x: x,
 			y: y,

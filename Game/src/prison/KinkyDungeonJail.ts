@@ -655,13 +655,14 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 		if (KDGameData.GuardTimer > 0 && KinkyDungeonJailGuard()) {
 			// Decrease timer when not on a tour
 			if (!KinkyDungeonFlags.has("notickguardtimer") && !KinkyDungeonAngel()) {
-				KDGameData.GuardTimer -= 1;
+				KDGameData.GuardTimer -= delta;
 				if (KDGameData.GuardTimer <= 0) {
 					KinkyDungeonJailGuard().gx = xx;
 					KinkyDungeonJailGuard().gy = yy;
 				}
 			}
 		} else {
+
 			// Leave the cell and lock the door
 			// Despawn jailer if not using existing
 			if (KinkyDungeonJailGuard()
@@ -709,6 +710,10 @@ function KinkyDungeonHandleJailSpawns(delta: number, useExistingGuard: boolean =
 					}
 				}
 			}
+		}
+	} else {
+		if (KDGameData.GuardTimer > 0) {
+			KDGameData.GuardTimer -= delta;
 		}
 	}
 

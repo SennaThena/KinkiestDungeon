@@ -211,6 +211,7 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 	let AdvanceAmount = KDAdvanceAmount[toTile](altRoom, altRoomTarget);
 
 	let data = {
+		CurrentJourneyTile: KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY],
 		JourneyTile: journeyTile,
 		altRoom: altRoom,
 		altRoomTarget: altRoomTarget,
@@ -252,11 +253,19 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 		KDGenMapCallback = () => {
 			if (data.toTile == 's') {
 				if (!altRoom?.noAdvance
+					&& !tile?.RoomType
 					&& (
 						// By default only the main advances
-						location?.main == (originalRoom || "")
+						data.CurrentJourneyTile?.RoomType == (originalRoom || "")
 						|| altRoom?.alwaysAdvance)) {
 					// advance by default
+					if (MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent
+						&& data.AdvanceAmount == 0
+					) {
+						data.overrideRoomType = true;
+						KDGameData.RoomType = "PerkRoom";
+					}
+					//data.AdvanceAmount = 0;
 				} else {
 					// Return to the normal map
 					if (!tile?.RoomType) {
@@ -327,18 +336,17 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					}
 				}
 				if (!data.overrideRoomType) {
-					if (KinkyDungeonBossFloor(MiniGameKinkyDungeonLevel)) {
-						roomType = ""; // We let the boss spawn naturally
-					} else {
-						roomType = ""; // TODO add more room types
-					}
+					roomType = "";
 				}
 			} else {
 				if (tile?.RoomType != undefined) {
 					roomType = tile.RoomType;
 					KDGameData.MapMod = ""; // Reset the map mod
 				} else if (!data.overrideRoomType) {
-					roomType = (altRoom?.skiptunnel) ? "" : "PerkRoom"; // We do a perk room, then a tunnel
+					// If its an exit stair in the main, we override to the main of next floor
+					// The player can never backtrack to old perk rooms
+
+					roomType = data.JourneyTile?.RoomType || "";
 					altRoomTarget = KinkyDungeonAltFloor(roomType);
 					KDGameData.MapMod = ""; // Reset the map mod
 				}
@@ -1032,7 +1040,7 @@ function KDAdvanceLevel(data: any, closeConnections: boolean = true, query: bool
 
 
 
-let KDAdvanceAmount: Record<string, (altRoom: any, altRoomNext: any) => number> = {
+let KDAdvanceAmount: Record<string, (altRoom: AltType, altRoomNext: AltType) => number> = {
 	'S': (_altRoom, altRoomNext) => { // Stairs up
 		return (altRoomNext?.skiptunnel ? -1 : 0);
 	},

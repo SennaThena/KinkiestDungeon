@@ -298,6 +298,7 @@ interface AltType {
 
 let alts: Record<string, AltType> = {
 	"Tunnel": {
+		// DEPRECATED DO NOT USE
 		name: "Tunnel",
 		bossroom: false,
 		width: 8,

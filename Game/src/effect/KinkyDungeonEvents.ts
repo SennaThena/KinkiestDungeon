@@ -10148,14 +10148,6 @@ let KDEventMapGeneric: Record<string, Record<string, (e: string, data: any) => v
 				data.tile.RoomType = "ShopStart";
 			}
 		},
-		"SkipOldPerkRooms": (_e, data) => {
-			// The player can never backtrack to old perk rooms
-			if (data.toTile != 'S' && !data.tile?.RoomType && MiniGameKinkyDungeonLevel < KDGameData.HighestLevelCurrent) {
-				data.overrideRoomType = true;
-				KDGameData.RoomType = "";
-				data.AdvanceAmount = 1;
-			}
-		},
 	},
 	"drawSGTooltip": {
 		"goddessBonus": (_e, data) => {

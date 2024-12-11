@@ -864,8 +864,8 @@ let KDGameDataBase: KDGameDataBase = {
 	ItemID: 0,
 	ShopkeeperFee: 0,
 	otherPlaying: 0,
-	HighestLevel: 1,
-	HighestLevelCurrent: 1,
+	HighestLevel: 0,
+	HighestLevelCurrent: 0,
 	tickAlertTimer: false,
 	HostileFactions: [],
 	Wait: 0,
@@ -6050,7 +6050,9 @@ function KinkyDungeonLoadGame(String: string = "") {
 
 			KDUpdateEnemyCache = true;
 
-			// bandaid
+			// bandaids
+			if (KDWorldMap["0,0"])
+				KDWorldMap["0,0"].main = "ShopStart";
 			for (let enemy of KDMapData.Entities) {
 				if (enemy.buffs) {
 					for (let b of Object.keys(enemy.buffs)) {
