@@ -26,7 +26,8 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 			})) {
 				let npc = KDGetPersistentNPC(id);
 				if (!npc.entity) return false;
-				let ent = KDAddEntity(npc.entity, false, false, true, mapData);
+				let ent = KDAddEntity(npc.entity,
+					false, false, true, mapData);
 
 				if (mapData == KDMapData) {
 					ent.runSpawnAI = true;
@@ -52,14 +53,15 @@ let KDPersistentSpawnAIList: Record<string, PersistentSpawnAI> = {
 				if (point) {
 					KDMoveEntity(entity, point.x, point.y,
 						false, false, false, false,
-						true);
+						true, mapData);
 					entity.runSpawnAI = false;
 					delete npc.fromIndex;
 					delete npc.fromType;
 					return true;
 				} else {
 					// Wait till next spawn cycle
-					KDRemoveEntity(entity, false, false, true, undefined, mapData);
+					KDRemoveEntity(entity, false, false,
+						true, undefined, mapData);
 					return true;
 				}
 			}

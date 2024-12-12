@@ -4387,8 +4387,8 @@ function KDRunRegularJailDefeatAttempt(CDE: entity, allowMain: boolean = true, r
 	}
 	KDPlayer().leash = oldLeash;
 
-	if (CDE) {
-		KDGameData.JailGuard = CDE.id;
+	if (CDE) KDGameData.JailGuard = CDE.id;
+		if (CDE && KinkyDungeonJailGuard()) {
 		KDAttachLeashOrCollar(KinkyDungeonJailGuard(), KDPlayer(), 1, true);
 		if (!KDPlayer().leash)
 			KinkyDungeonAttachTetherToEntity(
@@ -9081,7 +9081,7 @@ function KDDespawnEnemy(enemy: entity, E: number,  mapData?: KDMapDataType, move
 
 	if (!KDIsNPCPersistent(enemy.id) && !KDIsInEnemyParty(enemy)) {
 
-		if (!moveThruExit) {
+		if (moveThruExit == undefined) {
 			KDClearStolenItems(enemy);
 			DisposeEntity(enemy.id);
 		}

@@ -323,7 +323,25 @@ let KDFactionProperties: Record<string, KDFactionProps> = {
 		weight: (_Floor, _Checkpoint, tags, _bonustags, _X, _Y) => {
 			let w = 5;
 			if (tags.includes("apprentice")) w += 40;
-			if (tags.includes("witch")) w += 25;
+			if (tags.includes("witch")) w += 5;
+			if (tags.includes("library")) w += 20;
+			if (tags.includes("magical")) w += 20;
+			if (tags.includes("book")) w += 15;
+			return w;
+		},
+		jailOutfit: "Lingerie",
+	},
+	Witch: {
+		honor: 1,
+		jailBackupFaction: "Apprentice",
+		honor_specific: {
+			Apprentice: 0,
+			Wizard: -1,
+		},
+		weight: (_Floor, _Checkpoint, tags, _bonustags, _X, _Y) => {
+			let w = 5;
+			if (tags.includes("apprentice")) w += 10;
+			if (tags.includes("witch")) w += 35;
 			if (tags.includes("library")) w += 20;
 			if (tags.includes("magical")) w += 20;
 			if (tags.includes("book")) w += 15;

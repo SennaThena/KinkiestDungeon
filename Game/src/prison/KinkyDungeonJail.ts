@@ -1568,8 +1568,9 @@ function KinkyDungeonDefeat(PutInJail?: boolean, leashEnemy?: entity) {
 			}
 		}
 
-		if (leasher) {
-			KDGameData.JailGuard = leasher.id;
+
+		if (leasher) KDGameData.JailGuard = leasher.id;
+		if (leasher && KinkyDungeonJailGuard()) {
 			KDAttachLeashOrCollar(KinkyDungeonJailGuard(), KDPlayer(), 1, true);
 			if (!KDPlayer().leash)
 				KinkyDungeonAttachTetherToEntity(
@@ -2185,7 +2186,8 @@ function KDGetHiSecDialogue(enemy: entity): string {
 
 function KDGetLeashFaction(leashEnemy: entity): string {
 	let forceFaction = undefined;
-	if (leashEnemy && (KDFactionProperties[KDGetFaction(leashEnemy)] || KDFactionProperties[KDGetFactionOriginal(leashEnemy)])) {
+	if (leashEnemy && (KDFactionProperties[KDGetFaction(leashEnemy)]
+		|| KDFactionProperties[KDGetFactionOriginal(leashEnemy)])) {
 		if (KDFactionProperties[KDGetFaction(leashEnemy)])
 			forceFaction = KDGetFaction(leashEnemy);
 		else
