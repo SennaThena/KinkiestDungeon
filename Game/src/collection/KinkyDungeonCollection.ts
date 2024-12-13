@@ -9,6 +9,7 @@ let KDCurrentRestrainingTarget = 0;
 let KDCollectionTabStatus = "";
 let KDCollectionTabStatusOptions = ["", "Guest"];
 let KDPromotableStatus = ["", "Guest"];
+let KDSummonableStatus = ["Servant", "Guest"];
 
 let KDFacilityCollectionDataTypes = [
 	"Prisoners",
@@ -1449,6 +1450,48 @@ let KDCollectionTabDraw: Record<string, KDCollectionTabDrawDef> = {
 			DrawTextFitKD(TextGet("KDKickOutGuest" + (KDConfirmOverInventoryAction ? "Confirm" : "")), x + 220, y + 750, 500, "#ffffff", KDTextGray0);
 		}
 
+		if (KDSummonableStatus.includes(value.status)
+			&& DrawButtonKDEx("summonServant", (_b) => {
+				if (!KDNPCUnavailable(value.id, value.status)
+					&& KDIsInSummit()
+					&& !KinkyDungeonFindID(value.id)) {
+						let point = KinkyDungeonGetNearbyPoint(KDPlayer().x, KDPlayer().y, true);
+						if (point) {
+							let en = DialogueCreateEnemy(KDGameData.InteractTargetX, KDGameData.InteractTargetY,
+								(value.Enemy
+									|| KinkyDungeonGetEnemyByName(value.type)).name,
+									value.id, true);
+							if (en) {
+								KDFreeNPC(en);
+								//en.ceasefire = 9999;
+								en.playWithPlayer = 0;
+								if (KDNPCChar.get(en.id))
+									KDRefreshCharacter.set(KDNPCChar.get(en.id), true);
+								KDUpdatePersistentNPC(en.id, true);
+								KDMovePersistentNPC(en.id, KDGetCurrentLocation());
+								KinkyDungeonAdvanceTime(1);
+							}
+						}
+					}
+			return true;
+		}, true, x + 10 + buttonSpacing*III++, y + 730 - 10 - 80,
+		80, 80, "", "#ffffff", KinkyDungeonRootDirectory + "UI/Summon.png",
+		undefined, undefined, false,
+		(
+			KDNPCUnavailable(value.id, value.status)
+			|| !KDIsInSummit()
+			|| KinkyDungeonFindID(value.id)
+		)
+		? "#ff5555" : "")) {
+			let tt = "KDSummonServant";
+			if (KDNPCUnavailable(value.id, value.status)) tt = "KDSummonServantUnavailable";
+			else if (!KDIsInSummit()) tt = "KDSummonServantSummit";
+			else if (KinkyDungeonFindID(value.id)) tt = "KDSummonServantAlreadyPresent";
+
+			DrawTextFitKD(TextGet(tt),
+				x + 220, y + 750, 500, "#ffffff", KDTextGray0);
+		}
+
 		return III;
 	}
 };
@@ -1572,4 +1615,9 @@ function KDPromote(value: KDCollectionEntry) {
 		KDUpdatePersistentNPC(value.id);
 	}
 	delete value.Facility;
+}
+
+
+function KDIsInSummit() {
+	return KDGameData.RoomType == "Summit";
 }

@@ -315,6 +315,21 @@ function KDRenderJourneyMap(X: number, Y: number, Width: number = 5, Height: num
 				}
 			);
 		}
+		if (slot.SideRooms.length > 0) {
+			for (let i = 0; i < 4; i++) {
+				let sprite = "UI/SideRoom/" + slot.SideRooms[i];
+				KDDraw(kdcanvas, kdpixisprites, "navsideroom" + i + "_" + slot.x + ',' + slot.y,
+					KinkyDungeonRootDirectory + sprite + '.png',
+					xOffset + ScaleX*(slot.x - X) - spriteSize/2,
+					yOffset + ScaleY*(slot.y - Y) - spriteSize/2 + i * spriteSize*0.25,
+					spriteSize*0.25, spriteSize*0.25, undefined, {
+						//tint: string2hex(slot.color),
+						zIndex: 1,
+					}
+				);
+			}
+
+		}
 
 		if (MouseIn(
 			xOffset + ScaleX*(slot.x - X) - spriteSize/2,

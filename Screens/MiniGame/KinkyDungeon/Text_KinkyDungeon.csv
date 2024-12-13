@@ -25413,6 +25413,12 @@ KDCuddleLoungeInfo,Submissive prisoners and dominant servants add different amou
 KDCollectionTab_Release,Release Prisoners
 KDDrawSelectedTab_Release,Release
 
+KDSummonServant,Summon
+KDSummonServantAlreadyPresent,Already present in summit
+KDSummonServantUnavailable,NPC is unavailable
+KDSummonServantSummit,Only available in the Summit
+
+
 KDReleaseMark,Mark
 KDReleaseUnmark,Unmark
 KDReleaseMarkAll,Mark ALL
@@ -26099,5 +26105,7 @@ KDOrgasmPsychicLinkEnemy,"Your linked target lets go of herself, transmitting a 
 
 KDOutpostName,FCTN's RMTPE
 KDLairName,PTRN RMTPE
+
+
 
 rWardenCourier,"(You find a girl clad in a pink catsuit and restrained with straps.)|(She wears a backpack with a note attached to it.)|'My pet here can pick up and deliver restraints for you~'|'Try opening the Facilities tab and depositing restraints!'|'Signed: Your Loyal Warden'"

@@ -826,7 +826,6 @@
             <key type="filename">../Game/EffectTiles/SpikeTrapSeen.png</key>
             <key type="filename">../Game/EffectTiles/StarryTrail.png</key>
             <key type="filename">../Game/EffectTiles/Steam.png</key>
-            <key type="filename">../Game/EffectTiles/SummitTeleporter.png</key>
             <key type="filename">../Game/EffectTiles/TauntGround.png</key>
             <key type="filename">../Game/EffectTiles/TeleportPlate.png</key>
             <key type="filename">../Game/EffectTiles/TeleportPlateMana.png</key>
@@ -1628,6 +1627,7 @@
             <key type="filename">../Game/FloorGeneric/Spores.png</key>
             <key type="filename">../Game/FloorGeneric/StairsDown.png</key>
             <key type="filename">../Game/FloorGeneric/StairsUp.png</key>
+            <key type="filename">../Game/FloorGeneric/SummitTeleporter.png</key>
             <key type="filename">../Game/FloorGeneric/Table.png</key>
             <key type="filename">../Game/FloorGeneric/TableCookies.png</key>
             <key type="filename">../Game/FloorGeneric/TablePizza.png</key>
@@ -4243,6 +4243,7 @@
             <key type="filename">../Game/UI/Buttons/Release.png</key>
             <key type="filename">../Game/UI/Buttons/RemoveGuest.png</key>
             <key type="filename">../Game/UI/Buttons/RemoveGuestConfirm.png</key>
+            <key type="filename">../Game/UI/Buttons/Summon.png</key>
             <key type="filename">../Game/UI/Buttons/Unmark.png</key>
             <key type="filename">../Game/UI/Buttons/UnmarkAll.png</key>
             <struct type="IndividualSpriteSettings">
@@ -4366,6 +4367,27 @@
                 <rect>12,12,24,24</rect>
                 <key>scale9Paddings</key>
                 <rect>12,12,24,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Game/UI/SideRoom/BanditFort.png</key>
+            <key type="filename">../Game/UI/SideRoom/Caldera.png</key>
+            <key type="filename">../Game/UI/SideRoom/DemonTransition.png</key>
+            <key type="filename">../Game/UI/SideRoom/ElevatorEgyptian.png</key>
+            <key type="filename">../Game/UI/SideRoom/ElevatorEgyptian2.png</key>
+            <key type="filename">../Game/UI/SideRoom/ElevatorRoom.png</key>
+            <key type="filename">../Game/UI/SideRoom/GoldVault.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
