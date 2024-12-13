@@ -25616,8 +25616,6 @@ KDWardenTightened,AMNT restraints added since last tick~
 KDWardenConfiscate,AMNT restraints confiscated since last tick~
 KDWardenNoRestraints,You have no restraints in storage. Go to the Summit to deposit restraints.
 
-KDWardenNoRestraints,You have no restraints in storage. Go to the Summit to deposit restraints.
-
 KDContainerBack_Facilities,Back to Facilities
 KDContainerBack_Game,Back to Game
 
@@ -26102,4 +26100,4 @@ KDOrgasmPsychicLinkEnemy,"Your linked target lets go of herself, transmitting a 
 KDOutpostName,FCTN's RMTPE
 KDLairName,PTRN RMTPE
 
-dAngelCourier,"(The angel is tied up, with a sign around her neck)|'My pet here can pick up and deliver restraints for you~'|'Try opening the Facilities tab and depositing restraints!'|'Signed: Your Loyal Warden'"
+dWardenCourier,"(You find a girl clad in a pink catsuit and restrained with straps.)|(She wears a backpack with a note attached to it.)|'My pet here can pick up and deliver restraints for you~'|'Try opening the Facilities tab and depositing restraints!'|'Signed: Your Loyal Warden'"
