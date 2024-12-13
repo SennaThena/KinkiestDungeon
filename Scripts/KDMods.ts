@@ -580,7 +580,8 @@ function KDDrawModConfigs() {
                 if (KDModSettings[KDModToggleTab] == undefined) { KDModSettings[KDModToggleTab] = {}};
                 if (KDModSettings[KDModToggleTab][modbutton.refvar] == undefined) { KDModSettings[KDModToggleTab][modbutton.refvar] = (modbutton.default != undefined) ? modbutton.default : false};
                 var blocking = (typeof modbutton.block == "function") ? modbutton.block() : undefined
-                DrawButtonKDEx(modbutton.name, modbutton.click(), blocking ? false : true, CombarXX + modtoggleoffset, YY, 350, 64, modbutton.name, blocking ? "#888888" : "#ffffff", "");
+
+                DrawButtonKDEx(modbutton.name, modbutton.click, blocking ? false : true, CombarXX + modtoggleoffset, YY, 350, 64, modbutton.name, blocking ? "#888888" : "#ffffff", "");
                 YY += YYd;
             }
             // variable is a spacer - Only print text here.

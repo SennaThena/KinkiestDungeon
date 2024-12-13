@@ -2796,11 +2796,13 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 	let dlist = KDDragonList.filter((dragon) => {
 		return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
 	});
-	let def = dlist[Math.floor(KDRandom() * KDDragonList.length)];
+	let def = dlist[Math.floor(KDRandom() * dlist.length)];
 	let obstacles: Record<string, number> = {}
 	if (def) {
+		if (!def.enemy) def.enemy = "DragonGirlCrystal";
 		DialogueCreateEnemy(15,2 + 7 + 2,def.enemy);
-		obstacles = def.obstacles;
+		if (def.obstacles)
+			obstacles = def.obstacles;
 	}
 
 
@@ -2846,8 +2848,12 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 		let slot = obsSlots[index];
 		obsSlots.splice(index, 1);
 		if (!KinkyDungeonEnemyAt(slot.x, slot.y)) {
-			let en = DialogueCreateEnemy(slot.x, slot.y, KDGetByWeight(obstacles));
-			en.faction = "DragonQueen";
+			let o = KDGetByWeight(obstacles);
+			if (o) {
+				let en = DialogueCreateEnemy(slot.x, slot.y, o);
+				en.faction = "DragonQueen";
+			}
+
 		}
 	}
 

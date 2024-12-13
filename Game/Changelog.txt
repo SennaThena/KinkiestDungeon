@@ -31,6 +31,9 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.20
+- Various quality of life changes
+
 5.4.19
 - Fixed prison wandering behavior from guards in highsec
 - New enemy: Witch's Apprentice

@@ -1475,7 +1475,7 @@ let KDCollectionTabDraw: Record<string, KDCollectionTabDrawDef> = {
 					}
 			return true;
 		}, true, x + 10 + buttonSpacing*III++, y + 730 - 10 - 80,
-		80, 80, "", "#ffffff", KinkyDungeonRootDirectory + "UI/Summon.png",
+		80, 80, "", "#ffffff", KinkyDungeonRootDirectory + "UI/Buttons/Summon.png",
 		undefined, undefined, false,
 		(
 			KDNPCUnavailable(value.id, value.status)
