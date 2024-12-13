@@ -826,6 +826,7 @@
             <key type="filename">../Game/EffectTiles/SpikeTrapSeen.png</key>
             <key type="filename">../Game/EffectTiles/StarryTrail.png</key>
             <key type="filename">../Game/EffectTiles/Steam.png</key>
+            <key type="filename">../Game/EffectTiles/SummitTeleporter.png</key>
             <key type="filename">../Game/EffectTiles/TauntGround.png</key>
             <key type="filename">../Game/EffectTiles/TeleportPlate.png</key>
             <key type="filename">../Game/EffectTiles/TeleportPlateMana.png</key>
@@ -1496,6 +1497,7 @@
             <key type="filename">../Game/EnemiesBound/WolfgirlPet.png</key>
             <key type="filename">../Game/EnemiesBound/Zombie.png</key>
             <key type="filename">../Game/FloorGeneric/Angel.png</key>
+            <key type="filename">../Game/FloorGeneric/AngelTied.png</key>
             <key type="filename">../Game/FloorGeneric/Bars.png</key>
             <key type="filename">../Game/FloorGeneric/Bed.png</key>
             <key type="filename">../Game/FloorGeneric/BondageMachine/ChastityHoriz.png</key>
@@ -1636,6 +1638,7 @@
             <key type="filename">../Game/FloorGeneric/TabletDetermination_2.png</key>
             <key type="filename">../Game/FloorGeneric/TabletHeart.png</key>
             <key type="filename">../Game/FloorGeneric/TabletSpent.png</key>
+            <key type="filename">../Game/FloorGeneric/TiedCourier.png</key>
             <key type="filename">../Game/FloorGeneric/Torch.png</key>
             <key type="filename">../Game/FloorGeneric/TorchOrb.png</key>
             <key type="filename">../Game/FloorGeneric/Viewscreen.png</key>

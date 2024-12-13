@@ -576,6 +576,11 @@ const KDOverlays: KDSprites = {
 		if (tile?.Overlay) return tile.Overlay;
 		return "";
 	},
+	"7": (x, y, _Fog, _noReplace) => {
+		let tile = KinkyDungeonTilesGet(x + "," + y);
+		if (tile?.Overlay) return tile.Overlay;
+		return "";
+	},
 	"Z": (_x, _y, _Fog, _noReplace) => {
 		return "Signal/AutoLock";
 	},

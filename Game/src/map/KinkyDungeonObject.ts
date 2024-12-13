@@ -46,6 +46,9 @@ let KDObjectClick: Record<string, (x: number, y: number) => void> = {
 	"Oriel": (_x, _y) => {
 		KDStartDialog("Oriel", "", true, "");
 	},
+	"WardenCourier": (_x, _y) => {
+		KDStartDialog("WardenCourier", "", true, "");
+	},
 };
 /**
  * Script happens when you interact to an object

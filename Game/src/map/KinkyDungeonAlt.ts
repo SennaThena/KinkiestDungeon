@@ -2543,7 +2543,16 @@ function KinkyDungeonCreatePerkRoom(POI: any, VisitedRooms: any[], width: number
 		KDChest(VisitedRooms[0].x*2 + 0, VisitedRooms[0].y*2 - 2, "lost_clothes");
 	}
 
-	// TODO add the angel courier msg if you have a warden
+	if (KinkyDungeonFlags.get("1stSummit") && KDFacilityTypes.Warden.prereq()
+		&& KDGameData.FacilitiesData["Servants_Warden"]?.length > 0) {
+		KinkyDungeonMapSet(VisitedRooms[0].x*2 - 1, VisitedRooms[0].y*2 - 1, '7');
+		KinkyDungeonTilesSet((VisitedRooms[0].x*2 - 1) + ',' + (VisitedRooms[0].y*2 - 1), {
+			Type: "WardenCourier",
+			Overlay: "TiedCourier",
+			Light: 2,
+			lightColor: 0xffffff,
+		});
+	}
 
 	// Place the exit stairs
 	if (perksplaced > 0 && KinkyDungeonStatsChoice.get("perksmandatory"))

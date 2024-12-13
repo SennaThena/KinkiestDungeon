@@ -1543,6 +1543,18 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			},
 		}
 	},
+	"WardenCourier": {
+		response: "Default",
+		clickFunction: (_gagged, _player) => {
+			return false;
+		},
+		options: {
+			"Leave": {
+				playertext: "Leave", response: "Default",
+				exitDialogue: true,
+			},
+		}
+	},
 	"ToolsOfTheTrade": {
 		response: "Default",
 		inventory: true,
