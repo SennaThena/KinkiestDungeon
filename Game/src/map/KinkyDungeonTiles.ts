@@ -17,6 +17,13 @@ let KDCancelFilters = {
 		}
 		return "";
 	},
+	ProtectOldSaves: (_x, _y, _tile, data: any) => {
+		// This one is set by event
+		if (!KDMapData.RoomType && (KDMapData.mapX == undefined || !(KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()))?.jx !== undefined))) {
+			return "NoJourneyTarget";
+		}
+		return "";
+	},
 };
 
 /**

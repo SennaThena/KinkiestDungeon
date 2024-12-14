@@ -4388,7 +4388,7 @@ function KDRunRegularJailDefeatAttempt(CDE: entity, allowMain: boolean = true, r
 	KDPlayer().leash = oldLeash;
 
 	if (CDE) KDGameData.JailGuard = CDE.id;
-		if (CDE && KinkyDungeonJailGuard()) {
+	if (CDE && KinkyDungeonJailGuard()) {
 		KDAttachLeashOrCollar(KinkyDungeonJailGuard(), KDPlayer(), 1, true);
 		if (!KDPlayer().leash)
 			KinkyDungeonAttachTetherToEntity(
@@ -4402,6 +4402,13 @@ function KDRunRegularJailDefeatAttempt(CDE: entity, allowMain: boolean = true, r
 		guard.aware = true;
 		guard.gx = guard.x;
 		guard.gy = guard.y;
+
+
+		let action = "CaptureJail";
+		if (guard.IntentAction != action) {
+			KDIntentEvents[action].trigger(guard, {});
+		}
+
 		KDAssignLeashPoint(CDE);
 		if (!CDE.IntentLeashPoint) {
 			CDE.gx = AIData.nearestJail.x;

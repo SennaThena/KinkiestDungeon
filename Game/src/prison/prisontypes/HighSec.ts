@@ -12,7 +12,8 @@ KDPrisonTypes.HighSec = {
 		// Assign guards to deal with idle dolls
 		let idleGuard: entity[] = [];
 		for (let en of KDMapData.Entities) {
-			if ((en.Enemy?.tags?.prisoner || en.Enemy?.tags?.formerprisoner) && !KDEnemyHasFlag(en, "conveyed_rec")) {
+			if ((en.Enemy?.tags?.prisoner || en.Enemy?.tags?.formerprisoner)
+				&& !KDEnemyHasFlag(en, "conveyed_rec")) {
 				// Is a prisoner, dont do anything (for now)
 			} else if (en.faction == (mainFaction || "Enemy")
 				&& en.Enemy?.tags.jailer
@@ -38,9 +39,16 @@ KDPrisonTypes.HighSec = {
 			}
 		}
 		if (guardCount > 8) {
-			let max = guardCount * 0.33;
+			let max = guardCount * 0.2;
 			let despawning = 0;
 			for (let en of idleGuards) {
+				if (KDEntityHasFlag(en, "despawn")) {
+					despawning++;
+					continue;
+				}
+				if (KDEntityHasFlag(en, "spawned")) {
+					continue;
+				}
 				if ((!en.homeCoord) || !KDCompareLocation(en.homeCoord, KDGetCurrentLocation())) {
 					despawning += 1;
 					KinkyDungeonSetEnemyFlag(en, "despawn", 300);
@@ -73,6 +81,7 @@ KDPrisonTypes.HighSec = {
 					en.gx = l.x;
 					en.gy = l.y;
 					KinkyDungeonSetEnemyFlag(en, "mapguard", -1);
+					KinkyDungeonSetEnemyFlag(en, "spawned", 300);
 					//KinkyDungeonSetEnemyFlag(en, "cyberaccess", -1);
 				}
 			}
