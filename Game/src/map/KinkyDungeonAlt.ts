@@ -5,7 +5,31 @@ let KDJourneyMapMod = {
 };
 
 
-let KDDragonList = [
+interface KDMapEnemyList {
+	/** The boss */
+	enemy: string,
+	faction?: string,
+	minfloor?: number,
+	maxfloor?: number,
+	/** Scenery */
+	obstacles: Record<string, number>,
+	/** Weighted average for close party */
+	party?: Record<string, number>,
+	/** Uses all as tags in enemy selection */
+	partytags?: string[],
+	/** Chooses one to be filtertag */
+	partyrequiretags?: string[],
+	/** Multiplier for weighted average party */
+	weightedpartymult?: number
+	/** Multiplier for randomly generated party */
+	randompartymult?: number
+}
+
+let KDElevatorHallEnemies : KDMapEnemyList[] = [
+
+];
+
+let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonQueenCrystal",
 		minfloor: 7,
