@@ -576,18 +576,18 @@ function KDDrawModConfigs() {
                 YY += YYd;
             }
             // variable has custom code that wants to run when clicking a button.
-            else if (modbutton.type == "custom") {
+            else if ((modbutton.type == "custom") || (modbutton.type == "button")) {
                 if (KDModSettings[KDModToggleTab] == undefined) { KDModSettings[KDModToggleTab] = {}};
                 if (KDModSettings[KDModToggleTab][modbutton.refvar] == undefined) { KDModSettings[KDModToggleTab][modbutton.refvar] = (modbutton.default != undefined) ? modbutton.default : false};
                 var blocking = (typeof modbutton.block == "function") ? modbutton.block() : undefined
 
-                DrawButtonKDEx(modbutton.name, modbutton.click, blocking ? false : true, CombarXX + modtoggleoffset, YY, 350, 64, modbutton.name, blocking ? "#888888" : "#ffffff", "");
+                DrawButtonKDEx(modbutton.name, modbutton.click, blocking ? false : true, CombarXX + modtoggleoffset + modsecondrowoffset, YY, 370, 64, (TextGet(`KDModButton${modbutton.refvar}`) != `KDModButton${modbutton.refvar}`) ? TextGet(`KDModButton${modbutton.refvar}`) : modbutton.name, blocking ? "#888888" : "#ffffff", "");
                 YY += YYd;
             }
             // variable is a spacer - Only print text here.
             else if (modbutton.type == "text") {
                 var blocking = (typeof modbutton.block == "function") ? modbutton.block() : undefined
-                DrawTextFitKD(`${TextGet(`KDModButton${modbutton.refvar}`)}`, CombarXX + modtoggleoffset + 64 + 190, YY + 32, 480, blocking ? "#888888" : "#ffffff", undefined, 30);
+                DrawTextFitKD(`${(modbutton.refvar != undefined) ? TextGet(`KDModButton${modbutton.refvar}`) : ""}`, CombarXX + modtoggleoffset + 64 + 190 + modsecondrowoffset, YY + 32, 480, blocking ? "#888888" : "#ffffff", undefined, 30);
                 YY += YYd;
             }
 			// variable is a string value - Put an input box here.
