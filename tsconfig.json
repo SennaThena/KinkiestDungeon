@@ -47,6 +47,7 @@
         "Game/src/player/KinkyDungeonVibe.ts",
         "Game/src/effect/KinkyDungeonBuffsList.ts",
         "Game/src/map/KinkyDungeonAlt.ts",
+        "Game/src/map/Lair/DragonLair.ts",
         "Game/src/map/KDLairs.ts",
         "Game/src/map/KDLairEntrances.ts",
         "Game/src/map/KDRegiments.ts",
