@@ -5603,6 +5603,7 @@ function KinkyDungeonEnemyLoop(enemy: entity, player: any, delta: number, vision
 											let ey = enemy.y;
 											let cohesion = enemy.Enemy.cohesion ? enemy.Enemy.cohesion : 0.5;
 											let masterCloseness = enemy.Enemy.cohesion ? enemy.Enemy.cohesion : 0.7;
+											if (AIData.master) KinkyDungeonSetEnemyFlag(enemy, "led", 100);
 											if (AIData.master && KDRandom() < masterCloseness) {
 												ex = AIData.master.x;
 												ey = AIData.master.y;
@@ -7200,6 +7201,28 @@ function KinkyDungeonFindMaster(enemy: entity): { master: entity; dist: number; 
 					findMaster = e;
 				}
 			}
+		}
+	} else {
+		let checkDist = 4;
+		let closestmaster: entity = null;
+		if (KDEntityHasFlag(enemy, "led")) checkDist = 10;
+		let closestdist = checkDist + 1;
+		let nearby = KDNearbyEnemies(enemy.x, enemy.y, checkDist, undefined, true, enemy);
+		for (let en of nearby) {
+			if (KDGetFaction(enemy) == KDGetFaction(en)) {
+				let rankDiff = KDEnemyRank(en) - KDEnemyRank(enemy);
+				if (KDEntityHasFlag(en, "leader")) rankDiff += 2;
+				if (rankDiff >= 2) {
+					let dd = KDistChebyshev(en.x - enemy.x, en.y - enemy.y);
+					if (dd < closestdist) {
+						closestmaster = en;
+						closestdist = dd;
+					}
+				}
+			}
+		}
+		if (closestmaster) {
+			return {master: closestmaster, dist: closestdist, info: undefined};
 		}
 	}
 	return {master: findMaster, dist: masterDist, info: masterInfo};

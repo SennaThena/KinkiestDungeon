@@ -696,7 +696,7 @@ let KinkyDungeonSpellList: Record<string, spell[]> = { // List of spells you can
 
 		{name: "ChaoticOverflow", tags: ["will", "mana", "utility"], castCondition: "requireCrystallable", classSpecific: "Trainee", prerequisite: "DistractionCast", hideWithout: "DistractionCast", school: "Special", manacost: 0, components: [], defaultOff: true, time: 10, level:1, type:"passive", onhit:"", delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
 			events: [
-				{type: "ChaoticOverflow", trigger: "toggleSpell", time: 10, mult: 0.25, power: 0.35},
+				{type: "ChaoticOverflow", trigger: "toggleSpell", time: 10, mult: 0.25, power: 3.5},
 			]},
 
 

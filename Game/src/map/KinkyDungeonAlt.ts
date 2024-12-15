@@ -26,12 +26,90 @@ interface KDMapEnemyList {
 }
 
 let KDElevatorHallEnemies : KDMapEnemyList[] = [
-
+	{
+		enemy: "EnforcerBot",
+		faction: "Virus",
+		minfloor: 0,
+		maxfloor: 4,
+		obstacles: {
+			"": 1,
+			OldDrone: 0.5,
+			RubberTurret: 0.07,
+		},
+	},
+	{ // With missile silos
+		enemy: "BotMissile",
+		faction: "Virus",
+		minfloor: 4,
+		obstacles: {
+			"": 0.4,
+			OldDrone: 0.3,
+			OldTapeDrone: 0.5,
+			RubberTurret: 0.1,
+			RubberSilo: 0.05,
+		},
+	},
+	{ // Bandit earlygame
+		enemy: "BanditChief",
+		faction: "Bandit",
+		maxfloor: 8,
+		obstacles: {
+			"": 1.5,
+			Bandit: 0.4,
+			BanditPet: 0.3,
+			BanditHunter: 0.2,
+		},
+	},
+	{ // Bandit later
+		enemy: "BanditMerchant",
+		faction: "Bandit",
+		minfloor: 6,
+		obstacles: {
+			"": 1.0,
+			BanditGuard: 0.5,
+			BanditPet: 1.0,
+			BanditGrappler: 0.3,
+		},
+	},
+	{ // Dollmaker earlygame
+		enemy: "Dollmaker",
+		faction: "Dollsmith",
+		maxfloor: 4,
+		obstacles: {
+			"DollsmithDoll": 1.5,
+			"": 0.4,
+			OldDrone: .25,
+		},
+	},
+	{ // Dollmaker mid
+		enemy: "Dollmaker",
+		faction: "Dollsmith",
+		minfloor: 4,
+		maxfloor: 9,
+		obstacles: {
+			"DollsmithDoll": 1.0,
+			Dollsmith: 0.1,
+			OldDrone: 0.25,
+			OldTapeDrone: 0.1,
+		},
+	},
+	{ // Dollmaker late
+		enemy: "Dollmaker",
+		faction: "Dollsmith",
+		minfloor: 8,
+		obstacles: {
+			"DollsmithDoll": 0.75,
+			Dollsmith: 0.25,
+			Dollmaker: 0.15,
+			OldTapeDrone: 0.5,
+		},
+	},
 ];
 
 let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonQueenCrystal",
+		faction: "DragonQueen",
 		minfloor: 7,
 		obstacles: {
 			ChaoticCrystal: 1.0,
@@ -44,6 +122,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonQueenPoison",
 		minfloor: 6,
+		faction: "DragonQueen",
 		obstacles: {
 			BarricadeVine: 1.0,
 			GiantMushroom: 0.25,
@@ -53,6 +132,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonQueenIce",
 		minfloor: 5,
+		faction: "DragonQueen",
 		obstacles: {
 			BarricadeIce: 1.0,
 		},
@@ -60,6 +140,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonQueenShadow",
 		minfloor: 8,
+		faction: "DragonQueen",
 		obstacles: {
 			ShadowHand: 0.1,
 			BarricadeShadow: 1.0,
@@ -69,6 +150,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonGirlCrystal",
 		maxfloor: 5,
+		faction: "DragonQueen",
 		obstacles: {
 			ChaoticCrystal: 1.0,
 			ChaoticCrystalActive: 0.25,
@@ -77,6 +159,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonGirlPoison",
 		maxfloor: 6,
+		faction: "DragonQueen",
 		obstacles: {
 			BarricadeVine: 0.5,
 			GiantMushroom: 0.5,
@@ -85,6 +168,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonGirlIce",
 		maxfloor: 7,
+		faction: "DragonQueen",
 		obstacles: {
 			BarricadeIce: 0.75,
 		},
@@ -92,6 +176,7 @@ let KDDragonList: KDMapEnemyList[] = [
 	{
 		enemy: "DragonGirlShadow",
 		maxfloor: 8,
+		faction: "DragonQueen",
 		obstacles: {
 			BarricadeShadow: 0.75,
 			BarricadeShadowMetal: 0.25,
@@ -2817,16 +2902,20 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 	KD_PasteTile(KDMapTilesList.ElevatorRoom, KDMapData.StartPosition.x - 7 - 3, KDMapData.StartPosition.y - 7 * 4, data);
 	KDGenerateBaseTraffic(KDMapData.GridWidth, KDMapData.GridHeight);
 
-	let dlist = KDDragonList.filter((dragon) => {
+	let dlist = KDElevatorHallEnemies.filter((dragon) => {
 		return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
 	});
 	let def = dlist[Math.floor(KDRandom() * dlist.length)];
 	let obstacles: Record<string, number> = {}
 	if (def) {
 		if (!def.enemy) def.enemy = "DragonGirlCrystal";
-		DialogueCreateEnemy(15,2 + 7 + 2,def.enemy);
+		let en = DialogueCreateEnemy(15,2 + 7 + 2,def.enemy);
 		if (def.obstacles)
 			obstacles = def.obstacles;
+		if (en) {
+			if (def.faction) en.faction = def.faction;
+			KinkyDungeonSetEnemyFlag(en, "leader", -1);
+		}
 	}
 
 
@@ -2875,7 +2964,8 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 			let o = KDGetByWeight(obstacles);
 			if (o) {
 				let en = DialogueCreateEnemy(slot.x, slot.y, o);
-				en.faction = "DragonQueen";
+
+				if (def.faction) en.faction = def.faction;
 			}
 
 		}
