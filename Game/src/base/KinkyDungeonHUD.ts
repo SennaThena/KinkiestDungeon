@@ -1709,6 +1709,10 @@ function KinkyDungeonHandleHUD() {
 					let en = KinkyDungeonSummonEnemy(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, enemy.name, 1, 1.5);
 					if (en[0]) {
 						KDProcessCustomPatron(en[0].Enemy, en[0], 0.2, true);
+
+					}
+					for (let e of en) {
+						KDRunCreationScript(e, KDGetCurrentLocation());
 					}
 				}
 				return true;
@@ -1718,6 +1722,7 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.allied = 9999;
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			}else
@@ -1726,12 +1731,14 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.ceasefire = 1000;
+
 					let shop = KinkyDungeonGetShopForEnemy(e, true);
 					if (shop) {
 						KinkyDungeonSetEnemyFlag(e, "Shop", -1);
 						KinkyDungeonSetEnemyFlag(e, shop, -1);
 						KDSetShopMoney(e);
 					}
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			} else

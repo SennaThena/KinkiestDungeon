@@ -497,6 +497,13 @@ function DialogueCreateEnemy(x: number, y: number, Name: string, persistentid?: 
 	return KDAddEntity(e, persistentid != undefined, undefined, noLoadout);
 }
 
+function KDRunCreationScript(entity: entity, coord: WorldCoord) {
+	if (entity?.Enemy?.creationScript && !entity.created) {
+		let script = KDCreationScripts[entity.Enemy.creationScript];
+		if (script && script(entity, coord)) entity.created = true;
+	}
+}
+
 
 function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: string[], excludeTags: string[], weight: number): KinkyDialogue {
 	/**
@@ -1439,6 +1446,8 @@ function KDPrisonerRescue(name: string, faction: string, enemytypes: string[]): 
 				let e = DialogueCreateEnemy(door.x, door.y, enemytypes[0]);
 				e.allied = 9999;
 				e.faction = "Player";
+
+				KDRunCreationScript(e, KDGetCurrentLocation());
 				KDGameData.CurrentDialogMsgSpeaker = e.Enemy.name;
 
 				let reinforcementCount = Math.floor(1 + KDRandom() * (KDGameData.PriorJailbreaks ? (Math.min(5, KDGameData.PriorJailbreaks) + 1) : 1));
@@ -2596,9 +2605,11 @@ function KDRunChefChance(player: entity) {
 				KinkyDungeonSetFlag("SpawnedChef", -1, 1);
 				let e = DialogueCreateEnemy(point.x, point.y, "Chef");
 				if (e) {
+
 					KinkyDungeonSendTextMessage(10, TextGet("KDSpawnChef"), "#ff5277", 1);
 					e.aware = true;
 					e.faction = "Ambush";
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 			}
 		}

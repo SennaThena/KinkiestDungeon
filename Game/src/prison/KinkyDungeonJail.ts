@@ -1257,16 +1257,7 @@ function KDEnterDemonTransition() {
 }
 
 
-
-function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
-	KDDefeatedPlayerTick();
-	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
-	//KDGameData.MapMod = ""; // Reset the map mod
-	KDGameData.CurrentDialog = "";
-	let params = KinkyDungeonMapParams.DemonTransition;
-
-	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
-	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+function KDCreateDragonLair(dragon: entity, lairType: string, slot: KDWorldSlot): string {
 	let main = dragon.homeCoord?.room || slot.main || "";
 	let outpost = KDAddLair(
 		slot,
@@ -1280,7 +1271,22 @@ function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
 		(KDGameData.RoomType != main) ? "Cave" : undefined,
 		true
 	);
-	let room = outpost != undefined ? outpost : lairType;
+	return outpost != undefined ? outpost : lairType;
+}
+
+function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
+	KDDefeatedPlayerTick();
+	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
+	//KDGameData.MapMod = ""; // Reset the map mod
+	KDGameData.CurrentDialog = "";
+
+
+
+	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel, "", lairType);
+	let params = altRoom?.useGenParams ? KinkyDungeonMapParams[altRoom.useGenParams] : KinkyDungeonMapParams.cav;
+
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let room = KDCreateDragonLair(dragon, lairType, slot);
 
 	KinkyDungeonCreateMap(params, room, "",
 		MiniGameKinkyDungeonLevel, undefined, undefined,

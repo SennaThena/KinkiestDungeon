@@ -2988,15 +2988,19 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 				en.faction = "Enemy";
 				en.aware = true;
 
+				KDRunCreationScript(en, KDGetCurrentLocation());
+
 				// If the roomtype is sarcophagus, spawn the sarcophagus
 				if (KDGameData.RoomType == "ElevatorEgyptian") {
 					en = DialogueCreateEnemy(e.x, e.y + 11, "SarcoKraken");
 					en.faction = "Enemy";
 					en.maxlifetime = 9999;
 					en.lifetime = 9999;
+
 					if (KinkyDungeonTilesGet((e.x) + ',' + (e.y + 11))) {
 						KinkyDungeonTilesGet((e.x) + ',' + (e.y + 11)).Skin = "SarcophagusGone";
 					}
+					KDRunCreationScript(en, KDGetCurrentLocation());
 				} else if (KDGameData.RoomType == "ElevatorEgyptian2") {
 					// Otherwise ALL statues in the room become cursed ones
 					for (let X = 1; X < KDMapData.GridWidth - 1; X++) {
@@ -4405,6 +4409,8 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			e.hp = e.Enemy.maxhp;
 			e.hostile = 300;
 			e.modified = true;
+
+			KDRunCreationScript(e, KDGetCurrentLocation());
 			return false;
 		},
 		options: {
@@ -4432,6 +4438,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			e.hp = e.Enemy.maxhp;
 			e.hostile = 300;
 			e.modified = true;
+			KDRunCreationScript(e, KDGetCurrentLocation());
 			return false;
 		},
 		options: {
@@ -4731,6 +4738,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			else if (KinkyDungeonStatsChoice.get("hardMode")) e.Enemy.maxhp *= 2;
 			e.hp = e.Enemy.maxhp;
 			e.modified = true;
+			KDRunCreationScript(e, KDGetCurrentLocation());
 			return false;
 		},
 		options: {
@@ -4754,6 +4762,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			e.hp = e.Enemy.maxhp;
 			e.hostile = 300;
 			e.modified = true;
+			KDRunCreationScript(e, KDGetCurrentLocation());
 			return false;
 		},
 		options: {
@@ -4957,6 +4966,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			e.hp = e.Enemy.maxhp;
 			e.hostile = 300;
 			e.modified = true;
+			KDRunCreationScript(e, KDGetCurrentLocation());
 			return false;
 		},
 		options: {

@@ -2151,6 +2151,7 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				}
 				let loadout = KinkyDungeonGetLoadoutForEnemy(e, false);
 				KDSetLoadout(e, loadout);
+				KDRunCreationScript(e, KDGetCurrentLocation());
 
 				if (!spawnPoint && !currentCluster && Enemy.clusterWith) {
 					if (Enemy.tags.boss) clusterChance = 0;
@@ -6154,10 +6155,10 @@ let KDKeyCheckers = {
  */
 function KDGetAltType(Floor: number, MapMod?: string, RoomType?: string): AltType {
 	let mapMod = null;
-	if (MapMod ? MapMod : KDGameData.MapMod) {
+	if (MapMod != undefined ? MapMod : KDGameData.MapMod) {
 		mapMod = KDMapMods[MapMod ? MapMod : KDGameData.MapMod];
 	}
-	let altRoom = RoomType ? RoomType : KDGameData.RoomType;
+	let altRoom = RoomType != undefined ? RoomType : KDGameData.RoomType;
 	let altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
 	return altType;
 }

@@ -863,6 +863,7 @@ let KDTileGen = {
 				if (en && tileGenerator.faction) {
 					en.faction = tileGenerator.faction;
 				}
+				KDRunCreationScript(en, KDGetCurrentLocation());
 			}
 		}
 		KinkyDungeonMapSet(x, y, '0');

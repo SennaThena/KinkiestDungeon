@@ -2843,6 +2843,7 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 		if (en) {
 			if (def.faction) en.faction = def.faction;
 			KinkyDungeonSetEnemyFlag(en, "leader", -1);
+			KDRunCreationScript(en, KDGetCurrentLocation());
 		}
 	}
 
@@ -2894,6 +2895,7 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 				let en = DialogueCreateEnemy(slot.x, slot.y, o);
 
 				if (def.faction) en.faction = def.faction;
+				KDRunCreationScript(en, KDGetCurrentLocation());
 			}
 
 		}

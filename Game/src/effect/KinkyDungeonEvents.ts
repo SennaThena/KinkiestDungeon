@@ -1068,7 +1068,8 @@ let KDEventMapInventory: Record<string, Record<string, (e: KinkyDungeonEvent, it
 					// Spawn a new doll
 					let point = KinkyDungeonGetRandomEnemyPoint(true, false, undefined, 6, 10);
 					if (point) {
-						DialogueCreateEnemy(point.x, point.y, "DollmakerTarget");
+						let en = DialogueCreateEnemy(point.x, point.y, "DollmakerTarget");
+						KDRunCreationScript(en, KDGetCurrentLocation());
 					}
 				}
 			}

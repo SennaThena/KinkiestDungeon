@@ -757,7 +757,8 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 							&& (KDRandom() < 0.15 + 0.45 * Math.min(1, KinkyDungeonDifficulty/30)
 								|| KDNearbyTiles(X, Y, 1.5).some((tile) => {return tile.tile == 'C';}))) {
 							KinkyDungeonMapSet(X, Y, '3');
-							DialogueCreateEnemy(X, Y, "MummyCursed");
+							let en = DialogueCreateEnemy(X, Y, "MummyCursed");
+							KDRunCreationScript(en, KDGetCurrentLocation());
 						}
 					}
 				}

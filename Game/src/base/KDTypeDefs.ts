@@ -767,6 +767,8 @@ interface alwaysDressModel {
 interface KDLoadout {name: string, tags?: string[], singletag: string[], singletag2?: string[], forbidtags: string[], chance: number, items?: string[], restraintMult?: number, multiplier?: number};
 
 interface enemy extends KDHasTags {
+	/** Run when created in some circumstances. NOT when summoned*/
+	creationScript?: string,
 	/** This enemy will always kite the player even if player is harmless*/
 	alwaysKite?: boolean,
 	/** This enemy will give an intro when it first sees you*/
@@ -1692,6 +1694,8 @@ interface entity {
 	domVariance?: number,
 	hideTimer?: boolean,
 	Enemy?: enemy,
+	/** Creation script has run */
+	created?: boolean,
 
 	/** Amount of sound the entity is currently producing */
 	sound?: number,

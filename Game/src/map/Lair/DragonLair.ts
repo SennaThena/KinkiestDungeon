@@ -237,6 +237,7 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 		if (en) {
 			if (def.faction) en.faction = def.faction;
 			KinkyDungeonSetEnemyFlag(en, "leader", -1);
+			KDRunCreationScript(en, KDGetCurrentLocation());
 		}
 	}
 }

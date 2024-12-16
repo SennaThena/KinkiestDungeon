@@ -3125,6 +3125,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
 		terrainTags: {"nature": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlPoison", range: 0.5, count: 1, sameid: true, strict: false}],
+		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlPoison", nameList: "DragonGirl", outfit: "DragonGirlPoison", style: "DragonPoison", faction: "DragonQueen", clusterWith: "beast",
@@ -3154,6 +3155,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
+		creationScript: "DragonLair",
 		dropTable: [{name: "WaterRune", weight: 3}]},
 
 	{name: "DragonQueenCrystal", color: "#92e8c0",
@@ -3214,6 +3216,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		terrainTags: {"crystalline": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlCrystal", range: 0.5, sameid: true, count: 1, strict: false}],
+		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlCrystal", nameList: "DragonGirl", outfit: "DragonGirlCrystal", style: "DragonCrystal", faction: "DragonQueen", clusterWith: "beast",
@@ -3240,6 +3243,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Crystal", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
+		creationScript: "DragonLair",
 		dropTable: [{name: "EarthRune", weight: 3}]},
 
 
@@ -3297,6 +3301,7 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		terrainTags: {"shadow": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlShadow", range: 0.5, sameid: true, count: 1, strict: false}],
+		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlShadow", nameList: "DragonGirl", outfit: "DragonGirlShadow", style: "DragonShadow", faction: "DragonQueen", clusterWith: "beast",
@@ -3326,6 +3331,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 6,
 		preferBlock: true,
+		creationScript: "DragonLair",
 		dropTable: [{name: "PotionInvisibility", weight: 3}]},
 
 
@@ -3393,6 +3399,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		],
 		terrainTags: {"ice": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlIce", range: 0.5, sameid: true, count: 1, strict: false}],
+		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 
@@ -3425,6 +3432,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
+		creationScript: "DragonLair",
 		dropTable: [{name: "IceRune", weight: 3}]},
 
 
