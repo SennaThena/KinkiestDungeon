@@ -3116,10 +3116,10 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "VineSuspend"},
 		},
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Vines", time: 45, power: 2, chance: 0.5, aoe: 1.5},
 		],
-		ignoreflag: ["Furniture"],
 		spells: ["SummonDragonVinePlant", "PoisonBreath"],  spellCooldownMult: 1, spellCooldownMod: -1,
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 3, attackPoints: 2, attack: "SpellMeleeWillBindEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
@@ -3139,12 +3139,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "VineSuspend"},
 		},
-		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 2.5,
 
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Vines", time: 45, power: 2, chance: 0.2, aoe: 1.5},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
@@ -3204,11 +3204,11 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "CrystalEncase"},
 		},
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "getLights", type: "enemyTorch", power: 4.5, color: "#ff44aa"},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
-		ignoreflag: ["Furniture"],
 		spells: ["CrystalBolt", "CrystalSlash"],  spellCooldownMult: 1, spellCooldownMod: -1,
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 3, attackPoints: 2, attack: "SpellMeleeWillEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
@@ -3290,11 +3290,11 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "ShadowEncase"},
 		},
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "ShadowBubbles", spell: "ShadowBubble", power: 1, count: 1, dist: 10, aoe: 6.5, time: 2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
-		ignoreflag: ["Furniture"],
 		spells: ["ShadowShroud", "ShadowShroudTele"],  spellCooldownMult: 1, spellCooldownMod: 0,
 		visionRadius: 7, blindSight: 7.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 2, attackPoints: 2, attack: "MeleeWillEffectSpell",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
@@ -3312,6 +3312,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		followLeashedOnly: true, ignorechance: 0, armor: 0, spellResist: 2, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenShadow", range: 4, loose: true, aggressive: true},
 		spells: ["DarkTele", "ShadowShroudGirl",], spellCooldownMult: 1, spellCooldownMod: 0, castWhileMoving: true, spellRdy: true,
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			//{trigger: "getLights", type: "enemyTorch", power: 4.5, color: "#ff44aa"},
 		],
@@ -3321,7 +3322,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		Resistance: {
 			block_phys: 1,
 		},
-		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 3.5, kiteChance: 0.25,
@@ -3382,7 +3382,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "IceEncase"},
 		},
-		ignoreflag: ["Furniture"],
 
 		Magic: {
 			priority: {
@@ -3394,6 +3393,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 4, attackPoints: 2, attack: "SpellMeleeWillBindEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "crush",
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "createIce", power: 1, chance: 1.0, aoe: 1.0},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
@@ -3420,9 +3420,9 @@ let KinkyDungeonEnemies: enemy[] = [
 			},
 		},
 		events: [
+			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "createIce", power: 1, chance: 0.5, aoe: 1.0},
 		],
-		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 2.5,

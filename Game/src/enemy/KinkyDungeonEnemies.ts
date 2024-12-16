@@ -4032,7 +4032,12 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 						if (!KDFactionProperties[fac]) {
 							fac = KDGetFactionOriginal(enemy);
 						}
-						if (KDFactionProperties[fac]?.customDefeat) {
+						if (enemy.Enemy?.customDefeat && (
+							!KDFactionProperties[fac]?.customDefeat
+							|| enemy.Enemy?.overrideFactionDefeat
+						)) {
+							KDCustomDefeat = enemy.Enemy.customDefeat;
+						} else if (KDFactionProperties[fac]?.customDefeat) {
 							KDCustomDefeat = KDFactionProperties[fac]?.customDefeat;
 						}
 					} else {

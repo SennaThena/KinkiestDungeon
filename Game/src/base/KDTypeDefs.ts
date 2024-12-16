@@ -767,6 +767,8 @@ interface alwaysDressModel {
 interface KDLoadout {name: string, tags?: string[], singletag: string[], singletag2?: string[], forbidtags: string[], chance: number, items?: string[], restraintMult?: number, multiplier?: number};
 
 interface enemy extends KDHasTags {
+	overrideFactionDefeat?: boolean,
+	customDefeat?: string,
 	/** Run when created in some circumstances. NOT when summoned*/
 	creationScript?: string,
 	/** This enemy will always kite the player even if player is harmless*/

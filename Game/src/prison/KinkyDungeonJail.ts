@@ -1285,7 +1285,7 @@ function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
 	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel, "", lairType);
 	let params = altRoom?.useGenParams ? KinkyDungeonMapParams[altRoom.useGenParams] : KinkyDungeonMapParams.cav;
 
-	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let slot = KDGetWorldMapLocation(KDCoordToPoint(dragon.homeCoord || KDGetCurrentLocation()));
 	let room = KDCreateDragonLair(dragon, lairType, slot);
 
 	KinkyDungeonCreateMap(params, room, "",
@@ -2022,6 +2022,9 @@ function KDGetJailRestraints(overrideTags?: string[], requireJail?: boolean, req
 let KDCustomDefeats: Record<string, (enemy: entity) => void> = {
 	"DemonTransition": (_enemy) => {
 		KDEnterDemonTransition();
+	},
+	"DragonLair": (_enemy) => {
+		KDEnterDragonLair(_enemy, "DragonLair");
 	},
 	"ShopkeeperRescue": (enemy) => {
 		KDRemoveEntity(enemy);
