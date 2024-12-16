@@ -3,8 +3,8 @@ alts.DragonLair = {
 	Title: "DragonLair",
 	noWear: false, // Disables doodad wear
 	bossroom: false,
-	width: 20,
-	height: 20,
+	width: 14,
+	height: 16,
 	nopatrols: false,
 	setpieces: {
 	},
@@ -34,7 +34,6 @@ alts.DragonLair = {
 	notraps: true,
 	noClutter: false,
 	nobrick: false,
-	noFurniture: true,
 	nolore: true,
 	noboring: false,
 	noSetpiece: true,
@@ -152,8 +151,8 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	let dist = 0;
 	for (let X = 1; X < KDMapData.GridWidth; X += 1)
 		for (let Y = 1; Y < KDMapData.GridWidth; Y += 1) {
-			dist = KDistEuclidean(X - KDMapData.GridWidth/2, Y - KDMapData.GridWidth/2);
-			if (dist < 4 + 0.25 * openness) {
+			dist = KDistEuclidean(X - KDMapData.GridWidth, Y - KDMapData.GridWidth);
+			if (dist < 8 + 0.25 * openness) {
 				KinkyDungeonMapSet(X, Y, '0');
 			}
 		}
@@ -228,4 +227,16 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 
 	// end of boilerplate again
 
+	let dlist = KDDragonList.filter((dragon) => {
+		return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
+	});
+	let def = dlist[Math.floor(KDRandom() * dlist.length)];
+	if (def) {
+		if (!def.enemy) def.enemy = "DragonGirlCrystal";
+		let en = DialogueCreateEnemy(KDMapData.GridWidth/2, KDMapData.GridHeight/2,def.enemy);
+		if (en) {
+			if (def.faction) en.faction = def.faction;
+			KinkyDungeonSetEnemyFlag(en, "leader", -1);
+		}
+	}
 }

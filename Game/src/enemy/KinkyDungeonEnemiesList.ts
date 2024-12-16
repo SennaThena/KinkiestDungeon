@@ -3082,9 +3082,6 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		dontKiteWhenDisabled: true,
 
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
-
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
 		preferBlock: true, maxdodge: 0,
@@ -3119,16 +3116,15 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "VineSuspend"},
 		},
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Vines", time: 45, power: 2, chance: 0.5, aoe: 1.5},
 		],
+		ignoreflag: ["Furniture"],
 		spells: ["SummonDragonVinePlant", "PoisonBreath"],  spellCooldownMult: 1, spellCooldownMod: -1,
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 3, attackPoints: 2, attack: "SpellMeleeWillBindEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
 		terrainTags: {"nature": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlPoison", range: 0.5, count: 1, sameid: true, strict: false}],
-		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlPoison", nameList: "DragonGirl", outfit: "DragonGirlPoison", style: "DragonPoison", faction: "DragonQueen", clusterWith: "beast",
@@ -3142,15 +3138,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "VineSuspend"},
 		},
+		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 2.5,
 
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
-
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Vines", time: 45, power: 2, chance: 0.2, aoe: 1.5},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
@@ -3161,7 +3154,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
-		creationScript: "DragonLair",
 		dropTable: [{name: "WaterRune", weight: 3}]},
 
 	{name: "DragonQueenCrystal", color: "#92e8c0",
@@ -3176,9 +3168,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		specialRange: 12, projectileTargeting: true, projectileAttack: true, specialMinRange: 4, specialCDonAttack: true, specialWidth: 1.25,
 		castWhileMoving: true,
 
-
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
 
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
@@ -3213,11 +3202,11 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "CrystalEncase"},
 		},
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "getLights", type: "enemyTorch", power: 4.5, color: "#ff44aa"},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
+		ignoreflag: ["Furniture"],
 		spells: ["CrystalBolt", "CrystalSlash"],  spellCooldownMult: 1, spellCooldownMod: -1,
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 3, attackPoints: 2, attack: "SpellMeleeWillEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
@@ -3225,7 +3214,6 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		terrainTags: {"crystalline": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlCrystal", range: 0.5, sameid: true, count: 1, strict: false}],
-		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlCrystal", nameList: "DragonGirl", outfit: "DragonGirlCrystal", style: "DragonCrystal", faction: "DragonQueen", clusterWith: "beast",
@@ -3242,8 +3230,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "CrystalEncase"},
 		},
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
 		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
@@ -3254,7 +3240,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Crystal", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
-		creationScript: "DragonLair",
 		dropTable: [{name: "EarthRune", weight: 3}]},
 
 
@@ -3268,8 +3253,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		},
 		castWhileMoving: true,
 
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
 
 		evasion: -0.5, disarm: 0.4,
 		stamina: 12, sprintspeed: 1.8,
@@ -3303,18 +3286,17 @@ let KinkyDungeonEnemies: enemy[] = [
 			effect: {name: "ShadowEncase"},
 		},
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			{trigger: "afterEnemyTick", type: "ShadowBubbles", spell: "ShadowBubble", power: 1, count: 1, dist: 10, aoe: 6.5, time: 2},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
+		ignoreflag: ["Furniture"],
 		spells: ["ShadowShroud", "ShadowShroudTele"],  spellCooldownMult: 1, spellCooldownMod: 0,
 		visionRadius: 7, blindSight: 7.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 2, attackPoints: 2, attack: "MeleeWillEffectSpell",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
 
 		terrainTags: {"shadow": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlShadow", range: 0.5, sameid: true, count: 1, strict: false}],
-		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 	{name: "DragonGirlShadow", nameList: "DragonGirl", outfit: "DragonGirlShadow", style: "DragonShadow", faction: "DragonQueen", clusterWith: "beast",
@@ -3325,7 +3307,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		followLeashedOnly: true, ignorechance: 0, armor: 0, spellResist: 2, followRange: 1, AI: "hunt", guardChance: 0.6, master: {type: "DragonQueenShadow", range: 4, loose: true, aggressive: true},
 		spells: ["DarkTele", "ShadowShroudGirl",], spellCooldownMult: 1, spellCooldownMod: 0, castWhileMoving: true, spellRdy: true,
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
 			//{trigger: "getLights", type: "enemyTorch", power: 4.5, color: "#ff44aa"},
 		],
@@ -3335,8 +3316,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		Resistance: {
 			block_phys: 1,
 		},
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
+		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 3.5, kiteChance: 0.25,
@@ -3346,7 +3326,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 6,
 		preferBlock: true,
-		creationScript: "DragonLair",
 		dropTable: [{name: "PotionInvisibility", weight: 3}]},
 
 
@@ -3364,8 +3343,6 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		dontKiteWhenDisabled: true,
 
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
 		preferBlock: true, maxdodge: 0,
@@ -3399,6 +3376,7 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "IceEncase"},
 		},
+		ignoreflag: ["Furniture"],
 
 		Magic: {
 			priority: {
@@ -3410,13 +3388,11 @@ let KinkyDungeonEnemies: enemy[] = [
 		visionRadius: 7, blindSight: 2.5, maxhp: 40, armor: 3, minLevel:12, weight:2.5, movePoints: 4, attackPoints: 2, attack: "SpellMeleeWillBindEffect",
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "crush",
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "createIce", power: 1, chance: 1.0, aoe: 1.0},
 			{trigger: "afterEnemyTick", type: "createEffectTile", kind: "Cracked", time: 1400, power: 2, chance: 0.02, aoe: 0.5},
 		],
 		terrainTags: {"ice": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlIce", range: 0.5, sameid: true, count: 1, strict: false}],
-		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
 
@@ -3436,12 +3412,10 @@ let KinkyDungeonEnemies: enemy[] = [
 				EnemyWinterblast: 10,
 			},
 		},
-		wanderAISetting: "Dragon",
-		spawnAISetting: "Dragon",
 		events: [
-			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "createIce", power: 1, chance: 0.5, aoe: 1.0},
 		],
+		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 2.5,
@@ -3451,7 +3425,6 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
-		creationScript: "DragonLair",
 		dropTable: [{name: "IceRune", weight: 3}]},
 
 
@@ -5746,8 +5719,6 @@ let KDOndeath: Record<string, (enemy: entity, o: any, mapData: KDMapDataType) =>
 					f.id = enemy.id;
 					f.CustomName = enemy.CustomNameColor;
 					f.CustomNameColor = enemy.CustomNameColor;
-					f.created = enemy.created;
-					f.homeCoord = enemy.homeCoord;
 				} else
 					KDProcessCustomPatron(en.Enemy, en, 0, false);
 
@@ -6183,9 +6154,6 @@ let SpecialPersistentScriptSettingList: Record<string, (npc: KDPersistentNPC, en
 	Default: (npc: KDPersistentNPC, enemy: enemy) => {
 		return undefined;
 	},
-	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
-		return "Dragon";
-	},
 }
 let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
 	Default: (npc: KDPersistentNPC, enemy: enemy) => {
@@ -6193,9 +6161,6 @@ let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => s
 	},
 	None: (npc: KDPersistentNPC, enemy: enemy) => {
 		return "None";
-	},
-	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
-		return "Dragon";
 	},
 }
 
@@ -6208,8 +6173,5 @@ let WanderAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => 
 	},
 	None: (npc: KDPersistentNPC, enemy: enemy) => {
 		return "None";
-	},
-	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
-		return "Dragon";
 	},
 }

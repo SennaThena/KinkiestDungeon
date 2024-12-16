@@ -1257,7 +1257,16 @@ function KDEnterDemonTransition() {
 }
 
 
-function KDCreateDragonLair(dragon: entity, lairType: string, slot: KDWorldSlot): string {
+
+function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
+	KDDefeatedPlayerTick();
+	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
+	//KDGameData.MapMod = ""; // Reset the map mod
+	KDGameData.CurrentDialog = "";
+	let params = KinkyDungeonMapParams.DemonTransition;
+
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
 	let main = dragon.homeCoord?.room || slot.main || "";
 	let outpost = KDAddLair(
 		slot,
@@ -1271,22 +1280,7 @@ function KDCreateDragonLair(dragon: entity, lairType: string, slot: KDWorldSlot)
 		(KDGameData.RoomType != main) ? "Cave" : undefined,
 		true
 	);
-	return outpost != undefined ? outpost : lairType;
-}
-
-function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
-	KDDefeatedPlayerTick();
-	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
-	//KDGameData.MapMod = ""; // Reset the map mod
-	KDGameData.CurrentDialog = "";
-
-
-
-	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel, "", lairType);
-	let params = altRoom?.useGenParams ? KinkyDungeonMapParams[altRoom.useGenParams] : KinkyDungeonMapParams.cav;
-
-	let slot = KDGetWorldMapLocation(KDCoordToPoint(dragon.homeCoord || KDGetCurrentLocation()));
-	let room = KDCreateDragonLair(dragon, lairType, slot);
+	let room = outpost != undefined ? outpost : lairType;
 
 	KinkyDungeonCreateMap(params, room, "",
 		MiniGameKinkyDungeonLevel, undefined, undefined,
@@ -2022,9 +2016,6 @@ function KDGetJailRestraints(overrideTags?: string[], requireJail?: boolean, req
 let KDCustomDefeats: Record<string, (enemy: entity) => void> = {
 	"DemonTransition": (_enemy) => {
 		KDEnterDemonTransition();
-	},
-	"DragonLair": (_enemy) => {
-		KDEnterDragonLair(_enemy, "DragonLair");
 	},
 	"ShopkeeperRescue": (enemy) => {
 		KDRemoveEntity(enemy);

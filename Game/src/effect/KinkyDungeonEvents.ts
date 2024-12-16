@@ -1068,8 +1068,7 @@ let KDEventMapInventory: Record<string, Record<string, (e: KinkyDungeonEvent, it
 					// Spawn a new doll
 					let point = KinkyDungeonGetRandomEnemyPoint(true, false, undefined, 6, 10);
 					if (point) {
-						let en = DialogueCreateEnemy(point.x, point.y, "DollmakerTarget");
-						KDRunCreationScript(en, KDGetCurrentLocation());
+						DialogueCreateEnemy(point.x, point.y, "DollmakerTarget");
 					}
 				}
 			}
@@ -9094,28 +9093,6 @@ let KDEventMapEnemy: Record<string, Record<string, (e: KinkyDungeonEvent, enemy:
 		},
 	},
 	"beforeDamage": {
-
-		"dragonLairDefeat": (_e, enemy, data) => {
-			if (data.enemy == enemy && data.target == KinkyDungeonPlayerEntity && data.restraintsAdded && data.restraintsAdded.length == 0) {
-				if (data.enemy == enemy && data.target == KinkyDungeonPlayerEntity && data.restraintsAdded && data.restraintsAdded.length == 0) {
-					KDTripleBuffKill("DragonLairDefeat", KinkyDungeonPlayerEntity, 30, (_tt) => {
-						if (KDGetAltType(MiniGameKinkyDungeonLevel)?.name != "DragonLair") {
-							AIData.defeat = true;
-							KDCustomDefeat = "DragonLair";
-							KDCustomDefeatEnemy = enemy;
-						} else
-							KinkyDungeonPassOut();
-					}, "Blindness",
-					(_target) => {
-						// Just in case
-						KDCreateDragonLair(enemy, "DragonLair",
-							KDGetWorldMapLocation(
-							KDCoordToPoint(enemy.homeCoord || KDGetCurrentLocation())
-						));
-					});
-				}
-			}
-		},
 		"shadowEngulf": (_e, enemy, data) => {
 			if (data.enemy == enemy && data.target == KinkyDungeonPlayerEntity && data.restraintsAdded && data.restraintsAdded.length == 0 && !KinkyDungeonFlags.get("shadowEngulf")) {
 				if (data.enemy == enemy && data.target == KinkyDungeonPlayerEntity && data.restraintsAdded && data.restraintsAdded.length == 0 && !KinkyDungeonFlags.get("shadowEngulf")) {

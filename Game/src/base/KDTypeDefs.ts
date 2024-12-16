@@ -767,10 +767,6 @@ interface alwaysDressModel {
 interface KDLoadout {name: string, tags?: string[], singletag: string[], singletag2?: string[], forbidtags: string[], chance: number, items?: string[], restraintMult?: number, multiplier?: number};
 
 interface enemy extends KDHasTags {
-	overrideFactionDefeat?: boolean,
-	customDefeat?: string,
-	/** Run when created in some circumstances. NOT when summoned*/
-	creationScript?: string,
 	/** This enemy will always kite the player even if player is harmless*/
 	alwaysKite?: boolean,
 	/** This enemy will give an intro when it first sees you*/
@@ -1696,8 +1692,6 @@ interface entity {
 	domVariance?: number,
 	hideTimer?: boolean,
 	Enemy?: enemy,
-	/** Creation script has run */
-	created?: boolean,
 
 	/** Amount of sound the entity is currently producing */
 	sound?: number,
@@ -2732,8 +2726,6 @@ interface KDMapDataType {
 	Checkpoint: string,
 	Title: string,
 	PrisonState: string,
-	/** 1 for explored, undefined not */
-	ExpStair: Record<string, number>,
 	PrisonStateStack: string[],
 	PrisonType: string,
 
@@ -2856,8 +2848,6 @@ type MapMod = {
 	spawnBoxes?: any[],
 	bonussetpieces?: {Type: string, Weight: number}[],
 	altRoom: string,
-	/** Runs AFTER the worldgenscript */
-	worldGenScript?: (coord: WorldCoord) => void,
 	escapeMethod?: string,
 	noPersistentPrisoners?: boolean,
 	noPersistentSpawn?: boolean,

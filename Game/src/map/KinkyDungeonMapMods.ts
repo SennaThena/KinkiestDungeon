@@ -66,7 +66,7 @@ let KDMapMods: Record<string, MapMod> = {
 		name: "Dragon",
 		roomType: "",
 		weight: 50,
-		tags: ["dragon"],
+		tags: ["witch", "elemental", "dragon"],
 		faction: "Dragon",
 		jailType: "Dragon",
 		guardType: "Dragon",
@@ -76,32 +76,15 @@ let KDMapMods: Record<string, MapMod> = {
 		},
 		bonusTags: {
 			"dragon": {bonus: 7, mult: 2},
+			"elemental": {bonus: 3, mult: 1.5},
 		},
 		bonussetpieces: [
 			{Type: "BanditPrison", Weight: 8},
 		],
 		altRoom: "",
-		worldGenScript: (coord) => {
-			// Creates a dragon!
-			let point = KinkyDungeonGetRandomEnemyPoint(true);
-			if (!point) return;
-			let dlist = KDDragonList.filter((dragon) => {
-				return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
-			});
-			let def = dlist[Math.floor(KDRandom() * dlist.length)];
-			if (def) {
-				if (!def.enemy) def.enemy = "DragonGirlCrystal";
-				let en = DialogueCreateEnemy(point.x, point.y,def.enemy);
-				if (en) {
-					if (def.faction) en.faction = def.faction;
-					KinkyDungeonSetEnemyFlag(en, "leader", -1);
-					KDRunCreationScript(en, KDGetCurrentLocation());
-				}
-			}
-		},
 		spawnBoxes: [
 			{requiredTags: ["dragon"], tags: [], currentCount: 0, maxCount: 0.33, ignoreAllyCount: true},
-			//{requiredTags: ["elemental"], tags: [], currentCount: 0, maxCount: 0.33, ignoreAllyCount: true},
+			{requiredTags: ["elemental"], tags: [], currentCount: 0, maxCount: 0.33, ignoreAllyCount: true},
 		],
 	},
 	"Witch": {

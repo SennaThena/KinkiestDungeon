@@ -4028,15 +4028,7 @@ let KDTileTooltips: Record<string, (x: number, y: number) => {color: string, tex
 	',': () => {return {color: "#ffffff", noInspect: true, text: "Hook"};},
 	'S': () => {return {color: "#96caff", noInspect: true, text: "S"};},
 	's': () => {return {color: "#4c6885", noInspect: true, text: "s"};},
-	'H': (x, y) => {
-		let tile = KinkyDungeonTilesGet(x + ',' + y);
-		return {color: "#4c6885", noInspect: true, text: "H", desc:
-			TextGet("KDLeadsTo").replace("PLCE", KDGetDungeonName({
-				mapX: KDGetCurrentLocation().mapX,
-				mapY: KDGetCurrentLocation().mapY,
-				room: tile.RoomType
-			}))};
-		},
+	'H': () => {return {color: "#4c6885", noInspect: true, text: "H"};},
 	'G': () => {return {color: "#69bf3e", noInspect: true, text: "G"};},
 	'B': () => {return {color: "#4444ff", noInspect: true, text: "B"};},
 	'@': () => {return {color: "#ffffff", noInspect: true, text: "@"};},

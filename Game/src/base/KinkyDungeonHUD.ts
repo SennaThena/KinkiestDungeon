@@ -266,31 +266,17 @@ function KDHandleGame() {
 
 
 
-function KDGetDungeonName(coord: WorldCoord) {
-	let mapData = KDGetMapData(coord);
-	if (mapData) {
-
-		let altType = KDGetAltType(coord.mapY, mapData.MapMod, mapData.RoomType);
-		let dungeonName = altType?.Title ? altType.Title :
-			(KinkyDungeonMapIndex[mapData.Checkpoint] || mapData.Checkpoint);
-		return KDPersonalAlt[coord.room] ?
-			KDGetLairName(coord.room)
-			: TextGet("DungeonName" + dungeonName)
-	}
-
-	return KDPersonalAlt[coord.room] ?
-		KDGetLairName(coord.room)
-			: TextGet("KDUnknown");
-}
-
 function KinkyDungeonDrawInterface(_showControls: boolean) {
 	if (KDToggles.TurnCounter)
 		DrawTextKD(TextGet("TurnCounter") + KinkyDungeonCurrentTick, 1995, 995, "#ffffff", "#333333", 12, "right");
 
-	let dungeonName = KDGetDungeonName(KDGetCurrentLocation());
+	let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
+	let dungeonName = altType?.Title ? altType.Title : (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint);
 	DrawTextFitKD(
 		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME",
-			dungeonName)
+			KDPersonalAlt[KDGameData.RoomType] ?
+			KDGetLairName(KDGameData.RoomType)
+			: TextGet("DungeonName" + dungeonName))
 		+ (KinkyDungeonNewGame ? TextGet("KDNGPlus").replace("XXX", "" + KinkyDungeonNewGame) : ""),
 		1870, 15, 250, "#ffffff", "#333333", 18, "center");
 
@@ -1723,10 +1709,6 @@ function KinkyDungeonHandleHUD() {
 					let en = KinkyDungeonSummonEnemy(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, enemy.name, 1, 1.5);
 					if (en[0]) {
 						KDProcessCustomPatron(en[0].Enemy, en[0], 0.2, true);
-
-					}
-					for (let e of en) {
-						KDRunCreationScript(e, KDGetCurrentLocation());
 					}
 				}
 				return true;
@@ -1736,7 +1718,6 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.allied = 9999;
-					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			}else
@@ -1745,14 +1726,12 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.ceasefire = 1000;
-
 					let shop = KinkyDungeonGetShopForEnemy(e, true);
 					if (shop) {
 						KinkyDungeonSetEnemyFlag(e, "Shop", -1);
 						KinkyDungeonSetEnemyFlag(e, shop, -1);
 						KDSetShopMoney(e);
 					}
-					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			} else

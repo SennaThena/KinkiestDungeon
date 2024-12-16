@@ -31,7 +31,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 				+ (worldSlot.jy != undefined ? worldSlot.jy : currentWorldPosition.mapY)];
 
 			let fromType = 0;
-			let fromIndex = "0";
+			let fromIndex = 0;
 
 			if (currentWorldPosition.mapY < KDGameData.HighestLevelCurrent
 				&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
@@ -40,9 +40,11 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 					targetPosition.room = worldSlot.main || "";
 
 					fromType = 2;
-					fromIndex = currentWorldPosition.room;
+					fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+						return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+					}) || 0;
 
-					if (fromIndex == "-1") fromType = 0;
+					if (fromIndex == -1) fromType = 0;
 				}
 			}
 
@@ -102,40 +104,6 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 			});
 		},
 	},
-	/** regular wander, but visits lair every 600 turns*/
-	Dragon: {
-		cooldown: 200,
-		filter: (id, mapData) => {
-			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id)
-				&& KDEnemyCanDespawn(id, mapData);
-		},
-		chance: (id, mapData) => {
-			if (!KDIDHasFlag(id, "LairCheck")) return 1.0;
-			return mapData == KDMapData ? 0.33 : 0.8;
-		},
-		doWander: (id, mapData, entity) => {
-			let forceLair = false;
-			if (!KDIDHasFlag(id, "LairCheck")) {
-				KDSetIDFlag(id, "LairCheck", 550);
-				forceLair = true;
-			}
-			return KDStandardLairWander(id, mapData, entity, forceLair, 550, () => {
-				let NPC = KDGetPersistentNPC(id);
-				let AITags = {
-					generic: 1.0,
-				};
-				AITags["owner_" + id] = 1;
-				if (NPC?.partyLeader) {
-					AITags["owner_" + id] = 0.5;
-				}
-				if (NPC?.entity) {
-					AITags["faction_" + KDGetFaction(NPC.entity)] = 1;
-				}
-				return AITags;
-			});
-		},
-	},
 };
 
 function KDStandardWander(id: number, mapData: KDMapDataType, entity: entity, AITagFunc: () => Record<string, number>): boolean {
@@ -147,7 +115,7 @@ function KDStandardWander(id: number, mapData: KDMapDataType, entity: entity, AI
 		+ (worldSlot.jy != undefined ? worldSlot.jy : currentWorldPosition.mapY)];
 
 	let fromType = 0;
-	let fromIndex = "0";
+	let fromIndex = 0;
 
 	if (currentWorldPosition.mapY <= KDGameData.HighestLevelCurrent
 		&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && KDRandom() < 0.5) {
@@ -165,144 +133,25 @@ function KDStandardWander(id: number, mapData: KDMapDataType, entity: entity, AI
 			} else {
 				targetPosition.room = worldSlot.main || "";
 				fromType = 2;
-				fromIndex = currentWorldPosition.room;
+				fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+					return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+				}) || 0;
 
-				if (fromIndex == "-1") fromType = 0;
+				if (fromIndex == -1) fromType = 0;
 			}
 		} else {
 			targetPosition.room = worldSlot.main || "";
 			fromType = 2;
-			fromIndex = currentWorldPosition.room;
+			fromIndex = journeySlot?.SideRooms.findIndex((sr) => {
+				return KDSideRooms[sr]?.altRoom == currentWorldPosition.room;
+			}) || 0;
 
-			if (fromIndex == "-1") fromType = 0;
+			if (fromIndex == -1) fromType = 0;
 		}
 	} else if (currentWorldPosition.room == (worldSlot.main || "")) {
 		// Go up or down
 		// We dont go beyond current max level
 		let dy = KDRandom() < 0.5 ? -1 : 1;
-		// Wont go up if its a boss level
-		if (currentWorldPosition.mapY + dy == KDGameData.HighestLevelCurrent
-			&& KinkyDungeonBossFloor(currentWorldPosition.mapY + dy)
-		) {
-			// Dont move
-			dy = 0;
-		}
-
-		if (dy < 0) {
-			fromType = 1;
-		}
-
-		if (dy && currentWorldPosition.mapY + dy > 0 && currentWorldPosition.mapY + dy <= KDGameData.HighestLevelCurrent) {
-			targetPosition.mapY = currentWorldPosition.mapY + dy;
-		}
-	}
-
-	if (!KDCompareLocation(currentWorldPosition, targetPosition)) {
-		if (!entity) {
-			entity = mapData?.Entities.find((ent) => {
-				return ent.id == id;
-			});
-
-		}
-		// Despawn first
-		if (entity) {
-			KDRemoveEntity(entity, false, false, true, undefined, mapData);
-		}
-
-		// Move the entity
-		if (KDMovePersistentNPC(id, targetPosition)) {
-			let npc = KDGetPersistentNPC(id);
-			npc.fromType = fromType;
-			npc.fromIndex = fromIndex;
-		}
-		return true;
-	}
-
-	return false;
-}
-
-
-function KDStandardLairWander(id: number, mapData: KDMapDataType, entity: entity, modeAlternate: boolean, duration: number, AITagFunc: () => Record<string, number>): boolean {
-	let currentWorldPosition = KDGetNPCLocation(id);
-	let targetPosition = KDGetNPCLocation(id);
-	let worldSlot = KDGetWorldMapLocation({x: currentWorldPosition.mapX, y: currentWorldPosition.mapY});
-	let journeySlot = KDGameData.JourneyMap[
-		(worldSlot.jx != undefined ? worldSlot.jx : currentWorldPosition.mapX) + ','
-		+ (worldSlot.jy != undefined ? worldSlot.jy : currentWorldPosition.mapY)];
-
-	let fromType = 0;
-	let fromIndex = "0";
-	let NPC = KDGetPersistentNPC(id);
-
-	if (modeAlternate && !(KDPersonalAlt[currentWorldPosition.room]?.OwnerNPC == id)) {
-		KDSetIDFlag(id, "LairCheck", 0);
-	}
-
-	if (currentWorldPosition.mapY <= KDGameData.HighestLevelCurrent
-		&& journeySlot?.SideRooms.length > 0 && worldSlot?.data && ((!modeAlternate && KDRandom() < 0.5)
-		|| (modeAlternate
-			// Force go to lair
-			&& NPC.entity.homeCoord && (
-				currentWorldPosition.mapX == NPC.entity.homeCoord.mapX
-				&& currentWorldPosition.mapY == NPC.entity.homeCoord.mapY
-				&& currentWorldPosition.room != NPC.entity.homeCoord.room
-			)
-		))) {
-		// 50% chance to go to a side room or go to normal
-		if (currentWorldPosition.room == (worldSlot.main || "")) {
-
-			if ( (modeAlternate
-				// Force go to lair
-				&& NPC.entity.homeCoord && (
-					currentWorldPosition.mapX == NPC.entity.homeCoord.mapX
-					&& currentWorldPosition.mapY == NPC.entity.homeCoord.mapY
-					&& currentWorldPosition.room != NPC.entity.homeCoord.room
-				)
-			)) {
-				let lairs = KDGetLairs(worldSlot, id);
-				if (lairs.length > 0) {
-					let result = lairs[Math.floor(KDRandom() * lairs.length)];
-					targetPosition.room = result[0];
-					fromType = 0;
-					KDSetIDFlag(id, "LairCheck", duration);
-				}
-			} else {
-				let AITags = AITagFunc();
-
-				let result = KDGetByWeight(KDGetPersistentWanderWeightsForRoom(
-					AITags, currentWorldPosition, true
-				))
-
-				if (result) {
-					targetPosition.room = result;
-					fromType = 0;
-				} else {
-					targetPosition.room = worldSlot.main || "";
-					fromType = 2;
-					fromIndex = currentWorldPosition.room;
-
-					if (fromIndex == "-1") fromType = 0;
-				}
-			}
-
-		} else {
-			targetPosition.room = worldSlot.main || "";
-			fromType = 2;
-			fromIndex = currentWorldPosition.room;
-
-			if (fromIndex == "-1") fromType = 0;
-		}
-	} else if ((modeAlternate && NPC.entity.homeCoord && (
-		currentWorldPosition.mapX != NPC.entity.homeCoord.mapX
-		|| currentWorldPosition.mapY != NPC.entity.homeCoord.mapY
-	)) || (!modeAlternate && currentWorldPosition.room == (worldSlot.main || ""))) {
-		// Go up or down
-		// We dont go beyond current max level
-		let dy = KDRandom() < 0.5 ? -1 : 1;
-		if (modeAlternate && NPC.entity.homeCoord) {
-			if (currentWorldPosition.mapY < NPC.entity.homeCoord.mapY) dy = 1;
-			else if (currentWorldPosition.mapY > NPC.entity.homeCoord.mapY) dy = -1;
-		}
 		// Wont go up if its a boss level
 		if (currentWorldPosition.mapY + dy == KDGameData.HighestLevelCurrent
 			&& KinkyDungeonBossFloor(currentWorldPosition.mapY + dy)

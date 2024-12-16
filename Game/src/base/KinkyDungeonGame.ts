@@ -159,14 +159,6 @@ let KinkyDungeonSaveInterval = 10;
 let KinkyDungeonSFX = [];
 
 
-function KDIsStairExplored(x, y) {
-	return KDMapData.ExpStair ? !!KDMapData.ExpStair[x + ',' + y] : false;
-}
-function KDExploreStairs(x, y) {
-	if (!KDMapData.ExpStair) KDMapData.ExpStair = {};
-	KDMapData.ExpStair[x + ',' + y] = 1;
-}
-
 /**
  * @param [RoomType]
  * @param [MapMod]
@@ -180,8 +172,6 @@ function KDDefaultMapData(mapX: number, mapY: number, RoomType: string = "", Map
 		mapY: mapY,
 
 		RepopulateQueue: [],
-
-		ExpStair: {},
 
 		SpecialAreas: [],
 		Labels: {},
@@ -1454,7 +1444,6 @@ function KinkyDungeonCreateMap (
 
 			if (MapParams.worldGenCode) MapParams.worldGenCode(KDGetCurrentLocation());
 			if (altType?.worldGenScript) altType?.worldGenScript(KDGetCurrentLocation());
-			if (mapMod?.worldGenScript) mapMod?.worldGenScript(KDGetCurrentLocation());
 			if (KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()))?.main == KDGameData.RoomType) {
 				// Run the sideroom WorldGenScripts
 				let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];
@@ -2162,7 +2151,6 @@ function KinkyDungeonPlaceEnemies(spawnPoints: any[], InJail: boolean, Tags: str
 				}
 				let loadout = KinkyDungeonGetLoadoutForEnemy(e, false);
 				KDSetLoadout(e, loadout);
-				KDRunCreationScript(e, KDGetCurrentLocation());
 
 				if (!spawnPoint && !currentCluster && Enemy.clusterWith) {
 					if (Enemy.tags.boss) clusterChance = 0;
@@ -3686,48 +3674,6 @@ function KinkyDungeonPlaceDoors (
 }
 
 function KinkyDungeonReplaceDoodads(Chance: number, barchance: number, wallRubblechance: number, wallhookchance: number, ceilinghookchance: number, width: number, height: number, altType?: any) {
-
-	if (altType && !altType.noClutter) {
-		// Make it so you dont ever move through square corners
-		for (let X = 1; X < width - 1; X += 1)
-			for (let Y = 1; Y < height - 1; Y += 1) {
-				let tl = KinkyDungeonMapGet(X, Y);
-				let tr = KinkyDungeonMapGet(X+1, Y);
-				let bl = KinkyDungeonMapGet(X, Y+1);
-				let br = KinkyDungeonMapGet(X+1, Y+1);
-				if (tl == '1' && br == '1' && KinkyDungeonMovableTilesEnemy.includes(tr) && KinkyDungeonMovableTilesEnemy.includes(bl))
-					KinkyDungeonMapSet(X, Y, 'X');
-				else if (tr == '1' && bl == '1' && KinkyDungeonMovableTilesEnemy.includes(tl) && KinkyDungeonMovableTilesEnemy.includes(br))
-					KinkyDungeonMapSet(X, Y+1, 'X');
-			}
-
-		for (let X = 1; X < width-1; X += 1)
-			for (let Y = 1; Y < height-1; Y += 1) {
-				if (KinkyDungeonMapGet(X, Y) == '1' && KDRandom() < barchance
-						&& ((KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y+1) == '1' && KinkyDungeonMapGet(X-1, Y) == '0' && KinkyDungeonMapGet(X+1, Y) == '0')
-							|| (KinkyDungeonMapGet(X-1, Y) == '1' && KinkyDungeonMapGet(X+1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '0' && KinkyDungeonMapGet(X, Y+1) == '0'))) {
-					KinkyDungeonMapSet(X, Y, 'b');
-				} else if ((KinkyDungeonMapGet(X, Y) == '2' || KinkyDungeonMapGet(X, Y) == '0') && (
-					(KDRandom() < wallhookchance && KinkyDungeonMapGet(X-1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X+1, Y) == '0' && KinkyDungeonMapGet(X+1, Y-1) == '0' && KinkyDungeonMapGet(X+1, Y+1) == '0')
-						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X+1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X-1, Y) == '0' && KinkyDungeonMapGet(X-1, Y-1) == '0' && KinkyDungeonMapGet(X-1, Y+1) == '0')
-						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y+1) == '0' && KinkyDungeonMapGet(X+1, Y+1) == '0' && KinkyDungeonMapGet(X-1, Y+1) == '0')
-						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X, Y+1) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y-1) == '0' && KinkyDungeonMapGet(X+1, Y-1) == '0' && KinkyDungeonMapGet(X-1, Y-1) == '0'))) {
-					KinkyDungeonMapSet(X, Y-1, ','); // Wall hook
-				} else if (KDRandom() < ceilinghookchance && (KinkyDungeonMapGet(X, Y) == '2' || KinkyDungeonMapGet(X, Y) == '0' &&
-						(KinkyDungeonMapGet(X-1, Y) != '1'
-						&& KinkyDungeonMapGet(X+1, Y) != '1'
-						&& KinkyDungeonMapGet(X, Y-1) != '1'
-						&& KinkyDungeonMapGet(X, Y+1) != '1'
-						&& KinkyDungeonMapGet(X+1, Y+1) != '1'
-						&& KinkyDungeonMapGet(X+1, Y-1) != '1'
-						&& KinkyDungeonMapGet(X-1, Y+1) != '1'
-						&& KinkyDungeonMapGet(X-1, Y-1) != '1'
-						))) {
-					KinkyDungeonMapSet(X, Y, '?'); // Ceiling hook
-				}
-			}
-	}
-
 	for (let X = 1; X < width-1; X += 1)
 		for (let Y = 1; Y < height-1; Y += 1) {
 			let category = (KDMapData.CategoryIndex ? KDGetCategoryIndex(X, Y)?.category : {}) as {category: string, tags: string[]};
@@ -3802,7 +3748,46 @@ function KinkyDungeonReplaceDoodads(Chance: number, barchance: number, wallRubbl
 		}
 
 
+	if (altType && !altType.noClutter) {
+		// Make it so you dont ever move through square corners
+		for (let X = 1; X < width - 1; X += 1)
+			for (let Y = 1; Y < height - 1; Y += 1) {
+				let tl = KinkyDungeonMapGet(X, Y);
+				let tr = KinkyDungeonMapGet(X+1, Y);
+				let bl = KinkyDungeonMapGet(X, Y+1);
+				let br = KinkyDungeonMapGet(X+1, Y+1);
+				if (tl == '1' && br == '1' && KinkyDungeonMovableTilesEnemy.includes(tr) && KinkyDungeonMovableTilesEnemy.includes(bl))
+					KinkyDungeonMapSet(X, Y, 'X');
+				else if (tr == '1' && bl == '1' && KinkyDungeonMovableTilesEnemy.includes(tl) && KinkyDungeonMovableTilesEnemy.includes(br))
+					KinkyDungeonMapSet(X, Y+1, 'X');
+			}
 
+		for (let X = 1; X < width-1; X += 1)
+			for (let Y = 1; Y < height-1; Y += 1) {
+				if (KinkyDungeonMapGet(X, Y) == '1' && KDRandom() < barchance
+						&& ((KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y+1) == '1' && KinkyDungeonMapGet(X-1, Y) == '0' && KinkyDungeonMapGet(X+1, Y) == '0')
+							|| (KinkyDungeonMapGet(X-1, Y) == '1' && KinkyDungeonMapGet(X+1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '0' && KinkyDungeonMapGet(X, Y+1) == '0'))) {
+					KinkyDungeonMapSet(X, Y, 'b');
+				} else if ((KinkyDungeonMapGet(X, Y) == '2' || KinkyDungeonMapGet(X, Y) == '0') && (
+					(KDRandom() < wallhookchance && KinkyDungeonMapGet(X-1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X+1, Y) == '0' && KinkyDungeonMapGet(X+1, Y-1) == '0' && KinkyDungeonMapGet(X+1, Y+1) == '0')
+						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X+1, Y) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X-1, Y) == '0' && KinkyDungeonMapGet(X-1, Y-1) == '0' && KinkyDungeonMapGet(X-1, Y+1) == '0')
+						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y+1) == '0' && KinkyDungeonMapGet(X+1, Y+1) == '0' && KinkyDungeonMapGet(X-1, Y+1) == '0')
+						|| (KDRandom() < wallhookchance && KinkyDungeonMapGet(X, Y+1) == '1' && KinkyDungeonMapGet(X, Y-1) == '1' && KinkyDungeonMapGet(X, Y-1) == '0' && KinkyDungeonMapGet(X+1, Y-1) == '0' && KinkyDungeonMapGet(X-1, Y-1) == '0'))) {
+					KinkyDungeonMapSet(X, Y-1, ','); // Wall hook
+				} else if (KDRandom() < ceilinghookchance && (KinkyDungeonMapGet(X, Y) == '2' || KinkyDungeonMapGet(X, Y) == '0' &&
+						(KinkyDungeonMapGet(X-1, Y) != '1'
+						&& KinkyDungeonMapGet(X+1, Y) != '1'
+						&& KinkyDungeonMapGet(X, Y-1) != '1'
+						&& KinkyDungeonMapGet(X, Y+1) != '1'
+						&& KinkyDungeonMapGet(X+1, Y+1) != '1'
+						&& KinkyDungeonMapGet(X+1, Y-1) != '1'
+						&& KinkyDungeonMapGet(X-1, Y+1) != '1'
+						&& KinkyDungeonMapGet(X-1, Y-1) != '1'
+						))) {
+					KinkyDungeonMapSet(X, Y, '?'); // Ceiling hook
+				}
+			}
+	}
 
 }
 
@@ -5575,7 +5560,6 @@ function KinkyDungeonAdvanceTime(delta: number, NoUpdate?: boolean, NoMsgTick?: 
 	} else pauseTime = false;
 	KDGameData.ShieldDamage = 0;
 	KDUpdateCollectionFlags(delta);
-	KDUpdatePersistentNPCFlags(delta);
 	for (let value of Object.values(KDGameData.Collection))
 		KDTickCollectionWanderCollectionEntry(value);
 	KinkyDungeonUpdateBuffs(delta, pauseTime);
@@ -6170,10 +6154,10 @@ let KDKeyCheckers = {
  */
 function KDGetAltType(Floor: number, MapMod?: string, RoomType?: string): AltType {
 	let mapMod = null;
-	if (MapMod != undefined ? MapMod : KDGameData.MapMod) {
+	if (MapMod ? MapMod : KDGameData.MapMod) {
 		mapMod = KDMapMods[MapMod ? MapMod : KDGameData.MapMod];
 	}
-	let altRoom = RoomType != undefined ? RoomType : KDGameData.RoomType;
+	let altRoom = RoomType ? RoomType : KDGameData.RoomType;
 	let altType = altRoom ? KinkyDungeonAltFloor((mapMod && mapMod.altRoom) ? mapMod.altRoom : altRoom) : KinkyDungeonBossFloor(Floor);
 	return altType;
 }

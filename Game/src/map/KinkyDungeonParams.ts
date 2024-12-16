@@ -508,7 +508,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			for (let x = 0; x < KDMapData.GridWidth-1; x++)
 				for (let y = 0; y < KDMapData.GridHeight-1; y++) {
 					if (cavernized[x + ',' + y] && !KDMapData.TilesSkin[x + ',' + y]) {
-						KDMapData.TilesSkin[x + ',' + y] = {skin: "cav", force: true};
+						KDMapData.TilesSkin[x + ',' + y] = {skin: "cry", force: true};
 					} else if (naturalized[x + ',' + y] && !KDMapData.TilesSkin[x + ',' + y]) {
 						KDMapData.TilesSkin[x + ',' + y] = {skin: "jngWild", force: true};
 					}
@@ -757,8 +757,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 							&& (KDRandom() < 0.15 + 0.45 * Math.min(1, KinkyDungeonDifficulty/30)
 								|| KDNearbyTiles(X, Y, 1.5).some((tile) => {return tile.tile == 'C';}))) {
 							KinkyDungeonMapSet(X, Y, '3');
-							let en = DialogueCreateEnemy(X, Y, "MummyCursed");
-							KDRunCreationScript(en, KDGetCurrentLocation());
+							DialogueCreateEnemy(X, Y, "MummyCursed");
 						}
 					}
 				}

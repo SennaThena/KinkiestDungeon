@@ -379,15 +379,6 @@ function KDAddCollection(enemy: entity, type?: string, status?: string, servantc
 
 
 
-function KDUpdatePersistentNPCFlags(delta: number) {
-	let curpos = KDGetCurrentLocation();
-	for (let npc of Object.values(KDPersistentNPCs)) {
-		if (!KDCompareLocation(KDGetNPCLocation(npc.id), curpos)) {
-			KinkyDungeonTickFlagsEnemy(npc.entity, delta);
-		}
-	}
-}
-
 function KDUpdateCollectionFlags(delta: number) {
 	for (let npc of Object.values(KDGameData.Collection)) {
 		if (npc.flags) {

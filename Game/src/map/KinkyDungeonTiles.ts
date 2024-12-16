@@ -200,7 +200,6 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 }
 
 function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: boolean, willing: boolean) {
-	KDExploreStairs(x, y);
 	let toTile = KinkyDungeonMapGet(x, y);
 	let tile = KinkyDungeonTilesGet(x + "," + y);
 	let altRoom = KDGameData.RoomType ? KinkyDungeonAltFloor(KDGameData.RoomType) : KinkyDungeonBossFloor(MiniGameKinkyDungeonLevel);
@@ -626,7 +625,7 @@ function KDApplyAlpha(id: string, alpha: number, fade: string, delta: number) {
 			return Math.max(0, Math.min(1, .5 + 0.25 * Math.sin(CommonTime()/1000)));
 		}
 		case "ice": {
-			return Math.max(0, Math.min(1, .5 + 0.25 * Math.sin(CommonTime()/2500)));
+			return Math.max(0, Math.min(1, .25 + 0.25 * Math.sin(CommonTime()/5000)));
 		}
 	}
 }
