@@ -1256,6 +1256,53 @@ function KDEnterDemonTransition() {
 	KinkyDungeonSaveGame();
 }
 
+
+
+function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
+	KDDefeatedPlayerTick();
+	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
+	//KDGameData.MapMod = ""; // Reset the map mod
+	KDGameData.CurrentDialog = "";
+	let params = KinkyDungeonMapParams.DemonTransition;
+
+	let slot = KDGetWorldMapLocation(KDCurrentWorldSlot);
+	let altRoom = KDGetAltType(MiniGameKinkyDungeonLevel);
+	let main = dragon.homeCoord?.room || slot.main || "";
+	let outpost = KDAddLair(
+		slot,
+		main,
+		lairType,
+		dragon.id,
+		false,
+		"Cave",
+		(KDGameData.RoomType != main) ? main : undefined,
+		(KDGameData.RoomType != main) ? "Cave" : undefined,
+		(KDGameData.RoomType != main) ? "Cave" : undefined,
+		true
+	);
+	let room = outpost != undefined ? outpost : lairType;
+
+	KinkyDungeonCreateMap(params, room, "",
+		MiniGameKinkyDungeonLevel, undefined, undefined,
+		KDGetFaction(dragon) || "DragonQueen", undefined, true,
+		dragon.homeCoord?.room || slot.main || "");
+	KDRemovePrisonRestraints();
+
+	KinkyDungeonDressPlayer();
+	if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/StoneDoor_Close.ogg");
+
+	KDMapData.KeysHeld = 0;
+	let p = KinkyDungeonGetNearbyPoint(KDMapData.GridWidth/2, KDMapData.GridHeight/2, true);
+
+	KDMovePlayer(p.x || KDMapData.GridWidth/2, p.y || KDMapData.GridHeight/2, false);
+
+	KinkyDungeonLoseJailKeys();
+	KDResetAllAggro();
+
+	KinkyDungeonSaveGame();
+}
+
+
 function KDEnterDollTerminal(willing: boolean, cancelDialogue: boolean = true, forceOutfit: boolean = true): void {
 	let dollStand = KinkyDungeonPlayerTags.get("Dollstand");
 
