@@ -1444,6 +1444,7 @@ function KinkyDungeonCreateMap (
 
 			if (MapParams.worldGenCode) MapParams.worldGenCode(KDGetCurrentLocation());
 			if (altType?.worldGenScript) altType?.worldGenScript(KDGetCurrentLocation());
+			if (mapMod?.worldGenScript) mapMod?.worldGenScript(KDGetCurrentLocation());
 			if (KDGetWorldMapLocation(KDCoordToPoint(KDGetCurrentLocation()))?.main == KDGameData.RoomType) {
 				// Run the sideroom WorldGenScripts
 				let journeySlot = KDGameData.JourneyMap[KDGameData.JourneyX + ',' + KDGameData.JourneyY];

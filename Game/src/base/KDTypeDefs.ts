@@ -2852,6 +2852,8 @@ type MapMod = {
 	spawnBoxes?: any[],
 	bonussetpieces?: {Type: string, Weight: number}[],
 	altRoom: string,
+	/** Runs AFTER the worldgenscript */
+	worldGenScript?: (coord: WorldCoord) => void,
 	escapeMethod?: string,
 	noPersistentPrisoners?: boolean,
 	noPersistentSpawn?: boolean,

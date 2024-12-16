@@ -227,17 +227,4 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 
 	// end of boilerplate again
 
-	let dlist = KDDragonList.filter((dragon) => {
-		return (!dragon.minfloor || MiniGameKinkyDungeonLevel >= dragon.minfloor) && (!dragon.maxfloor || MiniGameKinkyDungeonLevel <= dragon.maxfloor);
-	});
-	let def = dlist[Math.floor(KDRandom() * dlist.length)];
-	if (def) {
-		if (!def.enemy) def.enemy = "DragonGirlCrystal";
-		let en = DialogueCreateEnemy(KDMapData.GridWidth/2, KDMapData.GridHeight/2,def.enemy);
-		if (en) {
-			if (def.faction) en.faction = def.faction;
-			KinkyDungeonSetEnemyFlag(en, "leader", -1);
-			KDRunCreationScript(en, KDGetCurrentLocation());
-		}
-	}
 }
