@@ -24,7 +24,7 @@ let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, en
 
 			KDMakeShortcutStairs(lair, point, data, roomTo);
 
-			KinkyDungeonSkinArea({skin: "cry"}, point.x, point.y, 1.5);
+			KinkyDungeonSkinArea({skin: "cav"}, point.x, point.y, 1.5);
 
 			if (!KDMapData.SpecialAreas) KDMapData.SpecialAreas = [];
 			KDMapData.SpecialAreas.push({x: point.x, y: point.y, radius: 2});
@@ -40,7 +40,7 @@ let KDLairTypePlaceScript: Record<string, (lair: KDLair, data: KDMapDataType, en
 
 			KDMakeShortcutStairs(lair, point, data, roomTo);
 
-			//KinkyDungeonSkinArea({skin: "cry"}, point.x, point.y, 1.5);
+			//KinkyDungeonSkinArea({skin: "cav"}, point.x, point.y, 1.5);
 
 			if (!KDMapData.SpecialAreas) KDMapData.SpecialAreas = [];
 			KDMapData.SpecialAreas.push({x: point.x, y: point.y, radius: 2});

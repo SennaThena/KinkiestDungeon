@@ -3,8 +3,8 @@ alts.DragonLair = {
 	Title: "DragonLair",
 	noWear: false, // Disables doodad wear
 	bossroom: false,
-	width: 14,
-	height: 16,
+	width: 20,
+	height: 20,
 	nopatrols: false,
 	setpieces: {
 	},
@@ -34,6 +34,7 @@ alts.DragonLair = {
 	notraps: true,
 	noClutter: false,
 	nobrick: false,
+	noFurniture: true,
 	nolore: true,
 	noboring: false,
 	noSetpiece: true,
@@ -151,8 +152,8 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	let dist = 0;
 	for (let X = 1; X < KDMapData.GridWidth; X += 1)
 		for (let Y = 1; Y < KDMapData.GridWidth; Y += 1) {
-			dist = KDistEuclidean(X - KDMapData.GridWidth, Y - KDMapData.GridWidth);
-			if (dist < 8 + 0.25 * openness) {
+			dist = KDistEuclidean(X - KDMapData.GridWidth/2, Y - KDMapData.GridWidth/2);
+			if (dist < 4 + 0.25 * openness) {
 				KinkyDungeonMapSet(X, Y, '0');
 			}
 		}

@@ -1273,7 +1273,7 @@ function KDProcessCustomPatron(Enemy: enemy, e: entity, chanceBoost: number, mak
 			}
 			if (makePersistent) {
 				let npc = KDGetPersistentNPC(e.id, e);
-				KDSetSpawnAndWanderAI(npc, custom.spawnAI, custom.sanderAI);
+				KDSetSpawnAndWanderAI(npc, custom.spawnAI, custom.wanderAI);
 				KDSetSpecialScript(npc, custom.specialScript);
 				npc.special = true;
 				KDGameData.NamesGenerated[custom.name] = e.id;

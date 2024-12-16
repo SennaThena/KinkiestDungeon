@@ -63,7 +63,9 @@ function KDAddLair(
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
 	entranceFrom?: string,
 	alwaysGet?: boolean): string {
-	let lairid = id + "_" + alt + `,${slot.x},${slot.y}`;
+	let lairid = KDOutpostID(id + "", alt, slot);
+
+	//id + "_" + alt + `,${slot.x},${slot.y}`;
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
 	let journeySlot = KDGameData.JourneyMap[jx + ',' + jy];
@@ -74,7 +76,7 @@ function KDAddLair(
 	if (slot.lairs[lairid] == undefined) {
 		slot.lairs[lairid] = room;
 		KDPersonalAlt[lairid] = {
-			Name: room,
+			Name: lairid,
 			RoomType: alt,
 			OwnerNPC: id,
 			Entrance: {},
@@ -135,6 +137,10 @@ function KDAddLair(
 	return (placed || alwaysGet) ? lairid : undefined;
 }
 
+function KDOutpostID(faction: string, alt: string, slot: KDPoint) {
+	return faction + "_" + alt + `,${slot.x},${slot.y}`;
+}
+
 function KDAddOutpost(
 	slot: KDWorldSlot,
 	/** Room to place the lair entrance in */
@@ -152,7 +158,7 @@ function KDAddOutpost(
 	/** Entrance of the fromRoom from within the lair, only relevant if fromRoom diffs from room*/
 	entranceFrom?: string,
 	alwaysGet: boolean = true): string {
-	let outpostid = faction + "_" + alt + `,${slot.x},${slot.y}`;
+	let outpostid = KDOutpostID(faction, alt, slot);
 	let jx = slot.jx || 0;
 	let jy = slot.jy || slot.y;
 	let journeySlot = KDGameData.JourneyMap[jx + ',' + jy];

@@ -3082,6 +3082,9 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		dontKiteWhenDisabled: true,
 
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
+
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
 		preferBlock: true, maxdodge: 0,
@@ -3143,6 +3146,9 @@ let KinkyDungeonEnemies: enemy[] = [
 		dontKiteWhenDisabled: true,
 		kite: 2.5,
 
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
+
 		events: [
 			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "DragonRegen", power: 0.2},
@@ -3170,6 +3176,9 @@ let KinkyDungeonEnemies: enemy[] = [
 		specialRange: 12, projectileTargeting: true, projectileAttack: true, specialMinRange: 4, specialCDonAttack: true, specialWidth: 1.25,
 		castWhileMoving: true,
 
+
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
@@ -3233,6 +3242,8 @@ let KinkyDungeonEnemies: enemy[] = [
 		effect: {
 			effect: {name: "CrystalEncase"},
 		},
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 		ignoreflag: ["Furniture"],
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
@@ -3257,6 +3268,8 @@ let KinkyDungeonEnemies: enemy[] = [
 		},
 		castWhileMoving: true,
 
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 
 		evasion: -0.5, disarm: 0.4,
 		stamina: 12, sprintspeed: 1.8,
@@ -3322,6 +3335,8 @@ let KinkyDungeonEnemies: enemy[] = [
 		Resistance: {
 			block_phys: 1,
 		},
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 3.5, kiteChance: 0.25,
@@ -3349,6 +3364,8 @@ let KinkyDungeonEnemies: enemy[] = [
 
 		dontKiteWhenDisabled: true,
 
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 		evasion: -1, disarm: 0.4,
 		stamina: 12, sprintspeed: 2.0,
 		preferBlock: true, maxdodge: 0,
@@ -3419,6 +3436,8 @@ let KinkyDungeonEnemies: enemy[] = [
 				EnemyWinterblast: 10,
 			},
 		},
+		wanderAISetting: "Dragon",
+		spawnAISetting: "Dragon",
 		events: [
 			{trigger: "beforeDamage", type: "dragonLairDefeat", power: 0, color: "#ff5277"},
 			{trigger: "afterEnemyTick", type: "createIce", power: 1, chance: 0.5, aoe: 1.0},
@@ -5727,6 +5746,8 @@ let KDOndeath: Record<string, (enemy: entity, o: any, mapData: KDMapDataType) =>
 					f.id = enemy.id;
 					f.CustomName = enemy.CustomNameColor;
 					f.CustomNameColor = enemy.CustomNameColor;
+					f.created = enemy.created;
+					f.homeCoord = enemy.homeCoord;
 				} else
 					KDProcessCustomPatron(en.Enemy, en, 0, false);
 
@@ -6162,6 +6183,9 @@ let SpecialPersistentScriptSettingList: Record<string, (npc: KDPersistentNPC, en
 	Default: (npc: KDPersistentNPC, enemy: enemy) => {
 		return undefined;
 	},
+	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "Dragon";
+	},
 }
 let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => string> = {
 	Default: (npc: KDPersistentNPC, enemy: enemy) => {
@@ -6169,6 +6193,9 @@ let SpawnAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => s
 	},
 	None: (npc: KDPersistentNPC, enemy: enemy) => {
 		return "None";
+	},
+	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "Dragon";
 	},
 }
 
@@ -6181,5 +6208,8 @@ let WanderAISettingList: Record<string, (npc: KDPersistentNPC, enemy: enemy) => 
 	},
 	None: (npc: KDPersistentNPC, enemy: enemy) => {
 		return "None";
+	},
+	Dragon: (npc: KDPersistentNPC, enemy: enemy) => {
+		return "Dragon";
 	},
 }

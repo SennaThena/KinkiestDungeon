@@ -288,7 +288,7 @@ interface AltType {
 		brightness: number,
 	},
 	/** Doesnt generate random bits of furniture */
-	noFurniture?: string,
+	noFurniture?: boolean,
 	/** Doesnt turn tables to food */
 	noFood?: string,
 	/** Archaic code */

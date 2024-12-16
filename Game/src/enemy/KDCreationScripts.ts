@@ -1,6 +1,7 @@
 let KDCreationScripts: Record<string, (entity: entity, coord: WorldCoord) => boolean> = {
 	DragonLair: (entity, coord) => {
-
+		// Make the dragon persistent
+		KDSetSpawnAndWanderAI(KDGetPersistentNPC(entity.id, entity, true), undefined, undefined);
 
 		let slot = KDGetWorldMapLocation(KDCoordToPoint(entity.homeCoord || coord));
 		let res = KDCreateDragonLair(entity, "DragonLair", slot);

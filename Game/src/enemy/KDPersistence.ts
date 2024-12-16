@@ -44,7 +44,7 @@ interface KDPersistentNPC {
 	/** 0 = start, 1 = end, 2 = shortcut */
 	fromType?: number,
 	/** Shortcut index */
-	fromIndex?: number,
+	fromIndex?: string,
 
 	nextWanderTick?: number,
 	nextSpawnTick?: number,

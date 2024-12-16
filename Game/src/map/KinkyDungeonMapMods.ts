@@ -66,7 +66,7 @@ let KDMapMods: Record<string, MapMod> = {
 		name: "Dragon",
 		roomType: "",
 		weight: 50,
-		tags: ["witch", "elemental", "dragon"],
+		tags: ["dragon"],
 		faction: "Dragon",
 		jailType: "Dragon",
 		guardType: "Dragon",
@@ -76,7 +76,6 @@ let KDMapMods: Record<string, MapMod> = {
 		},
 		bonusTags: {
 			"dragon": {bonus: 7, mult: 2},
-			"elemental": {bonus: 3, mult: 1.5},
 		},
 		bonussetpieces: [
 			{Type: "BanditPrison", Weight: 8},
