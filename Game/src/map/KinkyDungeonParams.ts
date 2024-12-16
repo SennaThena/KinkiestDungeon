@@ -1082,8 +1082,9 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		torchchanceboring: 0.1,
 
 		music: {
-			"AREA6-CRYSTALCAVE.ogg": 10,
-			"AREA9-BELLOWS.ogg": 3,
+			"AREA7-LOSTTEMPLE-AMBIENT.ogg": 10,
+			"Elemental_Temple.ogg": 4,
+			"AREA6-CRYSTALCAVE.ogg": 3,
 		},
 
 		shadowColor: 0x080311,

@@ -7,6 +7,7 @@ interface LairEntrance {
 	y: number,
 	Excavate: KDPoint[],
 	PlaceScript: string,
+	priority?: number,
 }
 
 /** PlaceScripts for lairs that override the entrance placescript */

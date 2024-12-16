@@ -360,8 +360,8 @@ function KDFindEntrance(lair: KDLair, data: KDMapDataType): LairEntrance {
 		return lair.Entrance[data.RoomType] == entrance.Type;
 	});
 	for (let entrance of potentialEntrances) {
-		let value = !KDLairEntranceFilterScript[lair.Entrance[data.RoomType]] ? min
-			: KDLairEntranceFilterScript[lair.Entrance[data.RoomType]](lair, data, entrance);
+		let value = (entrance.priority || 0) + (!KDLairEntranceFilterScript[lair.Entrance[data.RoomType]] ? min
+			: KDLairEntranceFilterScript[lair.Entrance[data.RoomType]](lair, data, entrance));
 		if (value > highestEntranceLevel) {
 			highestEntranceLevel = value;
 			highestEntrances = [];
@@ -385,8 +385,8 @@ function KDFindEntranceTo(lairFrom: KDLair, roomTo: string, data: KDMapDataType)
 		return lairFrom.EntranceTo[roomTo] == entrance.Type;
 	});
 	for (let entrance of potentialEntrances) {
-		let value = !KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]] ? min
-			: KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]](null, data, entrance, roomTo);
+		let value = (entrance.priority || 0) + (!KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]] ? min
+			: KDLairEntranceFilterScript[lairFrom.EntranceTo[roomTo]](null, data, entrance, roomTo));
 		if (value > highestEntranceLevel) {
 			highestEntranceLevel = value;
 			highestEntrances = [];

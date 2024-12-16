@@ -1185,7 +1185,15 @@ function KinkyDungeonAltFloor(Type: string): AltType {
 }
 
 
-let KinkyDungeonCreateMapGenType = {
+let KinkyDungeonCreateMapGenType: Record<string, (
+	POI: any[],
+	VisitedRooms: any[],
+	width: number,
+	height: number,
+	openness: number,
+	density: number,
+	hallopenness: number,
+	data: any) => void> = {
 	"Room": (POI, VisitedRooms, width, height, openness, density, hallopenness, data) => {
 		KinkyDungeonCreateRoom(POI, VisitedRooms, width, height, openness, density, hallopenness, data);
 	},
@@ -1451,7 +1459,7 @@ function KinkyDungeonCreateMaze(POI: any[], VisitedRooms: any[], width: number, 
 		}
 }
 
-function KinkyDungeonCreateCaldera(POI: any[], VisitedRooms: GridEntry, width: number, height: number, openness: number, density: number, _hallopenness: number, data: any) {
+function KinkyDungeonCreateCaldera(POI: any[], VisitedRooms: any, width: number, height: number, openness: number, density: number, _hallopenness: number, data: any) {
 	// Variable setup
 
 	let Walls: GridEntry = {};
