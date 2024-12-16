@@ -264,14 +264,14 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	"Less_Boxbinders":  {category: "Toggles", id: "Less_Boxbinders", cost: 0, block: ["More_Boxbinders"], debuff: true,},
 	"Less_Yokes":  {category: "Toggles", id: "Less_Yokes", cost: 0, block: ["More_Yokes"], debuff: true,},
 
-	"NovicePet":  {category: "Major", id: "NovicePet", cost: 1},
-	"Fortify_Barricade":  {category: "Major", id: "Fortify_Barricade", cost: -2},
-	"Fortify_Trap":  {category: "Enemies", id: "Fortify_Trap", cost: -1},
+	"NovicePet":  {category: "Major", id: "NovicePet", cost: 1.2},
+	"Fortify_Barricade":  {category: "Major", id: "Fortify_Barricade", cost: -1.6},
+	"Fortify_Trap":  {category: "Enemies", id: "Fortify_Trap", cost: -1.2},
 	"CurseSeeker":  {category: "Major", id: "CurseSeeker", cost: -3},
-	"DirectionVision":  {category: "Major", id: "DirectionVision", cost: -2},
+	"DirectionVision":  {category: "Major", id: "DirectionVision", cost: -1.6},
 	"DirectionSlow":  {category: "Major", id: "DirectionSlow", cost: -1, block: ["DirectionSlow2"]},
-	"DirectionSlow2":  {category: "Major", id: "DirectionSlow2", cost: -2, block: ["DirectionSlow"]},
-	"FutileStruggles":  {category: "Restraints", id: "FutileStruggles", cost: -1},
+	"DirectionSlow2":  {category: "Major", id: "DirectionSlow2", cost: -2.4, block: ["DirectionSlow"]},
+	"FutileStruggles":  {category: "Restraints", id: "FutileStruggles", cost: -0.8},
 	//"SecondWind":  {category: "Restraints", id: "SecondWind", cost: 1},
 
 	"Stranger": {startPriority: 1000, category: "Enemies", id: "Stranger", cost: 0, block: ["Bandit", "WrongNeighborhood"], tags: ["start"]},
@@ -279,35 +279,35 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	"WrongNeighborhood": {startPriority: 1000, category: "Major", id: "WrongNeighborhood", cost: -1, block: ["Bandit", "Stranger"], tags: ["start"]},
 
 	"Strong": {category: "Restraints", id: 0, cost: 2, block: ["Weak"]},
-	"Weak": {category: "Restraints", id: 1, cost: -1, block: ["Strong"]},
-	"Flexible": {category: "Restraints", id: 2, cost: 2, block: ["Inflexible"]},
-	"Inflexible": {category: "Restraints", id: 3, cost: -1, block: ["Flexible"]},
-	"Locksmith": {category: "Restraints", id: 4, cost: 2, block: ["Clueless"]},
-	"Clueless": {category: "Restraints", id: 5, cost: -1, block: ["Locksmith"]},
-	"HighSecurity": {category: "Restraints", id: 48, cost: -1},
+	"Weak": {category: "Restraints", id: 1, cost: -1.2, block: ["Strong"]},
+	"Flexible": {category: "Restraints", id: 2, cost: 1.6, block: ["Inflexible"]},
+	"Inflexible": {category: "Restraints", id: 3, cost: -0.8, block: ["Flexible"]},
+	"Locksmith": {category: "Restraints", id: 4, cost: 1.8, block: ["Clueless"]},
+	"Clueless": {category: "Restraints", id: 5, cost: -1.2, block: ["Locksmith"]},
+	"HighSecurity": {category: "Restraints", id: 48, cost: -0.8},
 	//"SearchParty": {category: "Enemies", id: 51, cost: -1},
-	"NoWayOut": {category: "Restraints", id: 52, cost: -1},
-	"TightRestraints": {category: "Restraints", id: 54, cost: -1},
-	"KinkyPrison":  {category: "Restraints", id: "KinkyPrison", cost: -1},
-	"MagicHands": {category: "Restraints", id: "MagicHands", cost: -1},
+	"NoWayOut": {category: "Restraints", id: 52, cost: -0.8},
+	"TightRestraints": {category: "Restraints", id: 54, cost: -0.4},
+	"KinkyPrison":  {category: "Restraints", id: "KinkyPrison", cost: -0.4},
+	"MagicHands": {category: "Restraints", id: "MagicHands", cost: -1.2},
 	"KeepOutfit":  {category: "Restraints", id: "KeepOutfit", cost: 0},
-	"CursedLocks": {category: "Restraints", id: "CursedLocks", cost: -1},
-	"FranticStruggle": {category: "Restraints", id: "FranticStruggle", cost: 1},
-	"Unchained": {category: "Kinky", id: 26, cost: 2, block: ["Damsel"]},
+	"CursedLocks": {category: "Restraints", id: "CursedLocks", cost: -1.4},
+	"FranticStruggle": {category: "Restraints", id: "FranticStruggle", cost: 1.4},
+	"Unchained": {category: "Kinky", id: 26, cost: 2.4, block: ["Damsel"]},
 	"Damsel": {category: "Kinky", id: 27, cost: -1, block: ["Unchained"]},
-	"Artist": {category: "Kinky", id: 28, cost: 2, block: ["Bunny"]},
+	"Artist": {category: "Kinky", id: 28, cost: 2.4, block: ["Bunny"]},
 	"Bunny": {category: "Kinky", id: 29, cost: -1, block: ["Artist"]},
-	"Slippery": {category: "Kinky", id: 30, cost: 2, block: ["Doll"]},
+	"Slippery": {category: "Kinky", id: 30, cost: 2.4, block: ["Doll"]},
 	"Doll": {category: "Kinky", id: 31, cost: -1, block: ["Slippery"]},
-	"Escapee": {category: "Kinky", id: 32, cost: 2, block: ["Dragon"]},
+	"Escapee": {category: "Kinky", id: 32, cost: 2.4, block: ["Dragon"]},
 	"Dragon": {category: "Kinky", id: 33, cost: -1, block: ["Escapee"]},
-	"Dodge": {category: "Combat", id: 18, cost: 3, block: ["Distracted"]},
-	"Distracted": {category: "Combat", id: 19, cost: -1, block: ["Dodge"]},
-	"Submissive": {startPriority: 0, category: "Kinky", id: 10, cost: 0},
-	"Wanted": {category: "Kinky", id: 11, cost: -1},
-	"QuickDraw": {category: "Combat", id: 55, cost: 1, block: ["Disorganized"]},
+	"Dodge": {category: "Combat", id: 18, cost: 2.4, block: ["Distracted"]},
+	"Distracted": {category: "Combat", id: 19, cost: -1.2, block: ["Dodge"]},
+	"Submissive": {startPriority: 0, category: "Kinky", id: 10, cost: -0.2},
+	"Wanted": {category: "Kinky", id: 11, cost: -0.6},
+	"QuickDraw": {category: "Combat", id: 55, cost: 2.4, block: ["Disorganized"]},
 	"Disorganized": {category: "Combat", id: 57, cost: -2, block: ["QuickDraw", "QuickScribe"]},
-	"Brawler": {category: "Combat", id: 20, cost: 1, block: ["UnarmedSuck"]},
+	"Brawler": {category: "Combat", id: 20, cost: 1.4, block: ["UnarmedSuck"]},
 	"UnarmedSuck": {category: "Combat", id: "UnarmedSuck", cost: -1, block: ["Brawler"]},
 	"UnarmedGrope": {category: "Combat", id: "UnarmedGrope", cost: 0, tags: ["unarmedreplace"], blocktags: ["unarmedreplace"]},
 	"UnarmedPain": {category: "Combat", id: "UnarmedPain", cost: 0, tags: ["unarmedreplace"], blocktags: ["unarmedreplace"]},
@@ -318,8 +318,9 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	//"Magician": {category: "Magic", id: 36, cost: 3},
 	//"Conjurer": {category: "Magic", id: 35, cost: 3},
 
-	"Unfocused": {category: "Combat", id: "Unfocused", cost: -2},
-	"BondageLover": {category: "Kinky", id: 15, cost: -1},
+	"Focused": {category: "Combat", id: "Focused", cost: -2},
+	"FocusedStaff": {category: "Combat", id: "FocusedStaff", cost: -1.2},
+	"BondageLover": {category: "Kinky", id: 15, cost: -0.8},
 	"Undeniable": {category: "Kinky", id: "Undeniable", cost: -1},
 	"Needs": {category: "Kinky", id: "Needs", cost: -1},
 	"BoundPower": {category: "Combat", id: 40, cost: 3},
@@ -531,7 +532,7 @@ function KDGetPerkCost(perk: KDPerk): number {
 }
 
 function KinkyDungeonGetStatPoints(Stats: Map<any, any>): number {
-	let total = KinkyDungeonStatsChoice.get("vhardperksMode") ? -25
+	let total = KinkyDungeonStatsChoice.get("vhardperksMode") ? -24
 		: (KinkyDungeonStatsChoice.get("hardperksMode") ? -10
 		: (KinkyDungeonStatsChoice.get("perksMode") ? 10
 		: 0));
@@ -985,7 +986,7 @@ function KinkyDungeonDrawPerks(NonSelectable: boolean): boolean {
 						}
 						return true;
 					}, !NonSelectable && (KinkyDungeonState == "Stats" || (KinkyDungeonDrawState == "Perks2" && KDDebugPerks)), XX, YY, KDPerksButtonWidth, KDPerksButtonHeight,
-					TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${KDGetPerkCost(stat[1])})`,
+					TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${5*KDGetPerkCost(stat[1])})`,
 						(!KinkyDungeonStatsChoice.get(stat[0]) && KinkyDungeonCanPickStat(stat[0])) ? colorAvailable : (KinkyDungeonStatsChoice.get(stat[0]) ? colorSelected : (NonSelectable ? colorAvailable : colorExpensive)),
 						KinkyDungeonStatsChoice.get(stat[0]) ? (KinkyDungeonRootDirectory + "UI/TickPerk.png") : "",
 						undefined, false, true,
@@ -1131,7 +1132,7 @@ function KDGetRandomPerks(existing: Record<string, boolean>, debuff?: boolean): 
 					if (!p[1].locked || KDUnlockedPerks.includes(p[0])) {
 						if (KDGetPerkCost(p[1]) > 0) {
 							poscandidates.push(p);
-							if (KDGetPerkCost(p[1]) == 1)
+							if (KDGetPerkCost(p[1]) <= 1)
 								singlepointcandidates.push(p);
 						} else if (KDGetPerkCost(p[1]) < 0) {
 							negcandidates.push(p);

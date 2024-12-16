@@ -1205,6 +1205,10 @@ function KinkyDungeonDrawInventorySelected (
 
 				//DrawTextKD(TextGet("KDMagicWeapon"), xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale/3.35, canvasOffsetY_ui + 483*KinkyDungeonBookScale/5 + 24, "#000000", "#8888ff", 18, undefined, 129);
 			}
+
+			if (weapon?.stamPenType) {
+				tags.push("stamPenType_" + weapon.stamPenType);
+			}
 			if (weapon.tags) {
 				for (let t of weapon.tags) {
 					if (KDWeaponTags[t]) {

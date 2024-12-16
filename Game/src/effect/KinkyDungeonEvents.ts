@@ -10666,7 +10666,7 @@ let KDEventMapGeneric: Record<string, Record<string, (e: string, data: any) => v
 	},
 	"tick": {
 		"biggerGags": (_e, _data) => {
-			if (KinkyDungeonStatsChoice.get("BiggerGags") && KDRandom() < 0.2) {
+			if (_data.delta > 0 && KinkyDungeonStatsChoice.get("BiggerGags") && KDRandom() < 0.2) {
 				let item = KinkyDungeonGetRestraintItem("ItemMouth");
 				if (item) {
 					let gags = KDDynamicLinkList(item, true).filter((inv) => {

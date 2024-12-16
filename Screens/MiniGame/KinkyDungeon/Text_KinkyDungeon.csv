@@ -231,6 +231,11 @@ KinkyDungeonStatDesc21,"0.7x base accuracy"
 KinkyDungeonStatUnfocused,"Unfocused"
 KinkyDungeonStatDescUnfocused,"Accuracy multiplied by 0.9x above 10% distraction, down to 0.6x at 90% distraction."
 
+KinkyDungeonStatFocused,"Focused Strikes"
+KinkyDungeonStatDescFocused,"90% less accuracy penalty on swung weapons due to distraction."
+KinkyDungeonStatFocusedStaff,"Focused Power"
+KinkyDungeonStatDescFocusedStaff,"90% less stamina cost penalty on staves and similar weaponsc distraction."
+
 KinkyDungeonStat22,"Pristine"
 KinkyDungeonStatDesc22,"There are significantly less shiny loot objects in the dungeon."
 KinkyDungeonStat23,"Lost Technology"
@@ -7996,9 +8001,9 @@ KinkyDungeonPerksMode1,Extra
 KinkyDungeonPerksMode2,Less
 KinkyDungeonPerksMode3,Much Less
 KinkyDungeonPerksModeDesc0,"No pain, no gain."
-KinkyDungeonPerksModeDesc1,"Gain 10 extra perks, to give you a false sense of security."
-KinkyDungeonPerksModeDesc2,"Lose 10 perk points, just to keep things interesting."
-KinkyDungeonPerksModeDesc3,"Lose 25 perk points, making things very interesting."
+KinkyDungeonPerksModeDesc1,"Gain 50 extra perk points, to give you a false sense of security."
+KinkyDungeonPerksModeDesc2,"Lose 50 perk points, just to keep things interesting."
+KinkyDungeonPerksModeDesc3,"Lose 120 perk points, making things very interesting."
 
 
 KDPerkProgressionMode,"Perk Progression Mode:"
@@ -22654,6 +22659,8 @@ KDWeaponTag_offhand,Offhand
 KDWeaponTagD_offhand,"Offhand: This weapon can be dual-wielded by some classes."
 KDWeaponTag_clumsy,2 Handed
 KDWeaponTagD_clumsy,"2 Handed: While wielding this as your primary weapon, you cannot wield an offhand weapon. Also this weapon can't be used while arms are tied."
+KDWeaponTag_stamPenType_Staff,Magical Focus
+KDWeaponTagD_stamPenType_Staff,"Magical Focus: Instead of losing accuracy, the stamina cost is increased when distracted."
 KDWeaponTag_precision,Precision
 KDWeaponTagD_precision,"Precision: Your arms need to be free to use this weapon."
 KDWeaponTag_noHands,Hands-Free

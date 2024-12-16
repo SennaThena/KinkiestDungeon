@@ -31,6 +31,17 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
+5.4.21
+- Dragon lairs are here
+- When created in map gen, dragons create a lair.
+- Dragons will wander on the map, but go back to check their lairs periodically
+- "Elemental Energy" mapmod replaced with "Dragon Sighting"
+- Perk point costs multiplied by 5 for readability
+- Rebalanced many perk costs in general
+- Removed Unfocused perk, added Focused Strikes and Focused Power
+- Being distracted now decreases accuracy of most weapons
+- Being distracted now raises the stamina cost of staves
+
 5.4.20
 - Various quality of life changes
 

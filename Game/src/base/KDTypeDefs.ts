@@ -1390,6 +1390,7 @@ interface shopItem {
 }
 
 interface weapon extends damageInfo, NamedAndTyped {
+	stamPenType?: string,
 	ignoreshield?: boolean,
 	shield_crit?: boolean, // Crit thru shield
 	shield_stun?: boolean, // stun thru shield

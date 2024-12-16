@@ -10,8 +10,8 @@ let KDDMGSOUNDMULT = 1.5;
 let KDBrawlerAmount = 1.0;
 let KDClumsyAmount = 0.7;
 let KDUnfocusedParams = {
-	AmountMin: 0.9,
-	AmountMax: 0.6,
+	AmountMin: 0.1,
+	AmountMax: 0.4,
 	ThreshMin: 0.1,
 	ThreshMax: 0.9,
 };
@@ -388,6 +388,43 @@ function KDGetSlowMult(Enemy: entity): number {
 	return mult;
 }
 
+let KDSTAMPENTYPE = {
+	Weapon: {
+		onEvasion: (data) => {
+			let perk = "Focused";
+			let focusStat = "WepDPAccPenalty";
+			let accPenMult = KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(KDPlayer(), focusStat)
+				- (KinkyDungeonStatsChoice.get(perk) ? 9 : 0))
+			let amount = 1;
+			let dist = KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax;
+			if (dist >= KDUnfocusedParams.ThreshMin) {
+				amount = (1 - accPenMult*KDUnfocusedParams.AmountMin)
+				+ ((1 - accPenMult*KDUnfocusedParams.AmountMax) - (1 - accPenMult*KDUnfocusedParams.AmountMin))
+					* (dist - KDUnfocusedParams.ThreshMin)
+				/ (KDUnfocusedParams.ThreshMax - KDUnfocusedParams.ThreshMin);
+			}
+			if (amount != 1) data.hitmult *= amount;
+		},
+	},
+	Staff: {
+		onAttack: (data) => {
+			let perk = "FocusedStaff";
+			let focusStat = "WepDPStamPenalty";
+			let accPenMult = KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(KDPlayer(), focusStat)
+				- (KinkyDungeonStatsChoice.get(perk) ? 9 : 0))
+			let amount = 1;
+			let dist = KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax;
+			if (dist >= KDUnfocusedParams.ThreshMin) {
+				amount = (1 - accPenMult*KDUnfocusedParams.AmountMin)
+				+ ((1 - accPenMult*KDUnfocusedParams.AmountMax) - (1 - accPenMult*KDUnfocusedParams.AmountMin))
+					* (dist - KDUnfocusedParams.ThreshMin)
+				/ (KDUnfocusedParams.ThreshMax - KDUnfocusedParams.ThreshMin);
+			}
+			if (amount != 1) data.attackCost /= amount;
+		}
+	},
+}
+
 function KinkyDungeonGetEvasion(Enemy?: entity, NoOverride?: boolean, IsSpell?: boolean, IsMagic?: boolean, cost?: boolean): number {
 	let flags = {
 		KDEvasionHands: true,
@@ -401,22 +438,20 @@ function KinkyDungeonGetEvasion(Enemy?: entity, NoOverride?: boolean, IsSpell?: 
 		flags: flags,
 		cost: cost,
 		hitmult: 1.0,
+		stamPenType: IsSpell ? "Spell" : KDWeaponStamPenType(KinkyDungeonPlayerDamage),
 	};
 
 	if (!NoOverride)
 		KinkyDungeonSendEvent("calcEvasion", data);
 	let hitChance = (Enemy && Enemy.buffs) ? KinkyDungeonMultiplicativeStat(KinkyDungeonGetBuffedStat(Enemy.buffs, "Evasion")) : 1.0;
-	hitChance *= data.hitmult;
+
 
 	if (KinkyDungeonStatsChoice.get("Clumsy")) hitChance *= KDClumsyAmount;
-	if (KinkyDungeonStatsChoice.get("Unfocused")) {
-		let amount = 1;
-		let dist = KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax;
-		if (dist >= KDUnfocusedParams.ThreshMin) {
-			amount = KDUnfocusedParams.AmountMin + (KDUnfocusedParams.AmountMax - KDUnfocusedParams.AmountMin) * (dist - KDUnfocusedParams.ThreshMin) / (KDUnfocusedParams.ThreshMax - KDUnfocusedParams.ThreshMin);
-		}
-		if (amount != 1) hitChance *= amount;
+	if (KDSTAMPENTYPE[data.stamPenType].onEvasion) {
+		KDSTAMPENTYPE[data.stamPenType].onEvasion(data);
 	}
+
+	hitChance *= data.hitmult;
 
 	if (Enemy && Enemy.Enemy && Enemy.Enemy.evasion && ((!(Enemy.stun > 0) && !(Enemy.freeze > 0)) || Enemy.Enemy.alwaysEvade || Enemy.Enemy.evasion < 0)) hitChance *= Math.max(0,
 		(Enemy.aware ? KinkyDungeonMultiplicativeStat(Enemy.Enemy.evasion) : Math.max(1, KinkyDungeonMultiplicativeStat(Enemy.Enemy.evasion))));
@@ -3283,4 +3318,9 @@ function KDBindEnemyWithTags(id: number, tags: string[],
 
 	return addedItems;
 
+}
+
+function KDWeaponStamPenType(weapon: weapon): string {
+	if (weapon.stamPenType != undefined) return weapon.stamPenType;
+	return "Weapon";
 }

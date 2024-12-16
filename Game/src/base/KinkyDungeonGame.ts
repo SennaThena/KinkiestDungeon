@@ -85,7 +85,7 @@ let KinkyDungeonMovableTiles = "OPCAMG$Y+=-F67" + KinkyDungeonMovableTilesSmartE
 // 6 = wall object, block passage
 // 7 = transparent wall object
 
-let KDRandomDisallowedNeighbors = ",?/RAasSHcCHDdOoPp+FZzgtuVvN567"; // tiles that can't be neighboring a randomly selected point
+let KDRandomDisallowedNeighbors = ",?/RAasSHcCHDdOoPp+-=FZMmzgtuVvN567"; // tiles that can't be neighboring a randomly selected point
 let KDTrappableNeighbors = "DA+-F@"; // tiles that might have traps bordering them with a small chance
 let KDTrappableNeighborsLikely = "COP="; // tiles that might have traps bordering them with a big chance
 
@@ -4875,16 +4875,23 @@ function KinkyDungeonSendActionMessage(priority: number, text: string, color: st
 
 let KinkyDungeonNoMoveFlag = false;
 
-function KDAttackCost(weapon?: weapon) {
+function KDAttackCost(weapon?: weapon, noEvent?: boolean) {
 	let data = {
 		attackCost: KinkyDungeonStatStaminaCostAttack,
+		stamPenType: KDWeaponStamPenType(KinkyDungeonPlayerDamage),
 		bonus: KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackStaminaBonus"),
 		mult: KinkyDungeonMultiplicativeStat(KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackStamina")),
 	};
 	if (!weapon) weapon = KinkyDungeonPlayerDamage;
 	if (weapon && weapon.staminacost) data.attackCost = -weapon.staminacost;
 
-	KinkyDungeonSendEvent("attackCost", data);
+	if (!noEvent) {
+		if (KDSTAMPENTYPE[data.stamPenType].onAttack) {
+			KDSTAMPENTYPE[data.stamPenType].onAttack(data);
+		}
+
+		KinkyDungeonSendEvent("attackCost", data);
+	}
 
 	data.attackCost = Math.min(0, (data.attackCost + data.bonus) * data.mult);
 	return data.attackCost;

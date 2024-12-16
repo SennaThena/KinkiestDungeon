@@ -2556,6 +2556,32 @@ function KDProcessBuffIcons(minXX: number, minYY: number, side: boolean = false)
 		statsDraw.quickness = {text: TextGet("KinkyDungeonPlayerQuickness"), icon: "quickness", category: "buffs", color: "#e7cf1a", bgcolor: "#333333", priority: 100};
 		//DrawTextFitKD(TextGet("KinkyDungeonPlayerQuickness"), X1, 900 - i * 35, 200, "#e7cf1a", "#333333"); i++;
 	}
+
+	let aflags = {
+		KDDamageHands: true.valueOf,
+		KDDamageArms: true.valueOf,
+	};
+	let adata = {
+		flags: aflags,
+		buffdmg: 0,
+		Damage: KinkyDungeonPlayerDamage,
+	};
+	KinkyDungeonSendEvent("calcDisplayDamage", adata);
+	let stamDiff = (KDAttackCost(undefined, true) != KDAttackCost());
+	if ((KDToggleShowAllBuffs
+		|| stamDiff
+		|| (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + adata.buffdmg)
+	) && KinkyDungeonPlayerDamage) {
+		let meleeDamage = (KinkyDungeonPlayerDamage.damage) + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + adata.buffdmg;
+		statsDraw.meleeDamage = {
+			text: TextGet("KinkyDungeonPlayerDamage")
+				.replace("DAMAGEDEALT", "" + Math.round(meleeDamage*10))
+				.replace("STMNA", Math.round(-10 * KDAttackCost()) + "")
+				.replace("DAMAGETYPE", TextGet("KinkyDungeonDamageType" + KinkyDungeonPlayerDamage.type)),
+			count: Math.round(meleeDamage*10) + (stamDiff ? "/" + Math.round(-10 * KDAttackCost()) : ""),
+			category: "info", color: "#ffffff", bgcolor: "#333333", icon: "infoDamageMelee", priority: 10.1
+		};
+	}
 	if (KDToggleShowAllBuffs) {
 		let armor = KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "Armor");
 		if (armor != 0) {
@@ -2587,27 +2613,6 @@ function KDProcessBuffIcons(minXX: number, minYY: number, side: boolean = false)
 				category: "buffs", color: "#73efe8", bgcolor: "#333333", icon: "damageresist", priority: damageReduction * 3
 			};
 			//DrawTextFitKD(TextGet("KinkyDungeonPlayerReduction") + Math.round(damageReduction*10), X2, 900 - i * 25, 150, "#73efe8", "#333333"); i++; i++;
-		}
-		if (KinkyDungeonPlayerDamage) {
-			let flags = {
-				KDDamageHands: true.valueOf,
-				KDDamageArms: true.valueOf,
-			};
-			let data = {
-				flags: flags,
-				buffdmg: 0,
-				Damage: KinkyDungeonPlayerDamage,
-			};
-			KinkyDungeonSendEvent("calcDisplayDamage", data);
-			let meleeDamage = (KinkyDungeonPlayerDamage.damage) + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + data.buffdmg;
-			statsDraw.meleeDamage = {
-				text: TextGet("KinkyDungeonPlayerDamage")
-					.replace("DAMAGEDEALT", "" + Math.round(meleeDamage*10))
-					.replace("STMNA", Math.round(-10 * KDAttackCost()) + "")
-					.replace("DAMAGETYPE", TextGet("KinkyDungeonDamageType" + KinkyDungeonPlayerDamage.type)),
-				count: "" + Math.round(meleeDamage*10),
-				category: "info", color: "#ffffff", bgcolor: "#333333", icon: "infoDamageMelee", priority: 10.1
-			};
 		}
 
 		let bindAmp = KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BindAmp");
