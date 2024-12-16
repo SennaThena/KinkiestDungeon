@@ -200,6 +200,7 @@ function KinkyDungeonHandleStairs(toTile: string, suppressCheckPoint?: boolean) 
 }
 
 function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: boolean, willing: boolean) {
+	KDExploreStairs(x, y);
 	let toTile = KinkyDungeonMapGet(x, y);
 	let tile = KinkyDungeonTilesGet(x + "," + y);
 	let altRoom = KDGameData.RoomType ? KinkyDungeonAltFloor(KDGameData.RoomType) : KinkyDungeonBossFloor(MiniGameKinkyDungeonLevel);

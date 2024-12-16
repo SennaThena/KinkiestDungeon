@@ -2732,6 +2732,8 @@ interface KDMapDataType {
 	Checkpoint: string,
 	Title: string,
 	PrisonState: string,
+	/** 1 for explored, undefined not */
+	ExpStair: Record<string, number>,
 	PrisonStateStack: string[],
 	PrisonType: string,
 

@@ -26110,6 +26110,7 @@ KDOrgasmPsychicLinkEnemy,"Your linked target lets go of herself, transmitting a 
 KDOutpostName,FCTN RMTPE
 KDLairName,PTRN's RMTPE
 
-
+KDLeadsTo,Leads to PLCE
+KDUnknown,???
 
 rWardenCourier,"(You find a girl clad in a pink catsuit and restrained with straps.)|(She wears a backpack with a note attached to it.)|'My pet here can pick up and deliver restraints for you~'|'Try opening the Facilities tab and depositing restraints!'|'Signed: Your Loyal Warden'"

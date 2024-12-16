@@ -266,17 +266,31 @@ function KDHandleGame() {
 
 
 
+function KDGetDungeonName(coord: WorldCoord) {
+	let mapData = KDGetMapData(coord);
+	if (mapData) {
+
+		let altType = KDGetAltType(coord.mapY, mapData.MapMod, mapData.RoomType);
+		let dungeonName = altType?.Title ? altType.Title :
+			(KinkyDungeonMapIndex[mapData.Checkpoint] || mapData.Checkpoint);
+		return KDPersonalAlt[coord.room] ?
+			KDGetLairName(coord.room)
+			: TextGet("DungeonName" + dungeonName)
+	}
+
+	return KDPersonalAlt[coord.room] ?
+		KDGetLairName(coord.room)
+			: TextGet("KDUnknown");
+}
+
 function KinkyDungeonDrawInterface(_showControls: boolean) {
 	if (KDToggles.TurnCounter)
 		DrawTextKD(TextGet("TurnCounter") + KinkyDungeonCurrentTick, 1995, 995, "#ffffff", "#333333", 12, "right");
 
-	let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
-	let dungeonName = altType?.Title ? altType.Title : (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint);
+	let dungeonName = KDGetDungeonName(KDGetCurrentLocation());
 	DrawTextFitKD(
 		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME",
-			KDPersonalAlt[KDGameData.RoomType] ?
-			KDGetLairName(KDGameData.RoomType)
-			: TextGet("DungeonName" + dungeonName))
+			dungeonName)
 		+ (KinkyDungeonNewGame ? TextGet("KDNGPlus").replace("XXX", "" + KinkyDungeonNewGame) : ""),
 		1870, 15, 250, "#ffffff", "#333333", 18, "center");
 

@@ -159,6 +159,14 @@ let KinkyDungeonSaveInterval = 10;
 let KinkyDungeonSFX = [];
 
 
+function KDIsStairExplored(x, y) {
+	return KDMapData.ExpStair ? !!KDMapData.ExpStair[x + ',' + y] : false;
+}
+function KDExploreStairs(x, y) {
+	if (!KDMapData.ExpStair) KDMapData.ExpStair = {};
+	KDMapData.ExpStair[x + ',' + y] = 1;
+}
+
 /**
  * @param [RoomType]
  * @param [MapMod]
@@ -172,6 +180,8 @@ function KDDefaultMapData(mapX: number, mapY: number, RoomType: string = "", Map
 		mapY: mapY,
 
 		RepopulateQueue: [],
+
+		ExpStair: {},
 
 		SpecialAreas: [],
 		Labels: {},
