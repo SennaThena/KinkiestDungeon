@@ -272,6 +272,7 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					) {
 						data.overrideRoomType = true;
 						KDGameData.RoomType = "PerkRoom";
+						KDGameData.MapMod = "";
 					} else data.AdvanceAmount = 1;
 					//data.AdvanceAmount = 0;
 				} else {

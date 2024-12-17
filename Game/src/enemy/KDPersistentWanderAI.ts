@@ -68,6 +68,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 							entity.despawnY = exit.y;
 							entity.goToDespawn = true;
 						}
+						halt = true;
 					}
 				}
 				if (halt) return true;
@@ -231,6 +232,7 @@ function KDStandardWander(id: number, mapData: KDMapDataType, entity: entity, AI
 					entity.despawnY = exit.y;
 					entity.goToDespawn = true;
 				}
+				halt = true;
 			}
 		}
 		if (halt) return true;
@@ -368,6 +370,7 @@ function KDStandardLairWander(id: number, mapData: KDMapDataType, entity: entity
 					entity.despawnY = exit.y;
 					entity.goToDespawn = true;
 				}
+				halt = true;
 			}
 		}
 		if (halt) return true;
