@@ -447,7 +447,7 @@ function KinkyDungeonGetEvasion(Enemy?: entity, NoOverride?: boolean, IsSpell?: 
 
 
 	if (KinkyDungeonStatsChoice.get("Clumsy")) hitChance *= KDClumsyAmount;
-	if (KDSTAMPENTYPE[data.stamPenType].onEvasion) {
+	if (KDSTAMPENTYPE[data.stamPenType]?.onEvasion) {
 		KDSTAMPENTYPE[data.stamPenType].onEvasion(data);
 	}
 

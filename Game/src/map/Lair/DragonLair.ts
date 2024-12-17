@@ -153,11 +153,12 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	// Generate central cavity
 
 	let dist = 0;
+	let distcav = 5.5 + 0.25 * openness;
 	for (let X = 1; X < KDMapData.GridWidth; X += 1)
 		for (let Y = 1; Y < KDMapData.GridWidth; Y += 1) {
 			dist = KDistEuclidean(X - KDMapData.GridWidth/2, Y - KDMapData.GridWidth/2);
-			if (dist < 5.5 + 0.25 * openness) {
-				KinkyDungeonMapSet(X, Y, '0');
+			if (dist < distcav) {
+				KinkyDungeonMapSet(X, Y, (dist > distcav * 0.67 && KDRandom() < 0.4) ? 'X' : '0');
 			}
 		}
 

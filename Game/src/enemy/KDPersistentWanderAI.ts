@@ -16,8 +16,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 		cooldown: 400,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id)
-				&& KDEnemyCanDespawn(id, mapData);
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.33 : 0.8;
@@ -54,9 +53,24 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 
 				}
 				// Despawn first
+
+				let halt = false;
 				if (entity) {
-					KDRemoveEntity(entity, false, false, true, undefined, mapData);
+					if (KDEnemyCanDespawn(id, mapData))
+						KDRemoveEntity(entity, false, false, true, undefined, mapData);
+					else {
+						let exit = KDGetNearestExitTo(targetPosition.room, targetPosition.mapX, targetPosition.mapY,
+							entity.x, entity.y, mapData, true
+						);
+						if (!exit) {exit = KDMapData.EndPosition;}
+						if (exit) {
+							entity.despawnX = exit.x;
+							entity.despawnY = exit.y;
+							entity.goToDespawn = true;
+						}
+					}
 				}
+				if (halt) return true;
 
 				// Move the entity
 				if (KDMovePersistentNPC(id, targetPosition)) {
@@ -79,8 +93,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 		cooldown: 400,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id)
-				&& KDEnemyCanDespawn(id, mapData);
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			return mapData == KDMapData ? 0.33 : 0.8;
@@ -107,8 +120,7 @@ let KDPersistentWanderAIList: Record<string, PersistentWanderAI> = {
 		cooldown: 200,
 		filter: (id, mapData) => {
 			let npc = KDGetPersistentNPC(id);
-			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id)
-				&& KDEnemyCanDespawn(id, mapData);
+			return KinkyDungeonCurrentTick > (npc.nextWanderTick || 0) && !npc.captured && KDNPCCanWander(npc.id);
 		},
 		chance: (id, mapData) => {
 			if (!KDIDHasFlag(id, "LairCheck")) return 1.0;
@@ -205,10 +217,23 @@ function KDStandardWander(id: number, mapData: KDMapDataType, entity: entity, AI
 
 		}
 		// Despawn first
+		let halt = false;
 		if (entity) {
-			KDRemoveEntity(entity, false, false, true, undefined, mapData);
+			if (KDEnemyCanDespawn(id, mapData))
+				KDRemoveEntity(entity, false, false, true, undefined, mapData);
+			else {
+				let exit = KDGetNearestExitTo(targetPosition.room, targetPosition.mapX, targetPosition.mapY,
+					entity.x, entity.y, mapData, true
+				);
+				if (!exit) {exit = KDMapData.EndPosition;}
+				if (exit) {
+					entity.despawnX = exit.x;
+					entity.despawnY = exit.y;
+					entity.goToDespawn = true;
+				}
+			}
 		}
-
+		if (halt) return true;
 		// Move the entity
 		if (KDMovePersistentNPC(id, targetPosition)) {
 			let npc = KDGetPersistentNPC(id);
@@ -328,9 +353,24 @@ function KDStandardLairWander(id: number, mapData: KDMapDataType, entity: entity
 
 		}
 		// Despawn first
+
+		let halt = false;
 		if (entity) {
-			KDRemoveEntity(entity, false, false, true, undefined, mapData);
+			if (KDEnemyCanDespawn(id, mapData))
+				KDRemoveEntity(entity, false, false, true, undefined, mapData);
+			else {
+				let exit = KDGetNearestExitTo(targetPosition.room, targetPosition.mapX, targetPosition.mapY,
+					entity.x, entity.y, mapData, true
+				);
+				if (!exit) {exit = KDMapData.EndPosition;}
+				if (exit) {
+					entity.despawnX = exit.x;
+					entity.despawnY = exit.y;
+					entity.goToDespawn = true;
+				}
+			}
 		}
+		if (halt) return true;
 
 		// Move the entity
 		if (KDMovePersistentNPC(id, targetPosition)) {

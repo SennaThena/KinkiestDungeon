@@ -4886,7 +4886,7 @@ function KDAttackCost(weapon?: weapon, noEvent?: boolean) {
 	if (weapon && weapon.staminacost) data.attackCost = -weapon.staminacost;
 
 	if (!noEvent) {
-		if (KDSTAMPENTYPE[data.stamPenType].onAttack) {
+		if (KDSTAMPENTYPE[data.stamPenType]?.onAttack) {
 			KDSTAMPENTYPE[data.stamPenType].onAttack(data);
 		}
 
