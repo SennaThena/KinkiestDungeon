@@ -553,11 +553,17 @@ function KinkyDungeonDressPlayer (
 			if (expression) {
 				let result = expression.expression(Character, flags);
 				for (let pose of KDExpressionPoses) {
-					if (!(KDNPCPoses.get(Character) && KDNPCPoses.get(Character)["CurrentPose" + pose.replace(
-						"Pose", "")
-					])
-						&& result[pose]) CurrentExpression[pose] = result[pose];
-						else if (KDNPCPoses.get(Character)) CurrentExpression[pose] = KDNPCPoses.get(Character)["CurrentPose" + pose.replace(
+					if (!(KDNPCPoses.get(Character)
+						&& KDNPCPoses.get(Character)["CurrentPose" + pose.replace(
+							"Pose", "")
+						])
+						&& result[pose])
+						CurrentExpression[pose] = result[pose];
+					else if (KDNPCPoses.get(Character)
+						&& KDNPCPoses.get(Character)["CurrentPose" + pose.replace(
+							"Pose", "")
+						])
+						CurrentExpression[pose] = KDNPCPoses.get(Character)["CurrentPose" + pose.replace(
 							"Pose", "")
 						] || "";
 				}

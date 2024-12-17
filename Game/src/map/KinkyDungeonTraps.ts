@@ -129,12 +129,12 @@ let KDTrapTypes: Record<string, KDTrapType> = {
 		};
 	},
 	SpawnEnemies: (tile, entity, x, y) => {
-		if (!entity.player) {
+		/*if (!entity.player) {
 			return {
 				triggered: false,
 				msg: "",
 			};
-		}
+		}*/
 		let radius = tile.Power > 4 ? 4 : 2;
 		let Enemy = (tile.FilterBackup && tile.FilterTag && KinkyDungeonPlayerTags.get(tile.FilterTag)) ? tile.FilterBackup : tile.Enemy;
 		let created = KinkyDungeonSummonEnemy(

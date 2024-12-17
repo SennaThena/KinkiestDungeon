@@ -3074,6 +3074,7 @@
             <key type="filename">../Game/Buffs/weaponTag/noHands.png</key>
             <key type="filename">../Game/Buffs/weaponTag/offhand.png</key>
             <key type="filename">../Game/Buffs/weaponTag/shield.png</key>
+            <key type="filename">../Game/Buffs/weaponTag/stamPenType_Staff.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
