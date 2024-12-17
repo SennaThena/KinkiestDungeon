@@ -229,9 +229,15 @@ let KDTrapTypesStepOff = {
 				}
 			} else
 				KinkyDungeonMapSet(x, y, 'd');
+
+			return {
+				msg: "Default",
+				triggered: true,
+			};
 		}
 		return {
 			msg: "Default",
+			triggered: false,
 		};
 	}
 };
@@ -253,10 +259,12 @@ function KinkyDungeonHandleStepOffTraps(entity: entity, x: number, y: number, mo
 			if (KDTrapTypesStepOff[tile.StepOffTrap]) {
 				let res = KDTrapTypesStepOff[tile.StepOffTrap](tile, entity, x, y);
 				msg = res.msg;
+				if (res.triggered) {
+					KDMapData.TrapsTriggered++;
+				}
 			}
 
 			if (msg) {
-				KDMapData.TrapsTriggered++;
 				KDTrigPanic();
 
 				if (msg == "Default")
@@ -282,7 +290,7 @@ function KinkyDungeonHandleTraps(entity: entity, x: number, y: number, Moved: bo
 			let color = "#ff5277";
 			let trap = tile.Trap;
 
-			if (KinkyDungeonStatsChoice.has("Rusted") && KDRandom() < 0.25) {
+			if (entity == KinkyDungeonPlayerEntity && KinkyDungeonStatsChoice.has("Rusted") && KDRandom() < 0.25) {
 				msg = TextGet("KDTrapMisfire");
 			} else {
 				if (KDTrapTypes[tile.Trap]) {
@@ -291,7 +299,7 @@ function KinkyDungeonHandleTraps(entity: entity, x: number, y: number, Moved: bo
 					triggered = res.triggered;
 				}
 			}
-			if (entity == KinkyDungeonPlayerEntity && triggered) {
+			if (triggered) {
 				KDMapData.TrapsTriggered++;
 			}
 			if (entity == KinkyDungeonPlayerEntity && (msg || triggered)) {
