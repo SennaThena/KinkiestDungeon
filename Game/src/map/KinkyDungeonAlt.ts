@@ -2837,7 +2837,7 @@ function KinkyDungeonCreateElevatorRoom(_POI: any, VisitedRooms: any[], _width: 
 	let obstacles: Record<string, number> = {}
 	if (def) {
 		if (!def.enemy) def.enemy = "DragonGirlCrystal";
-		let en = DialogueCreateEnemy(15,2 + 7 + 2,def.enemy);
+		let en = DialogueCreateEnemy(15,2 + 7,def.enemy);
 		if (def.obstacles)
 			obstacles = def.obstacles;
 		if (en) {

@@ -318,8 +318,8 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	//"Magician": {category: "Magic", id: 36, cost: 3},
 	//"Conjurer": {category: "Magic", id: 35, cost: 3},
 
-	"Focused": {category: "Combat", id: "Focused", cost: -2},
-	"FocusedStaff": {category: "Combat", id: "FocusedStaff", cost: -1.2},
+	"Focused": {category: "Combat", id: "Focused", cost: 2},
+	"FocusedStaff": {category: "Combat", id: "FocusedStaff", cost: 1.2},
 	"BondageLover": {category: "Kinky", id: 15, cost: -0.8},
 	"Undeniable": {category: "Kinky", id: "Undeniable", cost: -1},
 	"Needs": {category: "Kinky", id: "Needs", cost: -1},
@@ -986,7 +986,7 @@ function KinkyDungeonDrawPerks(NonSelectable: boolean): boolean {
 						}
 						return true;
 					}, !NonSelectable && (KinkyDungeonState == "Stats" || (KinkyDungeonDrawState == "Perks2" && KDDebugPerks)), XX, YY, KDPerksButtonWidth, KDPerksButtonHeight,
-					TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${5*KDGetPerkCost(stat[1])})`,
+					TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${Math.round(5*KDGetPerkCost(stat[1]))})`,
 						(!KinkyDungeonStatsChoice.get(stat[0]) && KinkyDungeonCanPickStat(stat[0])) ? colorAvailable : (KinkyDungeonStatsChoice.get(stat[0]) ? colorSelected : (NonSelectable ? colorAvailable : colorExpensive)),
 						KinkyDungeonStatsChoice.get(stat[0]) ? (KinkyDungeonRootDirectory + "UI/TickPerk.png") : "",
 						undefined, false, true,
@@ -997,7 +997,8 @@ function KinkyDungeonDrawPerks(NonSelectable: boolean): boolean {
 						});
 					if (MouseIn(XX, YY, KDPerksButtonWidth, KDPerksButtonHeight)) {
 						DrawTextFitKD(TextGet("KinkyDungeonStatDesc" + (stat[1].id)), 1000, 150, 1500, KDTextWhite, KDTextGray1);
-						DrawTextFitKD(TextGet("KinkyDungeonStatCost").replace("AMOUNT", 5*KDGetPerkCost(stat[1]) + ""), 1000, 190, 1400, KDTextWhite, KDTextGray1);
+						DrawTextFitKD(TextGet("KinkyDungeonStatCost").replace("AMOUNT",
+							Math.round(5*KDGetPerkCost(stat[1])) + ""), 1000, 190, 1400, KDTextWhite, KDTextGray1);
 						tooltip = true;
 					}
 				}
