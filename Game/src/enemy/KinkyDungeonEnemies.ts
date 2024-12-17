@@ -3984,7 +3984,7 @@ function KinkyDungeonUpdateEnemies(maindelta: number, Allied: boolean) {
 
 				KinkyDungeonHandleTilesEnemy(enemy, delta);
 
-				if (enemy.Enemy.triggersTraps || KinkyDungeonIsStunned(enemy)) {
+				if (enemy.Enemy.triggersTraps || (KinkyDungeonIsStunned(enemy) && !enemy.teleporting)) {
 					KinkyDungeonHandleTraps(enemy, enemy.x, enemy.y, true);
 				}
 

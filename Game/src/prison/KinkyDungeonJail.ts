@@ -299,7 +299,7 @@ function KinkyDungeonAggroAction(action: string, data: {enemy?: entity, x?: numb
 let KDLocalChaseTypes: string[] = ["Refusal", "Attack", "Spell", "SpellItem", "Shrine", "Orb", "Chest"];
 let KDSevereTypes: string[] = ["Attack"];
 
-let KDMaxGuiltPerAggro = 20;
+let KDMaxGuiltPerAggro = 200;
 let KDGuiltMult = 0.1;
 
 /**
@@ -1274,6 +1274,32 @@ function KDCreateDragonLair(dragon: entity, lairType: string, slot: KDWorldSlot)
 	return outpost != undefined ? outpost : lairType;
 }
 
+function KDAddDefeatRestraints(enemy: entity, allowFurniture: boolean) {
+	if (enemy.Enemy?.Defeat?.furnitureTags) {
+		for (let tagGroup of enemy.Enemy.Defeat.furnitureTags) {
+			for (let i = 0; i < tagGroup.count; i++) {
+				let restraintAdd = KDGetRestraintWithVariants({tags: tagGroup.tags},
+					KDGetEffLevel(),
+					(KinkyDungeonMapIndex[KDMapData.Checkpoint] || KDMapData.Checkpoint),
+					KinkyDungeonStatsChoice.get("MagicHands"),
+					undefined, false, false, false, undefined,
+					false, allowFurniture ? {
+						filterGroups: ["ItemFurniture"]
+					} : undefined, enemy, undefined, true
+				);
+				if (restraintAdd) {
+					KinkyDungeonAddRestraintIfWeaker(restraintAdd.r,
+						10, KinkyDungeonStatsChoice.get("MagicHands"), undefined,
+						false, false, undefined, KDGetFaction(enemy), true, undefined,
+						enemy, true, undefined, undefined, undefined,
+						restraintAdd.v
+					)
+				}
+			}
+		}
+	}
+}
+
 function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
 	KDDefeatedPlayerTick();
 	//KDGameData.RoomType = "DemonTransition"; // We do a tunnel every other room
@@ -1293,6 +1319,10 @@ function KDEnterDragonLair(dragon: entity, lairType: string = "DragonLair") {
 		KDGetFaction(dragon) || "DragonQueen", undefined, true,
 		dragon.homeCoord?.room || slot.main || "");
 	KDRemovePrisonRestraints();
+
+	// Now we add the encasement
+
+	KDAddDefeatRestraints(dragon, true);
 
 	KinkyDungeonDressPlayer();
 	if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/StoneDoor_Close.ogg");

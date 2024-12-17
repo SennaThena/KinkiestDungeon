@@ -1278,6 +1278,12 @@ interface enemy extends KDHasTags {
 		/** Forces the event to play when a dash is blocked, even if there are no eventable attack types*/
 		EventOnDashBlock?: boolean,
 	},
+	/** Used for jailing
+	 * No effect atm unless a custom defeat uses it
+	 */
+	Defeat?: {
+		furnitureTags: {tags: string[], count: number}[],
+	},
 	attackBonus?: number,
 	/** */
 	cohesion?: number,

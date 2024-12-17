@@ -3164,6 +3164,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 									else
 										KinkyDungeonChangeFactionRep(faction, 0.015);
 								}
+								KinkyDungeonChangeRep("Prisoner", 0.5);
 								KDAddConsumable("RedKey", -1);
 								if (KinkyDungeonIsHandsBound(false, true, 0.2)) {
 									DialogueBringNearbyEnemy(player.x, player.y, 8, true);
@@ -3223,6 +3224,7 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 										else
 											KinkyDungeonChangeFactionRep(faction, 0.015);
 									}
+									KinkyDungeonChangeRep("Prisoner", 0.5);
 									KDGameData.CurrentDialogMsg = "PrisonerJailPick";
 									if (e.Enemy.tags.gagged) {
 										KDGameData.CurrentDialogMsg = KDGameData.CurrentDialogMsg + "Gagged";

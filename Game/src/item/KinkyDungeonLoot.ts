@@ -283,7 +283,7 @@ function KinkyDungeonLootEvent(Loot: any, Floor: number, Replacemsg: string, Loc
 	if (Loot.weapon || Loot.weaponlist) {
 		let weapon = Loot.weapon;
 
-		if (Loot.weaponlist) weapon = KDGetByWeight(KinkyDungeonGetWeaponsByListWeighted("CommonWeapon", false, (Loot.minRarity || 0), (Loot.maxRarity || 4))) || weapon;
+		if (Loot.weaponlist) weapon = KDGetByWeight(KinkyDungeonGetWeaponsByListWeighted(Loot.weaponlist, false, (Loot.minRarity || 0), (Loot.maxRarity || 4))) || weapon;
 
 		let enchantVariant = "";
 		let enchant_extra = [];
@@ -320,7 +320,7 @@ function KinkyDungeonLootEvent(Loot: any, Floor: number, Replacemsg: string, Loc
 			if (Replacemsg)
 				Replacemsg = Replacemsg.replace("WeaponAcquired", (enchantVariant ? TextGet("KDVarPrefEnchanted") : "") + ' ' + TextGet("KinkyDungeonInventoryItem" + weapon));
 		} else {
-			KDInvAddWeapon(container, Loot.weapon);
+			KDInvAddWeapon(container, weapon);
 			if (Replacemsg)
 				Replacemsg = Replacemsg.replace("WeaponAcquired", TextGet("KinkyDungeonInventoryItem" + weapon));
 		}

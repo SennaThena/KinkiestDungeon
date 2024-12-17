@@ -14,7 +14,8 @@ let KinkyDungeonEnemies: enemy[] = [
 		specialdialogue: "MummyElevator",
 		Behavior: {noPlay: true},
 		terrainTags: {}, floors:KDMapInit([])},
-	{name: "FactoryDoll", bound: "FactoryDoll", playLine: "Gagged", tags: KDMapInit(["prisoner", "nocapture", "dollmakerconvert", "doll", "human", "minor", "peaceful", "nohelp", "noshop"]),
+	{name: "FactoryDoll", bound: "FactoryDoll", playLine: "Gagged", tags: KDMapInit(["prisoner",
+		"nocapture", "dollmakerconvert", "doll", "human", "minor", "peaceful", "nohelp", "noshop"]),
 		rescueTo: {
 			Remove: "FreeDoll",
 			Unlock: "FreeDoll",
@@ -3128,6 +3129,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackWidth: 3, attackRange: 1, tilesMinRange: 1, power: 5, dmgType: "slash",
 		terrainTags: {"nature": 4, "lair": -100, "dragonqueen": 50}, shrines: ["Leather"], allFloors: true, // Adventurers don't appear in lairs
 		ondeath: [{type: "summon", enemy: "DragonGirlPoison", range: 0.5, count: 1, sameid: true, strict: false}],
+		Defeat: {
+			furnitureTags: [
+				{tags: ["vineRestraints"], count: 12},
+				{tags: ["vineSuspend"], count: 1},
+			],
+		},
 		creationScript: "DragonLair",
 		dropTable: [{name: "Gold", amountMin: 200, amountMax: 300, weight: 15}]},
 
@@ -3161,6 +3168,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		attackLock: "Purple", maxdodge: 0,
 		stamina: 7,
 		preferBlock: true,
+		Defeat: {
+			furnitureTags: [
+				{tags: ["vineRestraints"], count: 12},
+				{tags: ["vineSuspend"], count: 1},
+			],
+		},
 		creationScript: "DragonLair",
 		dropTable: [{name: "WaterRune", weight: 3}]},
 
@@ -3195,6 +3208,12 @@ let KinkyDungeonEnemies: enemy[] = [
 			vision: 1.5,
 			senseSpeed: 1.1,
 			hearingRadius: 20,
+		},
+		Defeat: {
+			furnitureTags: [
+				{tags: ["crystalCuffs"], count: 7},
+				{tags: ["crystalEncase"], count: 1},
+			],
 		},
 		startBuffs: [
 			{
@@ -3248,6 +3267,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		noKiteWhenHarmless: true,
 		dontKiteWhenDisabled: true,
 		kite: 2.5,
+		Defeat: {
+			furnitureTags: [
+				{tags: ["crystalCuffs"], count: 3},
+				{tags: ["crystalEncase"], count: 1},
+			],
+		},
 		visionRadius: 9, maxhp: 30, minLevel:0, weight:0, movePoints: 1.5, attackPoints: 2, attack: "SpellMeleeBindLockWillEffect",
 		stunTime: 1, attackWidth: 1, attackRange: 1, power: 4.5, dmgType: "crush", fullBoundBonus: 2,
 		terrainTags: {"magic": 7, "dragongirl": 50}, shrines: ["Leather", "Conjure"], floors: {},
@@ -3285,6 +3310,12 @@ let KinkyDungeonEnemies: enemy[] = [
 			vision: 1.5,
 			senseSpeed: 1.1,
 			hearingRadius: 20,
+		},
+		Defeat: {
+			furnitureTags: [
+				{tags: ["shadowLatexRestraints"], count: 5},
+				{tags: ["shadowBall"], count: 1},
+			],
 		},
 		startBuffs: [
 			{
@@ -3335,6 +3366,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		Resistance: {
 			block_phys: 1,
 		},
+		Defeat: {
+			furnitureTags: [
+				{tags: ["shadowLatexRestraints"], count: 3},
+				{tags: ["shadowBall"], count: 1},
+			],
+		},
 		wanderAISetting: "Dragon",
 		spawnAISetting: "Dragon",
 		noKiteWhenHarmless: true,
@@ -3375,6 +3412,12 @@ let KinkyDungeonEnemies: enemy[] = [
 		Sound: {
 			moveAmount: 12,
 			attackAmount: 20,
+		},
+		Defeat: {
+			furnitureTags: [
+				{tags: ["iceCuffs"], count: 7},
+				{tags: ["iceEncase"], count: 1},
+			],
 		},
 		Awareness: {
 			chaseradius: 25,
@@ -3435,6 +3478,12 @@ let KinkyDungeonEnemies: enemy[] = [
 			priority: {
 				EnemyWinterblast: 10,
 			},
+		},
+		Defeat: {
+			furnitureTags: [
+				{tags: ["iceCuffs"], count: 3},
+				{tags: ["iceEncase"], count: 1},
+			],
 		},
 		wanderAISetting: "Dragon",
 		spawnAISetting: "Dragon",

@@ -2909,7 +2909,7 @@ function KDGetRestraintsEligible (
 	NoStack?:            boolean,
 	extraTags?:          Record<string, number>,
 	agnostic?:           boolean,
- 	filter?:             {minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
+ 	filter?:             {filterGroups?: string[], minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
 	securityEnemy?:      entity,
 	curse?:              string,
 	filterEps:           number = 0.9,
@@ -2974,24 +2974,31 @@ function KDGetRestraintsEligible (
 
 		)) {
 			if (!restraint.arousalMode || arousalMode) {
-				let enabled = false;
-				let weight = restraint.weight;
-				for (let t of tags.keys()) {
-					if (restraint.enemyTags[t] != undefined) {
-						weight += restraint.enemyTags[t];
-						enabled = true;
+				if (filter?.filterGroups?.some((fg) => {
+					return fg == restraint.Group;
+				})) {
+					// nope
+				} else {
+					let enabled = false;
+					let weight = restraint.weight;
+					for (let t of tags.keys()) {
+						if (restraint.enemyTags[t] != undefined) {
+							weight += restraint.enemyTags[t];
+							enabled = true;
+						}
+					}
+
+					if (restraint.enemyTagsMult)
+						for (let t of tags.keys()) {
+							if (restraint.enemyTagsMult[t] != undefined) {
+								weight *= restraint.enemyTagsMult[t];
+							}
+						}
+					if (enabled) {
+						cache.push({r: restraint, w:weight});
 					}
 				}
 
-				if (restraint.enemyTagsMult)
-					for (let t of tags.keys()) {
-						if (restraint.enemyTagsMult[t] != undefined) {
-							weight *= restraint.enemyTagsMult[t];
-						}
-					}
-				if (enabled) {
-					cache.push({r: restraint, w:weight});
-				}
 			}
 		}
 	}
@@ -3167,7 +3174,7 @@ function KinkyDungeonGetRestraint (
 	NoStack?:             boolean,
 	extraTags?:           Record<string, number>,
 	agnostic?:            boolean,
-	filter?:              {minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
+	filter?:              {filterGroups?: string[], minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
 	securityEnemy?:       entity,
 	curse?:               string,
 	useAugmented?:        boolean,
@@ -3233,7 +3240,7 @@ function KDGetRestraintWithVariants (
 	NoStack?:             boolean,
 	extraTags?:           Record<string, number>,
 	agnostic?:            boolean,
-	filter?:              {minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
+	filter?:              {filterGroups?: string[], minPower?: number, maxPower?: number, onlyLimited?: boolean, noUnlimited?: boolean, noLimited?: boolean, onlyUnlimited?: boolean, ignore?: string[], require?: string[], looseLimit?: boolean, ignoreTags?: string[], allowedGroups?: string[]},
 	securityEnemy?:       entity,
 	curse?:               string,
 	useAugmented?:        boolean,

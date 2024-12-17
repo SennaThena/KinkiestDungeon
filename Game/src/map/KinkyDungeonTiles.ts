@@ -264,7 +264,8 @@ function KDGoThruTile(x: number, y: number, suppressCheckPoint: boolean, force: 
 					&& !tile?.RoomType
 					&& (
 						// By default only the main advances
-						data.CurrentJourneyTile?.RoomType == (originalRoom || "")
+						!KDGameData.RoomType // '' is always advance, just for save compat
+						|| data.CurrentJourneyTile?.RoomType == (originalRoom || "")
 						|| altRoom?.alwaysAdvance)) {
 					// advance by default
 					if (MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent

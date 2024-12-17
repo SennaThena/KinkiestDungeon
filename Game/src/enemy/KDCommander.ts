@@ -679,6 +679,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 			if (!enemy.IntentAction
 				&& KDIsHumanoid(enemy)
 				&& (enemy.attackPoints < 1)
+				&& !enemy.Enemy?.tags?.nohelp
 				&& !KDIsImmobile(enemy)
 				&& KDBoundEffects(enemy) < 4
 				&& (!enemy.aware || KDAssaulters >= KDMaxAssaulters)
@@ -782,6 +783,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 			if (!enemy.IntentAction
 				&& KDIsHumanoid(enemy)
 				&& (enemy.attackPoints < 1)
+				&& !enemy.Enemy?.tags?.nohelp
 				&& !KDIsImmobile(enemy)
 				&& KDBoundEffects(enemy) < 4
 				&& (!enemy.aware || KDAssaulters >= KDMaxAssaulters)

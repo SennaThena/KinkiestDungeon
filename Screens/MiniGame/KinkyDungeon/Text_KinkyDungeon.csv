@@ -234,7 +234,7 @@ KinkyDungeonStatDescUnfocused,"Accuracy multiplied by 0.9x above 10% distraction
 KinkyDungeonStatFocused,"Focused Strikes"
 KinkyDungeonStatDescFocused,"90% less accuracy penalty on swung weapons due to distraction."
 KinkyDungeonStatFocusedStaff,"Focused Power"
-KinkyDungeonStatDescFocusedStaff,"90% less stamina cost penalty on staves and similar weaponsc distraction."
+KinkyDungeonStatDescFocusedStaff,"90% less stamina cost penalty on staves and similar weapons distraction."
 
 KinkyDungeonStat22,"Pristine"
 KinkyDungeonStatDesc22,"There are significantly less shiny loot objects in the dungeon."

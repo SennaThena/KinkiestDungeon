@@ -500,7 +500,8 @@ function KinkyDungeonInventoryAddOutfit(Name: string) {
 
 function KDInvAddWeapon(container: KDContainer | null, Name: string) {
 	if (container) {
-		container.items[Name] = {name:Name, type:Weapon, events: Object.assign([], KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()};
+		container.items[Name] = {name:Name, type:Weapon, events: Object.assign([],
+			KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()};
 	} else {
 		if (!KinkyDungeonInventoryGetWeapon(Name) && KinkyDungeonWeapons[Name])
 			KinkyDungeonInventoryAdd({name:Name, type:Weapon, events: Object.assign([], KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()});
