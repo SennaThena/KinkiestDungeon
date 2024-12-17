@@ -814,7 +814,16 @@ function KDPlacePlayerBasedOnDirection(direction: number = 0, sideRoomIndex: str
 	let sp = KDMapData.ShortcutPositions[sideRoomIndex]
 		|| ((journeySlot?.SideRooms && journeySlot.SideRooms[sideRoomIndex]
 			&& KDSideRooms[journeySlot.SideRooms[sideRoomIndex]]
-		) ? KDMapData.ShortcutPositions[KDSideRooms[journeySlot.SideRooms[sideRoomIndex]].altRoom] : undefined);
+		) ? KDMapData.ShortcutPositions[sideRoomIndex] : undefined);
+	if (!sp) {
+		if ((journeySlot?.SideRooms && journeySlot.SideRooms.some((sr) => {
+			return KDSideRooms[sr]?.altRoom == sideRoomIndex;
+		}))) sp = KDMapData.ShortcutPositions[
+			journeySlot.SideRooms.findIndex((sr) => {
+				return KDSideRooms[sr]?.altRoom == sideRoomIndex;
+			})
+		];
+	}
 	if (sideRoomIndex != '-1' && KDMapData.ShortcutPositions && (
 		sp
 	)) {

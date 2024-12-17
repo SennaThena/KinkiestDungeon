@@ -505,7 +505,7 @@ function KDElevatorToFloor(floor: number, RoomType: string) {
 					undefined,
 					undefined,
 					subslot.EscapeMethod);
-				KDMovePlayer(KDMapData.StartPosition.x, KDMapData.StartPosition.y, true);
+				KDMovePlayer(KDMapData.StartPosition.x, KDMapData.StartPosition.y - 2, true);
 			}
 		} else {
 			let subslot = slot.data.ElevatorRoom;

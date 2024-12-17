@@ -87,7 +87,7 @@ let KDAnims: Record<string, (entity: entity) => boolean> = {
  */
 function KDAnimQuantize(step: number, amount: number): number {
 	if (!KDToggles.RetroAnim) return amount;
-	return Math.round(amount/step) * step;
+	return Math.round((amount || 0)/step) * step;
 }
 
 

@@ -41,6 +41,7 @@ TODO Add Cuddle play type
 - Removed Unfocused perk, added Focused Strikes and Focused Power
 - Being distracted now decreases accuracy of most weapons
 - Being distracted now raises the stamina cost of staves
+- Fix bug with retro animations hiding most effect tiles
 
 5.4.20
 - Various quality of life changes
