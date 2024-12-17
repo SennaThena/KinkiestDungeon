@@ -997,7 +997,7 @@ function KinkyDungeonDrawPerks(NonSelectable: boolean): boolean {
 						});
 					if (MouseIn(XX, YY, KDPerksButtonWidth, KDPerksButtonHeight)) {
 						DrawTextFitKD(TextGet("KinkyDungeonStatDesc" + (stat[1].id)), 1000, 150, 1500, KDTextWhite, KDTextGray1);
-						DrawTextFitKD(TextGet("KinkyDungeonStatCost").replace("AMOUNT", KDGetPerkCost(stat[1]) + ""), 1000, 190, 1400, KDTextWhite, KDTextGray1);
+						DrawTextFitKD(TextGet("KinkyDungeonStatCost").replace("AMOUNT", 5*KDGetPerkCost(stat[1]) + ""), 1000, 190, 1400, KDTextWhite, KDTextGray1);
 						tooltip = true;
 					}
 				}

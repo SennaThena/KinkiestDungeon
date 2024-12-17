@@ -257,7 +257,7 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 		if (point) {
 			let curse: string = undefined;
 			let Lock = "Gold";
-			if (CurseList) {
+			if (CurseList && KDRandom() < 0.3) {
 				curse = KDGetByWeight(
 					KinkyDungeonGetCurseByListWeighted(
 						[CurseList],
