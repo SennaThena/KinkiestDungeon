@@ -38,6 +38,9 @@ alts.DragonLair = {
 	nolore: true,
 	noboring: false,
 	noSetpiece: true,
+
+	/** hehe */
+	keepItems: true,
 };
 
 
@@ -153,7 +156,7 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	for (let X = 1; X < KDMapData.GridWidth; X += 1)
 		for (let Y = 1; Y < KDMapData.GridWidth; Y += 1) {
 			dist = KDistEuclidean(X - KDMapData.GridWidth/2, Y - KDMapData.GridWidth/2);
-			if (dist < 4 + 0.25 * openness) {
+			if (dist < 5.5 + 0.25 * openness) {
 				KinkyDungeonMapSet(X, Y, '0');
 			}
 		}
@@ -161,7 +164,7 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	// Generate branching tunnels
 	let potEntrances: KDPoint[] = [];
 	let paths = 5 + Math.floor(density);
-	let pathMaxLength = 100;
+	let pathMaxLength = 40;
 	let pathMaxDist = KDMapData.GridWidth/2.5;
 
 	for (let i = 0; i < paths; i++) {
@@ -178,7 +181,10 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 					last = curr;
 					already[curr.x + ',' + curr.y] = curr;
 					let options = KDNearbyMapTiles(curr.x, curr.y, 1.5).filter((t) => {
-						return !already[t.x + ',' + t.y];
+						return !already[t.x + ',' + t.y]
+							&& KDistEuclidean(t.x - KDMapData.GridWidth/2,
+							t.y - KDMapData.GridHeight/2) > -0.5 + KDistEuclidean(curr.x - KDMapData.GridWidth/2,
+							curr.y - KDMapData.GridHeight/2);
 					})
 					if (options.length > 0) {
 						curr = options[Math.floor(KDRandom() * options.length)];
@@ -219,7 +225,6 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 
 	// End of map gen
 
-
 	// Boilerplate again
 
 	KinkyDungeonMapSet(KDMapData.StartPosition.x, KDMapData.StartPosition.y, 'S');
@@ -227,5 +232,68 @@ function KDMapgenCreateCave(POI, VisitedRooms, width, height, openness, density,
 	KDGenerateBaseTraffic(KDMapData.GridWidth, KDMapData.GridHeight);
 
 	// end of boilerplate again
+
+	// Scatter a healthy amount of cursed items around
+
+	let CurseList = "Dragon";
+	let HexList = "Dragon";
+	let EnchantList = "Dragon";
+	let idist = 5;
+
+	for (let i = 0; i < 10; i++) {
+
+		let ang = KDRandom() * 2 * Math.PI;
+		let point = (KDRandom() < 0.7 ? null : KinkyDungeonGetNearbyPoint(
+			KDMapData.GridWidth/2 + Math.round(2*idist * Math.cos(ang)),
+			KDMapData.GridHeight/2 + Math.round(2*idist * Math.sin(ang)),
+			true, undefined, undefined, true)) || KinkyDungeonGetNearbyPoint(
+			KDMapData.GridWidth/2 + Math.round(idist * Math.cos(ang)),
+			KDMapData.GridHeight/2 + Math.round(idist * Math.sin(ang)),
+			true, undefined, undefined, true)
+		if (!point) point = KinkyDungeonGetNearbyPoint(KDMapData.GridWidth/2, KDMapData.GridHeight/2,
+			true, undefined, undefined, true
+		);
+		if (point) {
+			let curse: string = undefined;
+			let Lock = "Gold";
+			if (CurseList) {
+				curse = KDGetByWeight(
+					KinkyDungeonGetCurseByListWeighted(
+						[CurseList],
+						undefined,
+						false,
+						0,
+						5 + KDGetEffLevel()));
+
+			}
+			let tags = ["bindingDress", "latexRestraints", "latexRestraintsHeavy", "kiguRestraints", "trap", "dragonRestraints", "steelbondage"];
+			let restraint = KinkyDungeonGetRestraint({tags: tags},
+				KDGetEffLevel() + 3,
+				(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint), undefined,
+				curse ? undefined : Lock,
+				undefined,
+				undefined,
+				undefined,
+				undefined,
+				undefined,
+				undefined,
+				undefined,
+				curse,
+				undefined,
+				undefined,
+				{
+					allowLowPower: true
+				});
+			let item = DialogueAddCursedEnchantedHexed(
+				restraint, undefined, curse ? undefined : Lock, HexList, EnchantList,
+				0, 5 + KDGetEffLevel(),
+				0, 8 + KDGetEffLevel(),
+				true
+			);
+			let inv = {x:point.x, y:point.y, name: item.inventoryVariant || item.name};
+				(KDMapData).GroundItems.push(inv);
+		}
+	}
+
 
 }

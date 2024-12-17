@@ -22,6 +22,12 @@ let KDCurseUnlockList = {
 		"Mana",
 		"SacrificeMage",
 	],
+	"Dragon": [
+		"ShrineWill",
+		"ShrineIllusion",
+		"ShrineElements",
+		"ShrineConjure",
+	],
 	"Divine": [
 		"ShrineWill",
 		"ShrineIllusion",

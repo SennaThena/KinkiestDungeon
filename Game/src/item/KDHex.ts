@@ -20,6 +20,13 @@ let KDHexVariantList = {
 		"Futility",
 		"Sensitivity",
 	],
+	"Dragon": [
+		"Punish",
+		"Submission",
+		"Distraction",
+		"Breathlessness",
+		"Futility",
+	],
 	"CursedCollar": [
 		"CursedHeal",
 		"CursedCorruption",
