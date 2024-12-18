@@ -1520,8 +1520,7 @@ function KDEnemyHasHelp(enemy: entity): boolean {
 			&& !KDEnemyHasFlag(en, "imprisoned")
 			&& !KinkyDungeonIsDisabled(en)
 			&& !(en.disarm > 0)
-			&& KDFactionRelation(KDGetFaction(enemy), KDGetFaction(en))
-				>= Math.max(0.1, KDFactionRelation("Player", KDGetFaction(en)));
+			&& KDWillingToHelp(enemy, en)
 	}) || (
 		KDAllied(enemy)
 		&& !!KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y)));

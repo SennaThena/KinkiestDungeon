@@ -686,10 +686,13 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 				&& (!KDAIType[KDGetAI(enemy)]
 					|| ((!KDAIType[KDGetAI(enemy)].ambush || enemy.ambushtrigger)))
 				&& KDNearbyEnemies(enemy.x, enemy.y, enemy.Enemy.visionRadius/2 || 1.5, undefined, true, enemy).some((en) => {
-					return en != enemy && KDBoundEffects(en) > 1 && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
+					return en != enemy && KDBoundEffects(en) > 1
+					&& !KDHostile(enemy, en)
+					&& (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 					&& !KDIsImprisoned(en)
 					&& (!KDEntityHasBuffTags(en, "commandword") || enemy.Enemy.unlockCommandLevel > 0)
 					&& !KDIsTileDangerous(en, en.x, en.y, KDMapData)
+					&& KDWillingToHelp(en, enemy)
 					;
 				})
 			) return true;
@@ -713,6 +716,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 				return en != enemy && KDBoundEffects(en) > 1 && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 				&& !KDIsImprisoned(en)
 				&& (!KDEntityHasBuffTags(en, "commandword") || enemy.Enemy.unlockCommandLevel > 0)
+				&& KDWillingToHelp(en, enemy)
 				;
 			})) return false;
 			return (!enemy.IntentAction
@@ -720,6 +724,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 				&& enemy != KinkyDungeonJailGuard()
 				&& (enemy.attackPoints < 1)
 				&& (!enemy.aware || KDAssaulters >= KDMaxAssaulters)
+
 				&& KDBoundEffects(enemy) < 4);
 		},
 		remove: (_enemy, _data) => {},
@@ -729,12 +734,14 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 					return en != enemy && KDBoundEffects(en) > 1 && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 					&& !KDIsImprisoned(en)
 					&& (!KDEntityHasBuffTags(en, "commandword") || enemy.Enemy.unlockCommandLevel > 0)
+					&& KDWillingToHelp(en, enemy)
 					;
 				});
 				if (search.length == 0) search = KDNearbyEnemies(enemy.x, enemy.y, enemy.Enemy.visionRadius/2 || 1.5, undefined, true, enemy).filter((en) => {
 					return en != enemy && KDBoundEffects(en) > 1 && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 					&& !KDIsImprisoned(en)
 					&& (!KDEntityHasBuffTags(en, "commandword") || enemy.Enemy.unlockCommandLevel > 0)
+					&& KDWillingToHelp(en, enemy)
 					;
 				});
 				if (search.length > 0) {
@@ -798,6 +805,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 							&& !KinkyDungeonEntityAt(tile.x, tile.y)
 							&& KinkyDungeonMovableTilesEnemy.includes(tile.tile)
 							&& !KDIsTileDangerous(en, tile.x, tile.y, KDMapData)
+							&& KDWillingToHelp(en, enemy)
 					})
 					;
 				})
@@ -822,6 +830,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 				return en != enemy && KDBoundEffects(en) > 1 && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 				&& !KDIsImprisoned(en)
 				&& (!KDEntityHasBuffTags(en, "commandword") || enemy.Enemy.unlockCommandLevel > 0)
+				&& KDWillingToHelp(en, enemy)
 				;
 			})) return false;
 			return (!enemy.IntentAction
@@ -838,6 +847,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 					return en != enemy && KinkyDungeonIsDisabled(en) && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 					&& !KDIsImprisoned(en)
 					&& KDIsTileDangerous(en, en.x, en.y, KDMapData)
+					&& KDWillingToHelp(en, enemy)
 					&& KDNearbyMapTiles(en.x, en.y, 1.5).some((tile) => {
 						return (tile.x != en.x || tile.y != en.y)
 							&& !KinkyDungeonEntityAt(tile.x, tile.y)
@@ -850,6 +860,7 @@ let KDCommanderOrders: Record<string, KDCommanderOrder> = {
 					return en != enemy && KinkyDungeonIsDisabled(en) && !KDHostile(enemy, en) && (!KDStruggleAssisters[en.id] || KDStruggleAssisters[en.id] == enemy.id)
 					&& !KDIsImprisoned(en)
 					&& KDIsTileDangerous(en, en.x, en.y, KDMapData)
+					&& KDWillingToHelp(en, enemy)
 					&& KDNearbyMapTiles(en.x, en.y, 1.5).some((tile) => {
 						return (tile.x != en.x || tile.y != en.y)
 							&& !KinkyDungeonEntityAt(tile.x, tile.y)
@@ -1280,3 +1291,16 @@ let KDBoobyTraps: Record<string, KDBoobyTrap> = {
 
 
 };
+
+
+/**
+ *
+ * @param en - The enemy being helped
+ * @param enemy - the helper
+ * @returns
+ */
+function KDWillingToHelp(en: entity, enemy: entity) {
+	return !en.rage && (!KDHostile(en)
+			|| KDFactionRelation(KDGetFaction(en), KDGetFaction(enemy))
+			>= Math.max(0.1, KDFactionRelation("Player", KDGetFaction(enemy))))
+}
