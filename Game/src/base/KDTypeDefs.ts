@@ -1738,6 +1738,7 @@ interface entity {
 	noDrop?: boolean,
 	droppedItems?: boolean,
 	specialdialogue?: string,
+	prisondialogue?: string,
 	aggro?: number,
 	id?: number,
 	hp?: number,

@@ -954,7 +954,7 @@ function SetpieceSpawnPrisoner(x: number, y: number, persistentOnly?: boolean, l
 			} : undefined)) {
 				e.faction = "Prisoner";
 				e.boundLevel = e.hp * 11;
-				e.specialdialogue = "PrisonerJail";
+				e.prisondialogue = "PrisonerJail";
 				e.items = [];
 			} else {
 				// Just spawn them with no items
@@ -1156,7 +1156,7 @@ function KDImprisonEnemy(e: entity, noJam: boolean, dialogue: string = "Prisoner
 	if (!e || !KDCapturable(e)) return false;
 	if (noJam)
 		KinkyDungeonSetEnemyFlag(e, "nojam", -1);
-	e.specialdialogue = dialogue;
+	e.prisondialogue = dialogue;
 	KinkyDungeonSetEnemyFlag(e, "noswap", -1);
 	KinkyDungeonSetEnemyFlag(e, "imprisoned", -1);
 	if (restraint) {

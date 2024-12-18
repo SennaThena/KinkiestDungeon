@@ -3152,7 +3152,6 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 								let e = KDDialogueEnemy();
 								KDFreeNPC(e);
 								e.allied = 9999;
-								e.specialdialogue = undefined;
 								KDAggroMapFaction();
 								let faction = e.Enemy.faction ? e.Enemy.faction : "Enemy";
 								e.faction = "Player";
@@ -3211,7 +3210,6 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 									let e = KDDialogueEnemy();
 									KDFreeNPC(e);
 									e.allied = 9999;
-									e.specialdialogue = undefined;
 									KDAggroMapFaction();
 
 									let faction = e.Enemy.faction ? e.Enemy.faction : "Enemy";
@@ -3253,6 +3251,25 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 			},
 		}
 	},
+	"PrisonerJailBug": { // For prisoners in the prison level. Doesnt increase rep much, but useful for jailbreak purposes
+		response: "Default",
+		options: {
+			"Leave": {
+				playertext: "Leave", response: "Default",
+				exitDialogue: true,
+			},
+			"Unlock": {
+				playertext: "Default", response: "Default",
+				clickFunction: (_gagged, player) => {
+					let e = KDDialogueEnemy();
+					KDFreeNPC(e);
+					return false;
+				},
+				exitDialogue: true,
+			},
+
+		}
+	},
 	"PrisonerJailOwn": { // For prisoners in the prison level. Doesnt increase rep much, but useful for jailbreak purposes
 		response: "Default",
 		clickFunction: (_gagged, _player) => {
@@ -3277,7 +3294,6 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 							if (KDDialogueEnemy()) {
 								let e = KDDialogueEnemy();
 								KDFreeNPC(e);
-								e.specialdialogue = undefined;
 								if (KinkyDungeonIsHandsBound(false, true, 0.2)) {
 									DialogueBringNearbyEnemy(player.x, player.y, 8, true);
 									KDGameData.CurrentDialogMsg = "PrisonerJailUnlockSlow";
@@ -3380,7 +3396,6 @@ let KDDialogue: Record<string, KinkyDialogue> = {
 								if (KDDialogueEnemy()) {
 									let e = KDDialogueEnemy();
 									KDFreeNPC(e);
-									e.specialdialogue = undefined;
 									KDGameData.CurrentDialogMsg = "PrisonerJailPick";
 									if (e.Enemy.tags.gagged) {
 										KDGameData.CurrentDialogMsg = KDGameData.CurrentDialogMsg + "Gagged";

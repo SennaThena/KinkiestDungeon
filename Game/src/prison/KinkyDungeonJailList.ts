@@ -1,5 +1,7 @@
 "use strict";
 
+let KDBaseJailTickSub = 0.5;
+
 let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => number, trigger: (guard: any, xx: any, yy: any) => void}> = {
 	"spawnGuard": {
 		// Determines the weight
@@ -50,7 +52,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 			}
 
 			if (KinkyDungeonPlayerInCell(true))
-				KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+				KinkyDungeonChangeRep("Ghost", KDBaseJailTickSub + KDGameData.KinkyDungeonPrisonExtraGhostRep);
 			KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
 
 			if (KinkyDungeonTilesGet((xx-1) + "," + yy)?.Lock && KinkyDungeonTilesGet((xx-1) + "," + yy).Type == "Door") {
@@ -96,7 +98,7 @@ let KDJailEvents: Record<string, {weight: (guard: any, xx: any, yy: any) => numb
 				KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonGuardApproach").replace("EnemyName", TextGet("Name" + guard.Enemy.name)), "white", 6);
 
 				if (KinkyDungeonPlayerInCell(true))
-					KinkyDungeonChangeRep("Ghost", 1 + KDGameData.KinkyDungeonPrisonExtraGhostRep);
+					KinkyDungeonChangeRep("Ghost", KDBaseJailTickSub + KDGameData.KinkyDungeonPrisonExtraGhostRep);
 				KDGameData.KinkyDungeonPrisonExtraGhostRep = 0;
 
 

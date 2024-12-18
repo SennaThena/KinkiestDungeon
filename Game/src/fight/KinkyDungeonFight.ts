@@ -393,7 +393,7 @@ let KDSTAMPENTYPE = {
 		onEvasion: (data) => {
 			let perk = "Focused";
 			let focusStat = "WepDPAccPenalty";
-			let accPenMult = KinkyDungeonMultiplicativeStat(KDEntityBuffedStat(KDPlayer(), focusStat)
+			let accPenMult = KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(KDPlayer(), focusStat)
 				+ (KinkyDungeonStatsChoice.get(perk) ? 9 : 0))
 			let amount = 1;
 			let dist = KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax;
@@ -410,7 +410,7 @@ let KDSTAMPENTYPE = {
 		onAttack: (data) => {
 			let perk = "FocusedStaff";
 			let focusStat = "WepDPStamPenalty";
-			let accPenMult = KinkyDungeonMultiplicativeStat(KDEntityBuffedStat(KDPlayer(), focusStat)
+			let accPenMult = KinkyDungeonMultiplicativeStat(-KDEntityBuffedStat(KDPlayer(), focusStat)
 				+ (KinkyDungeonStatsChoice.get(perk) ? 9 : 0))
 			let amount = 1;
 			let dist = KinkyDungeonStatDistraction / KinkyDungeonStatDistractionMax;

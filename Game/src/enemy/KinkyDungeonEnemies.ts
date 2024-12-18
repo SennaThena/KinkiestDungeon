@@ -1092,7 +1092,7 @@ function KDEntityHasFlag(enemy: entity, flag: string): boolean {
 	if (enemy.player) {
 		return KinkyDungeonFlags.get(flag) > 0;
 	}
-	return (enemy.flags && (enemy.flags[flag] > 0 || enemy.flags[flag] == -1));
+	return KDEnemyHasFlag(enemy, flag);//(enemy.flags && (enemy.flags[flag] > 0 || enemy.flags[flag] == -1));
 }
 
 function KinkyDungeonDrawEnemiesStatus(canvasOffsetX: number, canvasOffsetY: number, CamX: number, CamY: number) {
@@ -1914,7 +1914,7 @@ function KinkyDungeonDrawEnemiesHP(delta: number, canvasOffsetX: number, canvasO
 				// Draw thought bubbles
 				let yboost = II * -20;
 				if (canSee) {
-					if ((KDToggles.ForceWarnings || KDMouseInPlayableArea()) && (enemy.Enemy.specialdialogue || enemy.specialdialogue)) {
+					if ((KDToggles.ForceWarnings || KDMouseInPlayableArea()) && (enemy.Enemy.specialdialogue || enemy.specialdialogue || (enemy.prisondialogue && KDIsImprisoned(enemy)))) {
 						KDDraw(kdenemystatusboard, kdpixisprites, enemy.id + "_th", KinkyDungeonRootDirectory + "Conditions/Dialogue.png",
 							canvasOffsetX + (xx - CamX)*KinkyDungeonGridSizeDisplay, canvasOffsetY + (yy - CamY)*KinkyDungeonGridSizeDisplay - KinkyDungeonGridSizeDisplay/2 + yboost,
 							KinkyDungeonGridSizeDisplay, KinkyDungeonGridSizeDisplay, undefined, {
@@ -2142,7 +2142,9 @@ function KDSetToExpectedBondage(en: entity, mode: number = 0) {
  * @param en
  */
 function KDFreeNPC(en: entity) {
-	if (en.specialdialogue && KDEnemyHasFlag(en, "imprisoned")) {
+	if (en.prisondialogue)
+		en.prisondialogue = undefined;
+	else if (en.specialdialogue && KDEnemyHasFlag(en, "imprisoned")) {
 		en.specialdialogue = undefined;
 	}
 	KinkyDungeonSetEnemyFlag(en, "imprisoned", 0);

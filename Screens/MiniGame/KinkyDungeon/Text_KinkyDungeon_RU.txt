@@ -18246,7 +18246,7 @@ Stop! (PERCENT chance to avoid)
 (SPEAKER играет с серебристой веревкой)|Хм, мне нужно больше практиковаться.|Могу я попробовать на тебе?
 (The SPEAKER grins happily)|Thank you girl~|I'll tie with RESTRAINT then~
 (SPEAKER счастливо улыбается)|Спасибо тебе, девочка~|Тогда я свяжу тебя RESTRAINT~
-(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly and expert.)|Mmm, not too bad~
+(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly an expert.)|Mmm, not too bad~
 (SPEAKER крепко связывает вас)|(Веревка очень тугая, она явно профессионал)|Ммм, не так уж плохо~
 (The SPEAKER pouts indignantly)|Why say yes then?!|(The SPEAKER walks off grumbling)
 (SPEAKER возмущенно надувает губы)|Зачем тогда говорить 'да'?!|(Разочарованная SPEAKER уходит)

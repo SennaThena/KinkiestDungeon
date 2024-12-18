@@ -18402,7 +18402,7 @@ Stop! (PERCENT chance to avoid)
 (SPEAKER は銀色のロープをいじっている)|うーん、もっと上手になりたい……|あの、練習に付き合ってくれませんか？
 (The SPEAKER grins happily)|Thank you girl~|I'll tie with RESTRAINT then~
 (SPEAKER は幸せそうに微笑んだ)|ありがとうございます！|それじゃあ RESTRAINT で拘束しますね。
-(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly and expert.)|Mmm, not too bad~
+(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly an expert.)|Mmm, not too bad~
 (SPEAKER はきつく縛ってきた)|(彼女は慣れた手付きでロープをきつく締める)|んー、いい感じですね。
 (The SPEAKER pouts indignantly)|Why say yes then?!|(The SPEAKER walks off grumbling)
 (SPEAKER は)|最初に手伝うって言ったのに……|(SPEAKER は不満そうに歩いていった)

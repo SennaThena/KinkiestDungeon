@@ -77,7 +77,7 @@ AddModel({
 		},
 		{ Name: "Apron", Layer: "Apron", Pri: 15,
 			Poses: ToMap([...LEGPOSES]),
-			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", Hogtie: "Hogtie"},
+			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", SuspendedHogtie: "", Hogtie: "Hogtie"},
 			Invariant: true,
 		},
 		{ Name: "ApronBack", Layer: "BeltBack", Pri: -15,

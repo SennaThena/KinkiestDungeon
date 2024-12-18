@@ -11410,7 +11410,7 @@ dOfferMithrilForce_NoGag,"(Shake your head and moan) (PERCENT chance to avoid)"
 
 rOfferMithrilRope,"(A SPEAKER plays with silvery rope)|Hmm, I need to get better with this.|Can I practice on you?"
 rOfferMithrilRopeYes,"(The SPEAKER grins happily)|Thank you girl~|I'll tie with RESTRAINT then~"
-rOfferMithrilRopeYes_Yes,"(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly and expert.)|Mmm, not too bad~"
+rOfferMithrilRopeYes_Yes,"(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly an expert.)|Mmm, not too bad~"
 rOfferMithrilRopeYes_No,"(The SPEAKER pouts indignantly)|Why say yes then?!|(The SPEAKER walks off grumbling)"
 rOfferMithrilRopeNo,"(The SPEAKER sighs)|Very well then~"
 rOfferMithrilRopeForce,"(The SPEAKER pouts indignantly)|Oh no, you don't get out that easy.|You said you'd help!"
@@ -13286,8 +13286,8 @@ dPrisonerJail_Pick,"Try to pick her restraints (JAMPERCENT jam chance)"
 dPrisonerJail_Word,Use a command word
 dPrisonerJailJammedRecent_Apologize,Apologize profusely!
 
-
-
+rPrisonerJailBug,"(The SPEAKER sits bound in mysterious ASCII glyphs)|(She is bugged and needs your help to get out)"
+dPrisonerJailBug_Unlock,(Unlock her and file a bug report to Ada)
 
 rPrisonerJailOwn,"(The SPEAKER sits restrained by your own hand.|Only someone with keys can let her out.)"
 rPrisonerJailOwnNoKeys,"(You don't have any keys that work on the lock)"

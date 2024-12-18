@@ -4927,9 +4927,13 @@ function KinkyDungeonLaunchAttack(Enemy: entity, skip?: number): string {
 	}
 	let noadvance = false;
 	if (KinkyDungeonHasStamina(Math.abs(attackCost), true)) {
-		if (!KDGameData.ConfirmAttack && (KDIsImprisoned(Enemy) || ((!KinkyDungeonAggressive(Enemy) || KDAllied(Enemy)) && !(Enemy.playWithPlayer && KDCanDom(Enemy))))) {
+		if (!KDGameData.ConfirmAttack && (KDIsImprisoned(Enemy)
+			|| ((!KinkyDungeonAggressive(Enemy) || KDAllied(Enemy))
+			&& !(Enemy.playWithPlayer && KDCanDom(Enemy))))) {
 			let d = Enemy.Enemy.specialdialogue ? Enemy.Enemy.specialdialogue : "GenericAlly";
-			if (Enemy.specialdialogue) d = Enemy.specialdialogue; // Special dialogue override
+			if ((!Enemy.specialdialogue && !Enemy.prisondialogue) && KDIsImprisoned(Enemy)) d = "PrisonerJailBug";
+			else if (Enemy.prisondialogue && KDIsImprisoned(Enemy)) d = Enemy.prisondialogue; // Special dialogue override
+			else if (Enemy.specialdialogue) d = Enemy.specialdialogue; // Special dialogue override
 			if (d || ((!Enemy.lifetime || Enemy.lifetime > 9000) && !Enemy.Enemy.tags.notalk)) { // KDAllied(Enemy)
 
 				KDStartDialog(d, Enemy.Enemy.name, true, Enemy.personality, Enemy);

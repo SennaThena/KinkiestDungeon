@@ -18388,7 +18388,7 @@ Stop! (PERCENT chance to avoid)
 ( SPEAKER 在玩银色的绳子 ) |嗯，我需要在这方面做得更好。|我可以在你身上练习吗？
 (The SPEAKER grins happily)|Thank you girl~|I'll tie with RESTRAINT then~
 ( SPEAKER 开心地笑 ) |谢谢你，女孩~|那我就为你绑上 RESTRAINT 了~
-(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly and expert.)|Mmm, not too bad~
+(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly an expert.)|Mmm, not too bad~
 ( SPEAKER 把你绑得紧紧的 ) | ( 绳子很紧，她的思路清晰又熟练。 ) |嗯，还不错~
 (The SPEAKER pouts indignantly)|Why say yes then?!|(The SPEAKER walks off grumbling)
 ( SPEAKER 愤怒地撅起嘴 ) |那为什么要说'是'？！| ( SPEAKER 抱怨着走开 )

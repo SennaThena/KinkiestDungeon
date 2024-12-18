@@ -17804,7 +17804,7 @@ Stop! (PERCENT chance to avoid)
 (UN SPEAKER juega con una cuerda plateada)|Hmm, necesito mejorar con esto.|¿Puedo practicar contigo?
 (The SPEAKER grins happily)|Thank you girl~|I'll tie with RESTRAINT then~
 (El SPEAKER sonríe felizmente)|Gracias niña~|Entonces empataré con RESTRAINT~
-(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly and expert.)|Mmm, not too bad~
+(The SPEAKER binds you tightly)|(The rope is tight, and she's clearly an expert.)|Mmm, not too bad~
 (El SPEAKER te ata con fuerza)|(La cuerda está apretada, y ella es clara y experta.)|Mmm, no está tan mal~
 (The SPEAKER pouts indignantly)|Why say yes then?!|(The SPEAKER walks off grumbling)
 (El SPEAKER hace un puchero indignado)|¿¡Entonces por qué decir que sí?!|(El SPEAKER se aleja refunfuñando)

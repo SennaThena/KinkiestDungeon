@@ -264,7 +264,7 @@ let KinkyDungeonStatsPresets: Record<string, KDPerk> = {
 	"Less_Boxbinders":  {category: "Toggles", id: "Less_Boxbinders", cost: 0, block: ["More_Boxbinders"], debuff: true,},
 	"Less_Yokes":  {category: "Toggles", id: "Less_Yokes", cost: 0, block: ["More_Yokes"], debuff: true,},
 
-	"NovicePet":  {category: "Major", id: "NovicePet", cost: 1.2},
+	"NovicePet":  {category: "Major", id: "NovicePet", cost: 1},
 	"Fortify_Barricade":  {category: "Major", id: "Fortify_Barricade", cost: -1.6},
 	"Fortify_Trap":  {category: "Enemies", id: "Fortify_Trap", cost: -1.2},
 	"CurseSeeker":  {category: "Major", id: "CurseSeeker", cost: -3},
